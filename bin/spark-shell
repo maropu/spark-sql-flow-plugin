@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# The ASF licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# Determine the current working directory
+CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ROOT_DIR="$( cd "`dirname $0`"/..; pwd )"
+
+if [ -z "${SPARK_HOME}" ]; then
+  # Preserve the calling directory
+  _CALLING_DIR="$(pwd)"
+
+  # Install the proper version of Spark for this package
+  . ${CURRENT_DIR}/install.sh
+  install_spark
+
+  # Reset the current working directory
+  cd "${_CALLING_DIR}"
+else
+  SPARK_DIR=${SPARK_HOME}
+fi
+
+# Loads some variables from `pom.xml`
+. ${CURRENT_DIR}/package.sh && get_package_variables_from_pom
+
+# Resolve a jar location for the TPCDS data generator
+find_resource() {
+  local built_pkg="$CURRENT_DIR/../target/${PACKAGE_JAR_NAME}"
+  if [ -e "$built_pkg" ]; then
+    RESOURCE=$built_pkg
+  else
+    RESOURCE="$CURRENT_DIR/../assembly/${PACKAGE_JAR_NAME}"
+    echo "${built_pkg} not found, so use pre-compiled ${RESOURCE}" 1>&2
+  fi
+}
+
+echo "Using \`spark-shell\` from path: $SPARK_DIR" 1>&2
+find_resource && ${SPARK_DIR}/bin/spark-shell --conf spark.jars=${RESOURCE} "$@"
+

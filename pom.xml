@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Licensed to the Apache Software Foundation (ASF) under one or more
+  ~ contributor license agreements.  See the NOTICE file distributed with
+  ~ this work for additional information regarding copyright ownership.
+  ~ The ASF licenses this file to You under the Apache License, Version 2.0
+  ~ (the "License"); you may not use this file except in compliance with
+  ~ the License.  You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.apache</groupId>
+    <artifactId>apache</artifactId>
+    <version>14</version>
+  </parent>
+
+  <groupId>org.apache.spark</groupId>
+  <artifactId>spark-sql-flow-plugin_2.12</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <name>Visualize Data Lineage in Spark SQL</name>
+
+  <properties>
+    <project.package.name>spark-sql-flow-plugin</project.package.name>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>1.8</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <maven.version>3.6.3</maven.version>
+    <scala.version>2.12.10</scala.version>
+    <scala.binary.version>2.12</scala.binary.version>
+    <spark.version>3.1.2</spark.version>
+    <spark.binary.version>3.1</spark.binary.version>
+    <hadoop.version>2.7.4</hadoop.version>
+    <hadoop.binary.version>2.7</hadoop.binary.version>
+    <scalatest.version>3.2.3</scalatest.version>
+
+    <test.java.home>${java.home}</test.java.home>
+    <test.exclude.tags></test.exclude.tags>
+
+    <MetaspaceSize>64m</MetaspaceSize>
+    <MaxMetaspaceSize>512m</MaxMetaspaceSize>
+    <CodeCacheSize>512m</CodeCacheSize>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${scala.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-core_${scala.binary.version}</artifactId>
+      <version>${spark.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-catalyst_${scala.binary.version}</artifactId>
+      <version>${spark.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-sql_${scala.binary.version}</artifactId>
+      <version>${spark.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.scalatest</groupId>
+      <artifactId>scalatest_${scala.binary.version}</artifactId>
+      <version>${scalatest.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.scalatestplus</groupId>
+      <artifactId>scalatestplus-scalacheck_${scala.binary.version}</artifactId>
+      <version>3.1.0.0-RC2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-core_${scala.binary.version}</artifactId>
+      <version>${spark.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-catalyst_${scala.binary.version}</artifactId>
+      <version>${spark.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-sql_${scala.binary.version}</artifactId>
+      <version>${spark.version}</version>
+      <type>test-jar</type>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <directory>target</directory>
+    <outputDirectory>target/scala-${scala.binary.version}/classes</outputDirectory>
+    <finalName>${project.artifactId}_spark${spark.binary.version}-${project.version}</finalName>
+    <testOutputDirectory>target/scala-${scala.binary.version}/test-classes</testOutputDirectory>
+    <sourceDirectory>src/main/scala</sourceDirectory>
+    <testSourceDirectory>src/test/scala</testSourceDirectory>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>1.4.1</version>
+        <executions>
+          <execution>
+            <id>enforce-versions</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireMavenVersion>
+                  <version>${maven.version}</version>
+                </requireMavenVersion>
+                <requireJavaVersion>
+                  <version>${java.version}</version>
+                </requireJavaVersion>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.scalastyle</groupId>
+        <artifactId>scalastyle-maven-plugin</artifactId>
+        <version>0.8.0</version>
+        <configuration>
+          <verbose>false</verbose>
+          <failOnViolation>true</failOnViolation>
+          <includeTestSourceDirectory>true</includeTestSourceDirectory>
+          <failOnWarning>false</failOnWarning>
+          <sourceDirectory>src/main/scala</sourceDirectory>
+          <testSourceDirectory>src/test/scala</testSourceDirectory>
+          <configLocation>scalastyle-config.xml</configLocation>
+          <outputFile>target/scalastyle-output.xml</outputFile>
+          <inputEncoding>${project.build.sourceEncoding}</inputEncoding>
+          <outputEncoding>${project.reporting.outputEncoding}</outputEncoding>
+        </configuration>
+        <executions>
+          <execution>
+          <goals>
+            <goal>check</goal>
+          </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>net.alchim31.maven</groupId>
+        <artifactId>scala-maven-plugin</artifactId>
+        <version>3.2.2</version>
+        <executions>
+          <execution>
+            <id>eclipse-add-source</id>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>scala-compile-first</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>scala-test-compile-first</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>attach-scaladocs</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>doc-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <scalaVersion>${scala.version}</scalaVersion>
+          <recompileMode>incremental</recompileMode>
+          <useZincServer>true</useZincServer>
+          <args>
+            <arg>-unchecked</arg>
+            <arg>-deprecation</arg>
+            <arg>-feature</arg>
+          </args>
+          <jvmArgs>
+            <jvmArg>-Xms1024m</jvmArg>
+            <jvmArg>-Xmx1024m</jvmArg>
+            <jvmArg>-XX:MetaspaceSize=${MetaspaceSize}</jvmArg>
+            <jvmArg>-XX:MaxMetaspaceSize=${MaxMetaspaceSize}</jvmArg>
+            <jvmArg>-XX:ReservedCodeCacheSize=${CodeCacheSize}</jvmArg>
+          </jvmArgs>
+          <javacArgs>
+            <javacArg>-source</javacArg>
+            <javacArg>${java.version}</javacArg>
+            <javacArg>-target</javacArg>
+            <javacArg>${java.version}</javacArg>
+            <javacArg>-Xlint:all,-serial,-path</javacArg>
+          </javacArgs>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.5.1</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+          <encoding>UTF-8</encoding>
+          <maxmem>1024m</maxmem>
+          <fork>true</fork>
+          <compilerArgs>
+            <arg>-Xlint:all,-serial,-path</arg>
+          </compilerArgs>
+        </configuration>
+      </plugin>
+      <!-- Surefire runs all Java tests -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.19.1</version>
+        <!-- Note config is repeated in scalatest config -->
+        <configuration>
+          <includes>
+            <include>**/Test*.java</include>
+            <include>**/*Test.java</include>
+            <include>**/*TestCase.java</include>
+            <include>**/*Suite.java</include>
+          </includes>
+          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+          <argLine>-Xmx3g -Xss4096k -XX:MaxMetaspaceSize=${MaxMetaspaceSize} -XX:ReservedCodeCacheSize=512m</argLine>
+          <environmentVariables>
+            <!--
+              Setting SPARK_DIST_CLASSPATH is a simple way to make sure any child processes
+              launched by the tests have access to the correct test-time classpath.
+            -->
+            <SPARK_DIST_CLASSPATH>${test_classpath}</SPARK_DIST_CLASSPATH>
+            <SPARK_PREPEND_CLASSES>1</SPARK_PREPEND_CLASSES>
+            <SPARK_SCALA_VERSION>${scala.binary.version}</SPARK_SCALA_VERSION>
+            <SPARK_TESTING>1</SPARK_TESTING>
+            <JAVA_HOME>${test.java.home}</JAVA_HOME>
+          </environmentVariables>
+          <systemProperties>
+            <log4j.configuration>file:src/test/resources/log4j.properties</log4j.configuration>
+            <derby.system.durability>test</derby.system.durability>
+            <java.awt.headless>true</java.awt.headless>
+            <!--
+              When adding `/tmp` for `java.io.tmpdir`, the tests in GitHub Actions will fail:
+               Error: java.lang.IllegalStateException: Failed to connect database
+                 '/home/runner/work/spark-query-log-plugin/spark-query-log-plugin/target/tmp/querylogs.db' because path to
+                 '///home/runner/work/spark-query-log-plugin/spark-query-log-plugin/target/tmp/querylogs.db':
+                 '/home/runner/work/spark-query-log-plugin/spark-query-log-plugin/target/tmp' does not exist
+               Error: at io.github.maropu.spark.QueryLogSQLiteStore.init(QueryLogSQLiteStore.scala:80)
+               ...
+            -->
+            <!-- <java.io.tmpdir>${project.build.directory}/tmp</java.io.tmpdir> -->
+            <java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
+            <spark.test.home>${spark.test.home}</spark.test.home>
+            <spark.testing>1</spark.testing>
+            <spark.master.rest.enabled>false</spark.master.rest.enabled>
+            <spark.ui.enabled>false</spark.ui.enabled>
+            <spark.ui.showConsoleProgress>false</spark.ui.showConsoleProgress>
+            <spark.unsafe.exceptionOnMemoryLeak>true</spark.unsafe.exceptionOnMemoryLeak>
+            <spark.memory.debugFill>true</spark.memory.debugFill>
+            <!-- Needed by sql/hive tests. -->
+            <test.src.tables>src</test.src.tables>
+          </systemProperties>
+          <failIfNoTests>false</failIfNoTests>
+          <excludedGroups>${test.exclude.tags}</excludedGroups>
+        </configuration>
+        <executions>
+          <execution>
+            <id>test</id>
+            <goals>
+              <goal>test</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- Scalatest runs all Scala tests -->
+      <plugin>
+        <groupId>org.scalatest</groupId>
+        <artifactId>scalatest-maven-plugin</artifactId>
+        <version>1.0</version>
+        <!-- Note config is repeated in surefire config -->
+        <configuration>
+          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+          <junitxml>.</junitxml>
+          <filereports>SparkTestSuite.txt</filereports>
+          <argLine>-ea -Xmx3g -XX:MaxMetaspaceSize=${MaxMetaspaceSize} -XX:ReservedCodeCacheSize=${CodeCacheSize}</argLine>
+          <stderr/>
+          <environmentVariables>
+            <!--
+              Setting SPARK_DIST_CLASSPATH is a simple way to make sure any child processes
+              launched by the tests have access to the correct test-time classpath.
+            -->
+            <SPARK_DIST_CLASSPATH>${test_classpath}</SPARK_DIST_CLASSPATH>
+            <SPARK_PREPEND_CLASSES>1</SPARK_PREPEND_CLASSES>
+            <SPARK_SCALA_VERSION>${scala.binary.version}</SPARK_SCALA_VERSION>
+            <SPARK_TESTING>1</SPARK_TESTING>
+            <JAVA_HOME>${test.java.home}</JAVA_HOME>
+          </environmentVariables>
+          <systemProperties>
+            <log4j.configuration>file:src/test/resources/log4j.properties</log4j.configuration>
+            <derby.system.durability>test</derby.system.durability>
+            <java.awt.headless>true</java.awt.headless>
+            <!-- <java.io.tmpdir>${project.build.directory}/tmp</java.io.tmpdir> -->
+            <java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
+            <spark.test.home>${spark.test.home}</spark.test.home>
+            <spark.testing>1</spark.testing>
+            <spark.ui.enabled>false</spark.ui.enabled>
+            <spark.ui.showConsoleProgress>false</spark.ui.showConsoleProgress>
+            <spark.unsafe.exceptionOnMemoryLeak>true</spark.unsafe.exceptionOnMemoryLeak>
+            <!-- Needed by sql/hive tests. -->
+            <test.src.tables>__not_used__</test.src.tables>
+          </systemProperties>
+          <tagsToExclude>${test.exclude.tags}</tagsToExclude>
+        </configuration>
+        <executions>
+          <execution>
+            <id>test</id>
+            <goals>
+              <goal>test</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>cobertura-maven-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+          <instrumentation>
+            <excludes>
+              <exclude>**/*$*</exclude>
+              <exclude>**/*$</exclude>
+              <exclude>org/apache/spark/sql/server/ui/**</exclude>
+              <exclude>org/apache/spark/sql/server/parser/**</exclude>
+              <exclude>org/apache/spark/sql/server/execution/**</exclude>
+              <exclude>org/apache/spark/sql/server/benchmark/**</exclude>
+            </excludes>
+          </instrumentation>
+          <format>xml</format>
+          <maxmem>256m</maxmem>
+          <!-- aggregated reports for multi-module projects -->
+          <aggregate>true</aggregate>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.eluder.coveralls</groupId>
+        <artifactId>coveralls-maven-plugin</artifactId>
+        <version>4.3.0</version>
+        <!-- For local uses
+        <configuration>
+          <repoToken></repoToken>
+        </configuration>
+        -->
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.5</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+          <!-- Build test-jar's for all projects, since some projects depend on tests from others -->
+          <execution>
+            <id>prepare-test-jar</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+            <configuration>
+              <excludes>
+                <exclude>log4j.properties</exclude>
+              </excludes>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <finalName>${project.artifactId}_spark${spark.binary.version}-${project.version}</finalName>
+          <outputDirectory>${project.parent.build.directory}</outputDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.3</version>
+          <executions>
+            <execution>
+            <id>jar-with-dependencies</id>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <finalName>${project.artifactId}_spark${spark.binary.version}-${project.version}-with-dependencies</finalName>
+              <outputDirectory>${project.parent.build.directory}</outputDirectory>
+              <minimizeJar>false</minimizeJar>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+              <artifactSet>
+                <includes></includes>
+              </artifactSet>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+
