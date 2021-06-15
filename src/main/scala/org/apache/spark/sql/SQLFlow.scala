@@ -48,8 +48,14 @@ object SQLFlow extends PredicateHelper {
     new SQLFlowHolder[T](ds)
   }
 
-  def catalogToSQLFlow(): Unit = {
-    SparkSession.getActiveSession.foreach { session =>
+  def printCatalogAsSQLFlow(): Unit = {
+    // scalastyle:off println
+    println(catalogToSQLFlow().getOrElse(""))
+    // scalastyle:on println
+  }
+
+  private[sql] def catalogToSQLFlow(): Option[String] = {
+    SparkSession.getActiveSession.map { session =>
       val catalog = session.sessionState.catalog
       val tempViewMap = catalog.getTempViewNames().map { tempView =>
         tempView -> catalog.getTempView(tempView).get
@@ -58,12 +64,13 @@ object SQLFlow extends PredicateHelper {
       val tempViewFlowMap = mutable.Map[String, (String, Seq[(Attribute, String)], LogicalPlan)]()
 
       val (nodes, edges) = catalog.getTempViewNames.map { tempView =>
-        val plan = tempViewMap(tempView).transformDown {
-          case SubqueryAlias(AliasIdentifier(name, Nil), _) if tempViewMap.contains(name) =>
-            TempView(name, tempViewMap(name).output)
+        val analyzed = session.sessionState.analyzer.execute(tempViewMap(tempView))
+        val normalized = analyzed.transformDown {
+          case s @ SubqueryAlias(AliasIdentifier(name, Nil), _) if tempViewMap.contains(name) =>
+            TempView(name, s.output)
         }
-        val p = session.sessionState.optimizer.execute(plan)
-        val (nodeName, outputAttrMap, nodeEntries, edgeEntries) = parsePlanRecursively(p)
+        val optimized = session.sessionState.optimizer.execute(normalized)
+        val (nodeName, outputAttrMap, nodeEntries, edgeEntries) = parsePlanRecursively(optimized)
 
         val (outputAttrs, tempViewEdges) = outputAttrMap.zipWithIndex.map {
           case ((attr, input), i) =>
@@ -79,12 +86,11 @@ object SQLFlow extends PredicateHelper {
              |</table>>];
          """.stripMargin
 
-        tempViewFlowMap(tempView) = (nodeName, outputAttrMap, p)
+        tempViewFlowMap(tempView) = (nodeName, outputAttrMap, optimized)
         (nodeEntries :+ tempViewNodeInfo, edgeEntries ++ tempViewEdges)
       }.unzip
 
-      // scalastyle:off println
-      println(s"""
+      s"""
          |digraph {
          |  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
          |  node [shape=plain]
@@ -93,8 +99,7 @@ object SQLFlow extends PredicateHelper {
          |  ${nodes.flatten.mkString("\n")}
          |  ${edges.flatten.mkString("\n")}
          |}
-       """.stripMargin)
-      // scalastyle:on println
+       """.stripMargin
     }
   }
 
@@ -123,7 +128,7 @@ object SQLFlow extends PredicateHelper {
   private def nodeColor(plan: LogicalPlan): String = plan match {
     case TempView(name, _) if isCached(name) => "lightblue"
     case _: TempView => "lightyellow"
-    case _: LogicalTable => "lightpink"
+    case _: LeafNode => "lightpink"
     case _ => "lightgray"
   }
 
