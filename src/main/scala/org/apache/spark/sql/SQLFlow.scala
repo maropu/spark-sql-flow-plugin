@@ -72,22 +72,30 @@ object SQLFlow extends PredicateHelper {
         val optimized = session.sessionState.optimizer.execute(normalized)
         val (nodeName, outputAttrMap, nodeEntries, edgeEntries) = parsePlanRecursively(optimized)
 
-        val (outputAttrs, tempViewEdges) = outputAttrMap.zipWithIndex.map {
-          case ((attr, input), i) =>
-            (s"""<tr><td port="$i">${attr.name}</td></tr>""", s"""$input -> "$tempView":$i;""")
-        }.unzip
+        if (nodeName != tempView) {
+          val (outputAttrs, tempViewEdges) = outputAttrMap.zipWithIndex.map {
+            case ((attr, input), i) =>
+              (s"""<tr><td port="$i">${attr.name}</td></tr>""", s"""$input -> "$tempView":$i;""")
+          }.unzip
 
-        val tempViewNodeInfo =
-          s"""
-             |"$tempView" [label=<
-             |<table border="1" cellborder="0" cellspacing="0">
-             |  <tr><td bgcolor="${nodeColor(TempView(tempView, null))}"><i>$tempView</i></td></tr>
-             |  ${outputAttrs.mkString("\n")}
-             |</table>>];
-         """.stripMargin
+          // scalastyle:off line.size.limit
+          val tempViewNodeInfo =
+            s"""
+               |"$tempView" [label=<
+               |<table border="1" cellborder="0" cellspacing="0">
+               |  <tr><td bgcolor="${nodeColor(TempView(tempView, null))}"><i>$tempView</i></td></tr>
+               |  ${outputAttrs.mkString("\n")}
+               |</table>>];
+             """.stripMargin
+          // scalastyle:on line.size.limit
 
-        tempViewFlowMap(tempView) = (nodeName, outputAttrMap, optimized)
-        (nodeEntries :+ tempViewNodeInfo, edgeEntries ++ tempViewEdges)
+          tempViewFlowMap(tempView) = (nodeName, outputAttrMap, optimized)
+          (nodeEntries :+ tempViewNodeInfo, edgeEntries ++ tempViewEdges)
+        } else {
+          // If a given plan is `TempView t1, [a#102, b#103]`, `nodeName` should be equal to
+          // `tempView` and we don't need a new node and edges for `TempView`.
+          (nodeEntries, edgeEntries)
+        }
       }.unzip
 
       s"""
