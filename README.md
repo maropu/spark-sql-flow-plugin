@@ -30,6 +30,7 @@ SparkSession available as 'spark'.
 # Defines some views for this example
 scala> sql("CREATE TABLE TestTable (key INT, value INT)")
 scala> sql("CREATE TEMPORARY VIEW TestView1 AS SELECT key, SUM(value) s FROM TestTable GROUP BY key")
+scala> sql("CACHE TABLE TestView1")
 scala> sql("CREATE TEMPORARY VIEW TestView2 AS SELECT t.key, t.value, v.s FROM TestTable t, TestView1 v WHERE t.key = v.key")
 
 # Generates a Graphviz-defined statement to analyze the views
@@ -81,7 +82,7 @@ digraph {
 
   "testview1" [label=<
   <table border="1" cellborder="0" cellspacing="0">
-    <tr><td bgcolor="lightyellow"><i>testview1</i></td></tr>
+    <tr><td bgcolor="lightblue"><i>testview1</i></td></tr>
     <tr><td port="0">key</td></tr>
   <tr><td port="1">s</td></tr>
   </table>>];
