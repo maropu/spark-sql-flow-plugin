@@ -128,13 +128,9 @@ object SQLFlow extends PredicateHelper {
 
   private def isCached(name: String): Boolean = {
     SparkSession.getActiveSession.exists { session =>
-      def hasCacheData(p: LogicalPlan) = {
+      session.sessionState.catalog.getTempView(name).exists { p =>
         val analyzed = session.sessionState.analyzer.execute(p)
         session.sharedState.cacheManager.lookupCachedData(analyzed).isDefined
-      }
-      session.sessionState.catalog.getTempView(name).exists {
-        case v: View => hasCacheData(v.child)
-        case p => hasCacheData(p)
       }
     }
   }
