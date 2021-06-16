@@ -22,6 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger
 import scala.collection.mutable
 
 import org.apache.spark.sql.catalyst.AliasIdentifier
+import org.apache.spark.sql.catalyst.catalog.HiveTableRelation
 import org.apache.spark.sql.catalyst.expressions.{Attribute, AttributeMap, AttributeSet, PredicateHelper}
 import org.apache.spark.sql.catalyst.plans.LeftExistence
 import org.apache.spark.sql.catalyst.plans.logical._
@@ -104,8 +105,8 @@ object SQLFlow extends PredicateHelper {
          |  node [shape=plain]
          |  rankdir=LR;
          |
-         |  ${nodes.flatten.mkString("\n")}
-         |  ${edges.flatten.mkString("\n")}
+         |  ${nodes.flatten.sorted.mkString("\n")}
+         |  ${edges.flatten.sorted.mkString("\n")}
          |}
        """.stripMargin
     }
@@ -119,16 +120,21 @@ object SQLFlow extends PredicateHelper {
        |  node [shape=plain]
        |  rankdir=LR;
        |
-       |  ${nodeEntries.distinct.mkString("\n")}
-       |  ${edgeEntries.distinct.mkString("\n")}
+       |  ${nodeEntries.distinct.sorted.mkString("\n")}
+       |  ${edgeEntries.distinct.sorted.mkString("\n")}
        |}
      """.stripMargin
   }
 
   private def isCached(name: String): Boolean = {
     SparkSession.getActiveSession.exists { session =>
+      def hasCacheData(p: LogicalPlan) = {
+        val analyzed = session.sessionState.analyzer.execute(p)
+        session.sharedState.cacheManager.lookupCachedData(analyzed).isDefined
+      }
       session.sessionState.catalog.getTempView(name).exists {
-        session.sharedState.cacheManager.lookupCachedData(_).isDefined
+        case v: View => hasCacheData(v.child)
+        case p => hasCacheData(p)
       }
     }
   }
@@ -224,6 +230,7 @@ object SQLFlow extends PredicateHelper {
       val nodeName = plan match {
         case TempView(name, _) => name
         case LogicalRelation(_, _, Some(table), false) => table.qualifiedName
+        case HiveTableRelation(table, _, _, _, _) => table.qualifiedName
         case _ => s"${plan.nodeName}_$nodeId"
       }
       val outputAttrWithIndex = plan.output.zipWithIndex
