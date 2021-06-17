@@ -17,9 +17,12 @@
 
 package org.apache.spark.sql
 
+import java.io.{BufferedWriter, OutputStreamWriter}
 import java.util.concurrent.atomic.AtomicInteger
 
 import scala.collection.mutable
+
+import org.apache.hadoop.fs.Path
 
 import org.apache.spark.sql.catalyst.AliasIdentifier
 import org.apache.spark.sql.catalyst.catalog.HiveTableRelation
@@ -29,11 +32,23 @@ import org.apache.spark.sql.catalyst.plans.logical._
 import org.apache.spark.sql.execution.datasources.LogicalRelation
 
 case class SQLFlowHolder[T] private[sql](private val ds: Dataset[T]) {
+  import SQLFlow._
 
-  def displayFlow(): Unit = {
+  def printAsSQLFlow(): Unit = {
     // scalastyle:off println
-    println(SQLFlow.planToSQLFlow(ds.queryExecution.optimizedPlan))
+    println(planToSQLFlow(ds.queryExecution.optimizedPlan))
     // scalastyle:on println
+  }
+
+  def saveAsSQLFlow(path: String): Unit = {
+    val filePath = new Path(path)
+    val fs = filePath.getFileSystem(ds.sparkSession.sessionState.newHadoopConf())
+    val writer = new BufferedWriter(new OutputStreamWriter(fs.create(filePath)))
+    try {
+      writer.write(planToSQLFlow(ds.queryExecution.optimizedPlan))
+    } finally {
+      writer.close()
+    }
   }
 }
 
@@ -49,56 +64,75 @@ object SQLFlow extends PredicateHelper {
     new SQLFlowHolder[T](ds)
   }
 
-  def printCatalogAsSQLFlow(): Unit = {
-    // scalastyle:off println
-    println(catalogToSQLFlow().getOrElse(""))
-    // scalastyle:on println
+  def printAsSQLFlow(): Unit = {
+    SparkSession.getActiveSession.map { session =>
+      // scalastyle:off println
+      println(catalogToSQLFlow(session))
+      // scalastyle:on println
+    }.getOrElse {
+      logWarning(s"Active SparkSession not found")
+    }
   }
 
-  private[sql] def catalogToSQLFlow(): Option[String] = {
+  def saveAsSQLFlow(path: String): Unit = {
     SparkSession.getActiveSession.map { session =>
-      val catalog = session.sessionState.catalog
-      val tempViewMap = catalog.getTempViewNames().map { tempView =>
-        tempView -> catalog.getTempView(tempView).get
-      }.toMap
+      val filePath = new Path(path)
+      val fs = filePath.getFileSystem(session.sessionState.newHadoopConf())
+      val writer = new BufferedWriter(new OutputStreamWriter(fs.create(filePath)))
+      try {
+        writer.write(catalogToSQLFlow(session))
+      } finally {
+        writer.close()
+      }
+    }.getOrElse {
+      logWarning(s"Active SparkSession not found")
+    }
+  }
 
-      val tempViewFlowMap = mutable.Map[String, (String, Seq[(Attribute, String)], LogicalPlan)]()
+  private[sql] def catalogToSQLFlow(session: SparkSession): String = {
+    val catalog = session.sessionState.catalog
+    val tempViewMap = catalog.getTempViewNames().map { tempView =>
+      tempView -> catalog.getTempView(tempView).get
+    }.toMap
 
-      val (nodes, edges) = catalog.getTempViewNames.map { tempView =>
-        val analyzed = session.sessionState.analyzer.execute(tempViewMap(tempView))
-        val normalized = analyzed.transformDown {
-          case s @ SubqueryAlias(AliasIdentifier(name, Nil), _) if tempViewMap.contains(name) =>
-            TempView(name, s.output)
-        }
-        val optimized = session.sessionState.optimizer.execute(normalized)
-        val (nodeName, outputAttrMap, nodeEntries, edgeEntries) = parsePlanRecursively(optimized)
+    val tempViewFlowMap = mutable.Map[String, (String, Seq[(Attribute, String)], LogicalPlan)]()
 
-        if (nodeName != tempView) {
-          val (outputAttrs, tempViewEdges) = outputAttrMap.zipWithIndex.map {
-            case ((attr, input), i) =>
-              (s"""<tr><td port="$i">${attr.name}</td></tr>""", s"""$input -> "$tempView":$i;""")
-          }.unzip
+    val (nodes, edges) = catalog.getTempViewNames.map { tempView =>
+      val analyzed = session.sessionState.analyzer.execute(tempViewMap(tempView))
+      val normalized = analyzed.transformDown {
+        case s @ SubqueryAlias(AliasIdentifier(name, Nil), _) if tempViewMap.contains(name) =>
+          TempView(name, s.output)
+      }
+      val optimized = session.sessionState.optimizer.execute(normalized)
+      val (nodeName, outputAttrMap, nodeEntries, edgeEntries) = parsePlanRecursively(optimized)
 
-          // scalastyle:off line.size.limit
-          val tempViewNodeInfo =
-            s"""
-               |"$tempView" [label=<
-               |<table border="1" cellborder="0" cellspacing="0">
-               |  <tr><td bgcolor="${nodeColor(TempView(tempView, null))}"><i>$tempView</i></td></tr>
-               |  ${outputAttrs.mkString("\n")}
-               |</table>>];
-             """.stripMargin
-          // scalastyle:on line.size.limit
+      if (nodeName != tempView) {
+        val (outputAttrs, tempViewEdges) = outputAttrMap.zipWithIndex.map {
+          case ((attr, input), i) =>
+            (s"""<tr><td port="$i">${attr.name}</td></tr>""", s"""$input -> "$tempView":$i;""")
+        }.unzip
 
-          tempViewFlowMap(tempView) = (nodeName, outputAttrMap, optimized)
-          (nodeEntries :+ tempViewNodeInfo, edgeEntries ++ tempViewEdges)
-        } else {
-          // If a given plan is `TempView t1, [a#102, b#103]`, `nodeName` should be equal to
-          // `tempView` and we don't need a new node and edges for `TempView`.
-          (nodeEntries, edgeEntries)
-        }
-      }.unzip
+        // scalastyle:off line.size.limit
+        val tempViewNodeInfo =
+          s"""
+             |"$tempView" [label=<
+             |<table border="1" cellborder="0" cellspacing="0">
+             |  <tr><td bgcolor="${nodeColor(TempView(tempView, null))}"><i>$tempView</i></td></tr>
+             |  ${outputAttrs.mkString("\n")}
+             |</table>>];
+           """.stripMargin
+        // scalastyle:on line.size.limit
 
+        tempViewFlowMap(tempView) = (nodeName, outputAttrMap, optimized)
+        (nodeEntries :+ tempViewNodeInfo, edgeEntries ++ tempViewEdges)
+      } else {
+        // If a given plan is `TempView t1, [a#102, b#103]`, `nodeName` should be equal to
+        // `tempView` and we don't need a new node and edges for `TempView`.
+        (nodeEntries, edgeEntries)
+      }
+    }.unzip
+
+    if (nodes.nonEmpty) {
       s"""
          |digraph {
          |  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
@@ -109,6 +143,8 @@ object SQLFlow extends PredicateHelper {
          |  ${edges.flatten.sorted.mkString("\n")}
          |}
        """.stripMargin
+    } else {
+      ""
     }
   }
 

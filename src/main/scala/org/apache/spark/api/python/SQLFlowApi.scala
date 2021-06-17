@@ -21,5 +21,6 @@ import org.apache.spark.sql.SQLFlow
 
 object SQLFlowApi {
 
-  def printCatalogAsSQLFlow(): Unit = SQLFlow.printCatalogAsSQLFlow()
+  def printAsSQLFlow(): Unit = SQLFlow.printAsSQLFlow()
+  def saveAsSQLFlow(path: String): Unit = SQLFlow.saveAsSQLFlow(path)
 }

@@ -34,8 +34,9 @@ scala> sql("CACHE TABLE TestView1")
 scala> sql("CREATE TEMPORARY VIEW TestView2 AS SELECT t.key, t.value, v.s FROM TestTable t, TestView1 v WHERE t.key = v.key")
 
 # Generates a Graphviz-defined statement to analyze the views
+# Note that you can use `SQLFlow.saveAsSQLFlow(path)` instead of printing a flow to console
 scala> import org.apache.spark.sql.SQLFlow
-scala> SQLFlow.printCatalogAsSQLFlow()
+scala> SQLFlow.printAsSQLFlow()
 
 digraph {
   graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
@@ -147,5 +148,5 @@ Finally, a diagram generated from the statement is as follows:
 ## Bug reports
 
 If you hit some bugs and requests, please leave some comments on [Issues](https://github.com/maropu/spark-sql-flow-plugin/issues)
-or Twitter([@maropu](http://twitter.com/#!/maropu)).
+or Twitter ([@maropu](http://twitter.com/#!/maropu)).
 
