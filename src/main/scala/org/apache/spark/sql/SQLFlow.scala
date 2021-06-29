@@ -131,7 +131,7 @@ object SQLFlow extends PredicateHelper {
           TempView(name, s.output)
       }
       val optimized = session.sessionState.optimizer.execute(normalized)
-      val (nodeName, outputAttrMap, nodeEntries, edgeEntries) = parsePlanRecursively(optimized)
+      val (nodeName, outputAttrMap, nodeEntries, edgeEntries) = traversePlanRecursively(optimized)
 
       if (nodeName != tempView) {
         val (outputAttrs, tempViewEdges) = outputAttrMap.zipWithIndex.map {
@@ -176,7 +176,7 @@ object SQLFlow extends PredicateHelper {
   }
 
   private[sql] def planToSQLFlow(plan: LogicalPlan): String = {
-    val (_, _, nodeEntries, edgeEntries) = parsePlanRecursively(plan)
+    val (_, _, nodeEntries, edgeEntries) = traversePlanRecursively(plan)
     s"""
        |digraph {
        |  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
@@ -205,7 +205,7 @@ object SQLFlow extends PredicateHelper {
     case _ => "lightgray"
   }
 
-  private def getEdeges(
+  private def collectEdges(
       nodeName: String,
       plan: LogicalPlan,
       inputAttrSeq: Seq[Seq[(Attribute, String)]],
@@ -237,6 +237,13 @@ object SQLFlow extends PredicateHelper {
           }
         }
         edgesForChildren ++ edgeForGenerator.seq.flatten
+
+      case Expand(projections, _, _) =>
+        projections.transpose.zipWithIndex.flatMap { case (projs, i) =>
+          projs.flatMap(e => e.references.flatMap(inputAttrMap.get))
+            .map { input => s"""$input -> "$nodeName":$i;"""}
+            .distinct
+        }
 
       case _: Union =>
         inputAttrSeq.transpose.zipWithIndex.flatMap { case (attrs, i) =>
@@ -282,7 +289,7 @@ object SQLFlow extends PredicateHelper {
     }
   }
 
-  private def parsePlanRecursively(plan: LogicalPlan)
+  private def traversePlanRecursively(plan: LogicalPlan)
     : (String, Seq[(Attribute, String)], Seq[String], Seq[String]) = plan match {
     case _: LeafNode =>
       val nodeId = nextNodeId.getAndIncrement()
@@ -308,20 +315,20 @@ object SQLFlow extends PredicateHelper {
       (nodeName, outputAttrMap, Seq(nodeInfo), Nil)
 
     case _ =>
-      val inputInfos = plan.children.map(parsePlanRecursively)
+      val inputInfos = plan.children.map(traversePlanRecursively)
       val nodeId = nextNodeId.getAndIncrement()
       val nodeName = plan match {
         case j: Join => s"${plan.nodeName}_${j.joinType}_$nodeId"
         case _ => s"${plan.nodeName}_$nodeId"
       }
       if (plan.output.nonEmpty) {
-        val inputInfos = plan.children.map(parsePlanRecursively)
+        val inputInfos = plan.children.map(traversePlanRecursively)
 
         val outputAttrsWithIndex = plan.output.zipWithIndex
         val (outputAttrs, outputAttrMap) = outputAttrsWithIndex.map { case (attr, i) =>
           (s"""<tr><td port="$i">${attr.name}</td></tr>""", attr -> s""""$nodeName":$i""")
         }.unzip
-        val edgeInfo = getEdeges(nodeName, plan, inputInfos.map(_._2), outputAttrsWithIndex)
+        val edgeInfo = collectEdges(nodeName, plan, inputInfos.map(_._2), outputAttrsWithIndex)
         val nodeInfo =
           s"""
              |"$nodeName" [label=<
