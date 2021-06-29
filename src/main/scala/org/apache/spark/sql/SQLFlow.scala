@@ -17,38 +17,34 @@
 
 package org.apache.spark.sql
 
-import java.io.{BufferedWriter, OutputStreamWriter}
+import java.io.File
+import java.util.Locale
 import java.util.concurrent.atomic.AtomicInteger
 
 import scala.collection.mutable
-
-import org.apache.hadoop.fs.Path
+import scala.sys.process.{Process, ProcessLogger}
+import scala.util.Try
 
 import org.apache.spark.sql.catalyst.AliasIdentifier
 import org.apache.spark.sql.catalyst.catalog.HiveTableRelation
 import org.apache.spark.sql.catalyst.expressions.{Attribute, AttributeMap, AttributeSet, PredicateHelper}
 import org.apache.spark.sql.catalyst.plans.LeftExistence
 import org.apache.spark.sql.catalyst.plans.logical._
+import org.apache.spark.sql.catalyst.util._
 import org.apache.spark.sql.execution.datasources.LogicalRelation
 
 case class SQLFlowHolder[T] private[sql](private val ds: Dataset[T]) {
   import SQLFlow._
 
-  def printAsSQLFlow(): Unit = {
+  def debugPrintAsSQLFlow(): Unit = {
     // scalastyle:off println
     println(planToSQLFlow(ds.queryExecution.optimizedPlan))
     // scalastyle:on println
   }
 
-  def saveAsSQLFlow(path: String): Unit = {
-    val filePath = new Path(path)
-    val fs = filePath.getFileSystem(ds.sparkSession.sessionState.newHadoopConf())
-    val writer = new BufferedWriter(new OutputStreamWriter(fs.create(filePath)))
-    try {
-      writer.write(planToSQLFlow(ds.queryExecution.optimizedPlan))
-    } finally {
-      writer.close()
-    }
+  def saveAsSQLFlow(path: String, format: String = "svg"): Unit = {
+    val flowString = planToSQLFlow(ds.queryExecution.optimizedPlan)
+    writeSQLFlow(path, format, flowString)
   }
 }
 
@@ -64,7 +60,44 @@ object SQLFlow extends PredicateHelper {
     new SQLFlowHolder[T](ds)
   }
 
-  def printAsSQLFlow(): Unit = {
+  private def isCommandAvailable(command: String): Boolean = {
+    val attempt = {
+      Try(Process(Seq("sh", "-c", s"command -v $command")).run(ProcessLogger(_ => ())).exitValue())
+    }
+    attempt.isSuccess && attempt.get == 0
+  }
+
+  // If the Graphviz dot command installed, converts the generated dot file
+  // into a specified-formatted image.
+  private def tryGenerateImageFile(format: String, src: String, dst: String): Unit = {
+    if (isCommandAvailable("dot")) {
+      try {
+        val commands = Seq("bash", "-c", s"dot -T$format $src > $dst")
+        BlockingLineStream(commands)
+      } catch {
+        case _ => // Do nothing
+      }
+    }
+  }
+
+  private[sql] val validImageFormatSet = Set("png", "svg")
+
+  private[sql] def writeSQLFlow(path: String, format: String, flowString: String): Unit = {
+    if (!validImageFormatSet.contains(format.toLowerCase(Locale.ROOT))) {
+      throw new AnalysisException(s"Invalid image format: $format")
+    }
+    val outputDir = new File(path)
+    if (!outputDir.mkdir()) {
+      throw new AnalysisException(s"path file:$path already exists")
+    }
+    val filePrefix = "sqlflow"
+    val dotFile = stringToFile(new File(outputDir, s"$filePrefix.dot"), flowString)
+    val srcFile = dotFile.getAbsolutePath
+    val dstFile = new File(outputDir, s"$filePrefix.$format").getAbsolutePath
+    tryGenerateImageFile(format, srcFile, dstFile)
+  }
+
+  def debugPrintAsSQLFlow(): Unit = {
     SparkSession.getActiveSession.map { session =>
       // scalastyle:off println
       println(catalogToSQLFlow(session))
@@ -74,16 +107,10 @@ object SQLFlow extends PredicateHelper {
     }
   }
 
-  def saveAsSQLFlow(path: String): Unit = {
+  def saveAsSQLFlow(path: String, format: String = "svg"): Unit = {
     SparkSession.getActiveSession.map { session =>
-      val filePath = new Path(path)
-      val fs = filePath.getFileSystem(session.sessionState.newHadoopConf())
-      val writer = new BufferedWriter(new OutputStreamWriter(fs.create(filePath)))
-      try {
-        writer.write(catalogToSQLFlow(session))
-      } finally {
-        writer.close()
-      }
+      val flowString = catalogToSQLFlow(session)
+      writeSQLFlow(path, format, flowString)
     }.getOrElse {
       logWarning(s"Active SparkSession not found")
     }

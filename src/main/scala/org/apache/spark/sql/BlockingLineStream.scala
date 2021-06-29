@@ -30,7 +30,7 @@ import scala.sys.process._
  *
  * See scala.sys.process.ProcessBuilderImpl.lineStream
  */
-object BlockingLineStream {
+private[sql] object BlockingLineStream {
 
   // See scala.sys.process.Streamed
   private final class BlockingStreamed[T](
@@ -61,8 +61,13 @@ object BlockingLineStream {
   // See scala.sys.process.ProcessImpl.Spawn
   private object Spawn {
     def apply(f: => Unit): Thread = apply(f, daemon = false)
+
     def apply(f: => Unit, daemon: Boolean): Thread = {
-      val thread = new Thread() { override def run() = { f } }
+      val thread = new Thread() {
+        override def run() = {
+          f
+        }
+      }
       thread.setDaemon(daemon)
       thread.start()
       thread

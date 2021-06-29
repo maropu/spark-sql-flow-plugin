@@ -17,6 +17,9 @@
 
 package org.apache.spark.sql
 
+import java.io.File
+
+import org.apache.spark.TestUtils
 import org.apache.spark.sql.catalyst.util._
 import org.apache.spark.sql.test.{SharedSparkSession, SQLTestUtils}
 
@@ -38,7 +41,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
     import SQLFlow._
     val flowString = getOutputAsString {
       val df = sql("SELECT k, sum(v) FROM VALUES (1, 2), (3, 4) t(k, v) GROUP BY k")
-      df.printAsSQLFlow()
+      df.debugPrintAsSQLFlow()
     }
     checkOutputString(flowString,
       s"""
@@ -76,7 +79,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
          """.stripMargin)
 
       val flowString = getOutputAsString {
-        SQLFlow.printAsSQLFlow()
+        SQLFlow.debugPrintAsSQLFlow()
       }
       checkOutputString(flowString,
         s"""digraph {
@@ -117,12 +120,12 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
   }
 
   test("df.saveAsSQLFlow") {
-    withTempPath { path =>
+    withTempDir { dirPath =>
       import SQLFlow._
       val df = sql("SELECT k, sum(v) FROM VALUES (1, 2), (3, 4) t(k, v) GROUP BY k")
-      df.saveAsSQLFlow(path.getAbsolutePath)
 
-      val flowString = fileToString(path)
+      df.saveAsSQLFlow(s"${dirPath.getAbsolutePath}/d")
+      val flowString = fileToString(new File(s"${dirPath.getAbsolutePath}/d/sqlflow.dot"))
       checkOutputString(flowString,
         s"""
            |digraph {
@@ -154,15 +157,14 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
 
   test("SQLFlow.saveAsSQLFlow") {
     withTempView("t") {
-      withTempPath { path =>
+      withTempDir { dirPath =>
         sql(s"""
              |CREATE OR REPLACE TEMPORARY VIEW t AS
              |  SELECT k, sum(v) FROM VALUES (1, 2), (3, 4) t(k, v) GROUP BY k
            """.stripMargin)
 
-        SQLFlow.saveAsSQLFlow(path.getAbsolutePath)
-
-        val flowString = fileToString(path)
+        SQLFlow.saveAsSQLFlow(s"${dirPath.getAbsolutePath}/d")
+        val flowString = fileToString(new File(s"${dirPath.getAbsolutePath}/d/sqlflow.dot"))
         checkOutputString(flowString,
           s"""digraph {
              |  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
@@ -196,6 +198,65 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
              |  "t":1 -> "Aggregate_x":1;
              |}
            """.stripMargin)
+      }
+    }
+  }
+
+  test("path already exists") {
+    withTempDir { dir =>
+      import SQLFlow._
+      val errMsg1 = intercept[AnalysisException] {
+        spark.range(1).saveAsSQLFlow(dir.getAbsolutePath)
+      }.getMessage
+      assert(errMsg1.contains(" already exists"))
+      val errMsg2 = intercept[AnalysisException] {
+        SQLFlow.saveAsSQLFlow(dir.getAbsolutePath)
+      }.getMessage
+      assert(errMsg2.contains(" already exists"))
+    }
+  }
+
+  test("invalid image format") {
+    withTempDir { dir =>
+      import SQLFlow._
+      val errMsg1 = intercept[AnalysisException] {
+        spark.range(1).saveAsSQLFlow(s"${dir.getAbsolutePath}/d", format = "invalid")
+      }.getMessage
+      assert(errMsg1.contains("Invalid image format: invalid"))
+      val errMsg2 = intercept[AnalysisException] {
+        SQLFlow.saveAsSQLFlow(s"${dir.getAbsolutePath}/d", format = "invalid")
+      }.getMessage
+      assert(errMsg2.contains("Invalid image format: invalid"))
+    }
+  }
+
+  test("image data generation") {
+    assume(TestUtils.testCommandAvailable("dot"))
+    withTempDir { dirPath =>
+      import SQLFlow._
+      val df = sql("SELECT k, sum(v) FROM VALUES (1, 2), (3, 4) t(k, v) GROUP BY k")
+
+      SQLFlow.validImageFormatSet.foreach { format =>
+        val outputPath = s"${dirPath.getAbsolutePath}/$format"
+        df.saveAsSQLFlow(outputPath, format)
+        val imgFile = new File(s"${outputPath}/sqlflow.$format")
+        assert(imgFile.exists())
+      }
+    }
+    withTempView("t") {
+      withTempDir { dirPath =>
+        sql(
+          s"""
+             |CREATE OR REPLACE TEMPORARY VIEW t AS
+             |  SELECT k, sum(v) FROM VALUES (1, 2), (3, 4) t(k, v) GROUP BY k
+           """.stripMargin)
+
+        SQLFlow.validImageFormatSet.foreach { format =>
+          val outputPath = s"${dirPath.getAbsolutePath}/$format"
+          SQLFlow.saveAsSQLFlow(outputPath, format)
+          val imgFile = new File(s"${outputPath}/sqlflow.$format")
+          assert(imgFile.exists())
+        }
       }
     }
   }
