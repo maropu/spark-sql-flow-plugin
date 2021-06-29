@@ -52,7 +52,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
          |
          |  "Aggregate_x" [label=<
          |  <table border="1" cellborder="0" cellspacing="0">
-         |    <tr><td bgcolor="lightgray"><i>Aggregate_x</i></td></tr>
+         |    <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_x</i></td></tr>
          |    <tr><td port="0">k</td></tr>
          |  <tr><td port="1">sum(v)</td></tr>
          |  </table>>];
@@ -60,7 +60,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
          |
          |  "LocalRelation_x" [label=<
          |  <table border="1" cellborder="0" cellspacing="0">
-         |    <tr><td bgcolor="lightpink"><i>LocalRelation_x</i></td></tr>
+         |    <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_x</i></td></tr>
          |    <tr><td port="0">k</td></tr>
          |  <tr><td port="1">v</td></tr>
          |  </table>>];
@@ -89,7 +89,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |
            |  "Aggregate_x" [label=<
            |  <table border="1" cellborder="0" cellspacing="0">
-           |    <tr><td bgcolor="lightgray"><i>Aggregate_x</i></td></tr>
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_x</i></td></tr>
            |    <tr><td port="0">k</td></tr>
            |  <tr><td port="1">sum(v)</td></tr>
            |  </table>>];
@@ -97,7 +97,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |
            |  "t" [label=<
            |  <table border="1" cellborder="0" cellspacing="0">
-           |    <tr><td bgcolor="lightyellow"><i>t</i></td></tr>
+           |    <tr><td bgcolor="lightyellow" port="nodeName"><i>t</i></td></tr>
            |    <tr><td port="0">k</td></tr>
            |  <tr><td port="1">sum(v)</td></tr>
            |  </table>>];
@@ -105,7 +105,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |
            |  "t" [label=<
            |  <table border="1" cellborder="0" cellspacing="0">
-           |    <tr><td bgcolor="lightyellow"><i>t</i></td></tr>
+           |    <tr><td bgcolor="lightyellow" port="nodeName"><i>t</i></td></tr>
            |    <tr><td port="0">k</td></tr>
            |  <tr><td port="1">v</td></tr>
            |  </table>>];
@@ -135,7 +135,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |
            |  "Aggregate_x" [label=<
            |  <table border="1" cellborder="0" cellspacing="0">
-           |    <tr><td bgcolor="lightgray"><i>Aggregate_x</i></td></tr>
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_x</i></td></tr>
            |    <tr><td port="0">k</td></tr>
            |  <tr><td port="1">sum(v)</td></tr>
            |  </table>>];
@@ -143,7 +143,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |
            |  "LocalRelation_x" [label=<
            |  <table border="1" cellborder="0" cellspacing="0">
-           |    <tr><td bgcolor="lightpink"><i>LocalRelation_x</i></td></tr>
+           |    <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_x</i></td></tr>
            |    <tr><td port="0">k</td></tr>
            |  <tr><td port="1">v</td></tr>
            |  </table>>];
@@ -173,21 +173,21 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
              |
              |  "Aggregate_x" [label=<
              |  <table border="1" cellborder="0" cellspacing="0">
-             |    <tr><td bgcolor="lightgray"><i>Aggregate_x</i></td></tr>
+             |    <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_x</i></td></tr>
              |    <tr><td port="0">k</td></tr>
              |  <tr><td port="1">sum(v)</td></tr>
              |  </table>>];
              |
              |  "t" [label=<
              |  <table border="1" cellborder="0" cellspacing="0">
-             |    <tr><td bgcolor="lightyellow"><i>t</i></td></tr>
+             |    <tr><td bgcolor="lightyellow" port="nodeName"><i>t</i></td></tr>
              |    <tr><td port="0">k</td></tr>
              |  <tr><td port="1">sum(v)</td></tr>
              |  </table>>];
              |
              |  "t" [label=<
              |  <table border="1" cellborder="0" cellspacing="0">
-             |    <tr><td bgcolor="lightyellow"><i>t</i></td></tr>
+             |    <tr><td bgcolor="lightyellow" port="nodeName"><i>t</i></td></tr>
              |    <tr><td port="0">k</td></tr>
              |  <tr><td port="1">v</td></tr>
              |  </table>>];

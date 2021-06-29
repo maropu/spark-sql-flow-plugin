@@ -25,9 +25,10 @@ import scala.collection.mutable
 import scala.sys.process.{Process, ProcessLogger}
 import scala.util.Try
 
+import org.apache.spark.internal.Logging
 import org.apache.spark.sql.catalyst.AliasIdentifier
 import org.apache.spark.sql.catalyst.catalog.HiveTableRelation
-import org.apache.spark.sql.catalyst.expressions.{Attribute, AttributeMap, AttributeSet, PredicateHelper}
+import org.apache.spark.sql.catalyst.expressions.{Attribute, AttributeMap, AttributeSet, BinaryComparison, ExprId, PredicateHelper, ScalarSubquery}
 import org.apache.spark.sql.catalyst.plans.LeftExistence
 import org.apache.spark.sql.catalyst.plans.logical._
 import org.apache.spark.sql.catalyst.util._
@@ -52,7 +53,7 @@ case class TempView(name: String, output: Seq[Attribute]) extends LeafNode {
   override lazy val resolved: Boolean = true
 }
 
-object SQLFlow extends PredicateHelper {
+object SQLFlow extends PredicateHelper with Logging {
 
   private val nextNodeId = new AtomicInteger(0)
 
@@ -97,23 +98,195 @@ object SQLFlow extends PredicateHelper {
     tryGenerateImageFile(format, srcFile, dstFile)
   }
 
-  def debugPrintAsSQLFlow(): Unit = {
+  def debugPrintAsSQLFlow(contracted: Boolean = false): Unit = {
     SparkSession.getActiveSession.map { session =>
+      val flowString = if (contracted) {
+        catalogToContractedSQLFlow(session)
+      } else {
+        catalogToSQLFlow(session)
+      }
       // scalastyle:off println
-      println(catalogToSQLFlow(session))
+      println(flowString)
       // scalastyle:on println
     }.getOrElse {
       logWarning(s"Active SparkSession not found")
     }
   }
 
-  def saveAsSQLFlow(path: String, format: String = "svg"): Unit = {
+  def saveAsSQLFlow(path: String, format: String = "svg", contracted: Boolean = false): Unit = {
     SparkSession.getActiveSession.map { session =>
-      val flowString = catalogToSQLFlow(session)
+      val flowString = if (contracted) {
+        catalogToContractedSQLFlow(session)
+      } else {
+        catalogToSQLFlow(session)
+      }
       writeSQLFlow(path, format, flowString)
     }.getOrElse {
       logWarning(s"Active SparkSession not found")
     }
+  }
+
+  private[sql] def catalogToContractedSQLFlow(session: SparkSession): String = {
+    val catalog = session.sessionState.catalog
+    val tempViewMap = catalog.getTempViewNames().map { tempView =>
+      tempView -> catalog.getTempView(tempView).get
+    }.toMap
+
+    val (nodes, edges) = catalog.getTempViewNames.map { tempView =>
+      val analyzed = session.sessionState.analyzer.execute(tempViewMap(tempView))
+      val normalized = analyzed.transformDown {
+        case s @ SubqueryAlias(AliasIdentifier(name, Nil), _) if tempViewMap.contains(name) =>
+          TempView(name, s.output)
+      }
+      val optimized = session.sessionState.optimizer.execute(normalized)
+
+      val refMapBuf = mutable.ArrayBuffer[(Attribute, Seq[Attribute])]()
+      val inputNodes = collectRefsRecursively(optimized, refMapBuf)
+      val refMap = refMapBuf.groupBy(_._1.exprId).map { case (exprId, refs) =>
+        exprId -> refs.flatMap(_._2.map(_.exprId)).distinct
+      }
+
+      if (!optimized.isInstanceOf[TempView]) {
+        val outputAttrs = optimized.output.zipWithIndex.map { case (attr, i) =>
+          s"""<tr><td port="$i">${attr.name}</td></tr>"""
+        }
+
+        val tempViewNodeInfo =
+          s"""
+             |"$tempView" [label=<
+             |<table border="1" cellborder="0" cellspacing="0">
+             |  <tr><td bgcolor="${nodeColor(TempView(tempView, null))}"><i>$tempView</i></td></tr>
+             |  ${outputAttrs.mkString("\n")}
+             |</table>>];
+           """.stripMargin
+
+        def traverseRefs(exprId: ExprId, depth: Int = 0): Seq[ExprId] = {
+          if (depth > 100) {
+            Nil
+          } else {
+            refMap.get(exprId).map { exprIds =>
+              exprIds.flatMap { id =>
+                if (exprId != id) {
+                  traverseRefs(id, depth + 1)
+                } else {
+                  id :: Nil
+                }
+              }
+            }.getOrElse(exprId :: Nil)
+          }
+        }
+
+        val outputAttrMap = optimized.output.map(_.exprId).zipWithIndex.toMap
+        val edgeEntries = inputNodes.flatMap { case (inputNodeId, _, input) =>
+          input.zipWithIndex.flatMap { case (a, i) =>
+            traverseRefs(a.exprId).flatMap { attr =>
+              if (outputAttrMap.contains(attr)) {
+                Some(s""""$inputNodeId":$i -> $tempView:${outputAttrMap(attr)}""")
+              } else {
+                None
+              }
+            }
+          }
+        }
+
+        (inputNodes.map(_._2) :+ tempViewNodeInfo, edgeEntries)
+      } else {
+        // If a given plan is `TempView t1, [a#102, b#103]`, `nodeName` should be equal to
+        // `tempView` and we don't need a new node and edges for `TempView`.
+        (inputNodes.map(_._2), Nil)
+      }
+    }.unzip
+
+    if (nodes.nonEmpty) {
+      s"""
+         |digraph {
+         |  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
+         |  node [shape=plain]
+         |  rankdir=LR;
+         |
+         |  ${nodes.flatten.distinct.sorted.mkString("\n")}
+         |  ${edges.flatten.distinct.sorted.mkString("\n")}
+         |}
+       """.stripMargin
+    } else {
+      ""
+    }
+  }
+
+  private def collectRefsRecursively(
+    plan: LogicalPlan,
+    refMapBuf: mutable.ArrayBuffer[(Attribute, Seq[Attribute])])
+    : Seq[(String, String, Seq[Attribute])] = plan match {
+    case _: LeafNode =>
+      val nodeName = plan match {
+        case TempView(name, _) => name
+        case LogicalRelation(_, _, Some(table), false) => table.qualifiedName
+        case HiveTableRelation(table, _, _, _, _) => table.qualifiedName
+        case _ => s"${plan.nodeName}_${nextNodeId.getAndIncrement()}"
+      }
+      val outputAttrWithIndex = plan.output.zipWithIndex
+      val (outputAttrs, outputAttrMap) = outputAttrWithIndex.map { case (attr, i) =>
+        (s"""<tr><td port="$i">${attr.name}</td></tr>""", attr -> s""""$nodeName":$i""")
+      }.unzip
+      val nodeInfo =
+        s"""
+           |"$nodeName" [label=<
+           |<table border="1" cellborder="0" cellspacing="0">
+           |  <tr><td bgcolor="${nodeColor(plan)}"><i>$nodeName</i></td></tr>
+           |  ${outputAttrs.mkString("\n")}
+           |</table>>];
+       """.stripMargin
+
+      Seq((nodeName, nodeInfo, plan.output))
+
+    case _ =>
+      val refs = plan.children.flatMap(collectRefsRecursively(_, refMapBuf))
+      if (plan.output.nonEmpty) {
+        val newRefs = plan match {
+          case a @ Aggregate(_, aggExprs, _) =>
+            aggExprs.zip(a.output).flatMap { case (ae, outputAttr) =>
+              ae.references.map(_ -> Seq(outputAttr))
+            }
+
+          case p @ Project(projList, _) =>
+            projList.zip(p.output).flatMap { case (ae, outputAttr) =>
+              ae.references.map(_ -> Seq(outputAttr))
+            }
+
+          case Generate(generator, _, _, _, generatorOutput, _) =>
+            generator.references.flatMap { a =>
+              generatorOutput.map { outputAttr => a -> Seq(outputAttr) }
+            }
+
+          case e @ Expand(projections, _, _) =>
+            projections.transpose.zip(e.output).flatMap { case (projs, outputAttr) =>
+              projs.flatMap(_.references).map(_ -> Seq(outputAttr)).distinct
+            }
+
+          case u: Union =>
+            u.children.map(_.output).transpose.zip(u.output).flatMap { case (attrs, outputAttr) =>
+              attrs.filter(_ != outputAttr).map { _ -> Seq(outputAttr) }
+            }
+
+          case Join(_, _, _, Some(condition), _) =>
+            condition.collect { case BinaryComparison(e1, e2) => (e1, e2) }
+                .flatMap { case (e1, e2) =>
+              e1.references.flatMap { a1 =>
+                e2.references.flatMap { a2 =>
+                  Seq(a1 -> Seq(a1, a2), a2 -> Seq(a1, a2))
+                }
+              }
+            }
+
+          case _ =>
+            Nil
+        }
+
+        refMapBuf ++= newRefs
+        refs
+      } else {
+        refs
+      }
   }
 
   private[sql] def catalogToSQLFlow(session: SparkSession): String = {
@@ -121,8 +294,6 @@ object SQLFlow extends PredicateHelper {
     val tempViewMap = catalog.getTempViewNames().map { tempView =>
       tempView -> catalog.getTempView(tempView).get
     }.toMap
-
-    val tempViewFlowMap = mutable.Map[String, (String, Seq[(Attribute, String)], LogicalPlan)]()
 
     val (nodes, edges) = catalog.getTempViewNames.map { tempView =>
       val analyzed = session.sessionState.analyzer.execute(tempViewMap(tempView))
@@ -144,13 +315,12 @@ object SQLFlow extends PredicateHelper {
           s"""
              |"$tempView" [label=<
              |<table border="1" cellborder="0" cellspacing="0">
-             |  <tr><td bgcolor="${nodeColor(TempView(tempView, null))}"><i>$tempView</i></td></tr>
+             |  <tr><td bgcolor="${nodeColor(TempView(tempView, null))}" port="nodeName"><i>$tempView</i></td></tr>
              |  ${outputAttrs.mkString("\n")}
              |</table>>];
            """.stripMargin
         // scalastyle:on line.size.limit
 
-        tempViewFlowMap(tempView) = (nodeName, outputAttrMap, optimized)
         (nodeEntries :+ tempViewNodeInfo, edgeEntries ++ tempViewEdges)
       } else {
         // If a given plan is `TempView t1, [a#102, b#103]`, `nodeName` should be equal to
@@ -292,12 +462,11 @@ object SQLFlow extends PredicateHelper {
   private def traversePlanRecursively(plan: LogicalPlan)
     : (String, Seq[(Attribute, String)], Seq[String], Seq[String]) = plan match {
     case _: LeafNode =>
-      val nodeId = nextNodeId.getAndIncrement()
       val nodeName = plan match {
         case TempView(name, _) => name
         case LogicalRelation(_, _, Some(table), false) => table.qualifiedName
         case HiveTableRelation(table, _, _, _, _) => table.qualifiedName
-        case _ => s"${plan.nodeName}_$nodeId"
+        case _ => s"${plan.nodeName}_${nextNodeId.getAndIncrement()}"
       }
       val outputAttrWithIndex = plan.output.zipWithIndex
       val (outputAttrs, outputAttrMap) = outputAttrWithIndex.map { case (attr, i) =>
@@ -307,7 +476,7 @@ object SQLFlow extends PredicateHelper {
         s"""
            |"$nodeName" [label=<
            |<table border="1" cellborder="0" cellspacing="0">
-           |  <tr><td bgcolor="${nodeColor(plan)}"><i>$nodeName</i></td></tr>
+           |  <tr><td bgcolor="${nodeColor(plan)}" port="nodeName"><i>$nodeName</i></td></tr>
            |  ${outputAttrs.mkString("\n")}
            |</table>>];
        """.stripMargin
@@ -321,9 +490,23 @@ object SQLFlow extends PredicateHelper {
         case j: Join => s"${plan.nodeName}_${j.joinType}_$nodeId"
         case _ => s"${plan.nodeName}_$nodeId"
       }
-      if (plan.output.nonEmpty) {
-        val inputInfos = plan.children.map(traversePlanRecursively)
 
+      val subqueries = plan.expressions.flatMap(_.collect { case ss: ScalarSubquery => ss })
+      val (nodesInSubquries, edgesInSubqueries) = if (subqueries.nonEmpty) {
+        val (n, e) = subqueries.map { ss =>
+          val (_, outputAttrMap, n, e) = traversePlanRecursively(ss.plan)
+          val edges = e ++ outputAttrMap.map { case (_, src) =>
+            s"""$src -> $nodeName:nodeName"""
+          }
+          (n, edges)
+        }.unzip
+
+        (n.flatten, e.flatten)
+      } else {
+        (Nil, Nil)
+      }
+
+      if (plan.output.nonEmpty) {
         val outputAttrsWithIndex = plan.output.zipWithIndex
         val (outputAttrs, outputAttrMap) = outputAttrsWithIndex.map { case (attr, i) =>
           (s"""<tr><td port="$i">${attr.name}</td></tr>""", attr -> s""""$nodeName":$i""")
@@ -333,15 +516,16 @@ object SQLFlow extends PredicateHelper {
           s"""
              |"$nodeName" [label=<
              |<table border="1" cellborder="0" cellspacing="0">
-             |  <tr><td bgcolor="${nodeColor(plan)}"><i>$nodeName</i></td></tr>
+             |  <tr><td bgcolor="${nodeColor(plan)}" port="nodeName"><i>$nodeName</i></td></tr>
              |  ${outputAttrs.mkString("\n")}
              |</table>>];
          """.stripMargin
 
-        (nodeName, outputAttrMap, nodeInfo +: inputInfos.flatMap(_._3),
-          edgeInfo ++ inputInfos.flatMap(_._4))
+        (nodeName, outputAttrMap, (nodeInfo +: inputInfos.flatMap(_._3)) ++ nodesInSubquries,
+          edgeInfo ++ inputInfos.flatMap(_._4) ++ edgesInSubqueries)
       } else {
-        (nodeName, Nil, inputInfos.flatMap(_._3), inputInfos.flatMap(_._4))
+        (nodeName, Nil, inputInfos.flatMap(_._3) ++ nodesInSubquries,
+          inputInfos.flatMap(_._4) ++ edgesInSubqueries)
       }
   }
 }
