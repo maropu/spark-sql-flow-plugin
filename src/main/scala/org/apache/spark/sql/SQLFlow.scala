@@ -338,8 +338,8 @@ object SQLFlow extends PredicateHelper with Logging {
          |  node [shape=plain]
          |  rankdir=LR;
          |
-         |  ${nodes.flatten.sorted.mkString("\n")}
-         |  ${edges.flatten.sorted.mkString("\n")}
+         |  ${nodes.flatten.distinct.sorted.mkString("\n")}
+         |  ${edges.flatten.distinct.sorted.mkString("\n")}
          |}
        """.stripMargin
     } else {
