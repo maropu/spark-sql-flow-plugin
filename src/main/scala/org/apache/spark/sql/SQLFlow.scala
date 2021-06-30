@@ -148,7 +148,7 @@ object SQLFlow extends PredicateHelper with Logging {
 
       if (!optimized.isInstanceOf[TempView]) {
         val outputAttrs = optimized.output.zipWithIndex.map { case (attr, i) =>
-          s"""<tr><td port="$i">${attr.name}</td></tr>"""
+          s"""<tr><td port="$i">${normalizeForHtml(attr.name)}</td></tr>"""
         }
 
         val tempViewNodeInfo =
@@ -226,7 +226,8 @@ object SQLFlow extends PredicateHelper with Logging {
       }
       val outputAttrWithIndex = plan.output.zipWithIndex
       val (outputAttrs, outputAttrMap) = outputAttrWithIndex.map { case (attr, i) =>
-        (s"""<tr><td port="$i">${attr.name}</td></tr>""", attr -> s""""$nodeName":$i""")
+        (s"""<tr><td port="$i">${normalizeForHtml(attr.name)}</td></tr>""",
+          attr -> s""""$nodeName":$i""")
       }.unzip
       val nodeInfo =
         s"""
@@ -307,7 +308,8 @@ object SQLFlow extends PredicateHelper with Logging {
       if (nodeName != tempView) {
         val (outputAttrs, tempViewEdges) = outputAttrMap.zipWithIndex.map {
           case ((attr, input), i) =>
-            (s"""<tr><td port="$i">${attr.name}</td></tr>""", s"""$input -> "$tempView":$i;""")
+            (s"""<tr><td port="$i">${normalizeForHtml(attr.name)}</td></tr>""",
+              s"""$input -> "$tempView":$i;""")
         }.unzip
 
         // scalastyle:off line.size.limit
@@ -366,6 +368,12 @@ object SQLFlow extends PredicateHelper with Logging {
         session.sharedState.cacheManager.lookupCachedData(analyzed).isDefined
       }
     }
+  }
+
+  private def normalizeForHtml(str: String) = {
+    str.replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
   }
 
   private def nodeColor(plan: LogicalPlan): String = plan match {
@@ -470,8 +478,10 @@ object SQLFlow extends PredicateHelper with Logging {
       }
       val outputAttrWithIndex = plan.output.zipWithIndex
       val (outputAttrs, outputAttrMap) = outputAttrWithIndex.map { case (attr, i) =>
-        (s"""<tr><td port="$i">${attr.name}</td></tr>""", attr -> s""""$nodeName":$i""")
+        (s"""<tr><td port="$i">${normalizeForHtml(attr.name)}</td></tr>""",
+          attr -> s""""$nodeName":$i""")
       }.unzip
+      // scalastyle:off line.size.limit
       val nodeInfo =
         s"""
            |"$nodeName" [label=<
@@ -480,6 +490,7 @@ object SQLFlow extends PredicateHelper with Logging {
            |  ${outputAttrs.mkString("\n")}
            |</table>>];
        """.stripMargin
+      // scalastyle:on line.size.limit
 
       (nodeName, outputAttrMap, Seq(nodeInfo), Nil)
 
@@ -496,7 +507,7 @@ object SQLFlow extends PredicateHelper with Logging {
         val (n, e) = subqueries.map { ss =>
           val (_, outputAttrMap, n, e) = traversePlanRecursively(ss.plan)
           val edges = e ++ outputAttrMap.map { case (_, src) =>
-            s"""$src -> $nodeName:nodeName"""
+            s"""$src -> "$nodeName":nodeName"""
           }
           (n, edges)
         }.unzip
@@ -509,9 +520,11 @@ object SQLFlow extends PredicateHelper with Logging {
       if (plan.output.nonEmpty) {
         val outputAttrsWithIndex = plan.output.zipWithIndex
         val (outputAttrs, outputAttrMap) = outputAttrsWithIndex.map { case (attr, i) =>
-          (s"""<tr><td port="$i">${attr.name}</td></tr>""", attr -> s""""$nodeName":$i""")
+          (s"""<tr><td port="$i">${normalizeForHtml(attr.name)}</td></tr>""",
+            attr -> s""""$nodeName":$i""")
         }.unzip
         val edgeInfo = collectEdges(nodeName, plan, inputInfos.map(_._2), outputAttrsWithIndex)
+        // scalastyle:off line.size.limit
         val nodeInfo =
           s"""
              |"$nodeName" [label=<
@@ -520,6 +533,7 @@ object SQLFlow extends PredicateHelper with Logging {
              |  ${outputAttrs.mkString("\n")}
              |</table>>];
          """.stripMargin
+        // scalastyle:on line.size.limit
 
         (nodeName, outputAttrMap, (nodeInfo +: inputInfos.flatMap(_._3)) ++ nodesInSubquries,
           edgeInfo ++ inputInfos.flatMap(_._4) ++ edgesInSubqueries)
