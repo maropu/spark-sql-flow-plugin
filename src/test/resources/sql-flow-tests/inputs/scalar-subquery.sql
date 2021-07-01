@@ -90,26 +90,26 @@ CREATE OR REPLACE TEMPORARY VIEW v4 AS
   WHERE  t1a = 'val1d';
 
 -- TC 01.05
--- CREATE OR REPLACE TEMPORARY VIEW v5 AS
---   SELECT q1.t1a, q2.t2a, q1.min_t3d, q2.avg_t3d
---   FROM   (SELECT t1a, (SELECT min(t3d) FROM t3) min_t3d
---           FROM   t1
---           WHERE  t1a IN ('val1e', 'val1c')) q1
---              FULL OUTER JOIN
---          (SELECT t2a, (SELECT avg(t3d) FROM t3) avg_t3d
---           FROM   t2
---           WHERE  t2a IN ('val1c', 'val2a')) q2
---          ON     q1.t1a = q2.t2a
---              AND    q1.min_t3d < q2.avg_t3d;
+CREATE OR REPLACE TEMPORARY VIEW v5 AS
+  SELECT q1.t1a, q2.t2a, q1.min_t3d, q2.avg_t3d
+  FROM   (SELECT t1a, (SELECT min(t3d) FROM t3) min_t3d
+          FROM   t1
+          WHERE  t1a IN ('val1e', 'val1c')) q1
+             FULL OUTER JOIN
+         (SELECT t2a, (SELECT avg(t3d) FROM t3) avg_t3d
+          FROM   t2
+          WHERE  t2a IN ('val1c', 'val2a')) q2
+         ON     q1.t1a = q2.t2a
+             AND    q1.min_t3d < q2.avg_t3d;
 
 -- Group 2: scalar subquery in SELECT clause
 --          with correlation
 -- TC 02.01
--- CREATE OR REPLACE TEMPORARY VIEW v6 AS
---   SELECT (SELECT min(t3d) FROM t3 WHERE t3.t3a = t1.t1a) min_t3d,
---          (SELECT max(t2h) FROM t2 WHERE t2.t2a = t1.t1a) max_t2h
---   FROM   t1
---   WHERE  t1a = 'val1b';
+CREATE OR REPLACE TEMPORARY VIEW v6 AS
+  SELECT (SELECT min(t3d) FROM t3 WHERE t3.t3a = t1.t1a) min_t3d,
+         (SELECT max(t2h) FROM t2 WHERE t2.t2a = t1.t1a) max_t2h
+  FROM   t1
+  WHERE  t1a = 'val1b';
 
 -- TC 02.02
 CREATE OR REPLACE TEMPORARY VIEW v7 AS
@@ -122,27 +122,27 @@ CREATE OR REPLACE TEMPORARY VIEW v7 AS
   WHERE  t1a = 'val1b';
 
 -- TC 02.03
--- CREATE OR REPLACE TEMPORARY VIEW v8 AS
---   SELECT t1a, t1b
---   FROM   t1
---   WHERE  NOT EXISTS (SELECT (SELECT max(t2b)
---                              FROM   t2 LEFT JOIN t1
---                                                  ON     t2a = t1a
---                              WHERE  t2c = t3c) dummy
---                      FROM   t3
---                      WHERE  t3b < (SELECT max(t2b)
---                                    FROM   t2 LEFT JOIN t1
---                                                        ON     t2a = t1a
---                                    WHERE  t2c = t3c)
---                        AND    t3a = t1a);
+CREATE OR REPLACE TEMPORARY VIEW v8 AS
+  SELECT t1a, t1b
+  FROM   t1
+  WHERE  NOT EXISTS (SELECT (SELECT max(t2b)
+                             FROM   t2 LEFT JOIN t1
+                                                 ON     t2a = t1a
+                             WHERE  t2c = t3c) dummy
+                     FROM   t3
+                     WHERE  t3b < (SELECT max(t2b)
+                                   FROM   t2 LEFT JOIN t1
+                                                       ON     t2a = t1a
+                                   WHERE  t2c = t3c)
+                       AND    t3a = t1a);
 
 -- SPARK-34876: Non-nullable aggregates should not return NULL in a correlated subquery
--- CREATE OR REPLACE TEMPORARY VIEW v9 AS
---   SELECT t1a,
---          (SELECT count(t2d) FROM t2 WHERE t2a = t1a) count_t2,
---          (SELECT count_if(t2d > 0) FROM t2 WHERE t2a = t1a) count_if_t2,
---          (SELECT approx_count_distinct(t2d) FROM t2 WHERE t2a = t1a) approx_count_distinct_t2,
---          (SELECT collect_list(t2d) FROM t2 WHERE t2a = t1a) collect_list_t2,
---          (SELECT sort_array(collect_set(t2d)) FROM t2 WHERE t2a = t1a) collect_set_t2_1,
---          (SELECT hex(count_min_sketch(t2d, 0.5d, 0.5d, 1)) FROM t2 WHERE t2a = t1a) collect_set_t2_2
---   FROM t1;
+CREATE OR REPLACE TEMPORARY VIEW v9 AS
+  SELECT t1a,
+         (SELECT count(t2d) FROM t2 WHERE t2a = t1a) count_t2,
+         (SELECT count_if(t2d > 0) FROM t2 WHERE t2a = t1a) count_if_t2,
+         (SELECT approx_count_distinct(t2d) FROM t2 WHERE t2a = t1a) approx_count_distinct_t2,
+         (SELECT collect_list(t2d) FROM t2 WHERE t2a = t1a) collect_list_t2,
+         (SELECT sort_array(collect_set(t2d)) FROM t2 WHERE t2a = t1a) collect_set_t2_1,
+         (SELECT hex(count_min_sketch(t2d, 0.5d, 0.5d, 1)) FROM t2 WHERE t2a = t1a) collect_set_t2_2
+  FROM t1;

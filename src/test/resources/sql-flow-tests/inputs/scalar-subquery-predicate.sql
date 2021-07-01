@@ -4,24 +4,24 @@ CREATE OR REPLACE TEMPORARY VIEW p AS VALUES (1, 1) AS T(pk, pv);
 CREATE OR REPLACE TEMPORARY VIEW c AS VALUES (1, 1) AS T(ck, cv);
 
 -- SPARK-18814.1: Simplified version of TPCDS-Q32
--- CREATE OR REPLACE TEMPORARY VIEW v1 AS
---   SELECT pk, cv
---   FROM   p, c
---   WHERE  p.pk = c.ck
---     AND    c.cv = (SELECT avg(c1.cv)
---                    FROM   c c1
---                    WHERE  c1.ck = p.pk);
+CREATE OR REPLACE TEMPORARY VIEW v1 AS
+  SELECT pk, cv
+  FROM   p, c
+  WHERE  p.pk = c.ck
+    AND    c.cv = (SELECT avg(c1.cv)
+                   FROM   c c1
+                   WHERE  c1.ck = p.pk);
 
 -- SPARK-18814.2: Adding stack of aggregates
--- CREATE OR REPLACE TEMPORARY VIEW v2 AS
---   SELECT pk, cv
---   FROM   p, c
---   WHERE  p.pk = c.ck
---     AND    c.cv = (SELECT max(avg)
---                    FROM   (SELECT   c1.cv, avg(c1.cv) avg
---                            FROM     c c1
---                            WHERE    c1.ck = p.pk
---                            GROUP BY c1.cv));
+CREATE OR REPLACE TEMPORARY VIEW v2 AS
+  SELECT pk, cv
+  FROM   p, c
+  WHERE  p.pk = c.ck
+    AND    c.cv = (SELECT max(avg)
+                   FROM   (SELECT   c1.cv, avg(c1.cv) avg
+                           FROM     c c1
+                           WHERE    c1.ck = p.pk
+                           GROUP BY c1.cv));
 
 create temporary view t1 as select * from values
   ('val1a', 6S, 8, 10L, float(15.0), 20D, 20E2BD, timestamp '2014-04-04 00:00:00.000', date '2014-04-04'),
@@ -211,34 +211,34 @@ CREATE OR REPLACE TEMPORARY VIEW v16 AS
                 GROUP BY t2c);
 
 -- TC 02.05
--- CREATE OR REPLACE TEMPORARY VIEW v17 AS
---   SELECT t1a
---   FROM   t1
---   WHERE  t1b <= (SELECT   max(t2b)
---                  FROM     t2
---                  WHERE    t2c = t1c
---                  GROUP BY t2c)
---     AND    t1b >= (SELECT   min(t2b)
---                    FROM     t2
---                    WHERE    t2c = t1c
---                    GROUP BY t2c);
+CREATE OR REPLACE TEMPORARY VIEW v17 AS
+  SELECT t1a
+  FROM   t1
+  WHERE  t1b <= (SELECT   max(t2b)
+                 FROM     t2
+                 WHERE    t2c = t1c
+                 GROUP BY t2c)
+    AND    t1b >= (SELECT   min(t2b)
+                   FROM     t2
+                   WHERE    t2c = t1c
+                   GROUP BY t2c);
 
 -- TC 02.06
 -- set op
--- CREATE OR REPLACE TEMPORARY VIEW v18 AS
---   SELECT t1a
---   FROM   t1
---   WHERE  t1a <= (SELECT   max(t2a)
---                  FROM     t2
---                  WHERE    t2c = t1c
---                  GROUP BY t2c)
---   INTERSECT
---   SELECT t1a
---   FROM   t1
---   WHERE  t1a >= (SELECT   min(t2a)
---                  FROM     t2
---                  WHERE    t2c = t1c
---                  GROUP BY t2c);
+CREATE OR REPLACE TEMPORARY VIEW v18 AS
+  SELECT t1a
+  FROM   t1
+  WHERE  t1a <= (SELECT   max(t2a)
+                 FROM     t2
+                 WHERE    t2c = t1c
+                 GROUP BY t2c)
+  INTERSECT
+  SELECT t1a
+  FROM   t1
+  WHERE  t1a >= (SELECT   min(t2a)
+                 FROM     t2
+                 WHERE    t2c = t1c
+                 GROUP BY t2c);
 
 -- TC 02.07.01
 -- set op
@@ -276,20 +276,20 @@ CREATE OR REPLACE TEMPORARY VIEW v21 AS
 
 -- TC 02.08
 -- set op
--- CREATE OR REPLACE TEMPORARY VIEW v22 AS
---   SELECT t1a
---   FROM   t1
---   WHERE  t1a <= (SELECT   max(t2a)
---                  FROM     t2
---                  WHERE    t2c = t1c
---                  GROUP BY t2c)
---       MINUS
---   SELECT t1a
---   FROM   t1
---   WHERE  t1a >= (SELECT   min(t2a)
---                  FROM     t2
---                  WHERE    t2c = t1c
---                  GROUP BY t2c);
+CREATE OR REPLACE TEMPORARY VIEW v22 AS
+  SELECT t1a
+  FROM   t1
+  WHERE  t1a <= (SELECT   max(t2a)
+                 FROM     t2
+                 WHERE    t2c = t1c
+                 GROUP BY t2c)
+      MINUS
+  SELECT t1a
+  FROM   t1
+  WHERE  t1a >= (SELECT   min(t2a)
+                 FROM     t2
+                 WHERE    t2c = t1c
+                 GROUP BY t2c);
 
 -- TC 02.09
 -- in HAVING clause

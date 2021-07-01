@@ -80,172 +80,172 @@ CREATE OR REPLACE TEMPORARY VIEW v3 AS
             t1b;
 
 -- TC 01.04
--- CREATE OR REPLACE TEMPORARY VIEW v4 AS
---   SELECT t1a,
---          Sum(DISTINCT( t1b ))
---   FROM   t1
---   WHERE  t1c IN (SELECT t2c
---                  FROM   t2
---                  WHERE  t1a = t2a)
---      OR t1c IN (SELECT t3c
---                 FROM   t3
---                 WHERE  t1a = t3a)
---   GROUP  BY t1a,
---             t1c;
+CREATE OR REPLACE TEMPORARY VIEW v4 AS
+  SELECT t1a,
+         Sum(DISTINCT( t1b ))
+  FROM   t1
+  WHERE  t1c IN (SELECT t2c
+                 FROM   t2
+                 WHERE  t1a = t2a)
+     OR t1c IN (SELECT t3c
+                FROM   t3
+                WHERE  t1a = t3a)
+  GROUP  BY t1a,
+            t1c;
 
 -- TC 01.05
--- CREATE OR REPLACE TEMPORARY VIEW v5 AS
---   SELECT t1a,
---          Sum(DISTINCT( t1b ))
---   FROM   t1
---   WHERE  t1c IN (SELECT t2c
---                  FROM   t2
---                  WHERE  t1a = t2a)
---     AND t1c IN (SELECT t3c
---                 FROM   t3
---                 WHERE  t1a = t3a)
---   GROUP  BY t1a,
---             t1c;
+CREATE OR REPLACE TEMPORARY VIEW v5 AS
+  SELECT t1a,
+         Sum(DISTINCT( t1b ))
+  FROM   t1
+  WHERE  t1c IN (SELECT t2c
+                 FROM   t2
+                 WHERE  t1a = t2a)
+    AND t1c IN (SELECT t3c
+                FROM   t3
+                WHERE  t1a = t3a)
+  GROUP  BY t1a,
+            t1c;
 
 -- TC 01.06
--- CREATE OR REPLACE TEMPORARY VIEW v6 AS
---   SELECT t1a,
---          Count(DISTINCT( t1b ))
---   FROM   t1
---   WHERE  t1c IN (SELECT t2c
---                  FROM   t2
---                  WHERE  t1a = t2a)
---   GROUP  BY t1a,
---             t1c
---   HAVING t1a = "t1b";
+CREATE OR REPLACE TEMPORARY VIEW v6 AS
+  SELECT t1a,
+         Count(DISTINCT( t1b ))
+  FROM   t1
+  WHERE  t1c IN (SELECT t2c
+                 FROM   t2
+                 WHERE  t1a = t2a)
+  GROUP  BY t1a,
+            t1c
+  HAVING t1a = "t1b";
 
 -- GROUP BY in subquery
 -- TC 01.07
--- CREATE OR REPLACE TEMPORARY VIEW v6 AS
---   SELECT *
---   FROM   t1
---   WHERE  t1b IN (SELECT Max(t2b)
---                  FROM   t2
---                  GROUP  BY t2a);
+CREATE OR REPLACE TEMPORARY VIEW v6 AS
+  SELECT *
+  FROM   t1
+  WHERE  t1b IN (SELECT Max(t2b)
+                 FROM   t2
+                 GROUP  BY t2a);
 
 -- TC 01.08
--- CREATE OR REPLACE TEMPORARY VIEW v7 AS
---   SELECT *
---   FROM   (SELECT t2a,
---                  t2b
---           FROM   t2
---           WHERE  t2a IN (SELECT t1a
---                          FROM   t1
---                          WHERE  t1b = t2b)
---           GROUP  BY t2a,
---                     t2b) t2;
+CREATE OR REPLACE TEMPORARY VIEW v7 AS
+  SELECT *
+  FROM   (SELECT t2a,
+                 t2b
+          FROM   t2
+          WHERE  t2a IN (SELECT t1a
+                         FROM   t1
+                         WHERE  t1b = t2b)
+          GROUP  BY t2a,
+                    t2b) t2;
 
 -- TC 01.09
--- CREATE OR REPLACE TEMPORARY VIEW v8 AS
---   SELECT Count(DISTINCT( * ))
---   FROM   t1
---   WHERE  t1b IN (SELECT Min(t2b)
---                  FROM   t2
---                  WHERE  t1a = t2a
---                    AND t1c = t2c
---                  GROUP  BY t2a);
+CREATE OR REPLACE TEMPORARY VIEW v8 AS
+  SELECT Count(DISTINCT( * ))
+  FROM   t1
+  WHERE  t1b IN (SELECT Min(t2b)
+                 FROM   t2
+                 WHERE  t1a = t2a
+                   AND t1c = t2c
+                 GROUP  BY t2a);
 
 -- TC 01.10
--- CREATE OR REPLACE TEMPORARY VIEW v9 AS
---   SELECT t1a,
---          t1b
---   FROM   t1
---   WHERE  t1c IN (SELECT Max(t2c)
---                  FROM   t2
---                  WHERE  t1a = t2a
---                  GROUP  BY t2a,
---                            t2c
---                  HAVING t2c > 8);
+CREATE OR REPLACE TEMPORARY VIEW v9 AS
+  SELECT t1a,
+         t1b
+  FROM   t1
+  WHERE  t1c IN (SELECT Max(t2c)
+                 FROM   t2
+                 WHERE  t1a = t2a
+                 GROUP  BY t2a,
+                           t2c
+                 HAVING t2c > 8);
 
 -- TC 01.11
--- CREATE OR REPLACE TEMPORARY VIEW v10 AS
---   SELECT t1a,
---          t1b
---   FROM   t1
---   WHERE  t1c IN (SELECT t2c
---                  FROM   t2
---                  WHERE  t2a IN (SELECT Min(t3a)
---                                 FROM   t3
---                                 WHERE  t3a = t2a
---                                 GROUP  BY t3b)
---                  GROUP  BY t2c);
+CREATE OR REPLACE TEMPORARY VIEW v10 AS
+  SELECT t1a,
+         t1b
+  FROM   t1
+  WHERE  t1c IN (SELECT t2c
+                 FROM   t2
+                 WHERE  t2a IN (SELECT Min(t3a)
+                                FROM   t3
+                                WHERE  t3a = t2a
+                                GROUP  BY t3b)
+                 GROUP  BY t2c);
 
 -- GROUP BY in both
 -- TC 01.12
--- CREATE OR REPLACE TEMPORARY VIEW v11 AS
---   SELECT t1a,
---          Min(t1b)
---   FROM   t1
---   WHERE  t1c IN (SELECT Min(t2c)
---                  FROM   t2
---                  WHERE  t2b = t1b
---                  GROUP  BY t2a)
---   GROUP  BY t1a;
+CREATE OR REPLACE TEMPORARY VIEW v11 AS
+  SELECT t1a,
+         Min(t1b)
+  FROM   t1
+  WHERE  t1c IN (SELECT Min(t2c)
+                 FROM   t2
+                 WHERE  t2b = t1b
+                 GROUP  BY t2a)
+  GROUP  BY t1a;
 
 -- TC 01.13
--- CREATE OR REPLACE TEMPORARY VIEW v12 AS
---   SELECT t1a,
---          Min(t1b)
---   FROM   t1
---   WHERE  t1c IN (SELECT Min(t2c)
---                  FROM   t2
---                  WHERE  t2b IN (SELECT Min(t3b)
---                                 FROM   t3
---                                 WHERE  t2a = t3a
---                                 GROUP  BY t3a)
---                  GROUP  BY t2c)
---   GROUP  BY t1a,
---             t1d;
+CREATE OR REPLACE TEMPORARY VIEW v12 AS
+  SELECT t1a,
+         Min(t1b)
+  FROM   t1
+  WHERE  t1c IN (SELECT Min(t2c)
+                 FROM   t2
+                 WHERE  t2b IN (SELECT Min(t3b)
+                                FROM   t3
+                                WHERE  t2a = t3a
+                                GROUP  BY t3a)
+                 GROUP  BY t2c)
+  GROUP  BY t1a,
+            t1d;
 
 -- TC 01.14
--- CREATE OR REPLACE TEMPORARY VIEW v13 AS
---   SELECT t1a,
---          Min(t1b)
---   FROM   t1
---   WHERE  t1c IN (SELECT Min(t2c)
---                  FROM   t2
---                  WHERE  t2b = t1b
---                  GROUP  BY t2a)
---     AND t1d IN (SELECT t3d
---                 FROM   t3
---                 WHERE  t1c = t3c
---                 GROUP  BY t3d)
---   GROUP  BY t1a;
+CREATE OR REPLACE TEMPORARY VIEW v13 AS
+  SELECT t1a,
+         Min(t1b)
+  FROM   t1
+  WHERE  t1c IN (SELECT Min(t2c)
+                 FROM   t2
+                 WHERE  t2b = t1b
+                 GROUP  BY t2a)
+    AND t1d IN (SELECT t3d
+                FROM   t3
+                WHERE  t1c = t3c
+                GROUP  BY t3d)
+  GROUP  BY t1a;
 
 -- TC 01.15
--- CREATE OR REPLACE TEMPORARY VIEW v14 AS
---   SELECT t1a,
---          Min(t1b)
---   FROM   t1
---   WHERE  t1c IN (SELECT Min(t2c)
---                  FROM   t2
---                  WHERE  t2b = t1b
---                  GROUP  BY t2a)
---      OR t1d IN (SELECT t3d
---                 FROM   t3
---                 WHERE  t1c = t3c
---                 GROUP  BY t3d)
---   GROUP  BY t1a;
+CREATE OR REPLACE TEMPORARY VIEW v14 AS
+  SELECT t1a,
+         Min(t1b)
+  FROM   t1
+  WHERE  t1c IN (SELECT Min(t2c)
+                 FROM   t2
+                 WHERE  t2b = t1b
+                 GROUP  BY t2a)
+     OR t1d IN (SELECT t3d
+                FROM   t3
+                WHERE  t1c = t3c
+                GROUP  BY t3d)
+  GROUP  BY t1a;
 
 -- TC 01.16
--- CREATE OR REPLACE TEMPORARY VIEW v15 AS
---   SELECT t1a,
---          Min(t1b)
---   FROM   t1
---   WHERE  t1c IN (SELECT Min(t2c)
---                  FROM   t2
---                  WHERE  t2b = t1b
---                  GROUP  BY t2a
---                  HAVING t2a > t1a)
---      OR t1d IN (SELECT t3d
---                 FROM   t3
---                 WHERE  t1c = t3c
---                 GROUP  BY t3d
---                 HAVING t3d = t1d)
---   GROUP  BY t1a
---   HAVING Min(t1b) IS NOT NULL;
+CREATE OR REPLACE TEMPORARY VIEW v15 AS
+  SELECT t1a,
+         Min(t1b)
+  FROM   t1
+  WHERE  t1c IN (SELECT Min(t2c)
+                 FROM   t2
+                 WHERE  t2b = t1b
+                 GROUP  BY t2a
+                 HAVING t2a > t1a)
+     OR t1d IN (SELECT t3d
+                FROM   t3
+                WHERE  t1c = t3c
+                GROUP  BY t3d
+                HAVING t3d = t1d)
+  GROUP  BY t1a
+  HAVING Min(t1b) IS NOT NULL;

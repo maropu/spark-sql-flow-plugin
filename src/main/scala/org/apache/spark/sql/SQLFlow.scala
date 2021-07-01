@@ -29,7 +29,7 @@ import org.apache.spark.internal.Logging
 import org.apache.spark.sql.catalyst.AliasIdentifier
 import org.apache.spark.sql.catalyst.catalog.HiveTableRelation
 import org.apache.spark.sql.catalyst.expressions._
-import org.apache.spark.sql.catalyst.plans.LeftExistence
+import org.apache.spark.sql.catalyst.plans.{ExistenceJoin, LeftExistence}
 import org.apache.spark.sql.catalyst.plans.logical._
 import org.apache.spark.sql.catalyst.util._
 import org.apache.spark.sql.execution.datasources.LogicalRelation
@@ -327,6 +327,9 @@ object SQLFlow extends PredicateHelper with Logging {
             aggregateExprs.flatMap { ne =>
               if (ne.references.nonEmpty) Some(ne.toAttribute) else None
             }
+
+          case Join(left, _, _: ExistenceJoin, _, _) =>
+            left.output
 
           case _ =>
             plan.output
