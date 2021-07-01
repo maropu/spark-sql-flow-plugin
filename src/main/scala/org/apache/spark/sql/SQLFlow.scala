@@ -244,22 +244,26 @@ object SQLFlow extends PredicateHelper with Logging {
       plan: LogicalPlan,
       refMap: mutable.HashMap[ExprId, mutable.Set[ExprId]]): Unit = {
 
-    object JoinCondition {
-      def unapply(cond: Option[Expression]): Option[Seq[(Expression, Expression)]] = {
-        cond match {
-          case Some(c) =>
-            val comps = c.collect { case BinaryComparison(e1, e2) => (e1, e2) }
-            if (comps.nonEmpty) {
-              Some(comps)
-            } else {
-              None
+    object JoinWithCondition {
+      def unapply(plan: LogicalPlan): Option[Seq[(Seq[Attribute], Seq[Attribute])]] = plan match {
+        case Join(left, _, _, Some(cond), _) =>
+          val comps = cond.collect { case BinaryComparison(e1, e2) =>
+            val (leftRefs, rightRefs) = {
+              (e1.references ++ e2.references).partition(left.outputSet.contains)
             }
-          case _ =>
+            (leftRefs.toSeq, rightRefs.toSeq)
+          }.filter { case (l, r) =>
+            l.nonEmpty && r.nonEmpty
+          }
+          if (comps.nonEmpty) {
+            Some(comps)
+          } else {
             None
-        }
+          }
+        case _ =>
+          None
       }
     }
-
     plan match {
       case _: LeafNode =>
       case _ =>
@@ -295,9 +299,9 @@ object SQLFlow extends PredicateHelper with Logging {
                 attrs.foreach(addRefsToMap(_, Seq(outputAttr)))
               }
 
-            case Join(_, _, _, JoinCondition(preds), _) =>
-              preds.foreach { case (e1, e2) =>
-                e1.references.foreach { a1 => e2.references.foreach { a2 =>
+            case JoinWithCondition(preds) =>
+              preds.foreach { case (leftRefs, rightRefs) =>
+                leftRefs.foreach { a1 => rightRefs.foreach { a2 =>
                   addRefsToMap(a1, Seq(a1, a2))
                   addRefsToMap(a2, Seq(a1, a2))
                 }}
