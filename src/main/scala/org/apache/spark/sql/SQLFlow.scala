@@ -34,160 +34,16 @@ import org.apache.spark.sql.catalyst.plans.logical._
 import org.apache.spark.sql.catalyst.util._
 import org.apache.spark.sql.execution.datasources.LogicalRelation
 
-case class SQLFlowHolder[T] private[sql](private val ds: Dataset[T]) {
-  import SQLFlow._
-
-  def debugPrintAsSQLFlow(): Unit = {
-    // scalastyle:off println
-    println(planToSQLFlow(ds.queryExecution.optimizedPlan))
-    // scalastyle:on println
-  }
-
-  def saveAsSQLFlow(path: String, format: String = "svg"): Unit = {
-    val flowString = planToSQLFlow(ds.queryExecution.optimizedPlan)
-    writeSQLFlow(path, format, flowString)
-  }
-}
-
-case class TempView(name: String, output: Seq[Attribute]) extends LeafNode {
-  override lazy val resolved: Boolean = true
-}
-
-object SQLFlow extends PredicateHelper with Logging {
+abstract class BaseSQLFlow extends PredicateHelper with Logging {
 
   private val nextNodeId = new AtomicInteger(0)
 
-  implicit def DatasetToSQLFlowHolder[T](ds: Dataset[T]): SQLFlowHolder[T] = {
-    new SQLFlowHolder[T](ds)
-  }
+  def collectEdgesRecursively(
+    tempView: String,
+    plan: LogicalPlan,
+    nodeMap: mutable.Map[String, String]): Seq[String]
 
-  private def isCommandAvailable(command: String): Boolean = {
-    val attempt = {
-      Try(Process(Seq("sh", "-c", s"command -v $command")).run(ProcessLogger(_ => ())).exitValue())
-    }
-    attempt.isSuccess && attempt.get == 0
-  }
-
-  // If the Graphviz dot command installed, converts the generated dot file
-  // into a specified-formatted image.
-  private def tryGenerateImageFile(format: String, src: String, dst: String): Unit = {
-    if (isCommandAvailable("dot")) {
-      try {
-        val commands = Seq("bash", "-c", s"dot -T$format $src > $dst")
-        BlockingLineStream(commands)
-      } catch {
-        case _ => // Do nothing
-      }
-    }
-  }
-
-  private[sql] val validImageFormatSet = Set("png", "svg")
-
-  private[sql] def writeSQLFlow(path: String, format: String, flowString: String): Unit = {
-    if (!validImageFormatSet.contains(format.toLowerCase(Locale.ROOT))) {
-      throw new AnalysisException(s"Invalid image format: $format")
-    }
-    val outputDir = new File(path)
-    if (!outputDir.mkdir()) {
-      throw new AnalysisException(s"path file:$path already exists")
-    }
-    val filePrefix = "sqlflow"
-    val dotFile = stringToFile(new File(outputDir, s"$filePrefix.dot"), flowString)
-    val srcFile = dotFile.getAbsolutePath
-    val dstFile = new File(outputDir, s"$filePrefix.$format").getAbsolutePath
-    tryGenerateImageFile(format, srcFile, dstFile)
-  }
-
-  def debugPrintAsSQLFlow(contracted: Boolean = false): Unit = {
-    SparkSession.getActiveSession.map { session =>
-      val flowString = if (contracted) {
-        catalogToContractedSQLFlow(session)
-      } else {
-        catalogToSQLFlow(session)
-      }
-      // scalastyle:off println
-      println(flowString)
-      // scalastyle:on println
-    }.getOrElse {
-      logWarning(s"Active SparkSession not found")
-    }
-  }
-
-  def saveAsSQLFlow(path: String, format: String = "svg", contracted: Boolean = false): Unit = {
-    SparkSession.getActiveSession.map { session =>
-      val flowString = if (contracted) {
-        catalogToContractedSQLFlow(session)
-      } else {
-        catalogToSQLFlow(session)
-      }
-      writeSQLFlow(path, format, flowString)
-    }.getOrElse {
-      logWarning(s"Active SparkSession not found")
-    }
-  }
-
-  private def isCached(name: String): Boolean = {
-    SparkSession.getActiveSession.exists { session =>
-      session.sessionState.catalog.getTempView(name).exists { p =>
-        val analyzed = session.sessionState.analyzer.execute(p)
-        session.sharedState.cacheManager.lookupCachedData(analyzed).isDefined
-      }
-    }
-  }
-
-  private def getNodeName(p: LogicalPlan) = p match {
-    case TempView(name, _) => name
-    case LogicalRelation(_, _, Some(table), false) => table.qualifiedName
-    case HiveTableRelation(table, _, _, _, _) => table.qualifiedName
-    case _ => s"${p.nodeName}_${nextNodeId.getAndIncrement()}"
-  }
-
-  private def getNodeColor(plan: LogicalPlan): String = plan match {
-    case TempView(name, _) if isCached(name) => "lightblue"
-    case _: TempView => "lightyellow"
-    case _: LeafNode => "lightpink"
-    case _ => "lightgray"
-  }
-
-  private def normalizeForHtml(str: String) = {
-    str.replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-  }
-
-  private def generateGraphString(nodes: Seq[String], edges: Seq[String]) = {
-    if (nodes.nonEmpty) {
-      s"""
-         |digraph {
-         |  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
-         |  node [shape=plain]
-         |  rankdir=LR;
-         |
-         |  ${nodes.sorted.mkString("\n")}
-         |  ${edges.sorted.mkString("\n")}
-         |}
-       """.stripMargin
-    } else {
-      ""
-    }
-  }
-
-  private def generateNodeString(p: LogicalPlan, nodeName: String, nodeColor: String = "") = {
-    val outputAttrs = p.output.zipWithIndex.map { case (attr, i) =>
-      s"""<tr><td port="$i">${normalizeForHtml(attr.name)}</td></tr>"""
-    }
-    // scalastyle:off line.size.limit
-    s"""
-       |"$nodeName" [label=<
-       |<table border="1" cellborder="0" cellspacing="0">
-       |  <tr><td bgcolor="${if (nodeColor.isEmpty) getNodeColor(p) else nodeColor}" port="nodeName"><i>$nodeName</i></td></tr>
-       |  ${outputAttrs.mkString("\n")}
-       |</table>>];
-     """.stripMargin
-    // scalastyle:on line.size.limit
-  }
-
-  private[sql] def catalogToContractedSQLFlow(session: SparkSession): String = {
+  def catalogToSQLFlow(session: SparkSession): String = {
     val catalog = session.sessionState.catalog
     val tempViewMap = catalog.getTempViewNames().map { tempView =>
       tempView -> catalog.getTempView(tempView).get
@@ -205,51 +61,7 @@ object SQLFlow extends PredicateHelper with Logging {
       nodeMap.getOrElseUpdate(tempView, generateNodeString(optimized, tempView, "lightyellow"))
 
       if (!optimized.isInstanceOf[TempView]) {
-        // Collect input nodes
-        val inputNodes = optimized.collectLeaves().map { p =>
-          val nodeName = getNodeName(p)
-          nodeMap.getOrElseUpdate(nodeName, generateNodeString(p, nodeName))
-          (nodeName, p.output)
-        }.groupBy(_._1).map { case (_, v) =>
-          v.head
-        }
-
-        // Collect references between input/output
-        val refMap = mutable.Map[ExprId, mutable.Set[ExprId]]()
-        collectRefsRecursively(optimized, refMap)
-
-        def traverseInRefMap(
-            exprId: ExprId,
-            depth: Int = 0,
-            seen: Set[ExprId] = Set.empty[ExprId]): Seq[ExprId] = {
-          if (seen.contains(exprId) || depth > 128) {
-            // Cyclic case
-            Nil
-          } else {
-            refMap.get(exprId).map { exprIds =>
-              exprIds.flatMap { id =>
-                if (exprId != id) {
-                  traverseInRefMap(id, depth + 1, seen + exprId)
-                } else {
-                  id :: Nil
-                }
-              }
-            }.map(_.toSeq).getOrElse(exprId :: Nil)
-          }
-        }
-
-        val outputAttrMap = optimized.output.map(_.exprId).zipWithIndex.toMap
-        inputNodes.toSeq.flatMap { case (inputNodeId, input) =>
-          input.zipWithIndex.flatMap { case (a, i) =>
-            traverseInRefMap(a.exprId).flatMap { attr =>
-              if (outputAttrMap.contains(attr)) {
-                Some(s""""$inputNodeId":$i -> $tempView:${outputAttrMap(attr)}""")
-              } else {
-                None
-              }
-            }
-          }
-        }
+        collectEdgesRecursively(tempView, optimized, nodeMap)
       } else {
         // If a given plan is `TempView t1, [a#102, b#103]`, `nodeName` should be equal to
         // `tempView` and we don't need a new node and edges for `TempView`.
@@ -258,6 +70,266 @@ object SQLFlow extends PredicateHelper with Logging {
     }
 
     generateGraphString(nodeMap.values.toSeq, edges.flatten)
+  }
+
+  private def isCached(name: String): Boolean = {
+    SparkSession.getActiveSession.exists { session =>
+      session.sessionState.catalog.getTempView(name).exists { p =>
+        val analyzed = session.sessionState.analyzer.execute(p)
+        session.sharedState.cacheManager.lookupCachedData(analyzed).isDefined
+      }
+    }
+  }
+
+  protected def getNodeName(p: LogicalPlan) = p match {
+    case TempView(name, _) => name
+    case LogicalRelation(_, _, Some(table), false) => table.qualifiedName
+    case HiveTableRelation(table, _, _, _, _) => table.qualifiedName
+    case j: Join => s"${p.nodeName}_${j.joinType}_${nextNodeId.getAndIncrement()}"
+    case _ => s"${p.nodeName}_${nextNodeId.getAndIncrement()}"
+  }
+
+  private def getNodeColor(plan: LogicalPlan): String = plan match {
+    case TempView(name, _) if isCached(name) => "lightblue"
+    case _: TempView => "lightyellow"
+    case _: LeafNode => "lightpink"
+    case _ => "lightgray"
+  }
+
+  private def normalizeForHtml(str: String) = {
+    str.replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+  }
+
+  protected def generateGraphString(nodes: Seq[String], edges: Seq[String]) = {
+    if (nodes.nonEmpty) {
+      s"""
+         |digraph {
+         |  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
+         |  node [shape=plain]
+         |  rankdir=LR;
+         |
+         |  ${nodes.sorted.mkString("\n")}
+         |  ${edges.sorted.mkString("\n")}
+         |}
+       """.stripMargin
+    } else {
+      ""
+    }
+  }
+
+  protected def generateNodeString(p: LogicalPlan, nodeName: String, nodeColor: String = "") = {
+    val outputAttrs = p.output.zipWithIndex.map { case (attr, i) =>
+      s"""<tr><td port="$i">${normalizeForHtml(attr.name)}</td></tr>"""
+    }
+    // scalastyle:off line.size.limit
+    s"""
+       |"$nodeName" [label=<
+       |<table border="1" cellborder="0" cellspacing="0">
+       |  <tr><td bgcolor="${if (nodeColor.isEmpty) getNodeColor(p) else nodeColor}" port="nodeName"><i>$nodeName</i></td></tr>
+       |  ${outputAttrs.mkString("\n")}
+       |</table>>];
+     """.stripMargin
+    // scalastyle:on line.size.limit
+  }
+}
+
+case class SQLFlow() extends BaseSQLFlow {
+
+  override def collectEdgesRecursively(
+      tempView: String,
+      plan: LogicalPlan,
+      nodeMap: mutable.Map[String, String]): Seq[String] = {
+    val (_, outputAttrMap, edgeEntries) = traversePlanRecursively(plan, nodeMap)
+    val tempViewEdges = outputAttrMap.zipWithIndex.map {
+      case ((_, input), i) => s"""$input -> "$tempView":$i;"""
+    }
+    edgeEntries ++ tempViewEdges
+  }
+
+  def planToSQLFlow(plan: LogicalPlan): String = {
+    val nodeMap = mutable.Map[String, String]()
+    val (_, _, edges) = traversePlanRecursively(plan, nodeMap)
+    generateGraphString(nodeMap.values.toSeq, edges)
+  }
+
+  private def collectEdges(
+      nodeName: String,
+      plan: LogicalPlan,
+      inputAttrSeq: Seq[Seq[(Attribute, String)]],
+      outputAttrs: Seq[(Attribute, Int)]): Seq[String] = {
+    lazy val inputAttrMap = AttributeMap(inputAttrSeq.flatten)
+    plan match {
+      case Aggregate(_, aggExprs, _) =>
+        aggExprs.zip(outputAttrs).flatMap { case (ne, (_, i)) =>
+          ne.references.filter(inputAttrMap.contains).map { attr =>
+            s"""${inputAttrMap(attr)} -> "$nodeName":$i;"""
+          }
+        }
+
+      case Project(projList, _) =>
+        projList.zip(outputAttrs).flatMap { case (ne, (_, i)) =>
+          ne.references.filter(inputAttrMap.contains).map { attr =>
+            s"""${inputAttrMap(attr)} -> "$nodeName":$i;"""
+          }
+        }
+
+      case g @ Generate(generator, _, _, _, generatorOutput, _) =>
+        val edgesForChildren = g.requiredChildOutput.zipWithIndex.flatMap { case (attr, i) =>
+          inputAttrMap.get(attr).map { input => s"""$input -> "$nodeName":$i;"""}
+        }
+        val edgeForGenerator = generator.references.flatMap(inputAttrMap.get).headOption
+          .map { genInput =>
+            generatorOutput.zipWithIndex.map { case (attr, i) =>
+              s"""$genInput -> "$nodeName":${g.requiredChildOutput.size + i}"""
+            }
+          }
+        edgesForChildren ++ edgeForGenerator.seq.flatten
+
+      case Expand(projections, _, _) =>
+        projections.transpose.zipWithIndex.flatMap { case (projs, i) =>
+          projs.flatMap(e => e.references.flatMap(inputAttrMap.get))
+            .map { input => s"""$input -> "$nodeName":$i;"""}
+            .distinct
+        }
+
+      case _: Union =>
+        inputAttrSeq.transpose.zipWithIndex.flatMap { case (attrs, i) =>
+          attrs.map { case (_, input) => s"""$input -> "$nodeName":$i"""}
+        }
+
+      case Join(_, _, joinType, condition, _) =>
+        // To avoid ambiguous joins, we need this
+        val Seq(left, right) = inputAttrSeq
+        joinType match {
+          case LeftExistence(_) =>
+            val leftAttrSet = AttributeSet(left.map(_._1))
+            val leftAttrIndexMap = AttributeMap(left.map(_._1).zipWithIndex)
+            val predicateEdges = condition.map { c =>
+              val referenceSeq = splitConjunctivePredicates(c).map(_.references)
+              right.flatMap { case (attr, input) =>
+                val leftAttrs = referenceSeq.flatMap { refs =>
+                  if (refs.contains(attr)) {
+                    refs.intersect(leftAttrSet).toSeq
+                  } else {
+                    Nil
+                  }
+                }
+                leftAttrs.map { attr =>
+                  s"""$input -> "$nodeName":${leftAttrIndexMap(attr)};"""
+                }
+              }
+            }
+            val joinOutputEdges = left.map(_._2).zipWithIndex.map { case (input, i) =>
+              s"""$input -> "$nodeName":$i;"""
+            }
+            joinOutputEdges ++ predicateEdges.getOrElse(Nil)
+          case _ =>
+            (left ++ right).map(_._2).zipWithIndex.map { case (input, i) =>
+              s"""$input -> "$nodeName":$i;"""
+            }
+        }
+
+      case _ =>
+        outputAttrs.flatMap { case (attr, i) =>
+          inputAttrMap.get(attr).map { input => s"""$input -> "$nodeName":$i;"""}
+        }
+    }
+  }
+
+  private def traversePlanRecursively(plan: LogicalPlan, nodeMap: mutable.Map[String, String])
+    : (String, Seq[(Attribute, String)], Seq[String]) = plan match {
+    case _: LeafNode =>
+      val nodeName = getNodeName(plan)
+      nodeMap.getOrElseUpdate(nodeName, generateNodeString(plan, nodeName))
+      val outputAttrMap = plan.output.zipWithIndex.map { case (attr, i) =>
+        attr -> s""""$nodeName":$i"""
+      }
+      (nodeName, outputAttrMap, Nil)
+
+    case _ =>
+      val inputInfos = plan.children.map(traversePlanRecursively(_, nodeMap))
+      val nodeName = getNodeName(plan)
+
+      val subqueries = plan.expressions.flatMap(_.collect { case ss: ScalarSubquery => ss })
+      val edgesInSubqueries = if (subqueries.nonEmpty) {
+        subqueries.flatMap { ss =>
+          val (_, outputAttrMap, e) = traversePlanRecursively(ss.plan, nodeMap)
+          val edges = e ++ outputAttrMap.map { case (_, src) =>
+            s"""$src -> "$nodeName":nodeName"""
+          }
+          edges
+        }
+      } else {
+        Nil
+      }
+
+      if (plan.output.nonEmpty) {
+        val outputAttrsWithIndex = plan.output.zipWithIndex
+        val outputAttrMap = outputAttrsWithIndex.map { case (attr, i) =>
+          attr -> s""""$nodeName":$i"""
+        }
+        val edgeInfo = collectEdges(nodeName, plan, inputInfos.map(_._2), outputAttrsWithIndex)
+        nodeMap.getOrElseUpdate(nodeName, generateNodeString(plan, nodeName))
+        (nodeName, outputAttrMap, edgeInfo ++ inputInfos.flatMap(_._3) ++ edgesInSubqueries)
+      } else {
+        (nodeName, Nil, inputInfos.flatMap(_._3) ++ edgesInSubqueries)
+      }
+  }
+}
+
+case class SQLContractedFlow() extends BaseSQLFlow {
+
+  override def collectEdgesRecursively(
+      tempView: String,
+      plan: LogicalPlan,
+      nodeMap: mutable.Map[String, String]): Seq[String] = {
+    // Collect input nodes
+    val inputNodes = plan.collectLeaves().map { p =>
+      val nodeName = getNodeName(p)
+      nodeMap.getOrElseUpdate(nodeName, generateNodeString(p, nodeName))
+      (nodeName, p.output)
+    }.groupBy(_._1).map { case (_, v) =>
+      v.head
+    }
+
+    // Collect references between input/output
+    val refMap = mutable.Map[ExprId, mutable.Set[ExprId]]()
+    collectRefsRecursively(plan, refMap)
+
+    def traverseInRefMap(
+        exprId: ExprId,
+        depth: Int = 0,
+        seen: Set[ExprId] = Set.empty[ExprId]): Seq[ExprId] = {
+      if (seen.contains(exprId) || depth > 128) {
+        // Cyclic case
+        Nil
+      } else {
+        refMap.get(exprId).map { exprIds =>
+          exprIds.flatMap { id =>
+            if (exprId != id) {
+              traverseInRefMap(id, depth + 1, seen + exprId)
+            } else {
+              id :: Nil
+            }
+          }
+        }.map(_.toSeq).getOrElse(exprId :: Nil)
+      }
+    }
+
+    val outputAttrMap = plan.output.map(_.exprId).zipWithIndex.toMap
+    inputNodes.toSeq.flatMap { case (inputNodeId, input) =>
+      input.zipWithIndex.flatMap { case (a, i) =>
+        traverseInRefMap(a.exprId).flatMap { attr =>
+          if (outputAttrMap.contains(attr)) {
+            Some(s""""$inputNodeId":$i -> $tempView:${outputAttrMap(attr)}""")
+          } else {
+            None
+          }
+        }
+      }
+    }
   }
 
   private def collectRefsRecursively(
@@ -365,176 +437,98 @@ object SQLFlow extends PredicateHelper with Logging {
           s"""refMap does not have enough entries for ${plan.nodeName}:
              |missingRefs: ${missingRefs.mkString(", ")}
              |${plan.treeString}
-             |""".stripMargin)
+           """.stripMargin)
+    }
+  }
+}
+
+case class TempView(name: String, output: Seq[Attribute]) extends LeafNode {
+  override lazy val resolved: Boolean = true
+}
+
+case class SQLFlowHolder[T] private[sql](private val ds: Dataset[T]) {
+  import SQLFlow._
+
+  def debugPrintAsSQLFlow(): Unit = {
+    // scalastyle:off println
+    println(SQLFlow().planToSQLFlow(ds.queryExecution.optimizedPlan))
+    // scalastyle:on println
+  }
+
+  def saveAsSQLFlow(path: String, format: String = "svg"): Unit = {
+    val flowString = SQLFlow().planToSQLFlow(ds.queryExecution.optimizedPlan)
+    writeSQLFlow(path, format, flowString)
+  }
+}
+
+object SQLFlow extends PredicateHelper with Logging {
+
+  val validImageFormatSet = Set("png", "svg")
+
+  implicit def DatasetToSQLFlowHolder[T](ds: Dataset[T]): SQLFlowHolder[T] = {
+    new SQLFlowHolder[T](ds)
+  }
+
+  private def isCommandAvailable(command: String): Boolean = {
+    val attempt = {
+      Try(Process(Seq("sh", "-c", s"command -v $command")).run(ProcessLogger(_ => ())).exitValue())
+    }
+    attempt.isSuccess && attempt.get == 0
+  }
+
+  // If the Graphviz dot command installed, converts the generated dot file
+  // into a specified-formatted image.
+  private def tryGenerateImageFile(format: String, src: String, dst: String): Unit = {
+    if (isCommandAvailable("dot")) {
+      try {
+        val commands = Seq("bash", "-c", s"dot -T$format $src > $dst")
+        BlockingLineStream(commands)
+      } catch {
+        case _ => // Do nothing
+      }
     }
   }
 
-  private[sql] def catalogToSQLFlow(session: SparkSession): String = {
-    val catalog = session.sessionState.catalog
-    val tempViewMap = catalog.getTempViewNames().map { tempView =>
-      tempView -> catalog.getTempView(tempView).get
-    }.toMap
-
-    val nodeMap = mutable.Map[String, String]()
-    val edges = catalog.getTempViewNames.map { tempView =>
-      val analyzed = session.sessionState.analyzer.execute(tempViewMap(tempView))
-      val optimized = session.sessionState.optimizer.execute(analyzed.transformDown {
-        case s @ SubqueryAlias(AliasIdentifier(name, Nil), _) if tempViewMap.contains(name) =>
-          TempView(name, s.output)
-      })
-
-      // Generate a node label for a temporary view if necessary
-      nodeMap.getOrElseUpdate(tempView, generateNodeString(optimized, tempView, "lightyellow"))
-
-      if (!optimized.isInstanceOf[TempView]) {
-        val (_, outputAttrMap, edgeEntries) = traversePlanRecursively(optimized, nodeMap)
-
-        val tempViewEdges = outputAttrMap.zipWithIndex.map {
-          case ((_, input), i) => s"""$input -> "$tempView":$i;"""
-        }
-
-        edgeEntries ++ tempViewEdges
-      } else {
-        // If a given plan is `TempView t1, [a#102, b#103]`, `nodeName` should be equal to
-        // `tempView` and we don't need a new node and edges for `TempView`.
-        Nil
-      }
+  def writeSQLFlow(path: String, format: String, flowString: String): Unit = {
+    if (!SQLFlow.validImageFormatSet.contains(format.toLowerCase(Locale.ROOT))) {
+      throw new AnalysisException(s"Invalid image format: $format")
     }
-
-    generateGraphString(nodeMap.values.toSeq, edges.flatten)
+    val outputDir = new File(path)
+    if (!outputDir.mkdir()) {
+      throw new AnalysisException(s"path file:$path already exists")
+    }
+    val filePrefix = "sqlflow"
+    val dotFile = stringToFile(new File(outputDir, s"$filePrefix.dot"), flowString)
+    val srcFile = dotFile.getAbsolutePath
+    val dstFile = new File(outputDir, s"$filePrefix.$format").getAbsolutePath
+    tryGenerateImageFile(format, srcFile, dstFile)
   }
 
-  private[sql] def planToSQLFlow(plan: LogicalPlan): String = {
-    val nodeMap = mutable.Map[String, String]()
-    val (_, _, edges) = traversePlanRecursively(plan, nodeMap)
-    generateGraphString(nodeMap.values.toSeq, edges)
-  }
-
-  private def collectEdges(
-      nodeName: String,
-      plan: LogicalPlan,
-      inputAttrSeq: Seq[Seq[(Attribute, String)]],
-      outputAttrs: Seq[(Attribute, Int)]): Seq[String] = {
-    lazy val inputAttrMap = AttributeMap(inputAttrSeq.flatten)
-    plan match {
-      case Aggregate(_, aggExprs, _) =>
-        aggExprs.zip(outputAttrs).flatMap { case (ne, (_, i)) =>
-          ne.references.filter(inputAttrMap.contains).map { attr =>
-            s"""${inputAttrMap(attr)} -> "$nodeName":$i;"""
-          }
-        }
-
-      case Project(projList, _) =>
-        projList.zip(outputAttrs).flatMap { case (ne, (_, i)) =>
-          ne.references.filter(inputAttrMap.contains).map { attr =>
-            s"""${inputAttrMap(attr)} -> "$nodeName":$i;"""
-          }
-        }
-
-      case g @ Generate(generator, _, _, _, generatorOutput, _) =>
-        val edgesForChildren = g.requiredChildOutput.zipWithIndex.flatMap { case (attr, i) =>
-          inputAttrMap.get(attr).map { input => s"""$input -> "$nodeName":$i;"""}
-        }
-        val edgeForGenerator = generator.references.flatMap(inputAttrMap.get).headOption
-            .map { genInput =>
-          generatorOutput.zipWithIndex.map { case (attr, i) =>
-            s"""$genInput -> "$nodeName":${g.requiredChildOutput.size + i}"""
-          }
-        }
-        edgesForChildren ++ edgeForGenerator.seq.flatten
-
-      case Expand(projections, _, _) =>
-        projections.transpose.zipWithIndex.flatMap { case (projs, i) =>
-          projs.flatMap(e => e.references.flatMap(inputAttrMap.get))
-            .map { input => s"""$input -> "$nodeName":$i;"""}
-            .distinct
-        }
-
-      case _: Union =>
-        inputAttrSeq.transpose.zipWithIndex.flatMap { case (attrs, i) =>
-          attrs.map { case (_, input) => s"""$input -> "$nodeName":$i"""}
-        }
-
-      case Join(_, _, joinType, condition, _) =>
-        // To avoid ambiguous joins, we need this
-        val Seq(left, right) = inputAttrSeq
-        joinType match {
-          case LeftExistence(_) =>
-            val leftAttrSet = AttributeSet(left.map(_._1))
-            val leftAttrIndexMap = AttributeMap(left.map(_._1).zipWithIndex)
-            val predicateEdges = condition.map { c =>
-              val referenceSeq = splitConjunctivePredicates(c).map(_.references)
-              right.flatMap { case (attr, input) =>
-                val leftAttrs = referenceSeq.flatMap { refs =>
-                  if (refs.contains(attr)) {
-                    refs.intersect(leftAttrSet).toSeq
-                  } else {
-                    Nil
-                  }
-                }
-                leftAttrs.map { attr =>
-                  s"""$input -> "$nodeName":${leftAttrIndexMap(attr)};"""
-                }
-              }
-            }
-            val joinOutputEdges = left.map(_._2).zipWithIndex.map { case (input, i) =>
-              s"""$input -> "$nodeName":$i;"""
-            }
-            joinOutputEdges ++ predicateEdges.getOrElse(Nil)
-          case _ =>
-            (left ++ right).map(_._2).zipWithIndex.map { case (input, i) =>
-              s"""$input -> "$nodeName":$i;"""
-            }
-        }
-
-      case _ =>
-        outputAttrs.flatMap { case (attr, i) =>
-          inputAttrMap.get(attr).map { input => s"""$input -> "$nodeName":$i;"""}
-        }
+  def saveAsSQLFlow(path: String, format: String = "svg", contracted: Boolean = false): Unit = {
+    SparkSession.getActiveSession.map { session =>
+      val flowString = if (contracted) {
+        SQLContractedFlow().catalogToSQLFlow(session)
+      } else {
+        SQLFlow().catalogToSQLFlow(session)
+      }
+      SQLFlow.writeSQLFlow(path, format, flowString)
+    }.getOrElse {
+      logWarning(s"Active SparkSession not found")
     }
   }
 
-  private def traversePlanRecursively(plan: LogicalPlan, nodeMap: mutable.Map[String, String])
-    : (String, Seq[(Attribute, String)], Seq[String]) = plan match {
-    case _: LeafNode =>
-      val nodeName = getNodeName(plan)
-      nodeMap.getOrElseUpdate(nodeName, generateNodeString(plan, nodeName))
-      val outputAttrMap = plan.output.zipWithIndex.map { case (attr, i) =>
-        attr -> s""""$nodeName":$i"""
-      }
-      (nodeName, outputAttrMap, Nil)
-
-    case _ =>
-      val inputInfos = plan.children.map(traversePlanRecursively(_, nodeMap))
-      val nodeId = nextNodeId.getAndIncrement()
-      val nodeName = plan match {
-        case j: Join => s"${plan.nodeName}_${j.joinType}_$nodeId"
-        case _ => s"${plan.nodeName}_$nodeId"
-      }
-
-      val subqueries = plan.expressions.flatMap(_.collect { case ss: ScalarSubquery => ss })
-      val edgesInSubqueries = if (subqueries.nonEmpty) {
-        subqueries.flatMap { ss =>
-          val (_, outputAttrMap, e) = traversePlanRecursively(ss.plan, nodeMap)
-          val edges = e ++ outputAttrMap.map { case (_, src) =>
-            s"""$src -> "$nodeName":nodeName"""
-          }
-          edges
-        }
+  def debugPrintAsSQLFlow(contracted: Boolean = false): Unit = {
+    SparkSession.getActiveSession.map { session =>
+      val flowString = if (contracted) {
+        SQLContractedFlow().catalogToSQLFlow(session)
       } else {
-        Nil
+        SQLFlow().catalogToSQLFlow(session)
       }
-
-      if (plan.output.nonEmpty) {
-        val outputAttrsWithIndex = plan.output.zipWithIndex
-        val outputAttrMap = outputAttrsWithIndex.map { case (attr, i) =>
-          attr -> s""""$nodeName":$i"""
-        }
-        val edgeInfo = collectEdges(nodeName, plan, inputInfos.map(_._2), outputAttrsWithIndex)
-        nodeMap.getOrElseUpdate(nodeName, generateNodeString(plan, nodeName))
-        (nodeName, outputAttrMap, edgeInfo ++ inputInfos.flatMap(_._3) ++ edgesInSubqueries)
-      } else {
-        (nodeName, Nil, inputInfos.flatMap(_._3) ++ edgesInSubqueries)
-      }
+      // scalastyle:off println
+      println(flowString)
+      // scalastyle:on println
+    }.getOrElse {
+      logWarning(s"Active SparkSession not found")
+    }
   }
 }
