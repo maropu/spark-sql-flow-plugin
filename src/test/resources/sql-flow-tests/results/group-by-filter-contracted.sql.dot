@@ -9,521 +9,521 @@ digraph {
   
 "LocalRelation_915" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink"><i>LocalRelation_915</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_915</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">dept_name</td></tr>
 <tr><td port="2">state</td></tr>
 </table>>];
-           
+     
 
 "LocalRelation_917" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink"><i>LocalRelation_917</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_917</i></td></tr>
   <tr><td port="0">id</td></tr>
 <tr><td port="1">emp_name</td></tr>
 <tr><td port="2">hiredate</td></tr>
 <tr><td port="3">salary</td></tr>
 <tr><td port="4">dept_id</td></tr>
 </table>>];
-           
+     
 
 "LocalRelation_918" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink"><i>LocalRelation_918</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_918</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
 </table>>];
-           
+     
 
 "OneRowRelation_916" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink"><i>OneRowRelation_916</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>OneRowRelation_916</i></td></tr>
   
 </table>>];
-           
+     
 
 "dept" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>dept</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>dept</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">dept_name</td></tr>
 <tr><td port="2">state</td></tr>
 </table>>];
-           
+     
 
 "emp" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>emp</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>emp</i></td></tr>
   <tr><td port="0">id</td></tr>
 <tr><td port="1">emp_name</td></tr>
 <tr><td port="2">hiredate</td></tr>
 <tr><td port="3">salary</td></tr>
 <tr><td port="4">dept_id</td></tr>
 </table>>];
-           
+     
 
 "t1" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t1</i></td></tr>
-  <tr><td port="0">b</td></tr>
-</table>>];
-           
-
-"t1" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t1</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t1</i></td></tr>
   <tr><td port="0">first(a)</td></tr>
 <tr><td port="1">count(b) FILTER (WHERE (a &gt;= 2))</td></tr>
 </table>>];
-           
+     
 
 "t10" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t10</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t10</i></td></tr>
   <tr><td port="0">count(DISTINCT id) FILTER (WHERE true)</td></tr>
 </table>>];
-           
+     
 
 "t11" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t11</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t11</i></td></tr>
   <tr><td port="0">count(DISTINCT id) FILTER (WHERE false)</td></tr>
 </table>>];
-           
+     
 
 "t12" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t12</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t12</i></td></tr>
   <tr><td port="0">count(DISTINCT 2)</td></tr>
 <tr><td port="1">count(DISTINCT 2, 3) FILTER (WHERE (dept_id = 40))</td></tr>
 </table>>];
-           
+     
 
 "t13" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t13</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t13</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">count(b) FILTER (WHERE (a &gt;= 2))</td></tr>
 </table>>];
-           
+     
 
 "t14" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t14</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t14</i></td></tr>
   <tr><td port="0">count(a) FILTER (WHERE (a &gt;= 0))</td></tr>
 <tr><td port="1">count(b) FILTER (WHERE (a &gt;= 3))</td></tr>
 </table>>];
-           
+     
 
 "t15" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t15</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t15</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">sum(salary) FILTER (WHERE (CAST(hiredate AS TIMESTAMP) &gt; to_timestamp(2003-01-01 00:00:00)))</td></tr>
 </table>>];
-           
+     
 
 "t16" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t16</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t16</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">sum(DISTINCT salary) FILTER (WHERE (date_format(CAST(hiredate AS TIMESTAMP), yyyy-MM-dd HH:mm:ss) &gt; 2001-01-01 00:00:00))</td></tr>
 </table>>];
-           
+     
 
 "t17" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t17</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t17</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">sum(DISTINCT salary)</td></tr>
 <tr><td port="2">sum(DISTINCT salary) FILTER (WHERE (date_format(CAST(hiredate AS TIMESTAMP), yyyy-MM-dd HH:mm:ss) &gt; 2001-01-01 00:00:00))</td></tr>
 </table>>];
-           
+     
 
 "t18" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t18</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t18</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">sum(DISTINCT salary) FILTER (WHERE (hiredate &gt; DATE '2001-01-01'))</td></tr>
 <tr><td port="2">sum(DISTINCT salary) FILTER (WHERE (date_format(CAST(hiredate AS TIMESTAMP), yyyy-MM-dd HH:mm:ss) &gt; 2001-01-01 00:00:00))</td></tr>
 </table>>];
-           
+     
 
 "t19" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t19</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t19</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">count(id)</td></tr>
 <tr><td port="2">sum(DISTINCT salary)</td></tr>
 <tr><td port="3">sum(DISTINCT salary) FILTER (WHERE (date_format(CAST(hiredate AS TIMESTAMP), yyyy-MM-dd) &gt; 2001-01-01))</td></tr>
 </table>>];
-           
+     
 
 "t2" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t2</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t2</i></td></tr>
   <tr><td port="0">count(a) FILTER (WHERE (a = 1))</td></tr>
 <tr><td port="1">count(b) FILTER (WHERE (a &gt; 1))</td></tr>
 </table>>];
-           
+     
 
 "t20" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t20</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t20</i></td></tr>
   <tr><td port="0">b</td></tr>
 <tr><td port="1">count(DISTINCT 1) FILTER (WHERE (a = 1))</td></tr>
 </table>>];
-           
+     
 
 "t21" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t21</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t21</i></td></tr>
   <tr><td port="0">foo</td></tr>
 <tr><td port="1">count(a) FILTER (WHERE (b &lt;= 2))</td></tr>
 </table>>];
-           
+     
 
 "t22" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t22</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t22</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">count(DISTINCT emp_name)</td></tr>
 <tr><td port="2">count(DISTINCT hiredate)</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 <tr><td port="4">sum(salary) FILTER (WHERE (id &gt; 200))</td></tr>
 </table>>];
-           
+     
 
 "t23" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t23</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t23</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">count(DISTINCT emp_name)</td></tr>
 <tr><td port="2">count(DISTINCT hiredate)</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 <tr><td port="4">sum(salary) FILTER (WHERE ((id + dept_id) &gt; 500))</td></tr>
 </table>>];
-           
+     
 
 "t24" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t24</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t24</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">count(DISTINCT emp_name)</td></tr>
 <tr><td port="2">count(DISTINCT hiredate)</td></tr>
 <tr><td port="3">sum(salary) FILTER (WHERE (salary &lt; 400.0))</td></tr>
 <tr><td port="4">sum(salary) FILTER (WHERE (id &gt; 200))</td></tr>
 </table>>];
-           
+     
 
 "t25" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t25</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t25</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">count(DISTINCT emp_name)</td></tr>
 <tr><td port="2">count(DISTINCT hiredate)</td></tr>
 <tr><td port="3">sum(salary) FILTER (WHERE (salary &lt; 400.0))</td></tr>
 <tr><td port="4">sum(salary) FILTER (WHERE ((id + dept_id) &gt; 500))</td></tr>
 </table>>];
-           
+     
 
 "t26" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t26</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t26</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">count(DISTINCT emp_name) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="2">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t27" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t27</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t27</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">count(DISTINCT emp_name) FILTER (WHERE ((id + dept_id) &gt; 500))</td></tr>
 <tr><td port="2">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t28" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t28</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t28</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">count(DISTINCT emp_name)</td></tr>
 <tr><td port="2">count(DISTINCT emp_name) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t29" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t29</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t29</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">count(DISTINCT emp_name)</td></tr>
 <tr><td port="2">count(DISTINCT emp_name) FILTER (WHERE ((id + dept_id) &gt; 500))</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t3" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t3</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t3</i></td></tr>
   <tr><td port="0">count(id) FILTER (WHERE (hiredate = DATE '2001-01-01'))</td></tr>
 </table>>];
-           
+     
 
 "t30" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t30</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t30</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">count(DISTINCT emp_name)</td></tr>
 <tr><td port="2">count(DISTINCT emp_name) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 <tr><td port="4">sum(salary) FILTER (WHERE (id &gt; 200))</td></tr>
 </table>>];
-           
+     
 
 "t31" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t31</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t31</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">count(DISTINCT emp_name)</td></tr>
 <tr><td port="2">count(DISTINCT emp_name) FILTER (WHERE ((id + dept_id) &gt; 500))</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 <tr><td port="4">sum(salary) FILTER (WHERE (id &gt; 200))</td></tr>
 </table>>];
-           
+     
 
 "t32" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t32</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t32</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">count(DISTINCT emp_name) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="2">count(DISTINCT hiredate)</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t33" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t33</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t33</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">count(DISTINCT emp_name) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="2">count(DISTINCT hiredate) FILTER (WHERE (hiredate &gt; DATE '2003-01-01'))</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t34" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t34</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t34</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">count(DISTINCT emp_name) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="2">count(DISTINCT hiredate) FILTER (WHERE (hiredate &gt; DATE '2003-01-01'))</td></tr>
 <tr><td port="3">sum(salary) FILTER (WHERE (salary &lt; 400.0))</td></tr>
 </table>>];
-           
+     
 
 "t35" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t35</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t35</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">count(DISTINCT emp_name) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="2">count(DISTINCT hiredate) FILTER (WHERE (hiredate &gt; DATE '2003-01-01'))</td></tr>
 <tr><td port="3">sum(salary) FILTER (WHERE (salary &lt; 400.0))</td></tr>
 <tr><td port="4">sum(salary) FILTER (WHERE (id &gt; 200))</td></tr>
 </table>>];
-           
+     
 
 "t36" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t36</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t36</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">count(DISTINCT emp_name) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="2">count(DISTINCT emp_name)</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t37" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t37</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t37</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">count(DISTINCT emp_name) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="2">count(DISTINCT emp_name) FILTER (WHERE (hiredate &gt; DATE '2003-01-01'))</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t38" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t38</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t38</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">sum(DISTINCT (id + dept_id)) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="2">count(DISTINCT hiredate)</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t39" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t39</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t39</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">sum(DISTINCT (id + dept_id)) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="2">count(DISTINCT hiredate) FILTER (WHERE (hiredate &gt; DATE '2003-01-01'))</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t4" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t4</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t4</i></td></tr>
   <tr><td port="0">count(id) FILTER (WHERE (CAST(hiredate AS TIMESTAMP) = to_timestamp(2001-01-01 00:00:00)))</td></tr>
 </table>>];
-           
+     
 
 "t40" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t40</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t40</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">avg(DISTINCT (id + dept_id)) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="2">count(DISTINCT hiredate) FILTER (WHERE (hiredate &gt; DATE '2003-01-01'))</td></tr>
 <tr><td port="3">sum(salary) FILTER (WHERE (salary &lt; 400.0))</td></tr>
 </table>>];
-           
+     
 
 "t41" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t41</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t41</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">count(DISTINCT emp_name, hiredate) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="2">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t42" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t42</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t42</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">count(DISTINCT emp_name, hiredate) FILTER (WHERE (id &gt; 0))</td></tr>
 <tr><td port="2">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t43" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t43</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t43</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">count(DISTINCT 1)</td></tr>
 <tr><td port="2">count(DISTINCT 1) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t44" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t44</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t44</i></td></tr>
   <tr><td port="0">foo</td></tr>
 <tr><td port="1">approx_count_distinct(a) FILTER (WHERE (b &gt;= 0))</td></tr>
 </table>>];
-           
+     
 
 "t45" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t45</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t45</i></td></tr>
   <tr><td port="0">foo</td></tr>
 <tr><td port="1">max(struct(a)) FILTER (WHERE (b &gt;= 1))</td></tr>
 </table>>];
-           
+     
 
 "t46" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t46</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t46</i></td></tr>
   <tr><td port="0">(a + b)</td></tr>
 <tr><td port="1">count(b) FILTER (WHERE (b &gt;= 2))</td></tr>
 </table>>];
-           
+     
 
 "t47" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t47</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t47</i></td></tr>
   <tr><td port="0">count(DISTINCT b) FILTER (WHERE (b &gt; 0))</td></tr>
 <tr><td port="1">count(DISTINCT b, c) FILTER (WHERE ((b &gt; 0) AND (c &gt; 2)))</td></tr>
 </table>>];
-           
+     
 
 "t48" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t48</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t48</i></td></tr>
   <tr><td port="0">k</td></tr>
 <tr><td port="1">count(b) FILTER (WHERE (b &gt; 0))</td></tr>
 </table>>];
-           
+     
 
 "t49" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t49</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t49</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">avg(salary)</td></tr>
 <tr><td port="2">avg(salary) FILTER (WHERE (id &gt; scalarsubquery()))</td></tr>
 </table>>];
-           
+     
 
 "t5" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t5</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t5</i></td></tr>
   <tr><td port="0">count(DISTINCT id) FILTER (WHERE (date_format(CAST(hiredate AS TIMESTAMP), yyyy-MM-dd HH:mm:ss) = 2001-01-01 00:00:00))</td></tr>
 </table>>];
-           
+     
 
 "t50" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t50</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t50</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">avg(salary)</td></tr>
 <tr><td port="2">avg(salary) FILTER (WHERE (dept_id = scalarsubquery()))</td></tr>
 </table>>];
-           
+     
+
+"t51" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t51</i></td></tr>
+  <tr><td port="0">b</td></tr>
+</table>>];
+     
 
 "t6" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t6</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t6</i></td></tr>
   <tr><td port="0">count(DISTINCT id)</td></tr>
 <tr><td port="1">count(DISTINCT id) FILTER (WHERE (date_format(CAST(hiredate AS TIMESTAMP), yyyy-MM-dd HH:mm:ss) = 2001-01-01 00:00:00))</td></tr>
 </table>>];
-           
+     
 
 "t7" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t7</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t7</i></td></tr>
   <tr><td port="0">count(DISTINCT id) FILTER (WHERE (CAST(hiredate AS TIMESTAMP) = to_timestamp(2001-01-01 00:00:00)))</td></tr>
 <tr><td port="1">count(DISTINCT id) FILTER (WHERE (hiredate = to_date(2001-01-01 00:00:00)))</td></tr>
 </table>>];
-           
+     
 
 "t8" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t8</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t8</i></td></tr>
   <tr><td port="0">sum(salary)</td></tr>
 <tr><td port="1">count(DISTINCT id)</td></tr>
 <tr><td port="2">count(DISTINCT id) FILTER (WHERE (hiredate = DATE '2001-01-01'))</td></tr>
 </table>>];
-           
+     
 
 "t9" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>t9</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t9</i></td></tr>
   <tr><td port="0">count(DISTINCT 1) FILTER (WHERE (a = 1))</td></tr>
 </table>>];
-           
+     
 
 "testdata" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>testdata</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>testdata</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
 </table>>];
-           
+     
   "LocalRelation_915":0 -> dept:0
 "LocalRelation_915":1 -> dept:1
 "LocalRelation_915":2 -> dept:2

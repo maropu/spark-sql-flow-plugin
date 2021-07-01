@@ -13,7 +13,7 @@ digraph {
   <tr><td port="0">first(a)</td></tr>
 <tr><td port="1">count(b) FILTER (WHERE (a &gt;= 2))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_763" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -25,7 +25,7 @@ digraph {
 <tr><td port="4">(emp.`id` &gt; 200)</td></tr>
 <tr><td port="5">sum(emp.`salary`)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_764" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -35,7 +35,7 @@ digraph {
 <tr><td port="2">count(DISTINCT hiredate)</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_766" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -43,14 +43,14 @@ digraph {
   <tr><td port="0">foo</td></tr>
 <tr><td port="1">approx_count_distinct(a) FILTER (WHERE (b &gt;= 0))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_768" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_768</i></td></tr>
   <tr><td port="0">count(id) FILTER (WHERE (CAST(hiredate AS TIMESTAMP) = to_timestamp(2001-01-01 00:00:00)))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_770" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -59,7 +59,7 @@ digraph {
 <tr><td port="1">avg(salary)</td></tr>
 <tr><td port="2">avg(salary) FILTER (WHERE (dept_id = scalarsubquery()))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_776" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -71,7 +71,7 @@ digraph {
 <tr><td port="4">(emp.`id` &gt; 200)</td></tr>
 <tr><td port="5">sum(emp.`salary`)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_777" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -81,7 +81,7 @@ digraph {
 <tr><td port="2">count(DISTINCT hiredate)</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_779" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -89,14 +89,14 @@ digraph {
   <tr><td port="0">count(DISTINCT b) FILTER (WHERE (b &gt; 0))</td></tr>
 <tr><td port="1">count(DISTINCT b, c) FILTER (WHERE ((b &gt; 0) AND (c &gt; 2)))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_781" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_781</i></td></tr>
   <tr><td port="0">count(DISTINCT id) FILTER (WHERE false)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_784" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -107,7 +107,7 @@ digraph {
 <tr><td port="3">(emp.`id` &gt; 200)</td></tr>
 <tr><td port="4">sum(emp.`salary`)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_785" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -116,7 +116,7 @@ digraph {
 <tr><td port="1">count(DISTINCT emp_name) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="2">sum(salary)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_787" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -128,7 +128,7 @@ digraph {
 <tr><td port="4">(emp.`id` &gt; 200)</td></tr>
 <tr><td port="5">sum(emp.`salary`)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_788" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -137,7 +137,7 @@ digraph {
 <tr><td port="1">count(DISTINCT emp_name, hiredate) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="2">sum(salary)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_790" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -146,7 +146,7 @@ digraph {
 <tr><td port="1">gid</td></tr>
 <tr><td port="2">(testdata.`a` = 1)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_791" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -154,7 +154,7 @@ digraph {
   <tr><td port="0">b</td></tr>
 <tr><td port="1">count(DISTINCT 1) FILTER (WHERE (a = 1))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_792" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -162,7 +162,7 @@ digraph {
   <tr><td port="0">count(a) FILTER (WHERE (a &gt;= 0))</td></tr>
 <tr><td port="1">count(b) FILTER (WHERE (a &gt;= 3))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_795" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -173,7 +173,7 @@ digraph {
 <tr><td port="3">((emp.`id` + emp.`dept_id`) &gt; 500)</td></tr>
 <tr><td port="4">sum(emp.`salary`)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_796" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -183,7 +183,7 @@ digraph {
 <tr><td port="2">count(DISTINCT emp_name) FILTER (WHERE ((id + dept_id) &gt; 500))</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_798" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -197,7 +197,7 @@ digraph {
 <tr><td port="6">sum(emp.`salary`) FILTER (WHERE (emp.`salary` &lt; 400.0D))</td></tr>
 <tr><td port="7">sum(emp.`salary`) FILTER (WHERE (emp.`id` &gt; 200))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_799" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -208,7 +208,7 @@ digraph {
 <tr><td port="3">sum(salary) FILTER (WHERE (salary &lt; 400.0))</td></tr>
 <tr><td port="4">sum(salary) FILTER (WHERE (id &gt; 200))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_802" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -218,7 +218,7 @@ digraph {
 <tr><td port="2">gid</td></tr>
 <tr><td port="3">(date_format(CAST(emp.`hiredate` AS TIMESTAMP), 'yyyy-MM-dd HH:mm:ss') &gt; '2001-01-01 00:00:00')</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_803" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -227,7 +227,7 @@ digraph {
 <tr><td port="1">sum(DISTINCT salary)</td></tr>
 <tr><td port="2">sum(DISTINCT salary) FILTER (WHERE (date_format(CAST(hiredate AS TIMESTAMP), yyyy-MM-dd HH:mm:ss) &gt; 2001-01-01 00:00:00))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_806" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -239,7 +239,7 @@ digraph {
 <tr><td port="4">sum(emp.`salary`)</td></tr>
 <tr><td port="5">sum(emp.`salary`) FILTER (WHERE ((emp.`id` + emp.`dept_id`) &gt; 500))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_807" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -250,7 +250,7 @@ digraph {
 <tr><td port="3">sum(salary)</td></tr>
 <tr><td port="4">sum(salary) FILTER (WHERE ((id + dept_id) &gt; 500))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_810" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -259,7 +259,7 @@ digraph {
 <tr><td port="1">gid</td></tr>
 <tr><td port="2">(date_format(CAST(emp.`hiredate` AS TIMESTAMP), 'yyyy-MM-dd HH:mm:ss') = '2001-01-01 00:00:00')</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_811" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -267,7 +267,7 @@ digraph {
   <tr><td port="0">count(DISTINCT id)</td></tr>
 <tr><td port="1">count(DISTINCT id) FILTER (WHERE (date_format(CAST(hiredate AS TIMESTAMP), yyyy-MM-dd HH:mm:ss) = 2001-01-01 00:00:00))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_813" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -276,7 +276,7 @@ digraph {
 <tr><td port="1">avg(salary)</td></tr>
 <tr><td port="2">avg(salary) FILTER (WHERE (id &gt; scalarsubquery()))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_818" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -289,7 +289,7 @@ digraph {
 <tr><td port="5">(emp.`hiredate` &gt; DATE '2003-01-01')</td></tr>
 <tr><td port="6">sum(emp.`salary`) FILTER (WHERE (emp.`salary` &lt; 400.0D))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_819" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -299,7 +299,7 @@ digraph {
 <tr><td port="2">count(DISTINCT hiredate) FILTER (WHERE (hiredate &gt; DATE '2003-01-01'))</td></tr>
 <tr><td port="3">sum(salary) FILTER (WHERE (salary &lt; 400.0))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_822" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -307,21 +307,21 @@ digraph {
   <tr><td port="0">gid</td></tr>
 <tr><td port="1">(testdata.`a` = 1)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_823" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_823</i></td></tr>
   <tr><td port="0">count(DISTINCT 1) FILTER (WHERE (a = 1))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_825" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_825</i></td></tr>
   <tr><td port="0">count(id) FILTER (WHERE (hiredate = DATE '2001-01-01'))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_827" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -333,7 +333,7 @@ digraph {
 <tr><td port="4">(emp.`hiredate` &gt; DATE '2003-01-01')</td></tr>
 <tr><td port="5">sum(emp.`salary`)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_828" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -343,7 +343,7 @@ digraph {
 <tr><td port="2">count(DISTINCT emp_name) FILTER (WHERE (hiredate &gt; DATE '2003-01-01'))</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_831" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -353,7 +353,7 @@ digraph {
 <tr><td port="2">(emp.`id` &gt; 200)</td></tr>
 <tr><td port="3">sum(emp.`salary`)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_832" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -363,7 +363,7 @@ digraph {
 <tr><td port="2">count(DISTINCT 1) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_834" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -375,7 +375,7 @@ digraph {
 <tr><td port="4">sum(emp.`salary`)</td></tr>
 <tr><td port="5">sum(emp.`salary`) FILTER (WHERE (emp.`id` &gt; 200))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_835" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -386,7 +386,7 @@ digraph {
 <tr><td port="3">sum(salary)</td></tr>
 <tr><td port="4">sum(salary) FILTER (WHERE (id &gt; 200))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_838" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -398,7 +398,7 @@ digraph {
 <tr><td port="4">sum(emp.`salary`)</td></tr>
 <tr><td port="5">sum(emp.`salary`) FILTER (WHERE (emp.`id` &gt; 200))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_839" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -409,7 +409,7 @@ digraph {
 <tr><td port="3">sum(salary)</td></tr>
 <tr><td port="4">sum(salary) FILTER (WHERE (id &gt; 200))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_840" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -417,7 +417,7 @@ digraph {
   <tr><td port="0">(a + b)</td></tr>
 <tr><td port="1">count(b) FILTER (WHERE (b &gt;= 2))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_843" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -428,7 +428,7 @@ digraph {
 <tr><td port="3">(date_format(CAST(emp.`hiredate` AS TIMESTAMP), 'yyyy-MM-dd') &gt; '2001-01-01')</td></tr>
 <tr><td port="4">count(1)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_844" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -438,7 +438,7 @@ digraph {
 <tr><td port="2">sum(DISTINCT salary)</td></tr>
 <tr><td port="3">sum(DISTINCT salary) FILTER (WHERE (date_format(CAST(hiredate AS TIMESTAMP), yyyy-MM-dd) &gt; 2001-01-01))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_846" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -450,7 +450,7 @@ digraph {
 <tr><td port="4">sum(emp.`salary`) FILTER (WHERE (emp.`salary` &lt; 400.0D))</td></tr>
 <tr><td port="5">sum(emp.`salary`) FILTER (WHERE ((emp.`id` + emp.`dept_id`) &gt; 500))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_847" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -461,14 +461,14 @@ digraph {
 <tr><td port="3">sum(salary) FILTER (WHERE (salary &lt; 400.0))</td></tr>
 <tr><td port="4">sum(salary) FILTER (WHERE ((id + dept_id) &gt; 500))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_849" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_849</i></td></tr>
   <tr><td port="0">count(DISTINCT id) FILTER (WHERE true)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_850" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -476,7 +476,7 @@ digraph {
   <tr><td port="0">a</td></tr>
 <tr><td port="1">count(b) FILTER (WHERE (a &gt;= 2))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_854" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -487,7 +487,7 @@ digraph {
 <tr><td port="3">(emp.`id` &gt; 200)</td></tr>
 <tr><td port="4">sum(emp.`salary`)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_855" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -497,7 +497,7 @@ digraph {
 <tr><td port="2">count(DISTINCT emp_name) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_857" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -510,7 +510,7 @@ digraph {
 <tr><td port="5">(emp.`hiredate` &gt; DATE '2003-01-01')</td></tr>
 <tr><td port="6">sum(emp.`salary`) FILTER (WHERE (emp.`salary` &lt; 400.0D))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_858" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -520,7 +520,7 @@ digraph {
 <tr><td port="2">count(DISTINCT hiredate) FILTER (WHERE (hiredate &gt; DATE '2003-01-01'))</td></tr>
 <tr><td port="3">sum(salary) FILTER (WHERE (salary &lt; 400.0))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_861" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -530,7 +530,7 @@ digraph {
 <tr><td port="2">gid</td></tr>
 <tr><td port="3">(date_format(CAST(emp.`hiredate` AS TIMESTAMP), 'yyyy-MM-dd HH:mm:ss') &gt; '2001-01-01 00:00:00')</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_862" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -538,7 +538,7 @@ digraph {
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">sum(DISTINCT salary) FILTER (WHERE (date_format(CAST(hiredate AS TIMESTAMP), yyyy-MM-dd HH:mm:ss) &gt; 2001-01-01 00:00:00))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_863" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -546,7 +546,7 @@ digraph {
   <tr><td port="0">count(a) FILTER (WHERE (a = 1))</td></tr>
 <tr><td port="1">count(b) FILTER (WHERE (a &gt; 1))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_866" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -555,14 +555,14 @@ digraph {
 <tr><td port="1">gid</td></tr>
 <tr><td port="2">(date_format(CAST(emp.`hiredate` AS TIMESTAMP), 'yyyy-MM-dd HH:mm:ss') = '2001-01-01 00:00:00')</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_867" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_867</i></td></tr>
   <tr><td port="0">count(DISTINCT id) FILTER (WHERE (date_format(CAST(hiredate AS TIMESTAMP), yyyy-MM-dd HH:mm:ss) = 2001-01-01 00:00:00))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_868" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -570,7 +570,7 @@ digraph {
   <tr><td port="0">k</td></tr>
 <tr><td port="1">count(b) FILTER (WHERE (b &gt; 0))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_870" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -583,7 +583,7 @@ digraph {
 <tr><td port="5">(emp.`hiredate` &gt; DATE '2003-01-01')</td></tr>
 <tr><td port="6">sum(emp.`salary`)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_871" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -593,7 +593,7 @@ digraph {
 <tr><td port="2">count(DISTINCT hiredate) FILTER (WHERE (hiredate &gt; DATE '2003-01-01'))</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_874" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -603,7 +603,7 @@ digraph {
 <tr><td port="2">(emp.`hiredate` = DATE '2001-01-01')</td></tr>
 <tr><td port="3">sum(emp.`salary`)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_875" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -612,7 +612,7 @@ digraph {
 <tr><td port="1">count(DISTINCT id)</td></tr>
 <tr><td port="2">count(DISTINCT id) FILTER (WHERE (hiredate = DATE '2001-01-01'))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_877" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -620,7 +620,7 @@ digraph {
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">sum(salary) FILTER (WHERE (CAST(hiredate AS TIMESTAMP) &gt; to_timestamp(2003-01-01 00:00:00)))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_879" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -632,7 +632,7 @@ digraph {
 <tr><td port="4">(emp.`id` &gt; 0)</td></tr>
 <tr><td port="5">sum(emp.`salary`)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_880" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -641,7 +641,7 @@ digraph {
 <tr><td port="1">count(DISTINCT emp_name, hiredate) FILTER (WHERE (id &gt; 0))</td></tr>
 <tr><td port="2">sum(salary)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_883" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -652,7 +652,7 @@ digraph {
 <tr><td port="3">(emp.`id` &gt; 200)</td></tr>
 <tr><td port="4">sum(emp.`salary`)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_884" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -662,7 +662,7 @@ digraph {
 <tr><td port="2">count(DISTINCT emp_name)</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_885" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -670,7 +670,7 @@ digraph {
   <tr><td port="0">foo</td></tr>
 <tr><td port="1">count(a) FILTER (WHERE (b &lt;= 2))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_887" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -682,7 +682,7 @@ digraph {
 <tr><td port="4">sum(emp.`salary`) FILTER (WHERE (emp.`salary` &lt; 400.0D))</td></tr>
 <tr><td port="5">sum(emp.`salary`) FILTER (WHERE (emp.`id` &gt; 200))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_888" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -693,7 +693,7 @@ digraph {
 <tr><td port="3">sum(salary) FILTER (WHERE (salary &lt; 400.0))</td></tr>
 <tr><td port="4">sum(salary) FILTER (WHERE (id &gt; 200))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_890" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -701,7 +701,7 @@ digraph {
   <tr><td port="0">foo</td></tr>
 <tr><td port="1">max(struct(a)) FILTER (WHERE (b &gt;= 1))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_893" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -712,7 +712,7 @@ digraph {
 <tr><td port="3">(emp.`hiredate` &gt; DATE '2001-01-01')</td></tr>
 <tr><td port="4">(date_format(CAST(emp.`hiredate` AS TIMESTAMP), 'yyyy-MM-dd HH:mm:ss') &gt; '2001-01-01 00:00:00')</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_894" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -721,7 +721,7 @@ digraph {
 <tr><td port="1">sum(DISTINCT salary) FILTER (WHERE (hiredate &gt; DATE '2001-01-01'))</td></tr>
 <tr><td port="2">sum(DISTINCT salary) FILTER (WHERE (date_format(CAST(hiredate AS TIMESTAMP), yyyy-MM-dd HH:mm:ss) &gt; 2001-01-01 00:00:00))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_897" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -733,7 +733,7 @@ digraph {
 <tr><td port="4">sum(emp.`salary`)</td></tr>
 <tr><td port="5">sum(emp.`salary`) FILTER (WHERE (emp.`id` &gt; 200))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_898" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -744,7 +744,7 @@ digraph {
 <tr><td port="3">sum(salary)</td></tr>
 <tr><td port="4">sum(salary) FILTER (WHERE (id &gt; 200))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_901" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -757,7 +757,7 @@ digraph {
 <tr><td port="5">(emp.`hiredate` &gt; DATE '2003-01-01')</td></tr>
 <tr><td port="6">sum(emp.`salary`)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_902" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -767,7 +767,7 @@ digraph {
 <tr><td port="2">count(DISTINCT hiredate) FILTER (WHERE (hiredate &gt; DATE '2003-01-01'))</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_905" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -777,7 +777,7 @@ digraph {
 <tr><td port="2">(CAST(emp.`hiredate` AS TIMESTAMP) = TIMESTAMP '2001-01-01 00:00:00')</td></tr>
 <tr><td port="3">(emp.`hiredate` = DATE '2001-01-01')</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_906" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -785,7 +785,7 @@ digraph {
   <tr><td port="0">count(DISTINCT id) FILTER (WHERE (CAST(hiredate AS TIMESTAMP) = to_timestamp(2001-01-01 00:00:00)))</td></tr>
 <tr><td port="1">count(DISTINCT id) FILTER (WHERE (hiredate = to_date(2001-01-01 00:00:00)))</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_909" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -796,7 +796,7 @@ digraph {
 <tr><td port="3">((emp.`id` + emp.`dept_id`) &gt; 500)</td></tr>
 <tr><td port="4">sum(emp.`salary`)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_910" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -805,7 +805,7 @@ digraph {
 <tr><td port="1">count(DISTINCT emp_name) FILTER (WHERE ((id + dept_id) &gt; 500))</td></tr>
 <tr><td port="2">sum(salary)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_913" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -813,7 +813,7 @@ digraph {
   <tr><td port="0">gid</td></tr>
 <tr><td port="1">(emp.`dept_id` = 40)</td></tr>
 </table>>];
-         
+     
 
 "Aggregate_914" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -821,7 +821,7 @@ digraph {
   <tr><td port="0">count(DISTINCT 2)</td></tr>
 <tr><td port="1">count(DISTINCT 2, 3) FILTER (WHERE (dept_id = 40))</td></tr>
 </table>>];
-         
+     
 
 "Expand_762" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -833,7 +833,7 @@ digraph {
 <tr><td port="4">(emp.`id` &gt; 200)</td></tr>
 <tr><td port="5">emp.`salary`</td></tr>
 </table>>];
-         
+     
 
 "Expand_775" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -845,7 +845,7 @@ digraph {
 <tr><td port="4">(emp.`id` &gt; 200)</td></tr>
 <tr><td port="5">emp.`salary`</td></tr>
 </table>>];
-         
+     
 
 "Expand_783" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -856,7 +856,7 @@ digraph {
 <tr><td port="3">(emp.`id` &gt; 200)</td></tr>
 <tr><td port="4">emp.`salary`</td></tr>
 </table>>];
-         
+     
 
 "Expand_786" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -868,7 +868,7 @@ digraph {
 <tr><td port="4">(emp.`id` &gt; 200)</td></tr>
 <tr><td port="5">emp.`salary`</td></tr>
 </table>>];
-         
+     
 
 "Expand_789" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -878,7 +878,7 @@ digraph {
 <tr><td port="2">gid</td></tr>
 <tr><td port="3">(testdata.`a` = 1)</td></tr>
 </table>>];
-         
+     
 
 "Expand_794" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -889,7 +889,7 @@ digraph {
 <tr><td port="3">((emp.`id` + emp.`dept_id`) &gt; 500)</td></tr>
 <tr><td port="4">emp.`salary`</td></tr>
 </table>>];
-         
+     
 
 "Expand_797" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -903,7 +903,7 @@ digraph {
 <tr><td port="6">emp.`salary`</td></tr>
 <tr><td port="7">emp.`id`</td></tr>
 </table>>];
-         
+     
 
 "Expand_801" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -913,7 +913,7 @@ digraph {
 <tr><td port="2">gid</td></tr>
 <tr><td port="3">(date_format(CAST(emp.`hiredate` AS TIMESTAMP), 'yyyy-MM-dd HH:mm:ss') &gt; '2001-01-01 00:00:00')</td></tr>
 </table>>];
-         
+     
 
 "Expand_805" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -926,7 +926,7 @@ digraph {
 <tr><td port="5">emp.`id`</td></tr>
 <tr><td port="6">emp.`dept_id`</td></tr>
 </table>>];
-         
+     
 
 "Expand_809" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -935,7 +935,7 @@ digraph {
 <tr><td port="1">gid</td></tr>
 <tr><td port="2">(date_format(CAST(emp.`hiredate` AS TIMESTAMP), 'yyyy-MM-dd HH:mm:ss') = '2001-01-01 00:00:00')</td></tr>
 </table>>];
-         
+     
 
 "Expand_817" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -948,7 +948,7 @@ digraph {
 <tr><td port="5">(emp.`hiredate` &gt; DATE '2003-01-01')</td></tr>
 <tr><td port="6">emp.`salary`</td></tr>
 </table>>];
-         
+     
 
 "Expand_821" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -957,7 +957,7 @@ digraph {
 <tr><td port="1">gid</td></tr>
 <tr><td port="2">(testdata.`a` = 1)</td></tr>
 </table>>];
-         
+     
 
 "Expand_826" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -969,7 +969,7 @@ digraph {
 <tr><td port="4">(emp.`hiredate` &gt; DATE '2003-01-01')</td></tr>
 <tr><td port="5">emp.`salary`</td></tr>
 </table>>];
-         
+     
 
 "Expand_830" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -980,7 +980,7 @@ digraph {
 <tr><td port="3">(emp.`id` &gt; 200)</td></tr>
 <tr><td port="4">emp.`salary`</td></tr>
 </table>>];
-         
+     
 
 "Expand_833" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -992,7 +992,7 @@ digraph {
 <tr><td port="4">emp.`salary`</td></tr>
 <tr><td port="5">emp.`id`</td></tr>
 </table>>];
-         
+     
 
 "Expand_837" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1004,7 +1004,7 @@ digraph {
 <tr><td port="4">emp.`salary`</td></tr>
 <tr><td port="5">emp.`id`</td></tr>
 </table>>];
-         
+     
 
 "Expand_842" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1014,7 +1014,7 @@ digraph {
 <tr><td port="2">gid</td></tr>
 <tr><td port="3">(date_format(CAST(emp.`hiredate` AS TIMESTAMP), 'yyyy-MM-dd') &gt; '2001-01-01')</td></tr>
 </table>>];
-         
+     
 
 "Expand_845" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1027,7 +1027,7 @@ digraph {
 <tr><td port="5">emp.`id`</td></tr>
 <tr><td port="6">emp.`dept_id`</td></tr>
 </table>>];
-         
+     
 
 "Expand_853" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1038,7 +1038,7 @@ digraph {
 <tr><td port="3">(emp.`id` &gt; 200)</td></tr>
 <tr><td port="4">emp.`salary`</td></tr>
 </table>>];
-         
+     
 
 "Expand_856" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1051,7 +1051,7 @@ digraph {
 <tr><td port="5">(emp.`hiredate` &gt; DATE '2003-01-01')</td></tr>
 <tr><td port="6">emp.`salary`</td></tr>
 </table>>];
-         
+     
 
 "Expand_860" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1061,7 +1061,7 @@ digraph {
 <tr><td port="2">gid</td></tr>
 <tr><td port="3">(date_format(CAST(emp.`hiredate` AS TIMESTAMP), 'yyyy-MM-dd HH:mm:ss') &gt; '2001-01-01 00:00:00')</td></tr>
 </table>>];
-         
+     
 
 "Expand_865" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1070,7 +1070,7 @@ digraph {
 <tr><td port="1">gid</td></tr>
 <tr><td port="2">(date_format(CAST(emp.`hiredate` AS TIMESTAMP), 'yyyy-MM-dd HH:mm:ss') = '2001-01-01 00:00:00')</td></tr>
 </table>>];
-         
+     
 
 "Expand_869" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1083,7 +1083,7 @@ digraph {
 <tr><td port="5">(emp.`hiredate` &gt; DATE '2003-01-01')</td></tr>
 <tr><td port="6">emp.`salary`</td></tr>
 </table>>];
-         
+     
 
 "Expand_873" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1093,7 +1093,7 @@ digraph {
 <tr><td port="2">(emp.`hiredate` = DATE '2001-01-01')</td></tr>
 <tr><td port="3">emp.`salary`</td></tr>
 </table>>];
-         
+     
 
 "Expand_878" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1105,7 +1105,7 @@ digraph {
 <tr><td port="4">(emp.`id` &gt; 0)</td></tr>
 <tr><td port="5">emp.`salary`</td></tr>
 </table>>];
-         
+     
 
 "Expand_882" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1116,7 +1116,7 @@ digraph {
 <tr><td port="3">(emp.`id` &gt; 200)</td></tr>
 <tr><td port="4">emp.`salary`</td></tr>
 </table>>];
-         
+     
 
 "Expand_886" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1128,7 +1128,7 @@ digraph {
 <tr><td port="4">emp.`salary`</td></tr>
 <tr><td port="5">emp.`id`</td></tr>
 </table>>];
-         
+     
 
 "Expand_892" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1139,7 +1139,7 @@ digraph {
 <tr><td port="3">(emp.`hiredate` &gt; DATE '2001-01-01')</td></tr>
 <tr><td port="4">(date_format(CAST(emp.`hiredate` AS TIMESTAMP), 'yyyy-MM-dd HH:mm:ss') &gt; '2001-01-01 00:00:00')</td></tr>
 </table>>];
-         
+     
 
 "Expand_896" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1151,7 +1151,7 @@ digraph {
 <tr><td port="4">emp.`salary`</td></tr>
 <tr><td port="5">emp.`id`</td></tr>
 </table>>];
-         
+     
 
 "Expand_900" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1164,7 +1164,7 @@ digraph {
 <tr><td port="5">(emp.`hiredate` &gt; DATE '2003-01-01')</td></tr>
 <tr><td port="6">emp.`salary`</td></tr>
 </table>>];
-         
+     
 
 "Expand_904" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1174,7 +1174,7 @@ digraph {
 <tr><td port="2">(CAST(emp.`hiredate` AS TIMESTAMP) = TIMESTAMP '2001-01-01 00:00:00')</td></tr>
 <tr><td port="3">(emp.`hiredate` = DATE '2001-01-01')</td></tr>
 </table>>];
-         
+     
 
 "Expand_908" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1185,7 +1185,7 @@ digraph {
 <tr><td port="3">((emp.`id` + emp.`dept_id`) &gt; 500)</td></tr>
 <tr><td port="4">emp.`salary`</td></tr>
 </table>>];
-         
+     
 
 "Expand_912" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1194,7 +1194,7 @@ digraph {
 <tr><td port="1">gid</td></tr>
 <tr><td port="2">(emp.`dept_id` = 40)</td></tr>
 </table>>];
-         
+     
 
 "Filter_765" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1202,7 +1202,7 @@ digraph {
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
 </table>>];
-         
+     
 
 "Filter_889" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1210,21 +1210,21 @@ digraph {
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
 </table>>];
-         
+     
 
 "GlobalLimit_774" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>GlobalLimit_774</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 </table>>];
-         
+     
 
 "LocalLimit_773" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>LocalLimit_773</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 </table>>];
-         
+     
 
 "LocalRelation_760" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1233,7 +1233,7 @@ digraph {
 <tr><td port="1">dept_name</td></tr>
 <tr><td port="2">state</td></tr>
 </table>>];
-       
+     
 
 "LocalRelation_771" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1242,7 +1242,7 @@ digraph {
 <tr><td port="1">dept_name</td></tr>
 <tr><td port="2">state</td></tr>
 </table>>];
-       
+     
 
 "LocalRelation_804" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1253,7 +1253,7 @@ digraph {
 <tr><td port="3">salary</td></tr>
 <tr><td port="4">dept_id</td></tr>
 </table>>];
-       
+     
 
 "LocalRelation_851" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1261,21 +1261,21 @@ digraph {
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
 </table>>];
-       
+     
 
 "OneRowRelation_778" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>OneRowRelation_778</i></td></tr>
   
 </table>>];
-       
+     
 
 "OneRowRelation_814" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>OneRowRelation_814</i></td></tr>
   
 </table>>];
-       
+     
 
 "Project_761" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1285,14 +1285,14 @@ digraph {
 <tr><td port="2">salary</td></tr>
 <tr><td port="3">dept_id</td></tr>
 </table>>];
-         
+     
 
 "Project_767" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_767</i></td></tr>
   <tr><td port="0">hiredate</td></tr>
 </table>>];
-         
+     
 
 "Project_769" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1300,14 +1300,14 @@ digraph {
   <tr><td port="0">salary</td></tr>
 <tr><td port="1">dept_id</td></tr>
 </table>>];
-         
+     
 
 "Project_772" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_772</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 </table>>];
-         
+     
 
 "Project_782" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1317,7 +1317,7 @@ digraph {
 <tr><td port="2">salary</td></tr>
 <tr><td port="3">dept_id</td></tr>
 </table>>];
-         
+     
 
 "Project_793" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1327,7 +1327,7 @@ digraph {
 <tr><td port="2">salary</td></tr>
 <tr><td port="3">dept_id</td></tr>
 </table>>];
-         
+     
 
 "Project_800" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1336,7 +1336,7 @@ digraph {
 <tr><td port="1">salary</td></tr>
 <tr><td port="2">dept_id</td></tr>
 </table>>];
-         
+     
 
 "Project_808" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1344,7 +1344,7 @@ digraph {
   <tr><td port="0">id</td></tr>
 <tr><td port="1">hiredate</td></tr>
 </table>>];
-         
+     
 
 "Project_812" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1353,14 +1353,14 @@ digraph {
 <tr><td port="1">salary</td></tr>
 <tr><td port="2">dept_id</td></tr>
 </table>>];
-         
+     
 
 "Project_815" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_815</i></td></tr>
   <tr><td port="0">200</td></tr>
 </table>>];
-         
+     
 
 "Project_816" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1370,21 +1370,21 @@ digraph {
 <tr><td port="2">salary</td></tr>
 <tr><td port="3">dept_id</td></tr>
 </table>>];
-         
+     
 
 "Project_820" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_820</i></td></tr>
   <tr><td port="0">a</td></tr>
 </table>>];
-         
+     
 
 "Project_824" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_824</i></td></tr>
   <tr><td port="0">hiredate</td></tr>
 </table>>];
-         
+     
 
 "Project_829" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1393,7 +1393,7 @@ digraph {
 <tr><td port="1">salary</td></tr>
 <tr><td port="2">dept_id</td></tr>
 </table>>];
-         
+     
 
 "Project_836" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1403,7 +1403,7 @@ digraph {
 <tr><td port="2">salary</td></tr>
 <tr><td port="3">dept_id</td></tr>
 </table>>];
-         
+     
 
 "Project_841" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1412,14 +1412,14 @@ digraph {
 <tr><td port="1">salary</td></tr>
 <tr><td port="2">dept_id</td></tr>
 </table>>];
-         
+     
 
 "Project_848" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_848</i></td></tr>
   <tr><td port="0">id</td></tr>
 </table>>];
-         
+     
 
 "Project_852" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1429,7 +1429,7 @@ digraph {
 <tr><td port="2">salary</td></tr>
 <tr><td port="3">dept_id</td></tr>
 </table>>];
-         
+     
 
 "Project_859" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1438,7 +1438,7 @@ digraph {
 <tr><td port="1">salary</td></tr>
 <tr><td port="2">dept_id</td></tr>
 </table>>];
-         
+     
 
 "Project_864" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1446,7 +1446,7 @@ digraph {
   <tr><td port="0">id</td></tr>
 <tr><td port="1">hiredate</td></tr>
 </table>>];
-         
+     
 
 "Project_872" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1455,7 +1455,7 @@ digraph {
 <tr><td port="1">hiredate</td></tr>
 <tr><td port="2">salary</td></tr>
 </table>>];
-         
+     
 
 "Project_876" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1464,7 +1464,7 @@ digraph {
 <tr><td port="1">salary</td></tr>
 <tr><td port="2">dept_id</td></tr>
 </table>>];
-         
+     
 
 "Project_881" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1474,7 +1474,7 @@ digraph {
 <tr><td port="2">salary</td></tr>
 <tr><td port="3">dept_id</td></tr>
 </table>>];
-         
+     
 
 "Project_891" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1483,7 +1483,7 @@ digraph {
 <tr><td port="1">salary</td></tr>
 <tr><td port="2">dept_id</td></tr>
 </table>>];
-         
+     
 
 "Project_895" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1493,7 +1493,7 @@ digraph {
 <tr><td port="2">salary</td></tr>
 <tr><td port="3">dept_id</td></tr>
 </table>>];
-         
+     
 
 "Project_899" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1503,7 +1503,7 @@ digraph {
 <tr><td port="2">salary</td></tr>
 <tr><td port="3">dept_id</td></tr>
 </table>>];
-         
+     
 
 "Project_903" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1511,7 +1511,7 @@ digraph {
   <tr><td port="0">id</td></tr>
 <tr><td port="1">hiredate</td></tr>
 </table>>];
-         
+     
 
 "Project_907" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1521,14 +1521,14 @@ digraph {
 <tr><td port="2">salary</td></tr>
 <tr><td port="3">dept_id</td></tr>
 </table>>];
-         
+     
 
 "Project_911" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_911</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
 </table>>];
-         
+     
 
 "dept" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1537,7 +1537,7 @@ digraph {
 <tr><td port="1">dept_name</td></tr>
 <tr><td port="2">state</td></tr>
 </table>>];
-           
+     
 
 "emp" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1548,25 +1548,7 @@ digraph {
 <tr><td port="3">salary</td></tr>
 <tr><td port="4">dept_id</td></tr>
 </table>>];
-       
-
-"emp" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow" port="nodeName"><i>emp</i></td></tr>
-  <tr><td port="0">id</td></tr>
-<tr><td port="1">emp_name</td></tr>
-<tr><td port="2">hiredate</td></tr>
-<tr><td port="3">salary</td></tr>
-<tr><td port="4">dept_id</td></tr>
-</table>>];
-           
-
-"t1" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow" port="nodeName"><i>t1</i></td></tr>
-  <tr><td port="0">b</td></tr>
-</table>>];
-       
+     
 
 "t1" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1574,21 +1556,21 @@ digraph {
   <tr><td port="0">first(a)</td></tr>
 <tr><td port="1">count(b) FILTER (WHERE (a &gt;= 2))</td></tr>
 </table>>];
-           
+     
 
 "t10" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t10</i></td></tr>
   <tr><td port="0">count(DISTINCT id) FILTER (WHERE true)</td></tr>
 </table>>];
-           
+     
 
 "t11" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t11</i></td></tr>
   <tr><td port="0">count(DISTINCT id) FILTER (WHERE false)</td></tr>
 </table>>];
-           
+     
 
 "t12" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1596,7 +1578,7 @@ digraph {
   <tr><td port="0">count(DISTINCT 2)</td></tr>
 <tr><td port="1">count(DISTINCT 2, 3) FILTER (WHERE (dept_id = 40))</td></tr>
 </table>>];
-           
+     
 
 "t13" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1604,7 +1586,7 @@ digraph {
   <tr><td port="0">a</td></tr>
 <tr><td port="1">count(b) FILTER (WHERE (a &gt;= 2))</td></tr>
 </table>>];
-           
+     
 
 "t14" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1612,7 +1594,7 @@ digraph {
   <tr><td port="0">count(a) FILTER (WHERE (a &gt;= 0))</td></tr>
 <tr><td port="1">count(b) FILTER (WHERE (a &gt;= 3))</td></tr>
 </table>>];
-           
+     
 
 "t15" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1620,7 +1602,7 @@ digraph {
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">sum(salary) FILTER (WHERE (CAST(hiredate AS TIMESTAMP) &gt; to_timestamp(2003-01-01 00:00:00)))</td></tr>
 </table>>];
-           
+     
 
 "t16" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1628,7 +1610,7 @@ digraph {
   <tr><td port="0">dept_id</td></tr>
 <tr><td port="1">sum(DISTINCT salary) FILTER (WHERE (date_format(CAST(hiredate AS TIMESTAMP), yyyy-MM-dd HH:mm:ss) &gt; 2001-01-01 00:00:00))</td></tr>
 </table>>];
-           
+     
 
 "t17" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1637,7 +1619,7 @@ digraph {
 <tr><td port="1">sum(DISTINCT salary)</td></tr>
 <tr><td port="2">sum(DISTINCT salary) FILTER (WHERE (date_format(CAST(hiredate AS TIMESTAMP), yyyy-MM-dd HH:mm:ss) &gt; 2001-01-01 00:00:00))</td></tr>
 </table>>];
-           
+     
 
 "t18" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1646,7 +1628,7 @@ digraph {
 <tr><td port="1">sum(DISTINCT salary) FILTER (WHERE (hiredate &gt; DATE '2001-01-01'))</td></tr>
 <tr><td port="2">sum(DISTINCT salary) FILTER (WHERE (date_format(CAST(hiredate AS TIMESTAMP), yyyy-MM-dd HH:mm:ss) &gt; 2001-01-01 00:00:00))</td></tr>
 </table>>];
-           
+     
 
 "t19" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1656,7 +1638,7 @@ digraph {
 <tr><td port="2">sum(DISTINCT salary)</td></tr>
 <tr><td port="3">sum(DISTINCT salary) FILTER (WHERE (date_format(CAST(hiredate AS TIMESTAMP), yyyy-MM-dd) &gt; 2001-01-01))</td></tr>
 </table>>];
-           
+     
 
 "t2" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1664,7 +1646,7 @@ digraph {
   <tr><td port="0">count(a) FILTER (WHERE (a = 1))</td></tr>
 <tr><td port="1">count(b) FILTER (WHERE (a &gt; 1))</td></tr>
 </table>>];
-           
+     
 
 "t20" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1672,7 +1654,7 @@ digraph {
   <tr><td port="0">b</td></tr>
 <tr><td port="1">count(DISTINCT 1) FILTER (WHERE (a = 1))</td></tr>
 </table>>];
-           
+     
 
 "t21" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1680,7 +1662,7 @@ digraph {
   <tr><td port="0">foo</td></tr>
 <tr><td port="1">count(a) FILTER (WHERE (b &lt;= 2))</td></tr>
 </table>>];
-           
+     
 
 "t22" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1691,7 +1673,7 @@ digraph {
 <tr><td port="3">sum(salary)</td></tr>
 <tr><td port="4">sum(salary) FILTER (WHERE (id &gt; 200))</td></tr>
 </table>>];
-           
+     
 
 "t23" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1702,7 +1684,7 @@ digraph {
 <tr><td port="3">sum(salary)</td></tr>
 <tr><td port="4">sum(salary) FILTER (WHERE ((id + dept_id) &gt; 500))</td></tr>
 </table>>];
-           
+     
 
 "t24" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1713,7 +1695,7 @@ digraph {
 <tr><td port="3">sum(salary) FILTER (WHERE (salary &lt; 400.0))</td></tr>
 <tr><td port="4">sum(salary) FILTER (WHERE (id &gt; 200))</td></tr>
 </table>>];
-           
+     
 
 "t25" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1724,7 +1706,7 @@ digraph {
 <tr><td port="3">sum(salary) FILTER (WHERE (salary &lt; 400.0))</td></tr>
 <tr><td port="4">sum(salary) FILTER (WHERE ((id + dept_id) &gt; 500))</td></tr>
 </table>>];
-           
+     
 
 "t26" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1733,7 +1715,7 @@ digraph {
 <tr><td port="1">count(DISTINCT emp_name) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="2">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t27" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1742,7 +1724,7 @@ digraph {
 <tr><td port="1">count(DISTINCT emp_name) FILTER (WHERE ((id + dept_id) &gt; 500))</td></tr>
 <tr><td port="2">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t28" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1752,7 +1734,7 @@ digraph {
 <tr><td port="2">count(DISTINCT emp_name) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t29" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1762,14 +1744,14 @@ digraph {
 <tr><td port="2">count(DISTINCT emp_name) FILTER (WHERE ((id + dept_id) &gt; 500))</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t3" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t3</i></td></tr>
   <tr><td port="0">count(id) FILTER (WHERE (hiredate = DATE '2001-01-01'))</td></tr>
 </table>>];
-           
+     
 
 "t30" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1780,7 +1762,7 @@ digraph {
 <tr><td port="3">sum(salary)</td></tr>
 <tr><td port="4">sum(salary) FILTER (WHERE (id &gt; 200))</td></tr>
 </table>>];
-           
+     
 
 "t31" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1791,7 +1773,7 @@ digraph {
 <tr><td port="3">sum(salary)</td></tr>
 <tr><td port="4">sum(salary) FILTER (WHERE (id &gt; 200))</td></tr>
 </table>>];
-           
+     
 
 "t32" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1801,7 +1783,7 @@ digraph {
 <tr><td port="2">count(DISTINCT hiredate)</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t33" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1811,7 +1793,7 @@ digraph {
 <tr><td port="2">count(DISTINCT hiredate) FILTER (WHERE (hiredate &gt; DATE '2003-01-01'))</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t34" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1821,7 +1803,7 @@ digraph {
 <tr><td port="2">count(DISTINCT hiredate) FILTER (WHERE (hiredate &gt; DATE '2003-01-01'))</td></tr>
 <tr><td port="3">sum(salary) FILTER (WHERE (salary &lt; 400.0))</td></tr>
 </table>>];
-           
+     
 
 "t35" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1832,7 +1814,7 @@ digraph {
 <tr><td port="3">sum(salary) FILTER (WHERE (salary &lt; 400.0))</td></tr>
 <tr><td port="4">sum(salary) FILTER (WHERE (id &gt; 200))</td></tr>
 </table>>];
-           
+     
 
 "t36" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1842,7 +1824,7 @@ digraph {
 <tr><td port="2">count(DISTINCT emp_name)</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t37" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1852,7 +1834,7 @@ digraph {
 <tr><td port="2">count(DISTINCT emp_name) FILTER (WHERE (hiredate &gt; DATE '2003-01-01'))</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t38" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1862,7 +1844,7 @@ digraph {
 <tr><td port="2">count(DISTINCT hiredate)</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t39" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1872,14 +1854,14 @@ digraph {
 <tr><td port="2">count(DISTINCT hiredate) FILTER (WHERE (hiredate &gt; DATE '2003-01-01'))</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t4" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t4</i></td></tr>
   <tr><td port="0">count(id) FILTER (WHERE (CAST(hiredate AS TIMESTAMP) = to_timestamp(2001-01-01 00:00:00)))</td></tr>
 </table>>];
-           
+     
 
 "t40" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1889,7 +1871,7 @@ digraph {
 <tr><td port="2">count(DISTINCT hiredate) FILTER (WHERE (hiredate &gt; DATE '2003-01-01'))</td></tr>
 <tr><td port="3">sum(salary) FILTER (WHERE (salary &lt; 400.0))</td></tr>
 </table>>];
-           
+     
 
 "t41" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1898,7 +1880,7 @@ digraph {
 <tr><td port="1">count(DISTINCT emp_name, hiredate) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="2">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t42" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1907,7 +1889,7 @@ digraph {
 <tr><td port="1">count(DISTINCT emp_name, hiredate) FILTER (WHERE (id &gt; 0))</td></tr>
 <tr><td port="2">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t43" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1917,7 +1899,7 @@ digraph {
 <tr><td port="2">count(DISTINCT 1) FILTER (WHERE (id &gt; 200))</td></tr>
 <tr><td port="3">sum(salary)</td></tr>
 </table>>];
-           
+     
 
 "t44" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1925,7 +1907,7 @@ digraph {
   <tr><td port="0">foo</td></tr>
 <tr><td port="1">approx_count_distinct(a) FILTER (WHERE (b &gt;= 0))</td></tr>
 </table>>];
-           
+     
 
 "t45" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1933,7 +1915,7 @@ digraph {
   <tr><td port="0">foo</td></tr>
 <tr><td port="1">max(struct(a)) FILTER (WHERE (b &gt;= 1))</td></tr>
 </table>>];
-           
+     
 
 "t46" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1941,7 +1923,7 @@ digraph {
   <tr><td port="0">(a + b)</td></tr>
 <tr><td port="1">count(b) FILTER (WHERE (b &gt;= 2))</td></tr>
 </table>>];
-           
+     
 
 "t47" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1949,7 +1931,7 @@ digraph {
   <tr><td port="0">count(DISTINCT b) FILTER (WHERE (b &gt; 0))</td></tr>
 <tr><td port="1">count(DISTINCT b, c) FILTER (WHERE ((b &gt; 0) AND (c &gt; 2)))</td></tr>
 </table>>];
-           
+     
 
 "t48" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1957,7 +1939,7 @@ digraph {
   <tr><td port="0">k</td></tr>
 <tr><td port="1">count(b) FILTER (WHERE (b &gt; 0))</td></tr>
 </table>>];
-           
+     
 
 "t49" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1966,14 +1948,14 @@ digraph {
 <tr><td port="1">avg(salary)</td></tr>
 <tr><td port="2">avg(salary) FILTER (WHERE (id &gt; scalarsubquery()))</td></tr>
 </table>>];
-           
+     
 
 "t5" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t5</i></td></tr>
   <tr><td port="0">count(DISTINCT id) FILTER (WHERE (date_format(CAST(hiredate AS TIMESTAMP), yyyy-MM-dd HH:mm:ss) = 2001-01-01 00:00:00))</td></tr>
 </table>>];
-           
+     
 
 "t50" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1982,14 +1964,14 @@ digraph {
 <tr><td port="1">avg(salary)</td></tr>
 <tr><td port="2">avg(salary) FILTER (WHERE (dept_id = scalarsubquery()))</td></tr>
 </table>>];
-           
+     
 
 "t51" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t51</i></td></tr>
   <tr><td port="0">b</td></tr>
 </table>>];
-           
+     
 
 "t6" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -1997,7 +1979,7 @@ digraph {
   <tr><td port="0">count(DISTINCT id)</td></tr>
 <tr><td port="1">count(DISTINCT id) FILTER (WHERE (date_format(CAST(hiredate AS TIMESTAMP), yyyy-MM-dd HH:mm:ss) = 2001-01-01 00:00:00))</td></tr>
 </table>>];
-           
+     
 
 "t7" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -2005,7 +1987,7 @@ digraph {
   <tr><td port="0">count(DISTINCT id) FILTER (WHERE (CAST(hiredate AS TIMESTAMP) = to_timestamp(2001-01-01 00:00:00)))</td></tr>
 <tr><td port="1">count(DISTINCT id) FILTER (WHERE (hiredate = to_date(2001-01-01 00:00:00)))</td></tr>
 </table>>];
-           
+     
 
 "t8" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -2014,14 +1996,14 @@ digraph {
 <tr><td port="1">count(DISTINCT id)</td></tr>
 <tr><td port="2">count(DISTINCT id) FILTER (WHERE (hiredate = DATE '2001-01-01'))</td></tr>
 </table>>];
-           
+     
 
 "t9" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t9</i></td></tr>
   <tr><td port="0">count(DISTINCT 1) FILTER (WHERE (a = 1))</td></tr>
 </table>>];
-           
+     
 
 "testdata" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -2029,15 +2011,7 @@ digraph {
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
 </table>>];
-       
-
-"testdata" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow" port="nodeName"><i>testdata</i></td></tr>
-  <tr><td port="0">a</td></tr>
-<tr><td port="1">b</td></tr>
-</table>>];
-           
+     
   "Aggregate_759":0 -> "t1":0;
 "Aggregate_759":1 -> "t1":1;
 "Aggregate_763":0 -> "Aggregate_764":0;
@@ -2853,7 +2827,6 @@ digraph {
 "emp":4 -> "Project_899":3;
 "emp":4 -> "Project_907":3;
 "emp":4 -> "Project_911":0;
-"t1":0 -> "t51":0;
 "testdata":0 -> "Aggregate_759":0;
 "testdata":0 -> "Aggregate_759":1;
 "testdata":0 -> "Aggregate_792":0;

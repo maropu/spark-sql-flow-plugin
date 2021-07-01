@@ -82,14 +82,16 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
         SQLFlow.debugPrintAsSQLFlow()
       }
       checkOutputString(flowString,
-        s"""digraph {
+        s"""
+           |digraph {
            |  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
            |  node [shape=plain]
            |  rankdir=LR;
            |
-           |  "Aggregate_x" [label=<
+           |
+           |  "Aggregate_1133" [label=<
            |  <table border="1" cellborder="0" cellspacing="0">
-           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_x</i></td></tr>
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_1133</i></td></tr>
            |    <tr><td port="0">k</td></tr>
            |  <tr><td port="1">sum(v)</td></tr>
            |  </table>>];
@@ -102,18 +104,10 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |  <tr><td port="1">sum(v)</td></tr>
            |  </table>>];
            |
-           |
-           |  "t" [label=<
-           |  <table border="1" cellborder="0" cellspacing="0">
-           |    <tr><td bgcolor="lightyellow" port="nodeName"><i>t</i></td></tr>
-           |    <tr><td port="0">k</td></tr>
-           |  <tr><td port="1">v</td></tr>
-           |  </table>>];
-           |
-           |  "Aggregate_x":0 -> "t":0;
-           |  "Aggregate_x":1 -> "t":1;
-           |  "t":0 -> "Aggregate_x":0;
-           |  "t":1 -> "Aggregate_x":1;
+           |  "Aggregate_1133":0 -> "t":0;
+           |  "Aggregate_1133":1 -> "t":1;
+           |  "t":0 -> "Aggregate_1133":0;
+           |  "t":1 -> "Aggregate_1133":1;
            |}
          """.stripMargin)
     }
@@ -132,6 +126,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
            |  node [shape=plain]
            |  rankdir=LR;
+           |
            |
            |  "Aggregate_x" [label=<
            |  <table border="1" cellborder="0" cellspacing="0">
@@ -166,10 +161,12 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
         SQLFlow.saveAsSQLFlow(s"${dirPath.getAbsolutePath}/d")
         val flowString = fileToString(new File(s"${dirPath.getAbsolutePath}/d/sqlflow.dot"))
         checkOutputString(flowString,
-          s"""digraph {
+          s"""
+             |digraph {
              |  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
              |  node [shape=plain]
              |  rankdir=LR;
+             |
              |
              |  "Aggregate_x" [label=<
              |  <table border="1" cellborder="0" cellspacing="0">
@@ -178,18 +175,12 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
              |  <tr><td port="1">sum(v)</td></tr>
              |  </table>>];
              |
-             |  "t" [label=<
-             |  <table border="1" cellborder="0" cellspacing="0">
-             |    <tr><td bgcolor="lightyellow" port="nodeName"><i>t</i></td></tr>
-             |    <tr><td port="0">k</td></tr>
-             |  <tr><td port="1">sum(v)</td></tr>
-             |  </table>>];
              |
              |  "t" [label=<
              |  <table border="1" cellborder="0" cellspacing="0">
              |    <tr><td bgcolor="lightyellow" port="nodeName"><i>t</i></td></tr>
              |    <tr><td port="0">k</td></tr>
-             |  <tr><td port="1">v</td></tr>
+             |  <tr><td port="1">sum(v)</td></tr>
              |  </table>>];
              |
              |  "Aggregate_x":0 -> "t":0;
