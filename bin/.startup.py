@@ -19,13 +19,12 @@
 
 from pyspark.sql import SparkSession
 
-# Install DataSketches APIs as built-in functions
 spark = SparkSession.builder.getOrCreate()
 jvm = spark.sparkContext._active_spark_context._jvm
-jvm.DataSketchApi.install()
 
-# TODO: Refresh a Spark session to load the functions
-spark = spark.newSession()
+def saveAsSQLFlow(path: str, format: str = "svg", contracted: bool = False):
+    jvm.SQLFlowApi.saveAsSQLFlow(path, format, contracted)
 
-print("DataSketches APIs available as built-in functions.")
+def debugPrintAsSQLFlow(contracted: bool = False):
+    jvm.SQLFlowApi.debugPrintAsSQLFlow(contracted)
 
