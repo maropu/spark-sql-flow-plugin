@@ -398,11 +398,18 @@ case class SQLContractedFlow() extends BaseSQLFlow {
         val missingRefs = (AttributeSet(planOutput) -- plan.producedAttributes).filterNot { a =>
           candidateOutputRefs.contains(a.exprId)
         }
-        assert(missingRefs.isEmpty,
-          s"""refMap does not have enough entries for ${plan.nodeName}:
-             |missingRefs: ${missingRefs.mkString(", ")}
-             |${plan.treeString}
-           """.stripMargin)
+        if (missingRefs.nonEmpty) {
+          val warningMsg =
+            s"""refMap does not have enough entries for ${plan.nodeName}:
+               |missingRefs: ${missingRefs.mkString(", ")}
+               |${plan.treeString}
+             """.stripMargin
+          if (!SQLFlow.isTesting) {
+            logWarning(warningMsg)
+          } else {
+            assert(false, warningMsg)
+          }
+        }
     }
   }
 
@@ -547,6 +554,11 @@ object SQLFlow extends PredicateHelper with Logging {
     }.getOrElse {
       logWarning(s"Active SparkSession not found")
     }
+  }
+
+  // Indicates whether Spark is currently running unit tests
+  private[sql] lazy val isTesting: Boolean = {
+    System.getenv("SPARK_TESTING") != null || System.getProperty("spark.testing") != null
   }
 
   def debugPrintAsSQLFlow(contracted: Boolean = false): Unit = {
