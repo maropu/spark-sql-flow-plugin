@@ -288,6 +288,33 @@ object SQLFlow extends PredicateHelper with Logging {
           case _ =>
         }
       }
+
+      val inputAttrs = plan.children.flatMap(_.output)
+      val candidateOutputRefs = (inputAttrs.map(_.exprId) ++ inputAttrs.flatMap { a =>
+        refMap.get(a.exprId)
+      }.flatten).toSet
+      val planOutput = plan match {
+        case Project(projList, _) =>
+          projList.flatMap { ne =>
+            if (ne.references.nonEmpty) Some(ne.toAttribute) else None
+          }
+
+        case Aggregate(_, aggregateExprs, _) =>
+          aggregateExprs.flatMap { ne =>
+            if (ne.references.nonEmpty) Some(ne.toAttribute) else None
+          }
+
+        case _ =>
+          plan.output
+      }
+      val missingRefs = (AttributeSet(planOutput) -- plan.producedAttributes).filterNot { a =>
+        candidateOutputRefs.contains(a.exprId)
+      }
+      assert(missingRefs.isEmpty,
+        s"""refMap does not have enough entries for ${plan.nodeName}:
+           |missingRefs: ${missingRefs.mkString(", ")}
+           |${plan.treeString}
+           |""".stripMargin)
   }
 
   private[sql] def catalogToSQLFlow(session: SparkSession): String = {
