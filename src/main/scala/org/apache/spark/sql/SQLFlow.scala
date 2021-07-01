@@ -138,9 +138,9 @@ object SQLFlow extends PredicateHelper with Logging {
         case s @ SubqueryAlias(AliasIdentifier(name, Nil), _) if tempViewMap.contains(name) =>
           TempView(name, s.output)
       }
-      val optimized = session.sessionState.optimizer.execute(normalized)
 
       val refMap = mutable.HashMap[ExprId, mutable.Set[ExprId]]()
+      val optimized = session.sessionState.optimizer.execute(normalized)
       val inputNodes = collectRefsRecursively(optimized, refMap)
 
       if (!optimized.isInstanceOf[TempView]) {
@@ -157,14 +157,18 @@ object SQLFlow extends PredicateHelper with Logging {
              |</table>>];
            """.stripMargin
 
-        def traverseRefs(exprId: ExprId, depth: Int = 0): Seq[ExprId] = {
-          if (depth > 100) {
+        def traverseInRefMap(
+            exprId: ExprId,
+            depth: Int = 0,
+            seen: Set[ExprId] = Set.empty[ExprId]): Seq[ExprId] = {
+          if (seen.contains(exprId) || depth > 128) {
+            // Cyclic case
             Nil
           } else {
             refMap.get(exprId).map { exprIds =>
               exprIds.flatMap { id =>
                 if (exprId != id) {
-                  traverseRefs(id, depth + 1)
+                  traverseInRefMap(id, depth + 1, seen + exprId)
                 } else {
                   id :: Nil
                 }
@@ -176,7 +180,7 @@ object SQLFlow extends PredicateHelper with Logging {
         val outputAttrMap = optimized.output.map(_.exprId).zipWithIndex.toMap
         val edgeEntries = inputNodes.flatMap { case (inputNodeId, _, input) =>
           input.zipWithIndex.flatMap { case (a, i) =>
-            traverseRefs(a.exprId).flatMap { attr =>
+            traverseInRefMap(a.exprId).flatMap { attr =>
               if (outputAttrMap.contains(attr)) {
                 Some(s""""$inputNodeId":$i -> $tempView:${outputAttrMap(attr)}""")
               } else {
