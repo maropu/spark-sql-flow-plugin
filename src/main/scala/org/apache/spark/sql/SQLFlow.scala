@@ -140,11 +140,8 @@ object SQLFlow extends PredicateHelper with Logging {
       }
       val optimized = session.sessionState.optimizer.execute(normalized)
 
-      val refMapBuf = mutable.ArrayBuffer[(Attribute, Seq[Attribute])]()
-      val inputNodes = collectRefsRecursively(optimized, refMapBuf)
-      val refMap = refMapBuf.groupBy(_._1.exprId).map { case (exprId, refs) =>
-        exprId -> refs.flatMap(_._2.map(_.exprId)).distinct
-      }
+      val refMap = mutable.HashMap[ExprId, mutable.Set[ExprId]]()
+      val inputNodes = collectRefsRecursively(optimized, refMap)
 
       if (!optimized.isInstanceOf[TempView]) {
         val outputAttrs = optimized.output.zipWithIndex.map { case (attr, i) =>
@@ -172,7 +169,7 @@ object SQLFlow extends PredicateHelper with Logging {
                   id :: Nil
                 }
               }
-            }.getOrElse(exprId :: Nil)
+            }.map(_.toSeq).getOrElse(exprId :: Nil)
           }
         }
 
@@ -214,8 +211,8 @@ object SQLFlow extends PredicateHelper with Logging {
   }
 
   private def collectRefsRecursively(
-    plan: LogicalPlan,
-    refMapBuf: mutable.ArrayBuffer[(Attribute, Seq[Attribute])])
+      plan: LogicalPlan,
+      refMap: mutable.HashMap[ExprId, mutable.Set[ExprId]])
     : Seq[(String, String, Seq[Attribute])] = plan match {
     case _: LeafNode =>
       val nodeName = plan match {
@@ -241,53 +238,50 @@ object SQLFlow extends PredicateHelper with Logging {
       Seq((nodeName, nodeInfo, plan.output))
 
     case _ =>
-      val refs = plan.children.flatMap(collectRefsRecursively(_, refMapBuf))
+      val refs = plan.children.flatMap(collectRefsRecursively(_, refMap))
       if (plan.output.nonEmpty) {
-        val newRefs = plan match {
+        def addRefsToMap(k: Attribute, v: Seq[Attribute]): Unit = {
+          val refs = refMap.getOrElseUpdate(k.exprId, mutable.Set[ExprId]())
+          refs ++= v.map(_.exprId)
+        }
+        plan match {
           case a @ Aggregate(_, aggExprs, _) =>
-            aggExprs.zip(a.output).flatMap { case (ae, outputAttr) =>
-              ae.references.map(_ -> Seq(outputAttr))
+            aggExprs.zip(a.output).foreach { case (ae, outputAttr) =>
+              ae.references.foreach(addRefsToMap(_, Seq(outputAttr)))
             }
 
           case p @ Project(projList, _) =>
-            projList.zip(p.output).flatMap { case (ae, outputAttr) =>
-              ae.references.map(_ -> Seq(outputAttr))
+            projList.zip(p.output).foreach { case (ae, outputAttr) =>
+              ae.references.foreach(addRefsToMap(_, Seq(outputAttr)))
             }
 
           case Generate(generator, _, _, _, generatorOutput, _) =>
-            generator.references.flatMap { a =>
-              generatorOutput.map { outputAttr => a -> Seq(outputAttr) }
+            generator.references.foreach { a =>
+              generatorOutput.foreach { outputAttr => addRefsToMap(a, Seq(outputAttr)) }
             }
 
           case e @ Expand(projections, _, _) =>
-            projections.transpose.zip(e.output).flatMap { case (projs, outputAttr) =>
-              projs.flatMap(_.references).map(_ -> Seq(outputAttr)).distinct
+            projections.transpose.zip(e.output).foreach { case (projs, outputAttr) =>
+              projs.flatMap(_.references).foreach(addRefsToMap(_, Seq(outputAttr)))
             }
 
           case u: Union =>
-            u.children.map(_.output).transpose.zip(u.output).flatMap { case (attrs, outputAttr) =>
-              attrs.filter(_ != outputAttr).map { _ -> Seq(outputAttr) }
+            u.children.map(_.output).transpose.zip(u.output).foreach { case (attrs, outputAttr) =>
+              attrs.foreach(addRefsToMap(_, Seq(outputAttr)))
             }
 
-          case Join(_, _, _, Some(condition), _) =>
-            condition.collect { case BinaryComparison(e1, e2) => (e1, e2) }
-                .flatMap { case (e1, e2) =>
-              e1.references.flatMap { a1 =>
-                e2.references.flatMap { a2 =>
-                  Seq(a1 -> Seq(a1, a2), a2 -> Seq(a1, a2))
-                }
-              }
+          case Join(_, _, _, Some(c), _) =>
+            c.collect { case BinaryComparison(e1, e2) => (e1, e2) }.foreach { case (e1, e2) =>
+              e1.references.foreach { a1 => e2.references.foreach { a2 =>
+                addRefsToMap(a1, Seq(a1, a2))
+                addRefsToMap(a2, Seq(a1, a2))
+              }}
             }
 
           case _ =>
-            Nil
         }
-
-        refMapBuf ++= newRefs
-        refs
-      } else {
-        refs
       }
+      refs
   }
 
   private[sql] def catalogToSQLFlow(session: SparkSession): String = {
