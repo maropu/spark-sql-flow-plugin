@@ -16,9 +16,18 @@ digraph {
 </table>>];
      
 
-"LocalRelation_2" [label=<
+"LocalRelation_1" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_2</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_1</i></td></tr>
+  <tr><td port="0">dept_id</td></tr>
+<tr><td port="1">dept_name</td></tr>
+<tr><td port="2">state</td></tr>
+</table>>];
+     
+
+"LocalRelation_3" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_3</i></td></tr>
   <tr><td port="0">id</td></tr>
 <tr><td port="1">emp_name</td></tr>
 <tr><td port="2">hiredate</td></tr>
@@ -27,17 +36,24 @@ digraph {
 </table>>];
      
 
-"LocalRelation_3" [label=<
+"LocalRelation_5" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_3</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_5</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
 </table>>];
      
 
-"OneRowRelation_1" [label=<
+"OneRowRelation_2" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>OneRowRelation_1</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>OneRowRelation_2</i></td></tr>
+  
+</table>>];
+     
+
+"OneRowRelation_4" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightpink" port="nodeName"><i>OneRowRelation_4</i></td></tr>
   
 </table>>];
      
@@ -527,13 +543,14 @@ digraph {
   "LocalRelation_0":0 -> dept:0
 "LocalRelation_0":1 -> dept:1
 "LocalRelation_0":2 -> dept:2
-"LocalRelation_2":0 -> emp:0
-"LocalRelation_2":1 -> emp:1
-"LocalRelation_2":2 -> emp:2
-"LocalRelation_2":3 -> emp:3
-"LocalRelation_2":4 -> emp:4
-"LocalRelation_3":0 -> testdata:0
-"LocalRelation_3":1 -> testdata:1
+"LocalRelation_1":0 -> t50:nodeName
+"LocalRelation_3":0 -> emp:0
+"LocalRelation_3":1 -> emp:1
+"LocalRelation_3":2 -> emp:2
+"LocalRelation_3":3 -> emp:3
+"LocalRelation_3":4 -> emp:4
+"LocalRelation_5":0 -> testdata:0
+"LocalRelation_5":1 -> testdata:1
 "emp":0 -> t10:0
 "emp":0 -> t22:4
 "emp":0 -> t23:4
