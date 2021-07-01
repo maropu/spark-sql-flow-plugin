@@ -28,7 +28,7 @@ import scala.util.Try
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql.catalyst.AliasIdentifier
 import org.apache.spark.sql.catalyst.catalog.HiveTableRelation
-import org.apache.spark.sql.catalyst.expressions.{Attribute, AttributeMap, AttributeSet, BinaryComparison, ExprId, PredicateHelper, ScalarSubquery}
+import org.apache.spark.sql.catalyst.expressions._
 import org.apache.spark.sql.catalyst.plans.LeftExistence
 import org.apache.spark.sql.catalyst.plans.logical._
 import org.apache.spark.sql.catalyst.util._
@@ -242,79 +242,104 @@ object SQLFlow extends PredicateHelper with Logging {
 
   private def collectRefsRecursively(
       plan: LogicalPlan,
-      refMap: mutable.HashMap[ExprId, mutable.Set[ExprId]]): Unit = plan match {
-    case _: LeafNode =>
-    case _ =>
-      plan.children.foreach(collectRefsRecursively(_, refMap))
-      if (plan.output.nonEmpty) {
-        def addRefsToMap(k: Attribute, v: Seq[Attribute]): Unit = {
-          val refs = refMap.getOrElseUpdate(k.exprId, mutable.Set[ExprId]())
-          refs ++= v.map(_.exprId)
+      refMap: mutable.HashMap[ExprId, mutable.Set[ExprId]]): Unit = {
+
+    object JoinCondition {
+      def unapply(cond: Option[Expression]): Option[Seq[(Expression, Expression)]] = {
+        cond match {
+          case Some(c) =>
+            val comps = c.collect { case BinaryComparison(e1, e2) => (e1, e2) }
+            if (comps.nonEmpty) {
+              Some(comps)
+            } else {
+              None
+            }
+          case _ =>
+            None
         }
-        plan match {
-          case a @ Aggregate(_, aggExprs, _) =>
-            aggExprs.zip(a.output).foreach { case (ae, outputAttr) =>
-              ae.references.foreach(addRefsToMap(_, Seq(outputAttr)))
-            }
+      }
+    }
 
-          case p @ Project(projList, _) =>
-            projList.zip(p.output).foreach { case (ae, outputAttr) =>
-              ae.references.foreach(addRefsToMap(_, Seq(outputAttr)))
-            }
+    plan match {
+      case _: LeafNode =>
+      case _ =>
+        plan.children.foreach(collectRefsRecursively(_, refMap))
+        if (plan.output.nonEmpty) {
+          def addRefsToMap(k: Attribute, v: Seq[Attribute]): Unit = {
+            val refs = refMap.getOrElseUpdate(k.exprId, mutable.Set[ExprId]())
+            refs ++= v.map(_.exprId)
+          }
+          plan match {
+            case a @ Aggregate(_, aggExprs, _) =>
+              aggExprs.zip(a.output).foreach { case (ae, outputAttr) =>
+                ae.references.foreach(addRefsToMap(_, Seq(outputAttr)))
+              }
 
-          case Generate(generator, _, _, _, generatorOutput, _) =>
-            generator.references.foreach { a =>
-              generatorOutput.foreach { outputAttr => addRefsToMap(a, Seq(outputAttr)) }
-            }
+            case p @ Project(projList, _) =>
+              projList.zip(p.output).foreach { case (ae, outputAttr) =>
+                ae.references.foreach(addRefsToMap(_, Seq(outputAttr)))
+              }
 
-          case e @ Expand(projections, _, _) =>
-            projections.transpose.zip(e.output).foreach { case (projs, outputAttr) =>
-              projs.flatMap(_.references).foreach(addRefsToMap(_, Seq(outputAttr)))
-            }
+            case Generate(generator, _, _, _, generatorOutput, _) =>
+              generator.references.foreach { a =>
+                generatorOutput.foreach { outputAttr => addRefsToMap(a, Seq(outputAttr)) }
+              }
 
-          case u: Union =>
-            u.children.map(_.output).transpose.zip(u.output).foreach { case (attrs, outputAttr) =>
-              attrs.foreach(addRefsToMap(_, Seq(outputAttr)))
-            }
+            case e @ Expand(projections, _, _) =>
+              projections.transpose.zip(e.output).foreach { case (projs, outputAttr) =>
+                projs.flatMap(_.references).foreach(addRefsToMap(_, Seq(outputAttr)))
+              }
 
-          case Join(_, _, _, Some(c), _) =>
-            c.collect { case BinaryComparison(e1, e2) => (e1, e2) }.foreach { case (e1, e2) =>
-              e1.references.foreach { a1 => e2.references.foreach { a2 =>
+            case u: Union =>
+              u.children.map(_.output).transpose.zip(u.output).foreach { case (attrs, outputAttr) =>
+                attrs.foreach(addRefsToMap(_, Seq(outputAttr)))
+              }
+
+            case Join(_, _, _, JoinCondition(preds), _) =>
+              preds.foreach { case (e1, e2) =>
+                e1.references.foreach { a1 => e2.references.foreach { a2 =>
+                  addRefsToMap(a1, Seq(a1, a2))
+                  addRefsToMap(a2, Seq(a1, a2))
+                }}
+              }
+
+            case Join(left, right, _, _, _) =>
+              left.output.foreach { a1 => right.output.foreach { a2 =>
                 addRefsToMap(a1, Seq(a1, a2))
                 addRefsToMap(a2, Seq(a1, a2))
               }}
+
+            case _ =>
+          }
+        }
+
+        val inputAttrs = plan.children.flatMap(_.output)
+        val candidateOutputRefs = (inputAttrs.map(_.exprId) ++ inputAttrs.flatMap { a =>
+          refMap.get(a.exprId)
+        }.flatten).toSet
+        val planOutput = plan match {
+          case Project(projList, _) =>
+            projList.flatMap { ne =>
+              if (ne.references.nonEmpty) Some(ne.toAttribute) else None
+            }
+
+          case Aggregate(_, aggregateExprs, _) =>
+            aggregateExprs.flatMap { ne =>
+              if (ne.references.nonEmpty) Some(ne.toAttribute) else None
             }
 
           case _ =>
+            plan.output
         }
-      }
-
-      val inputAttrs = plan.children.flatMap(_.output)
-      val candidateOutputRefs = (inputAttrs.map(_.exprId) ++ inputAttrs.flatMap { a =>
-        refMap.get(a.exprId)
-      }.flatten).toSet
-      val planOutput = plan match {
-        case Project(projList, _) =>
-          projList.flatMap { ne =>
-            if (ne.references.nonEmpty) Some(ne.toAttribute) else None
-          }
-
-        case Aggregate(_, aggregateExprs, _) =>
-          aggregateExprs.flatMap { ne =>
-            if (ne.references.nonEmpty) Some(ne.toAttribute) else None
-          }
-
-        case _ =>
-          plan.output
-      }
-      val missingRefs = (AttributeSet(planOutput) -- plan.producedAttributes).filterNot { a =>
-        candidateOutputRefs.contains(a.exprId)
-      }
-      assert(missingRefs.isEmpty,
-        s"""refMap does not have enough entries for ${plan.nodeName}:
-           |missingRefs: ${missingRefs.mkString(", ")}
-           |${plan.treeString}
-           |""".stripMargin)
+        val missingRefs = (AttributeSet(planOutput) -- plan.producedAttributes).filterNot { a =>
+          candidateOutputRefs.contains(a.exprId)
+        }
+        assert(missingRefs.isEmpty,
+          s"""refMap does not have enough entries for ${plan.nodeName}:
+             |missingRefs: ${missingRefs.mkString(", ")}
+             |${plan.treeString}
+             |""".stripMargin)
+    }
   }
 
   private[sql] def catalogToSQLFlow(session: SparkSession): String = {
