@@ -139,9 +139,35 @@ object SQLFlow extends PredicateHelper with Logging {
           TempView(name, s.output)
       }
 
-      val refMap = mutable.HashMap[ExprId, mutable.Set[ExprId]]()
       val optimized = session.sessionState.optimizer.execute(normalized)
-      val inputNodes = collectRefsRecursively(optimized, refMap)
+
+      // Collect input nodes
+      val inputNodes = optimized.collectLeaves().map { p =>
+        val nodeName = p match {
+          case TempView(name, _) => name
+          case LogicalRelation(_, _, Some(table), false) => table.qualifiedName
+          case HiveTableRelation(table, _, _, _, _) => table.qualifiedName
+          case _ => s"${p.nodeName}_${nextNodeId.getAndIncrement()}"
+        }
+        val outputAttrWithIndex = p.output.zipWithIndex
+        val outputAttrs = outputAttrWithIndex.map { case (attr, i) =>
+          s"""<tr><td port="$i">${normalizeForHtml(attr.name)}</td></tr>"""
+        }
+        val nodeInfo =
+          s"""
+             |"$nodeName" [label=<
+             |<table border="1" cellborder="0" cellspacing="0">
+             |  <tr><td bgcolor="${nodeColor(p)}"><i>$nodeName</i></td></tr>
+             |  ${outputAttrs.mkString("\n")}
+             |</table>>];
+           """.stripMargin
+
+        (nodeName, nodeInfo, p.output)
+      }
+
+      // Collect references between input/output
+      val refMap = mutable.HashMap[ExprId, mutable.Set[ExprId]]()
+      collectRefsRecursively(optimized, refMap)
 
       if (!optimized.isInstanceOf[TempView]) {
         val outputAttrs = optimized.output.zipWithIndex.map { case (attr, i) =>
@@ -216,33 +242,10 @@ object SQLFlow extends PredicateHelper with Logging {
 
   private def collectRefsRecursively(
       plan: LogicalPlan,
-      refMap: mutable.HashMap[ExprId, mutable.Set[ExprId]])
-    : Seq[(String, String, Seq[Attribute])] = plan match {
+      refMap: mutable.HashMap[ExprId, mutable.Set[ExprId]]): Unit = plan match {
     case _: LeafNode =>
-      val nodeName = plan match {
-        case TempView(name, _) => name
-        case LogicalRelation(_, _, Some(table), false) => table.qualifiedName
-        case HiveTableRelation(table, _, _, _, _) => table.qualifiedName
-        case _ => s"${plan.nodeName}_${nextNodeId.getAndIncrement()}"
-      }
-      val outputAttrWithIndex = plan.output.zipWithIndex
-      val (outputAttrs, outputAttrMap) = outputAttrWithIndex.map { case (attr, i) =>
-        (s"""<tr><td port="$i">${normalizeForHtml(attr.name)}</td></tr>""",
-          attr -> s""""$nodeName":$i""")
-      }.unzip
-      val nodeInfo =
-        s"""
-           |"$nodeName" [label=<
-           |<table border="1" cellborder="0" cellspacing="0">
-           |  <tr><td bgcolor="${nodeColor(plan)}"><i>$nodeName</i></td></tr>
-           |  ${outputAttrs.mkString("\n")}
-           |</table>>];
-       """.stripMargin
-
-      Seq((nodeName, nodeInfo, plan.output))
-
     case _ =>
-      val refs = plan.children.flatMap(collectRefsRecursively(_, refMap))
+      plan.children.foreach(collectRefsRecursively(_, refMap))
       if (plan.output.nonEmpty) {
         def addRefsToMap(k: Attribute, v: Seq[Attribute]): Unit = {
           val refs = refMap.getOrElseUpdate(k.exprId, mutable.Set[ExprId]())
@@ -285,7 +288,6 @@ object SQLFlow extends PredicateHelper with Logging {
           case _ =>
         }
       }
-      refs
   }
 
   private[sql] def catalogToSQLFlow(session: SparkSession): String = {

@@ -17,7 +17,7 @@ digraph {
 <tr><td port="4">val_timestamp</td></tr>
 <tr><td port="5">cate</td></tr>
 </table>>];
-       
+           
 
 "t1" [label=<
 <table border="1" cellborder="0" cellspacing="0">
@@ -159,18 +159,6 @@ digraph {
 <tr><td port="2">sum(val) OVER (PARTITION BY cate ORDER BY val DESC NULLS LAST RANGE BETWEEN CURRENT ROW AND 1 FOLLOWING)</td></tr>
 </table>>];
            
-
-"testdata" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow"><i>testdata</i></td></tr>
-  <tr><td port="0">val</td></tr>
-<tr><td port="1">val_long</td></tr>
-<tr><td port="2">val_double</td></tr>
-<tr><td port="3">val_date</td></tr>
-<tr><td port="4">val_timestamp</td></tr>
-<tr><td port="5">cate</td></tr>
-</table>>];
-       
 
 "testdata" [label=<
 <table border="1" cellborder="0" cellspacing="0">
