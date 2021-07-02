@@ -260,9 +260,23 @@ case class SQLFlow() extends BaseSQLFlow {
       nodeMap: mutable.Map[String, String]): Seq[String] = {
     val hasSbuqueres = plan.expressions.exists(SubqueryExpression.hasSubquery)
     if (hasSbuqueres) {
+      val planOutputMap = AttributeMap(planOutputWithIndex)
+
+      def collectEdgesInExprs(ne: NamedExpression): Seq[String] = {
+        val attr = ne.toAttribute
+        val ss = ne.collectFirst { case ss: ScalarSubquery => ss }.get
+        val (_, outputAttrMap, e) = traversePlanRecursively(ss.plan, nodeMap)
+        e ++ outputAttrMap.map { case (_, src) =>
+          if (planOutputMap.contains(attr)) {
+            s"""$src -> "$nodeName":${planOutputMap(attr)}"""
+          } else {
+            s"""$src -> "$nodeName":nodeName"""
+          }
+        }
+      }
+
       plan match {
         case Filter(SubqueryPredicate(subqueries), _) =>
-          val planOutputMap = AttributeMap(planOutputWithIndex)
           subqueries.flatMap { case (ss, attrs) =>
             val (_, outputAttrMap, e) = traversePlanRecursively(ss.plan, nodeMap)
             e ++ outputAttrMap.flatMap { case (_, src) =>
@@ -282,8 +296,17 @@ case class SQLFlow() extends BaseSQLFlow {
             }
           }
 
-        case _ =>
-          // TODO: Needs to handle Project/Aggregate nodes
+        case Project(projList, _) =>
+          projList.filter(SubqueryExpression.hasSubquery).flatMap { ne =>
+            collectEdgesInExprs(ne)
+          }
+
+        case Aggregate(_, aggregateExprs, _) =>
+          aggregateExprs.filter(SubqueryExpression.hasSubquery).flatMap { ne =>
+            collectEdgesInExprs(ne)
+          }
+
+        case _ => // fallback case
           val subqueries = plan.expressions.flatMap(_.collect { case ss: ScalarSubquery => ss })
           subqueries.flatMap { ss =>
             val (_, outputAttrMap, e) = traversePlanRecursively(ss.plan, nodeMap)
