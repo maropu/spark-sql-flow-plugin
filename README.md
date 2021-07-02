@@ -24,9 +24,6 @@ Welcome to
    /__ / .__/\_,_/_/ /_/\_\   version 3.1.2
       /_/
 
-Using Python version 3.6.8 (default, Dec 29 2018 19:04:46)
-SparkSession available as 'spark'.
-
 # Defines some views for this example
 scala> sql("CREATE TABLE TestTable (key INT, value INT)")
 scala> sql("CREATE TEMPORARY VIEW TestView1 AS SELECT key, SUM(value) s FROM TestTable GROUP BY key")
