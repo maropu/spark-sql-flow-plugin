@@ -52,13 +52,20 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     val nodeMap = mutable.Map[String, String]()
     val edges = catalog.getTempViewNames.map { tempView =>
       val analyzed = session.sessionState.analyzer.execute(tempViewMap(tempView))
-      val optimized = session.sessionState.optimizer.execute(analyzed.transformDown {
-        case s @ SubqueryAlias(AliasIdentifier(name, Nil), _) if tempViewMap.contains(name) =>
-          TempView(name, s.output)
-      })
+      val optimized = {
+        val plan = analyzed.transformDown {
+          case s @ SubqueryAlias(AliasIdentifier(name, Nil), _) if tempViewMap.contains(name) =>
+            TempView(name, s.output)
+        }.transformUp {
+          case p if isCached(p) =>
+            CachedPlan(p)
+        }
+        session.sessionState.optimizer.execute(plan)
+      }
 
       // Generate a node label for a temporary view if necessary
-      nodeMap.getOrElseUpdate(tempView, generateNodeString(optimized, tempView, "lightyellow"))
+      val nodeColor = if (isCached(tempView)) "lightblue" else "lightyellow"
+      nodeMap.getOrElseUpdate(tempView, generateNodeString(optimized, tempView, nodeColor))
 
       if (!optimized.isInstanceOf[TempView]) {
         collectEdges(tempView, optimized, nodeMap)
@@ -70,6 +77,12 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     }
 
     generateGraphString(nodeMap.values.toSeq, edges.flatten)
+  }
+
+  private def isCached(plan: LogicalPlan): Boolean = {
+    SparkSession.getActiveSession.exists { session =>
+      session.sharedState.cacheManager.lookupCachedData(plan).isDefined
+    }
   }
 
   private def isCached(name: String): Boolean = {
@@ -141,7 +154,7 @@ case class SQLFlow() extends BaseSQLFlow {
       tempView: String,
       plan: LogicalPlan,
       nodeMap: mutable.Map[String, String]): Seq[String] = {
-    val (_, outputAttrMap, edgeEntries) = traversePlanRecursively(plan, nodeMap)
+    val (_, outputAttrMap, edgeEntries) = traversePlanRecursively(plan, nodeMap, isRoot = true)
     val tempViewEdges = outputAttrMap.zipWithIndex.map {
       case ((_, input), i) => s"""$input -> "$tempView":$i;"""
     }
@@ -321,11 +334,13 @@ case class SQLFlow() extends BaseSQLFlow {
 
   private def tryCreateNode(
       plan: LogicalPlan,
-      nodeMap: mutable.Map[String, String]): (String, Seq[(Attribute, String)]) = {
+      nodeMap: mutable.Map[String, String],
+      cached: Boolean = false): (String, Seq[(Attribute, String)]) = {
     val nodeName = getNodeName(plan)
     if (plan.output.nonEmpty) {
       // Generate a node label for a plan if necessary
-      nodeMap.getOrElseUpdate(nodeName, generateNodeString(plan, nodeName))
+      val nodeColor = if (cached) "lightblue" else ""
+      nodeMap.getOrElseUpdate(nodeName, generateNodeString(plan, nodeName, nodeColor))
     }
     val outputAttrMap = createOutputAttrMap(nodeName, plan)
     (nodeName, outputAttrMap)
@@ -339,15 +354,21 @@ case class SQLFlow() extends BaseSQLFlow {
     }
   }
 
-  private def traversePlanRecursively(plan: LogicalPlan, nodeMap: mutable.Map[String, String])
-    : (String, Seq[(Attribute, String)], Seq[String]) = plan match {
+  private def traversePlanRecursively(
+    plan: LogicalPlan,
+    nodeMap: mutable.Map[String, String],
+    cached: Boolean = false,
+    isRoot: Boolean = false): (String, Seq[(Attribute, String)], Seq[String]) = plan match {
     case _: LeafNode =>
       val (nodeName, outputAttrMap) = tryCreateNode(plan, nodeMap)
       (nodeName, outputAttrMap, Nil)
 
+    case CachedPlan(cachedPlan) =>
+      traversePlanRecursively(cachedPlan, nodeMap, cached = !isRoot)
+
     case _ =>
       val edgesInChildren = plan.children.map(traversePlanRecursively(_, nodeMap))
-      val (nodeName, outputAttrMap) = tryCreateNode(plan, nodeMap)
+      val (nodeName, outputAttrMap) = tryCreateNode(plan, nodeMap, cached)
       if (plan.output.nonEmpty) {
         val edges = collectEdges(nodeName, plan, edgesInChildren.map(_._2))
         val edgesInSubqueries = collectEdgesInSubqueries(nodeName, plan, nodeMap)
@@ -567,6 +588,12 @@ case class SQLContractedFlow() extends BaseSQLFlow {
 
     (edgesInSubqueries, candidateEdges)
   }
+}
+
+case class CachedPlan(cachedPlan: LogicalPlan) extends UnaryNode {
+  override lazy val resolved: Boolean = true
+  override def output: Seq[Attribute] = cachedPlan.output
+  override def child: LogicalPlan = cachedPlan
 }
 
 case class TempView(name: String, output: Seq[Attribute]) extends LeafNode {
