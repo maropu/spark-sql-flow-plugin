@@ -62,7 +62,7 @@ class SQLFlowTestSuite extends QueryTest with SharedSparkSession {
   }
 
   protected def ignoreList: Set[String] = Set(
-    // TODO: t Temporarily ignored because the test fails in GitHub Actions
+    // TODO: Temporarily ignored because the test fails in GitHub Actions
     "group-by-filter.sql"
   )
 

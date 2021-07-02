@@ -64,7 +64,7 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
       }
 
       // Generate a node label for a temporary view if necessary
-      val nodeColor = if (isCached(tempView)) "lightblue" else "lightyellow"
+      val nodeColor = if (isCached(analyzed)) "lightblue" else "lightyellow"
       nodeMap.getOrElseUpdate(tempView, generateNodeString(optimized, tempView, nodeColor))
 
       if (!optimized.isInstanceOf[TempView]) {
