@@ -21,7 +21,6 @@ import java.io.File
 import java.net.URI
 
 import org.apache.spark.{SparkConf, TestUtils}
-import org.apache.spark.sql.catalyst.plans.SQLHelper
 import org.apache.spark.sql.catalyst.util.{fileToString, stringToFile}
 import org.apache.spark.sql.internal.SQLConf
 import org.apache.spark.sql.test.SharedSparkSession

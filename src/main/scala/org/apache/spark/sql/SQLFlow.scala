@@ -157,19 +157,19 @@ case class SQLFlow() extends BaseSQLFlow {
   private def collectEdges(
       nodeName: String,
       plan: LogicalPlan,
-      inputAttrSeq: Seq[Seq[(Attribute, String)]],
-      outputAttrs: Seq[(Attribute, Int)]): Seq[String] = {
-    lazy val inputAttrMap = AttributeMap(inputAttrSeq.flatten)
+      inputAttrSeq: Seq[Seq[(Attribute, String)]]): Seq[String] = {
+    val inputAttrMap = AttributeMap(inputAttrSeq.flatten)
+    val outputAttrWithIndex = plan.output.zipWithIndex
     plan match {
       case Aggregate(_, aggExprs, _) =>
-        aggExprs.zip(outputAttrs).flatMap { case (ne, (_, i)) =>
+        aggExprs.zip(outputAttrWithIndex).flatMap { case (ne, (_, i)) =>
           ne.references.filter(inputAttrMap.contains).map { attr =>
             s"""${inputAttrMap(attr)} -> "$nodeName":$i;"""
           }
         }
 
       case Project(projList, _) =>
-        projList.zip(outputAttrs).flatMap { case (ne, (_, i)) =>
+        projList.zip(outputAttrWithIndex).flatMap { case (ne, (_, i)) =>
           ne.references.filter(inputAttrMap.contains).map { attr =>
             s"""${inputAttrMap(attr)} -> "$nodeName":$i;"""
           }
@@ -232,7 +232,7 @@ case class SQLFlow() extends BaseSQLFlow {
         }
 
       case _ =>
-        outputAttrs.flatMap { case (attr, i) =>
+        outputAttrWithIndex.flatMap { case (attr, i) =>
           inputAttrMap.get(attr).map { input => s"""$input -> "$nodeName":$i;"""}
         }
     }
@@ -256,11 +256,10 @@ case class SQLFlow() extends BaseSQLFlow {
   private def collectEdgesInSubqueries(
       nodeName: String,
       plan: LogicalPlan,
-      planOutputWithIndex: Seq[(Attribute, Int)],
       nodeMap: mutable.Map[String, String]): Seq[String] = {
     val hasSbuqueres = plan.expressions.exists(SubqueryExpression.hasSubquery)
     if (hasSbuqueres) {
-      val planOutputMap = AttributeMap(planOutputWithIndex)
+      val planOutputMap = AttributeMap(plan.output.zipWithIndex)
 
       def collectEdgesInExprs(ne: NamedExpression): Seq[String] = {
         val attr = ne.toAttribute
@@ -320,34 +319,38 @@ case class SQLFlow() extends BaseSQLFlow {
     }
   }
 
+  private def tryCreateNode(
+      plan: LogicalPlan,
+      nodeMap: mutable.Map[String, String]): (String, Seq[(Attribute, String)]) = {
+    val nodeName = getNodeName(plan)
+    if (plan.output.nonEmpty) {
+      // Generate a node label for a plan if necessary
+      nodeMap.getOrElseUpdate(nodeName, generateNodeString(plan, nodeName))
+    }
+    val outputAttrMap = createOutputAttrMap(nodeName, plan)
+    (nodeName, outputAttrMap)
+  }
+
+  private def createOutputAttrMap(
+      nodeName: String,
+      plan: LogicalPlan): Seq[(Attribute, String)] = {
+    plan.output.zipWithIndex.map { case (attr, i) =>
+      attr -> s""""$nodeName":$i"""
+    }
+  }
+
   private def traversePlanRecursively(plan: LogicalPlan, nodeMap: mutable.Map[String, String])
     : (String, Seq[(Attribute, String)], Seq[String]) = plan match {
     case _: LeafNode =>
-      val nodeName = getNodeName(plan)
-      nodeMap.getOrElseUpdate(nodeName, generateNodeString(plan, nodeName))
-      val outputAttrMap = plan.output.zipWithIndex.map { case (attr, i) =>
-        attr -> s""""$nodeName":$i"""
-      }
+      val (nodeName, outputAttrMap) = tryCreateNode(plan, nodeMap)
       (nodeName, outputAttrMap, Nil)
 
     case _ =>
       val edgesInChildren = plan.children.map(traversePlanRecursively(_, nodeMap))
-      val nodeName = getNodeName(plan)
-
+      val (nodeName, outputAttrMap) = tryCreateNode(plan, nodeMap)
       if (plan.output.nonEmpty) {
-        // Generate a node label for a plan if necessary
-        nodeMap.getOrElseUpdate(nodeName, generateNodeString(plan, nodeName))
-
-        val outputAttrsWithIndex = plan.output.zipWithIndex
-        val outputAttrMap = outputAttrsWithIndex.map { case (attr, i) =>
-          attr -> s""""$nodeName":$i"""
-        }
-        val edges = collectEdges(nodeName, plan, edgesInChildren.map(_._2), outputAttrsWithIndex)
-
-        // Handles subqueries if necessary
-        val edgesInSubqueries = {
-          collectEdgesInSubqueries(nodeName, plan, outputAttrsWithIndex, nodeMap)
-        }
+        val edges = collectEdges(nodeName, plan, edgesInChildren.map(_._2))
+        val edgesInSubqueries = collectEdgesInSubqueries(nodeName, plan, nodeMap)
 
         (nodeName, outputAttrMap, edges ++ edgesInChildren.flatMap(_._3) ++ edgesInSubqueries)
       } else {
