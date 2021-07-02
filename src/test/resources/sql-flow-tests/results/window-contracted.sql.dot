@@ -33,9 +33,18 @@ digraph {
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t10</i></td></tr>
   <tr><td port="0">val</td></tr>
 <tr><td port="1">cate</td></tr>
+<tr><td port="2">sum(val) OVER (PARTITION BY cate ORDER BY val DESC NULLS LAST RANGE BETWEEN CURRENT ROW AND 1 FOLLOWING)</td></tr>
+</table>>];
+     
+
+"t11" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t11</i></td></tr>
+  <tr><td port="0">val</td></tr>
+<tr><td port="1">cate</td></tr>
 <tr><td port="2">max</td></tr>
-<tr><td port="3">min1</td></tr>
-<tr><td port="4">min2</td></tr>
+<tr><td port="3">min</td></tr>
+<tr><td port="4">min</td></tr>
 <tr><td port="5">count</td></tr>
 <tr><td port="6">sum</td></tr>
 <tr><td port="7">avg</td></tr>
@@ -66,9 +75,9 @@ digraph {
 </table>>];
      
 
-"t11" [label=<
+"t12" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow" port="nodeName"><i>t11</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t12</i></td></tr>
   <tr><td port="0">val</td></tr>
 <tr><td port="1">cate</td></tr>
 <tr><td port="2">first_value</td></tr>
@@ -80,9 +89,9 @@ digraph {
 </table>>];
      
 
-"t12" [label=<
+"t13" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow" port="nodeName"><i>t12</i></td></tr>
+  <tr><td bgcolor="lightyellow" port="nodeName"><i>t13</i></td></tr>
   <tr><td port="0">cate</td></tr>
 <tr><td port="1">sum(CAST(val AS BIGINT)) OVER (PARTITION BY cate ORDER BY val ASC NULLS FIRST RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)</td></tr>
 </table>>];
@@ -100,9 +109,9 @@ digraph {
 "t3" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t3</i></td></tr>
-  <tr><td port="0">val</td></tr>
+  <tr><td port="0">val_long</td></tr>
 <tr><td port="1">cate</td></tr>
-<tr><td port="2">count(val) OVER (PARTITION BY cate ORDER BY val ASC NULLS FIRST RANGE BETWEEN 1 PRECEDING AND CURRENT ROW)</td></tr>
+<tr><td port="2">sum(val_long) OVER (PARTITION BY cate ORDER BY val_long ASC NULLS FIRST ROWS BETWEEN CURRENT ROW AND 1024 FOLLOWING)</td></tr>
 </table>>];
      
 
@@ -111,52 +120,52 @@ digraph {
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t4</i></td></tr>
   <tr><td port="0">val</td></tr>
 <tr><td port="1">cate</td></tr>
-<tr><td port="2">sum(val) OVER (PARTITION BY cate ORDER BY val ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND 1 FOLLOWING)</td></tr>
+<tr><td port="2">count(val) OVER (PARTITION BY cate ORDER BY val ASC NULLS FIRST RANGE BETWEEN 1 PRECEDING AND CURRENT ROW)</td></tr>
 </table>>];
      
 
 "t5" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t5</i></td></tr>
-  <tr><td port="0">val_long</td></tr>
+  <tr><td port="0">val</td></tr>
 <tr><td port="1">cate</td></tr>
-<tr><td port="2">sum(val_long) OVER (PARTITION BY cate ORDER BY val_long ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND 2147483648 FOLLOWING)</td></tr>
+<tr><td port="2">sum(val) OVER (PARTITION BY cate ORDER BY val ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND 1 FOLLOWING)</td></tr>
 </table>>];
      
 
 "t6" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t6</i></td></tr>
-  <tr><td port="0">val_double</td></tr>
+  <tr><td port="0">val_long</td></tr>
 <tr><td port="1">cate</td></tr>
-<tr><td port="2">sum(val_double) OVER (PARTITION BY cate ORDER BY val_double ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND CAST(2.5 AS DOUBLE) FOLLOWING)</td></tr>
+<tr><td port="2">sum(val_long) OVER (PARTITION BY cate ORDER BY val_long ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND 2147483648 FOLLOWING)</td></tr>
 </table>>];
      
 
 "t7" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t7</i></td></tr>
-  <tr><td port="0">val_date</td></tr>
+  <tr><td port="0">val_double</td></tr>
 <tr><td port="1">cate</td></tr>
-<tr><td port="2">max(val_date) OVER (PARTITION BY cate ORDER BY val_date ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND 2 FOLLOWING)</td></tr>
+<tr><td port="2">sum(val_double) OVER (PARTITION BY cate ORDER BY val_double ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND CAST(2.5 AS DOUBLE) FOLLOWING)</td></tr>
 </table>>];
      
 
 "t8" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t8</i></td></tr>
-  <tr><td port="0">val_timestamp</td></tr>
+  <tr><td port="0">val_date</td></tr>
 <tr><td port="1">cate</td></tr>
-<tr><td port="2">avg(CAST(val_timestamp AS DOUBLE)) OVER (PARTITION BY cate ORDER BY val_timestamp ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND INTERVAL '23 days 4 hours' FOLLOWING)</td></tr>
+<tr><td port="2">max(val_date) OVER (PARTITION BY cate ORDER BY val_date ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND 2 FOLLOWING)</td></tr>
 </table>>];
      
 
 "t9" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t9</i></td></tr>
-  <tr><td port="0">val</td></tr>
+  <tr><td port="0">val_timestamp</td></tr>
 <tr><td port="1">cate</td></tr>
-<tr><td port="2">sum(val) OVER (PARTITION BY cate ORDER BY val DESC NULLS LAST RANGE BETWEEN CURRENT ROW AND 1 FOLLOWING)</td></tr>
+<tr><td port="2">avg(CAST(val_timestamp AS DOUBLE)) OVER (PARTITION BY cate ORDER BY val_timestamp ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND INTERVAL '23 days 4 hours' FOLLOWING)</td></tr>
 </table>>];
      
 
@@ -179,18 +188,20 @@ digraph {
 "LocalRelation_0":5 -> testdata:5
 "testdata":0 -> t10:0
 "testdata":0 -> t11:0
+"testdata":0 -> t12:0
 "testdata":0 -> t1:0
 "testdata":0 -> t2:0
-"testdata":0 -> t3:0
 "testdata":0 -> t4:0
-"testdata":0 -> t9:0
-"testdata":1 -> t5:0
-"testdata":2 -> t6:0
-"testdata":3 -> t7:0
-"testdata":4 -> t8:0
+"testdata":0 -> t5:0
+"testdata":1 -> t3:0
+"testdata":1 -> t6:0
+"testdata":2 -> t7:0
+"testdata":3 -> t8:0
+"testdata":4 -> t9:0
 "testdata":5 -> t10:1
 "testdata":5 -> t11:1
-"testdata":5 -> t12:0
+"testdata":5 -> t12:1
+"testdata":5 -> t13:0
 "testdata":5 -> t1:1
 "testdata":5 -> t2:1
 "testdata":5 -> t3:1

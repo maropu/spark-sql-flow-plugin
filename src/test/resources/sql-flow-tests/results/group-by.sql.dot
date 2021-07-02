@@ -83,13 +83,22 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_22</i></td></tr>
   <tr><td port="0">k</td></tr>
 <tr><td port="1">every(v)</td></tr>
-<tr><td port="2">every(v#1360)</td></tr>
+<tr><td port="2">every(v#661)</td></tr>
 </table>>];
      
 
-"Aggregate_26" [label=<
+"Aggregate_27" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_26</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_27</i></td></tr>
+  <tr><td port="0">__auto_generated_subquery_name.`b`</td></tr>
+<tr><td port="1">__auto_generated_subquery_name.`c`</td></tr>
+<tr><td port="2">gid</td></tr>
+</table>>];
+     
+
+"Aggregate_28" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_28</i></td></tr>
   <tr><td port="0">count(DISTINCT b)</td></tr>
 <tr><td port="1">count(DISTINCT b, c)</td></tr>
 </table>>];
@@ -103,71 +112,71 @@ digraph {
 </table>>];
      
 
-"Aggregate_30" [label=<
+"Aggregate_32" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_30</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_32</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">count(b)</td></tr>
 </table>>];
      
 
-"Aggregate_33" [label=<
+"Aggregate_35" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_33</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_35</i></td></tr>
   <tr><td port="0">foo</td></tr>
-</table>>];
-     
-
-"Aggregate_34" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_34</i></td></tr>
-  <tr><td port="0">(a + b)</td></tr>
-<tr><td port="1">count(b)</td></tr>
 </table>>];
      
 
 "Aggregate_36" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_36</i></td></tr>
-  <tr><td port="0">1</td></tr>
+  <tr><td port="0">(a + b)</td></tr>
+<tr><td port="1">count(b)</td></tr>
 </table>>];
      
 
-"Aggregate_41" [label=<
+"Aggregate_38" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_41</i></td></tr>
-  <tr><td port="0">every(v)</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_38</i></td></tr>
+  <tr><td port="0">1</td></tr>
 </table>>];
      
 
 "Aggregate_43" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_43</i></td></tr>
+  <tr><td port="0">every(v)</td></tr>
+</table>>];
+     
+
+"Aggregate_45" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_45</i></td></tr>
   <tr><td port="0">k</td></tr>
 <tr><td port="1">every</td></tr>
 </table>>];
      
 
-"Aggregate_44" [label=<
+"Aggregate_46" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_44</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_46</i></td></tr>
   <tr><td port="0">k</td></tr>
 <tr><td port="1">every(v)</td></tr>
-<tr><td port="2">every(v#1423)</td></tr>
-</table>>];
-     
-
-"Aggregate_49" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_49</i></td></tr>
-  <tr><td port="0">foo</td></tr>
-<tr><td port="1">max(struct(a))</td></tr>
+<tr><td port="2">every(v#661)</td></tr>
 </table>>];
      
 
 "Aggregate_51" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_51</i></td></tr>
+  <tr><td port="0">foo</td></tr>
+<tr><td port="1">max(struct(a))</td></tr>
+</table>>];
+     
+
+"Aggregate_53" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_53</i></td></tr>
   <tr><td port="0">k</td></tr>
 <tr><td port="1">count(b)</td></tr>
 </table>>];
@@ -177,6 +186,15 @@ digraph {
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_8</i></td></tr>
   <tr><td port="0">any(v)</td></tr>
+</table>>];
+     
+
+"Expand_26" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_26</i></td></tr>
+  <tr><td port="0">__auto_generated_subquery_name.`b`</td></tr>
+<tr><td port="1">__auto_generated_subquery_name.`c`</td></tr>
+<tr><td port="2">gid</td></tr>
 </table>>];
      
 
@@ -193,23 +211,15 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_23</i></td></tr>
   <tr><td port="0">k</td></tr>
 <tr><td port="1">every(v)</td></tr>
-<tr><td port="2">every(v#1360)</td></tr>
+<tr><td port="2">every(v#661)</td></tr>
 </table>>];
      
 
-"Filter_31" [label=<
+"Filter_33" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_31</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_33</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
-</table>>];
-     
-
-"Filter_37" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_37</i></td></tr>
-  <tr><td port="0">k</td></tr>
-<tr><td port="1">v</td></tr>
 </table>>];
      
 
@@ -229,26 +239,34 @@ digraph {
 </table>>];
      
 
-"Filter_45" [label=<
+"Filter_41" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_45</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_41</i></td></tr>
   <tr><td port="0">k</td></tr>
-<tr><td port="1">every(v)</td></tr>
-<tr><td port="2">every(v#1423)</td></tr>
+<tr><td port="1">v</td></tr>
 </table>>];
      
 
 "Filter_47" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_47</i></td></tr>
+  <tr><td port="0">k</td></tr>
+<tr><td port="1">every(v)</td></tr>
+<tr><td port="2">every(v#661)</td></tr>
+</table>>];
+     
+
+"Filter_49" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_49</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
 </table>>];
      
 
-"Filter_50" [label=<
+"Filter_52" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_50</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_52</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
 </table>>];
@@ -262,9 +280,9 @@ digraph {
 </table>>];
      
 
-"Join_LeftSemi_42" [label=<
+"Join_LeftSemi_44" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftSemi_42</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftSemi_44</i></td></tr>
   <tr><td port="0">k</td></tr>
 <tr><td port="1">v</td></tr>
 </table>>];
@@ -293,39 +311,39 @@ digraph {
 </table>>];
      
 
-"LocalRelation_27" [label=<
+"LocalRelation_29" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_27</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_29</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">count(1)</td></tr>
 </table>>];
      
 
-"LocalRelation_28" [label=<
+"LocalRelation_30" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_28</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_30</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
 </table>>];
      
 
-"LocalRelation_29" [label=<
+"LocalRelation_31" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_29</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_31</i></td></tr>
   <tr><td port="0">1</td></tr>
 </table>>];
      
 
-"LocalRelation_35" [label=<
+"LocalRelation_37" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_35</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_37</i></td></tr>
   
 </table>>];
      
 
-"LocalRelation_38" [label=<
+"LocalRelation_40" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_38</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_40</i></td></tr>
   <tr><td port="0">k</td></tr>
 <tr><td port="1">v</td></tr>
 </table>>];
@@ -383,24 +401,24 @@ digraph {
 </table>>];
      
 
-"Project_40" [label=<
+"Project_42" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_40</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_42</i></td></tr>
   <tr><td port="0">v</td></tr>
-</table>>];
-     
-
-"Project_46" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_46</i></td></tr>
-  <tr><td port="0">k</td></tr>
-<tr><td port="1">every(v)</td></tr>
 </table>>];
      
 
 "Project_48" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_48</i></td></tr>
+  <tr><td port="0">k</td></tr>
+<tr><td port="1">every(v)</td></tr>
+</table>>];
+     
+
+"Project_50" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_50</i></td></tr>
   <tr><td port="0">a</td></tr>
 </table>>];
      
@@ -625,54 +643,62 @@ digraph {
 "Aggregate_22":0 -> "Filter_23":0;
 "Aggregate_22":1 -> "Filter_23":1;
 "Aggregate_22":2 -> "Filter_23":2;
-"Aggregate_26":0 -> "t10":0;
-"Aggregate_26":1 -> "t10":1;
+"Aggregate_27":0 -> "Aggregate_28":0;
+"Aggregate_27":0 -> "Aggregate_28":1;
+"Aggregate_27":1 -> "Aggregate_28":1;
+"Aggregate_27":2 -> "Aggregate_28":0;
+"Aggregate_27":2 -> "Aggregate_28":1;
+"Aggregate_28":0 -> "t10":0;
+"Aggregate_28":1 -> "t10":1;
 "Aggregate_3":0 -> "t11":0;
 "Aggregate_3":1 -> "t11":1;
-"Aggregate_30":0 -> "t2":0;
-"Aggregate_30":1 -> "t2":1;
-"Aggregate_33":0 -> "t5":0;
-"Aggregate_34":0 -> "t8":0;
-"Aggregate_34":1 -> "t8":1;
-"Aggregate_36":0 -> "t15":0;
-"Aggregate_41":0 -> "Join_LeftSemi_42":1;
-"Aggregate_43":0 -> "t21":0;
-"Aggregate_43":1 -> "t21":1;
-"Aggregate_44":0 -> "Filter_45":0;
-"Aggregate_44":1 -> "Filter_45":1;
-"Aggregate_44":2 -> "Filter_45":2;
-"Aggregate_49":0 -> "t7":0;
-"Aggregate_49":1 -> "t7":1;
-"Aggregate_51":0 -> "t12":0;
-"Aggregate_51":1 -> "t12":1;
+"Aggregate_32":0 -> "t2":0;
+"Aggregate_32":1 -> "t2":1;
+"Aggregate_35":0 -> "t5":0;
+"Aggregate_36":0 -> "t8":0;
+"Aggregate_36":1 -> "t8":1;
+"Aggregate_38":0 -> "t15":0;
+"Aggregate_43":0 -> "Join_LeftSemi_44":1;
+"Aggregate_45":0 -> "t21":0;
+"Aggregate_45":1 -> "t21":1;
+"Aggregate_46":0 -> "Filter_47":0;
+"Aggregate_46":1 -> "Filter_47":1;
+"Aggregate_46":2 -> "Filter_47":2;
+"Aggregate_51":0 -> "t7":0;
+"Aggregate_51":1 -> "t7":1;
+"Aggregate_53":0 -> "t12":0;
+"Aggregate_53":1 -> "t12":1;
 "Aggregate_8":0 -> "Join_LeftSemi_9":1;
+"Expand_26":0 -> "Aggregate_27":0;
+"Expand_26":1 -> "Aggregate_27":1;
+"Expand_26":2 -> "Aggregate_27":2;
 "Filter_16":0 -> "Project_17":0;
 "Filter_23":0 -> "Project_24":0;
 "Filter_23":1 -> "Project_24":1;
-"Filter_37":0 -> "Join_LeftSemi_42":0;
-"Filter_37":1 -> "Join_LeftSemi_42":1;
-"Filter_39":1 -> "Project_40":0;
+"Filter_39":0 -> "Join_LeftSemi_44":0;
+"Filter_39":1 -> "Join_LeftSemi_44":1;
 "Filter_4":0 -> "Join_LeftSemi_9":0;
 "Filter_4":1 -> "Join_LeftSemi_9":1;
-"Filter_45":0 -> "Project_46":0;
-"Filter_45":1 -> "Project_46":1;
+"Filter_41":1 -> "Project_42":0;
 "Filter_47":0 -> "Project_48":0;
-"Filter_50":0 -> "Aggregate_51":0;
-"Filter_50":1 -> "Aggregate_51":1;
+"Filter_47":1 -> "Project_48":1;
+"Filter_49":0 -> "Project_50":0;
+"Filter_52":0 -> "Aggregate_53":0;
+"Filter_52":1 -> "Aggregate_53":1;
 "Filter_6":1 -> "Project_7":0;
-"Join_LeftSemi_42":0 -> "Aggregate_43":0;
-"Join_LeftSemi_42":1 -> "Aggregate_43":1;
+"Join_LeftSemi_44":0 -> "Aggregate_45":0;
+"Join_LeftSemi_44":1 -> "Aggregate_45":1;
 "Join_LeftSemi_9":0 -> "Aggregate_10":0;
 "Join_LeftSemi_9":1 -> "Aggregate_10":1;
 "LocalRelation_13":0 -> "Project_14":0;
 "LocalRelation_13":1 -> "Project_14":1;
-"LocalRelation_27":0 -> "t13":0;
-"LocalRelation_27":1 -> "t13":1;
-"LocalRelation_28":0 -> "testdata":0;
-"LocalRelation_28":1 -> "testdata":1;
-"LocalRelation_29":0 -> "t16":0;
-"LocalRelation_38":0 -> "Filter_39":0;
-"LocalRelation_38":1 -> "Filter_39":1;
+"LocalRelation_29":0 -> "t13":0;
+"LocalRelation_29":1 -> "t13":1;
+"LocalRelation_30":0 -> "testdata":0;
+"LocalRelation_30":1 -> "testdata":1;
+"LocalRelation_31":0 -> "t16":0;
+"LocalRelation_40":0 -> "Filter_41":0;
+"LocalRelation_40":1 -> "Filter_41":1;
 "LocalRelation_5":0 -> "Filter_6":0;
 "LocalRelation_5":1 -> "Filter_6":1;
 "Project_1":0 -> "Aggregate_2":1;
@@ -692,41 +718,41 @@ digraph {
 "Project_19":0 -> "Aggregate_20":8;
 "Project_24":0 -> "t19":0;
 "Project_24":1 -> "t19":1;
-"Project_40":0 -> "Aggregate_41":0;
-"Project_46":0 -> "t18":0;
-"Project_46":1 -> "t18":1;
-"Project_48":0 -> "Aggregate_49":1;
+"Project_42":0 -> "Aggregate_43":0;
+"Project_48":0 -> "t18":0;
+"Project_48":1 -> "t18":1;
+"Project_50":0 -> "Aggregate_51":1;
 "Project_7":0 -> "Aggregate_8":0;
 "test_agg":0 -> "Aggregate_22":0;
-"test_agg":0 -> "Aggregate_44":0;
-"test_agg":0 -> "Filter_37":0;
+"test_agg":0 -> "Aggregate_46":0;
+"test_agg":0 -> "Filter_39":0;
 "test_agg":0 -> "Filter_4":0;
 "test_agg":1 -> "Aggregate_22":1;
 "test_agg":1 -> "Aggregate_22":2;
-"test_agg":1 -> "Aggregate_44":1;
-"test_agg":1 -> "Aggregate_44":2;
-"test_agg":1 -> "Filter_37":1;
+"test_agg":1 -> "Aggregate_46":1;
+"test_agg":1 -> "Aggregate_46":2;
+"test_agg":1 -> "Filter_39":1;
 "test_agg":1 -> "Filter_4":1;
 "testdata":0 -> "Aggregate_0":0;
 "testdata":0 -> "Aggregate_21":0;
 "testdata":0 -> "Aggregate_3":0;
-"testdata":0 -> "Aggregate_30":0;
-"testdata":0 -> "Aggregate_34":0;
+"testdata":0 -> "Aggregate_32":0;
+"testdata":0 -> "Aggregate_36":0;
 "testdata":0 -> "Filter_16":0;
-"testdata":0 -> "Filter_31":0;
-"testdata":0 -> "Filter_47":0;
-"testdata":0 -> "Filter_50":0;
+"testdata":0 -> "Filter_33":0;
+"testdata":0 -> "Filter_49":0;
+"testdata":0 -> "Filter_52":0;
 "testdata":0 -> "Project_1":0;
 "testdata":0 -> "Project_19":0;
 "testdata":1 -> "Aggregate_0":1;
 "testdata":1 -> "Aggregate_21":1;
 "testdata":1 -> "Aggregate_3":1;
-"testdata":1 -> "Aggregate_30":1;
-"testdata":1 -> "Aggregate_34":0;
-"testdata":1 -> "Aggregate_34":1;
+"testdata":1 -> "Aggregate_32":1;
+"testdata":1 -> "Aggregate_36":0;
+"testdata":1 -> "Aggregate_36":1;
 "testdata":1 -> "Filter_16":1;
-"testdata":1 -> "Filter_31":1;
-"testdata":1 -> "Filter_47":1;
-"testdata":1 -> "Filter_50":1;
+"testdata":1 -> "Filter_33":1;
+"testdata":1 -> "Filter_49":1;
+"testdata":1 -> "Filter_52":1;
 }
        

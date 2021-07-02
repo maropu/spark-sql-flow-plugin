@@ -7,38 +7,38 @@ digraph {
   rankdir=LR;
 
   
-"Aggregate_10" [label=<
+"Aggregate_14" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_10</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_14</i></td></tr>
   <tr><td port="0">count(1)</td></tr>
 </table>>];
      
 
-"Aggregate_15" [label=<
+"Aggregate_9" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_15</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_9</i></td></tr>
   <tr><td port="0">count(1)</td></tr>
 </table>>];
      
 
-"Join_LeftAnti_2" [label=<
+"Join_LeftAnti_1" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftAnti_2</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftAnti_1</i></td></tr>
   <tr><td port="0">a1</td></tr>
 <tr><td port="1">b1</td></tr>
 </table>>];
      
 
-"Join_LeftAnti_8" [label=<
+"Join_LeftAnti_7" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftAnti_8</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftAnti_7</i></td></tr>
   <tr><td port="0">record</td></tr>
 </table>>];
      
 
-"Join_LeftSemi_13" [label=<
+"Join_LeftSemi_12" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftSemi_13</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftSemi_12</i></td></tr>
   <tr><td port="0">record</td></tr>
 </table>>];
      
@@ -51,62 +51,54 @@ digraph {
 </table>>];
      
 
-"LocalRelation_11" [label=<
+"LocalRelation_10" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_11</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_10</i></td></tr>
   <tr><td port="0">a2</td></tr>
 <tr><td port="1">b2</td></tr>
 </table>>];
      
 
-"LocalRelation_4" [label=<
+"LocalRelation_3" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_4</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_3</i></td></tr>
   <tr><td port="0">col1</td></tr>
 <tr><td port="1">col2</td></tr>
 </table>>];
      
 
-"LocalRelation_6" [label=<
+"LocalRelation_5" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_6</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_5</i></td></tr>
   <tr><td port="0">a2</td></tr>
 <tr><td port="1">b2</td></tr>
 </table>>];
      
 
-"Project_1" [label=<
+"Project_11" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_1</i></td></tr>
-  <tr><td port="0">a2</td></tr>
-<tr><td port="1">b2</td></tr>
-</table>>];
-     
-
-"Project_12" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_12</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_11</i></td></tr>
   <tr><td port="0">named_struct(a, a2 AS `a`, b, b2 AS `b`)</td></tr>
 </table>>];
      
 
-"Project_3" [label=<
+"Project_2" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_3</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_2</i></td></tr>
   <tr><td port="0">1</td></tr>
 </table>>];
      
 
-"Project_5" [label=<
+"Project_4" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_5</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_4</i></td></tr>
   <tr><td port="0">record</td></tr>
 </table>>];
      
 
-"Project_7" [label=<
+"Project_6" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_7</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_6</i></td></tr>
   <tr><td port="0">named_struct(a, a2 AS `a`, b, b2 AS `b`)</td></tr>
 </table>>];
      
@@ -154,25 +146,23 @@ digraph {
 <tr><td port="1">b2</td></tr>
 </table>>];
      
-  "Aggregate_10":0 -> "t3":0;
-"Aggregate_15":0 -> "t2":0;
-"LocalRelation_0":0 -> "Project_1":0;
-"LocalRelation_0":1 -> "Project_1":1;
-"LocalRelation_11":0 -> "Project_12":0;
-"LocalRelation_11":1 -> "Project_12":0;
-"LocalRelation_4":0 -> "Project_5":0;
-"LocalRelation_4":1 -> "Project_5":0;
-"LocalRelation_6":0 -> "Project_7":0;
-"LocalRelation_6":1 -> "Project_7":0;
-"Project_1":0 -> "Join_LeftAnti_2":0;
-"Project_1":1 -> "Join_LeftAnti_2":1;
-"Project_12":0 -> "Join_LeftSemi_13":0;
-"Project_3":0 -> "t1":0;
-"Project_5":0 -> "struct_tab":0;
-"Project_7":0 -> "Join_LeftAnti_8":0;
-"struct_tab":0 -> "Join_LeftAnti_8":0;
-"struct_tab":0 -> "Join_LeftSemi_13":0;
-"tab_a":0 -> "Join_LeftAnti_2":0;
-"tab_a":1 -> "Join_LeftAnti_2":1;
+  "Aggregate_14":0 -> "t2":0;
+"Aggregate_9":0 -> "t3":0;
+"LocalRelation_0":0 -> "Join_LeftAnti_1":0;
+"LocalRelation_0":1 -> "Join_LeftAnti_1":1;
+"LocalRelation_10":0 -> "Project_11":0;
+"LocalRelation_10":1 -> "Project_11":0;
+"LocalRelation_3":0 -> "Project_4":0;
+"LocalRelation_3":1 -> "Project_4":0;
+"LocalRelation_5":0 -> "Project_6":0;
+"LocalRelation_5":1 -> "Project_6":0;
+"Project_11":0 -> "Join_LeftSemi_12":0;
+"Project_2":0 -> "t1":0;
+"Project_4":0 -> "struct_tab":0;
+"Project_6":0 -> "Join_LeftAnti_7":0;
+"struct_tab":0 -> "Join_LeftAnti_7":0;
+"struct_tab":0 -> "Join_LeftSemi_12":0;
+"tab_a":0 -> "Join_LeftAnti_1":0;
+"tab_a":1 -> "Join_LeftAnti_1":1;
 }
        
