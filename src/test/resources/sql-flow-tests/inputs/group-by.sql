@@ -72,39 +72,3 @@ CREATE OR REPLACE TEMPORARY VIEW t16 AS
 CREATE OR REPLACE TEMPORARY VIEW t17 AS
   SELECT corr(DISTINCT x, y), corr(DISTINCT y, x), count(*)
   FROM (VALUES (1, 1), (2, 2), (2, 2)) t(x, y);
-
--- Test data
-CREATE OR REPLACE TEMPORARY VIEW test_agg AS SELECT * FROM VALUES
-    (1, true), (1, false),
-               (2, true),
-               (3, false), (3, null),
-               (4, null), (4, null),
-               (5, null), (5, true), (5, false) AS test_agg(k, v);
-
--- having
-CREATE OR REPLACE TEMPORARY VIEW t18 AS
-  SELECT k, every(v) FROM test_agg GROUP BY k HAVING every(v) = false;
-CREATE OR REPLACE TEMPORARY VIEW t19 AS
-  SELECT k, every(v) FROM test_agg GROUP BY k HAVING every(v) IS NULL;
-
--- basic subquery path to make sure rewrite happens in both parent and child plans.
-CREATE OR REPLACE TEMPORARY VIEW t20 AS
-  SELECT k,
-         Every(v) AS every
-  FROM   test_agg
-  WHERE  k = 2
-    AND v IN (SELECT Any(v)
-  FROM   test_agg
-  WHERE  k = 1)
-  GROUP  BY k;
-
--- basic subquery path to make sure rewrite happens in both parent and child plans.
-CREATE OR REPLACE TEMPORARY VIEW t21 AS
-  SELECT k,
-         Every(v) AS every
-  FROM   test_agg
-  WHERE  k = 2
-    AND v IN (SELECT Every(v)
-              FROM   test_agg
-              WHERE  k = 1)
-  GROUP  BY k;

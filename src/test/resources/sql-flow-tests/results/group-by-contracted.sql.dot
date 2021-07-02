@@ -7,70 +7,54 @@ digraph {
   rankdir=LR;
 
   
-"LocalRelation_0" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_0</i></td></tr>
-  <tr><td port="0">k</td></tr>
-<tr><td port="1">v</td></tr>
-</table>>];
-     
-
 "LocalRelation_1" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_1</i></td></tr>
-  
+  <tr><td port="0">a</td></tr>
+<tr><td port="1">count(1)</td></tr>
 </table>>];
      
 
 "LocalRelation_2" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_2</i></td></tr>
-  <tr><td port="0">col1</td></tr>
-<tr><td port="1">col2</td></tr>
+  
+</table>>];
+     
+
+"LocalRelation_3" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_3</i></td></tr>
+  
 </table>>];
      
 
 "LocalRelation_4" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_4</i></td></tr>
-  <tr><td port="0">a</td></tr>
-<tr><td port="1">count(1)</td></tr>
+  <tr><td port="0">1</td></tr>
 </table>>];
      
 
 "LocalRelation_5" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_5</i></td></tr>
-  <tr><td port="0">a</td></tr>
-<tr><td port="1">b</td></tr>
+  <tr><td port="0">col1</td></tr>
+<tr><td port="1">col2</td></tr>
 </table>>];
      
 
 "LocalRelation_6" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_6</i></td></tr>
-  <tr><td port="0">1</td></tr>
+  <tr><td port="0">a</td></tr>
+<tr><td port="1">b</td></tr>
 </table>>];
      
 
-"LocalRelation_7" [label=<
+"OneRowRelation_0" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_7</i></td></tr>
-  
-</table>>];
-     
-
-"LocalRelation_8" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_8</i></td></tr>
-  <tr><td port="0">k</td></tr>
-<tr><td port="1">v</td></tr>
-</table>>];
-     
-
-"OneRowRelation_3" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>OneRowRelation_3</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>OneRowRelation_0</i></td></tr>
   
 </table>>];
      
@@ -145,43 +129,11 @@ digraph {
 </table>>];
      
 
-"t18" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow" port="nodeName"><i>t18</i></td></tr>
-  <tr><td port="0">k</td></tr>
-<tr><td port="1">every(v)</td></tr>
-</table>>];
-     
-
-"t19" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow" port="nodeName"><i>t19</i></td></tr>
-  <tr><td port="0">k</td></tr>
-<tr><td port="1">every(v)</td></tr>
-</table>>];
-     
-
 "t2" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t2</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">count(b)</td></tr>
-</table>>];
-     
-
-"t20" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow" port="nodeName"><i>t20</i></td></tr>
-  <tr><td port="0">k</td></tr>
-<tr><td port="1">every</td></tr>
-</table>>];
-     
-
-"t21" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow" port="nodeName"><i>t21</i></td></tr>
-  <tr><td port="0">k</td></tr>
-<tr><td port="1">every</td></tr>
 </table>>];
      
 
@@ -220,7 +172,7 @@ digraph {
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t7</i></td></tr>
   <tr><td port="0">foo</td></tr>
-<tr><td port="1">max(struct(a))</td></tr>
+<tr><td port="1">max(named_struct(a, a))</td></tr>
 </table>>];
      
 
@@ -240,18 +192,10 @@ digraph {
 <tr><td port="2">min(a)</td></tr>
 <tr><td port="3">max(a)</td></tr>
 <tr><td port="4">avg(a)</td></tr>
-<tr><td port="5">variance(CAST(a AS DOUBLE))</td></tr>
-<tr><td port="6">stddev(CAST(a AS DOUBLE))</td></tr>
+<tr><td port="5">var_samp(CAST(a AS DOUBLE))</td></tr>
+<tr><td port="6">stddev_samp(CAST(a AS DOUBLE))</td></tr>
 <tr><td port="7">sum(a)</td></tr>
 <tr><td port="8">count(a)</td></tr>
-</table>>];
-     
-
-"test_agg" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow" port="nodeName"><i>test_agg</i></td></tr>
-  <tr><td port="0">k</td></tr>
-<tr><td port="1">v</td></tr>
 </table>>];
      
 
@@ -262,25 +206,15 @@ digraph {
 <tr><td port="1">b</td></tr>
 </table>>];
      
-  "LocalRelation_0":1 -> t20:1
-"LocalRelation_2":0 -> t17:0
-"LocalRelation_2":0 -> t17:1
-"LocalRelation_2":1 -> t17:0
-"LocalRelation_2":1 -> t17:1
-"LocalRelation_4":0 -> t13:0
-"LocalRelation_4":1 -> t13:1
-"LocalRelation_5":0 -> testdata:0
-"LocalRelation_5":1 -> testdata:1
-"LocalRelation_6":0 -> t16:0
-"LocalRelation_8":1 -> t21:1
-"test_agg":0 -> t18:0
-"test_agg":0 -> t19:0
-"test_agg":0 -> t20:0
-"test_agg":0 -> t21:0
-"test_agg":1 -> t18:1
-"test_agg":1 -> t19:1
-"test_agg":1 -> t20:1
-"test_agg":1 -> t21:1
+  "LocalRelation_1":0 -> t13:0
+"LocalRelation_1":1 -> t13:1
+"LocalRelation_4":0 -> t16:0
+"LocalRelation_5":0 -> t17:0
+"LocalRelation_5":0 -> t17:1
+"LocalRelation_5":1 -> t17:0
+"LocalRelation_5":1 -> t17:1
+"LocalRelation_6":0 -> testdata:0
+"LocalRelation_6":1 -> testdata:1
 "testdata":0 -> t11:0
 "testdata":0 -> t12:0
 "testdata":0 -> t1:0

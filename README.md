@@ -21,11 +21,8 @@ Welcome to
       ____              __
      / __/__  ___ _____/ /__
     _\ \/ _ \/ _ `/ __/  '_/
-   /__ / .__/\_,_/_/ /_/\_\   version 3.1.2
+   /__ / .__/\_,_/_/ /_/\_\   version 2.4.8
       /_/
-
-Using Python version 3.6.8 (default, Dec 29 2018 19:04:46)
-SparkSession available as 'spark'.
 
 # Defines some views for this example
 scala> sql("CREATE TABLE TestTable (key INT, value INT)")

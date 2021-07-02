@@ -45,15 +45,14 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
 
   def catalogToSQLFlow(session: SparkSession): String = {
     val catalog = session.sessionState.catalog
-    val tempViewMap = catalog.getTempViewNames().map { tempView =>
-      tempView -> catalog.getTempView(tempView).get
-    }.toMap
+    val tempViewNames = catalog.listTables("default").filter(catalog.isTemporaryTable).map(_.table)
+    val tempViewMap = tempViewNames.map { t => t -> catalog.getTempView(t).get }.toMap
 
     val nodeMap = mutable.Map[String, String]()
-    val edges = catalog.getTempViewNames.map { tempView =>
+    val edges = tempViewNames.map { tempView =>
       val analyzed = session.sessionState.analyzer.execute(tempViewMap(tempView))
       val optimized = session.sessionState.optimizer.execute(analyzed.transformDown {
-        case s @ SubqueryAlias(AliasIdentifier(name, Nil), _) if tempViewMap.contains(name) =>
+        case s @ SubqueryAlias(AliasIdentifier(name, None), _) if tempViewMap.contains(name) =>
           TempView(name, s.output)
       })
 
@@ -84,7 +83,7 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
   protected def getNodeName(p: LogicalPlan) = p match {
     case TempView(name, _) => name
     case LogicalRelation(_, _, Some(table), false) => table.qualifiedName
-    case HiveTableRelation(table, _, _, _, _) => table.qualifiedName
+    case HiveTableRelation(table, _, _) => table.qualifiedName
     case j: Join => s"${p.nodeName}_${j.joinType}_${nextNodeId.getAndIncrement()}"
     case _ => s"${p.nodeName}_${nextNodeId.getAndIncrement()}"
   }
@@ -199,7 +198,7 @@ case class SQLFlow() extends BaseSQLFlow {
           attrs.map { case (_, input) => s"""$input -> "$nodeName":$i"""}
         }
 
-      case Join(_, _, joinType, condition, _) =>
+      case Join(_, _, joinType, condition) =>
         // To avoid ambiguous joins, we need this
         val Seq(left, right) = inputAttrSeq
         joinType match {
@@ -379,7 +378,7 @@ case class SQLContractedFlow() extends BaseSQLFlow {
 
     object JoinWithCondition {
       def unapply(plan: LogicalPlan): Option[Seq[(Seq[Attribute], Seq[Attribute])]] = plan match {
-        case Join(left, _, _, Some(cond), _) =>
+        case Join(left, _, _, Some(cond)) =>
           val comps = cond.collect { case BinaryComparison(e1, e2) =>
             val (leftRefs, rightRefs) = {
               (e1.references ++ e2.references).partition(left.outputSet.contains)
@@ -440,7 +439,7 @@ case class SQLContractedFlow() extends BaseSQLFlow {
                 }}
               }
 
-            case Join(left, right, _, _, _) =>
+            case Join(left, right, _, _) =>
               left.output.foreach { a1 => right.output.foreach { a2 =>
                 addRefsToMap(a1, Seq(a1, a2))
                 addRefsToMap(a2, Seq(a1, a2))
@@ -465,7 +464,7 @@ case class SQLContractedFlow() extends BaseSQLFlow {
               if (ne.references.nonEmpty) Some(ne.toAttribute) else None
             }
 
-          case Join(left, _, _: ExistenceJoin, _, _) =>
+          case Join(left, _, _: ExistenceJoin, _) =>
             left.output
 
           case _ =>
@@ -585,7 +584,7 @@ case class SQLFlowHolder[T] private[sql](private val ds: Dataset[T]) {
   }
 }
 
-object SQLFlow extends PredicateHelper with Logging {
+object SQLFlow extends Logging {
 
   val validImageFormatSet = Set("png", "svg")
 
