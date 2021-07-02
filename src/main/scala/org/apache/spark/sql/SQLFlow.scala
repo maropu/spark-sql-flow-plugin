@@ -585,7 +585,7 @@ case class SQLFlowHolder[T] private[sql](private val ds: Dataset[T]) {
   }
 }
 
-object SQLFlow extends PredicateHelper with Logging {
+object SQLFlow extends Logging {
 
   val validImageFormatSet = Set("png", "svg")
 
