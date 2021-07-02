@@ -121,11 +121,9 @@ class SQLFlowTestSuite extends QueryTest with SharedSparkSession with SQLHelper
 
     def checkSQLFlowString(goldenFile: String, flowString: String): Unit = {
       // Read back the golden file.
-      val expectedOutput = fileToString(new File(goldenFile))
-        .replaceAll(fileHeader, "")
-        .replaceAll("_\\d+", "_x")
-      val normalizedFlowString = flowString.replaceAll("_\\d+", "_x")
-      assert(expectedOutput === normalizedFlowString)
+      def normalize(s: String) = s.replaceAll("_\\d+", "_x").replaceAll("#\\d+", "#x")
+      val expectedOutput = fileToString(new File(goldenFile)).replaceAll(fileHeader, "")
+      assert(normalize(expectedOutput) === normalize(flowString))
     }
 
     withClue(s"${testCase.name}${System.lineSeparator()}") {
