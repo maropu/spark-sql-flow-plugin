@@ -423,4 +423,104 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
          """.stripMargin)
     }
   }
+
+  test("handle cache plan nodes correctly") {
+    withView("t1") {
+      withTempView("t2", "t3") {
+        sql("CREATE VIEW t1 AS SELECT k, SUM(v) sum FROM VALUES (1, 2), (2, 3) t(k, v) GROUP BY k")
+        sql("CREATE TEMPORARY VIEW t2 AS SELECT k, sum, rand() v2 FROM t1")
+
+        val df = spark.table("t2")
+          .where("k > 1")
+          .cache()
+
+        df.groupBy("sum")
+          .count()
+          .createOrReplaceTempView("t3")
+
+        val flowString = getOutputAsString {
+          SQLFlow.debugPrintAsSQLFlow()
+        }
+        checkOutputString(flowString,
+          s"""
+             |digraph {
+             |  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
+             |  node [shape=plain]
+             |  rankdir=LR;
+             |
+             |
+             |  "Aggregate_1" [label=<
+             |  <table border="1" cellborder="0" cellspacing="0">
+             |    <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_1</i></td></tr>
+             |    <tr><td port="0">k</td></tr>
+             |  <tr><td port="1">sum</td></tr>
+             |  <tr><td port="2">v2</td></tr>
+             |  </table>>];
+             |
+             |
+             |  "Aggregate_4" [label=<
+             |  <table border="1" cellborder="0" cellspacing="0">
+             |    <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_4</i></td></tr>
+             |    <tr><td port="0">sum</td></tr>
+             |  <tr><td port="1">count</td></tr>
+             |  </table>>];
+             |
+             |
+             |  "Filter_2" [label=<
+             |  <table border="1" cellborder="0" cellspacing="0">
+             |    <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_2</i></td></tr>
+             |    <tr><td port="0">k</td></tr>
+             |  <tr><td port="1">sum</td></tr>
+             |  <tr><td port="2">v2</td></tr>
+             |  </table>>];
+             |
+             |
+             |  "LocalRelation_0" [label=<
+             |  <table border="1" cellborder="0" cellspacing="0">
+             |    <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_0</i></td></tr>
+             |    <tr><td port="0">k</td></tr>
+             |  <tr><td port="1">v</td></tr>
+             |  </table>>];
+             |
+             |
+             |  "Project_3" [label=<
+             |  <table border="1" cellborder="0" cellspacing="0">
+             |    <tr><td bgcolor="lightblue" port="nodeName"><i>Project_3</i></td></tr>
+             |    <tr><td port="0">sum</td></tr>
+             |  </table>>];
+             |
+             |
+             |  "t2" [label=<
+             |  <table border="1" cellborder="0" cellspacing="0">
+             |    <tr><td bgcolor="lightyellow" port="nodeName"><i>t2</i></td></tr>
+             |    <tr><td port="0">k</td></tr>
+             |  <tr><td port="1">sum</td></tr>
+             |  <tr><td port="2">v2</td></tr>
+             |  </table>>];
+             |
+             |
+             |  "t3" [label=<
+             |  <table border="1" cellborder="0" cellspacing="0">
+             |    <tr><td bgcolor="lightyellow" port="nodeName"><i>t3</i></td></tr>
+             |    <tr><td port="0">sum</td></tr>
+             |  <tr><td port="1">count</td></tr>
+             |  </table>>];
+             |
+             |  "Aggregate_1":0 -> "t2":0;
+             |  "Aggregate_1":1 -> "t2":1;
+             |  "Aggregate_1":2 -> "t2":2;
+             |  "Aggregate_4":0 -> "t3":0;
+             |  "Aggregate_4":1 -> "t3":1;
+             |  "Filter_2":1 -> "Project_3":0;
+             |  "LocalRelation_0":0 -> "Aggregate_1":0;
+             |  "LocalRelation_0":1 -> "Aggregate_1":1;
+             |  "Project_3":0 -> "Aggregate_4":0;
+             |  "t2":0 -> "Filter_2":0;
+             |  "t2":1 -> "Filter_2":1;
+             |  "t2":2 -> "Filter_2":2;
+             |}
+           """.stripMargin)
+      }
+    }
+  }
 }
