@@ -59,12 +59,12 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     val edges = tempViewMap.keySet.toSeq.map { tempView =>
       val analyzed = tempViewMap(tempView)
       val optimized = {
-        val plan = analyzed.transformDown {
-          case s @ SubqueryAlias(AliasIdentifier(name, Nil), _) if tempViewMap.contains(name) =>
-            TempView(name, s.output)
-        }.transformUp {
+        val plan = analyzed.transformUp {
           case p if isCached(p) =>
             CachedPlan(p)
+        }.transformDown {
+          case s @ SubqueryAlias(AliasIdentifier(name, Nil), _) if tempViewMap.contains(name) =>
+            TempView(name, s.output)
         }
         session.sessionState.optimizer.execute(plan)
       }
