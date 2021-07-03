@@ -7,10 +7,10 @@ digraph {
   rankdir=LR;
 
   
-"Aggregate_12" [label=<
+"Aggregate_11" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_12</i></td></tr>
-  <tr><td port="0">a</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_11</i></td></tr>
+  <tr><td port="0">b</td></tr>
 </table>>];
      
 
@@ -21,16 +21,16 @@ digraph {
 </table>>];
      
 
-"Aggregate_8" [label=<
+"Aggregate_7" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_8</i></td></tr>
-  <tr><td port="0">b</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_7</i></td></tr>
+  <tr><td port="0">a</td></tr>
 </table>>];
      
 
-"Join_LeftAnti_11" [label=<
+"Join_LeftAnti_6" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftAnti_11</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftAnti_6</i></td></tr>
   <tr><td port="0">a</td></tr>
 </table>>];
      
@@ -56,9 +56,9 @@ digraph {
 </table>>];
      
 
-"Project_10" [label=<
+"Project_4" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_10</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_4</i></td></tr>
   <tr><td port="0">a</td></tr>
 </table>>];
      
@@ -66,14 +66,14 @@ digraph {
 "Project_5" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_5</i></td></tr>
-  <tr><td port="0">b</td></tr>
+  <tr><td port="0">a</td></tr>
 </table>>];
      
 
-"Project_6" [label=<
+"Project_8" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_6</i></td></tr>
-  <tr><td port="0">a</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_8</i></td></tr>
+  <tr><td port="0">b</td></tr>
 </table>>];
      
 
@@ -84,16 +84,16 @@ digraph {
 </table>>];
      
 
-"Union_4" [label=<
+"Union_10" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Union_4</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Union_10</i></td></tr>
   <tr><td port="0">b</td></tr>
 </table>>];
      
 
-"Union_7" [label=<
+"Union_12" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Union_7</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Union_12</i></td></tr>
   <tr><td port="0">b</td></tr>
 </table>>];
      
@@ -141,27 +141,27 @@ digraph {
   <tr><td port="0">b</td></tr>
 </table>>];
      
-  "Aggregate_12":0 -> "t5":0;
+  "Aggregate_11":0 -> "t3":0;
 "Aggregate_3":0 -> "t4":0;
-"Aggregate_8":0 -> "t3":0;
-"Join_LeftAnti_11":0 -> "Aggregate_12":0;
+"Aggregate_7":0 -> "t5":0;
+"Join_LeftAnti_6":0 -> "Aggregate_7":0;
 "Join_LeftSemi_2":0 -> "Aggregate_3":0;
 "Project_0":0 -> "Join_LeftSemi_2":0;
 "Project_1":0 -> "Join_LeftSemi_2":0;
-"Project_10":0 -> "Join_LeftAnti_11":0;
-"Project_5":0 -> "Union_7":0
-"Project_6":0 -> "Union_7":0
-"Project_9":0 -> "Join_LeftAnti_11":0;
-"Union_4":0 -> "t6":0;
-"Union_7":0 -> "Aggregate_8":0;
+"Project_4":0 -> "Join_LeftAnti_6":0;
+"Project_5":0 -> "Join_LeftAnti_6":0;
+"Project_8":0 -> "Union_10":0
+"Project_9":0 -> "Union_10":0
+"Union_10":0 -> "Aggregate_11":0;
+"Union_12":0 -> "t6":0;
 "t1":0 -> "Project_0":0;
-"t1":0 -> "Project_9":0;
-"t1":1 -> "Project_5":0;
-"t2":0 -> "Project_10":0;
-"t2":0 -> "Project_6":0;
+"t1":0 -> "Project_4":0;
+"t1":1 -> "Project_8":0;
+"t2":0 -> "Project_5":0;
+"t2":0 -> "Project_9":0;
 "t2":1 -> "Project_1":0;
-"t3":0 -> "Union_4":0
-"t4":0 -> "Union_4":0
-"t5":0 -> "Union_4":0
+"t3":0 -> "Union_12":0
+"t4":0 -> "Union_12":0
+"t5":0 -> "Union_12":0
 }
        
