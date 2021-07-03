@@ -10,17 +10,17 @@ digraph {
 "LocalRelation_0" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_0</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-<tr><td port="2">earnings</td></tr>
+  <tr><td port="0">a</td></tr>
+<tr><td port="1">b</td></tr>
 </table>>];
      
 
 "LocalRelation_1" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_1</i></td></tr>
-  <tr><td port="0">a</td></tr>
-<tr><td port="1">b</td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+<tr><td port="2">earnings</td></tr>
 </table>>];
      
 
@@ -220,11 +220,11 @@ digraph {
 <tr><td port="1">b</td></tr>
 </table>>];
      
-  "LocalRelation_0":0 -> coursesales:0
-"LocalRelation_0":1 -> coursesales:1
-"LocalRelation_0":2 -> coursesales:2
-"LocalRelation_1":0 -> testdata:0
-"LocalRelation_1":1 -> testdata:1
+  "LocalRelation_0":0 -> testdata:0
+"LocalRelation_0":1 -> testdata:1
+"LocalRelation_1":0 -> coursesales:0
+"LocalRelation_1":1 -> coursesales:1
+"LocalRelation_1":2 -> coursesales:2
 "coursesales":0 -> t10:0
 "coursesales":0 -> t11:0
 "coursesales":0 -> t12:0

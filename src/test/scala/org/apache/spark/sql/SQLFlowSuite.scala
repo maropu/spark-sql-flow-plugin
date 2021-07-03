@@ -251,4 +251,176 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
       }
     }
   }
+
+  test("cached plan node") {
+    withTempView("v") {
+      val df = spark.range(1)
+        .selectExpr("id as k", "id as v")
+        .groupBy("k")
+        .count()
+        .cache()
+
+      df.where("count > 2")
+        .selectExpr("k", "rand() as v")
+        .createOrReplaceTempView("v")
+
+      val flowString = getOutputAsString {
+        SQLFlow.debugPrintAsSQLFlow()
+      }
+      checkOutputString(flowString,
+        s"""
+           |digraph {
+           |  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
+           |  node [shape=plain]
+           |  rankdir=LR;
+           |
+           |
+           |  "Aggregate_2" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightblue" port="nodeName"><i>Aggregate_2</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">count</td></tr>
+           |  </table>>];
+           |
+           |
+           |  "Filter_3" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_3</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">count</td></tr>
+           |  </table>>];
+           |
+           |
+           |  "Project_1" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Project_1</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  </table>>];
+           |
+           |
+           |  "Project_4" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Project_4</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v</td></tr>
+           |  </table>>];
+           |
+           |
+           |  "Range_0" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightpink" port="nodeName"><i>Range_0</i></td></tr>
+           |    <tr><td port="0">id</td></tr>
+           |  </table>>];
+           |
+           |
+           |  "v" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightyellow" port="nodeName"><i>v</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v</td></tr>
+           |  </table>>];
+           |
+           |  "Aggregate_2":0 -> "Filter_3":0;
+           |  "Aggregate_2":1 -> "Filter_3":1;
+           |  "Filter_3":0 -> "Project_4":0;
+           |  "Project_1":0 -> "Aggregate_2":0;
+           |  "Project_4":0 -> "v":0;
+           |  "Project_4":1 -> "v":1;
+           |  "Range_0":0 -> "Project_1":0;
+           |}
+         """.stripMargin)
+    }
+  }
+
+  test("remove redundant cached plan node") {
+    withTempView("t1", "t2") {
+      spark.range(1)
+        .selectExpr("id as k", "id as v")
+        .groupBy("k")
+        .count()
+        .cache()
+        .createOrReplaceTempView("t1")
+
+      spark.table("t1")
+        .where("count > 2")
+        .selectExpr("k", "rand() as v")
+        .createOrReplaceTempView("t2")
+
+      val flowString = getOutputAsString {
+        SQLFlow.debugPrintAsSQLFlow()
+      }
+      checkOutputString(flowString,
+        s"""
+           |digraph {
+           |  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
+           |  node [shape=plain]
+           |  rankdir=LR;
+           |
+           |
+           |  "Aggregate_2" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_2</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">count</td></tr>
+           |  </table>>];
+           |
+           |
+           |  "Filter_3" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_3</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">count</td></tr>
+           |  </table>>];
+           |
+           |
+           |  "Project_1" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Project_1</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  </table>>];
+           |
+           |
+           |  "Project_4" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Project_4</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v</td></tr>
+           |  </table>>];
+           |
+           |
+           |  "Range_0" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightpink" port="nodeName"><i>Range_0</i></td></tr>
+           |    <tr><td port="0">id</td></tr>
+           |  </table>>];
+           |
+           |
+           |  "t1" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightblue" port="nodeName"><i>t1</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">count</td></tr>
+           |  </table>>];
+           |
+           |
+           |  "t2" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightyellow" port="nodeName"><i>t2</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v</td></tr>
+           |  </table>>];
+           |
+           |  "Aggregate_2":0 -> "t1":0;
+           |  "Aggregate_2":1 -> "t1":1;
+           |  "Filter_3":0 -> "Project_4":0;
+           |  "Project_1":0 -> "Aggregate_2":0;
+           |  "Project_4":0 -> "t2":0;
+           |  "Project_4":1 -> "t2":1;
+           |  "Range_0":0 -> "Project_1":0;
+           |  "t1":0 -> "Filter_3":0;
+           |  "t1":1 -> "Filter_3":1;
+           |}
+         """.stripMargin)
+    }
+  }
 }

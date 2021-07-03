@@ -7,11 +7,19 @@ digraph {
   rankdir=LR;
 
   
+"LocalRelation_0" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_0</i></td></tr>
+  <tr><td port="0">a</td></tr>
+<tr><td port="1">count(1)</td></tr>
+</table>>];
+     
+
 "LocalRelation_1" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_1</i></td></tr>
   <tr><td port="0">a</td></tr>
-<tr><td port="1">count(1)</td></tr>
+<tr><td port="1">b</td></tr>
 </table>>];
      
 
@@ -25,36 +33,28 @@ digraph {
 "LocalRelation_3" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_3</i></td></tr>
-  
+  <tr><td port="0">col1</td></tr>
+<tr><td port="1">col2</td></tr>
 </table>>];
      
 
 "LocalRelation_4" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_4</i></td></tr>
-  <tr><td port="0">1</td></tr>
+  
 </table>>];
      
 
 "LocalRelation_5" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_5</i></td></tr>
-  <tr><td port="0">col1</td></tr>
-<tr><td port="1">col2</td></tr>
+  <tr><td port="0">1</td></tr>
 </table>>];
      
 
-"LocalRelation_6" [label=<
+"OneRowRelation_6" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_6</i></td></tr>
-  <tr><td port="0">a</td></tr>
-<tr><td port="1">b</td></tr>
-</table>>];
-     
-
-"OneRowRelation_0" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>OneRowRelation_0</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>OneRowRelation_6</i></td></tr>
   
 </table>>];
      
@@ -206,15 +206,15 @@ digraph {
 <tr><td port="1">b</td></tr>
 </table>>];
      
-  "LocalRelation_1":0 -> t13:0
-"LocalRelation_1":1 -> t13:1
-"LocalRelation_4":0 -> t16:0
-"LocalRelation_5":0 -> t17:0
-"LocalRelation_5":0 -> t17:1
-"LocalRelation_5":1 -> t17:0
-"LocalRelation_5":1 -> t17:1
-"LocalRelation_6":0 -> testdata:0
-"LocalRelation_6":1 -> testdata:1
+  "LocalRelation_0":0 -> t13:0
+"LocalRelation_0":1 -> t13:1
+"LocalRelation_1":0 -> testdata:0
+"LocalRelation_1":1 -> testdata:1
+"LocalRelation_3":0 -> t17:0
+"LocalRelation_3":0 -> t17:1
+"LocalRelation_3":1 -> t17:0
+"LocalRelation_3":1 -> t17:1
+"LocalRelation_5":0 -> t16:0
 "testdata":0 -> t11:0
 "testdata":0 -> t12:0
 "testdata":0 -> t1:0

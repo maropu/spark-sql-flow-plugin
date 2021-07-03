@@ -10,14 +10,14 @@ digraph {
 "Aggregate_11" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_11</i></td></tr>
-  <tr><td port="0">a</td></tr>
+  <tr><td port="0">b</td></tr>
 </table>>];
      
 
 "Aggregate_3" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_3</i></td></tr>
-  <tr><td port="0">b</td></tr>
+  <tr><td port="0">a</td></tr>
 </table>>];
      
 
@@ -28,16 +28,16 @@ digraph {
 </table>>];
      
 
-"Join_LeftAnti_10" [label=<
+"Join_LeftAnti_6" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftAnti_10</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftAnti_6</i></td></tr>
   <tr><td port="0">a</td></tr>
 </table>>];
      
 
-"Join_LeftSemi_6" [label=<
+"Join_LeftSemi_2" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftSemi_6</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftSemi_2</i></td></tr>
   <tr><td port="0">a</td></tr>
 </table>>];
      
@@ -45,14 +45,14 @@ digraph {
 "Project_0" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_0</i></td></tr>
-  <tr><td port="0">b</td></tr>
+  <tr><td port="0">a</td></tr>
 </table>>];
      
 
 "Project_1" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_1</i></td></tr>
-  <tr><td port="0">a</td></tr>
+  <tr><td port="0">b</td></tr>
 </table>>];
      
 
@@ -66,14 +66,14 @@ digraph {
 "Project_5" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_5</i></td></tr>
-  <tr><td port="0">b</td></tr>
+  <tr><td port="0">a</td></tr>
 </table>>];
      
 
 "Project_8" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_8</i></td></tr>
-  <tr><td port="0">a</td></tr>
+  <tr><td port="0">b</td></tr>
 </table>>];
      
 
@@ -84,16 +84,16 @@ digraph {
 </table>>];
      
 
-"Union_12" [label=<
+"Union_10" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Union_12</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Union_10</i></td></tr>
   <tr><td port="0">b</td></tr>
 </table>>];
      
 
-"Union_2" [label=<
+"Union_12" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Union_2</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Union_12</i></td></tr>
   <tr><td port="0">b</td></tr>
 </table>>];
      
@@ -141,25 +141,25 @@ digraph {
   <tr><td port="0">b</td></tr>
 </table>>];
      
-  "Aggregate_11":0 -> "t5":0;
-"Aggregate_3":0 -> "t3":0;
-"Aggregate_7":0 -> "t4":0;
-"Join_LeftAnti_10":0 -> "Aggregate_11":0;
-"Join_LeftSemi_6":0 -> "Aggregate_7":0;
-"Project_0":0 -> "Union_2":0
-"Project_1":0 -> "Union_2":0
-"Project_4":0 -> "Join_LeftSemi_6":0;
-"Project_5":0 -> "Join_LeftSemi_6":0;
-"Project_8":0 -> "Join_LeftAnti_10":0;
-"Project_9":0 -> "Join_LeftAnti_10":0;
+  "Aggregate_11":0 -> "t3":0;
+"Aggregate_3":0 -> "t4":0;
+"Aggregate_7":0 -> "t5":0;
+"Join_LeftAnti_6":0 -> "Aggregate_7":0;
+"Join_LeftSemi_2":0 -> "Aggregate_3":0;
+"Project_0":0 -> "Join_LeftSemi_2":0;
+"Project_1":0 -> "Join_LeftSemi_2":0;
+"Project_4":0 -> "Join_LeftAnti_6":0;
+"Project_5":0 -> "Join_LeftAnti_6":0;
+"Project_8":0 -> "Union_10":0
+"Project_9":0 -> "Union_10":0
+"Union_10":0 -> "Aggregate_11":0;
 "Union_12":0 -> "t6":0;
-"Union_2":0 -> "Aggregate_3":0;
+"t1":0 -> "Project_0":0;
 "t1":0 -> "Project_4":0;
-"t1":0 -> "Project_8":0;
-"t1":1 -> "Project_0":0;
-"t2":0 -> "Project_1":0;
+"t1":1 -> "Project_8":0;
+"t2":0 -> "Project_5":0;
 "t2":0 -> "Project_9":0;
-"t2":1 -> "Project_5":0;
+"t2":1 -> "Project_1":0;
 "t3":0 -> "Union_12":0
 "t4":0 -> "Union_12":0
 "t5":0 -> "Union_12":0
