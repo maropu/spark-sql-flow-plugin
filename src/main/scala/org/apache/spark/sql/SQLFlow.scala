@@ -44,14 +44,20 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     nodeMap: mutable.Map[String, String]): Seq[String]
 
   def catalogToSQLFlow(session: SparkSession): String = {
+    val nodeMap = mutable.Map[String, String]()
+
     val catalog = session.sessionState.catalog
     val tempViewMap = catalog.getTempViewNames().map { tempView =>
-      tempView -> catalog.getTempView(tempView).get
+      val analyzed = session.sessionState.analyzer.execute(catalog.getTempView(tempView).get)
+      // Generate a node label for a temporary view if necessary
+      nodeMap(tempView) = generateNodeString(analyzed, tempView, {
+        if (isCached(analyzed)) "lightblue" else "lightyellow"
+      })
+      tempView -> analyzed
     }.toMap
 
-    val nodeMap = mutable.Map[String, String]()
-    val edges = catalog.getTempViewNames.map { tempView =>
-      val analyzed = session.sessionState.analyzer.execute(tempViewMap(tempView))
+    val edges = tempViewMap.keySet.toSeq.map { tempView =>
+      val analyzed = tempViewMap(tempView)
       val optimized = {
         val plan = analyzed.transformDown {
           case s @ SubqueryAlias(AliasIdentifier(name, Nil), _) if tempViewMap.contains(name) =>
@@ -62,10 +68,6 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
         }
         session.sessionState.optimizer.execute(plan)
       }
-
-      // Generate a node label for a temporary view if necessary
-      val nodeColor = if (isCached(analyzed)) "lightblue" else "lightyellow"
-      nodeMap.getOrElseUpdate(tempView, generateNodeString(optimized, tempView, nodeColor))
 
       if (!optimized.isInstanceOf[TempView]) {
         collectEdges(tempView, optimized, nodeMap)
@@ -80,17 +82,19 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
   }
 
   private def isCached(plan: LogicalPlan): Boolean = {
-    SparkSession.getActiveSession.exists { session =>
-      session.sharedState.cacheManager.lookupCachedData(plan).isDefined
+    val session = SparkSession.getActiveSession.getOrElse {
+      throw new IllegalStateException("Active SparkSession not found")
     }
+    session.sharedState.cacheManager.lookupCachedData(plan).isDefined
   }
 
   private def isCached(name: String): Boolean = {
-    SparkSession.getActiveSession.exists { session =>
-      session.sessionState.catalog.getTempView(name).exists { p =>
-        val analyzed = session.sessionState.analyzer.execute(p)
-        session.sharedState.cacheManager.lookupCachedData(analyzed).isDefined
-      }
+    val session = SparkSession.getActiveSession.getOrElse {
+      throw new IllegalStateException("Active SparkSession not found")
+    }
+    session.sessionState.catalog.getTempView(name).exists { p =>
+      val analyzed = session.sessionState.analyzer.execute(p)
+      session.sharedState.cacheManager.lookupCachedData(analyzed).isDefined
     }
   }
 
@@ -687,7 +691,7 @@ object SQLFlow extends Logging {
       println(flowString)
       // scalastyle:on println
     }.getOrElse {
-      logWarning(s"Active SparkSession not found")
+      logWarning("Active SparkSession not found")
     }
   }
 }
