@@ -391,12 +391,22 @@ case class SQLContractedFlow() extends BaseSQLFlow {
       plan: LogicalPlan,
       nodeMap: mutable.Map[String, String]): Seq[String] = {
     val outputAttrMap = plan.output.map(_.exprId).zipWithIndex.toMap
-    val (edges, candidateEdges) = traversePlanRecursively(tempView, plan, nodeMap)
-    edges ++ candidateEdges.flatMap { case (src, exprId) =>
-      if (outputAttrMap.contains(exprId)) {
-        Some(s"$src -> $tempView:${outputAttrMap(exprId)}")
+    val (edges, candidateEdges, refMap) = traversePlanRecursively(tempView, plan, nodeMap)
+    edges ++ candidateEdges.flatMap { case ((inputNodeId, input), candidates) =>
+      val edges = candidates.flatMap { case (src, exprId) =>
+        if (outputAttrMap.contains(exprId)) {
+          Some(s"$src -> $tempView:${outputAttrMap(exprId)}")
+        } else {
+          None
+        }
+      }
+      if (edges.isEmpty) {
+        // TODO: Makes it more precise
+        input.zipWithIndex.filter { i => refMap.contains(i._1.exprId) }.map { case (_, i) =>
+          s""""$inputNodeId":$i -> $tempView:nodeName"""
+        }
       } else {
-        None
+        edges
       }
     }
   }
@@ -528,12 +538,22 @@ case class SQLContractedFlow() extends BaseSQLFlow {
       // TODO: Needs to handle Project/Aggregate/Filter nodes
       subqueries.flatMap { ss =>
         val outputAttrSet = ss.plan.output.map(_.exprId).toSet
-        val (edges, candidateEdges) = traversePlanRecursively(tempView, ss.plan, nodeMap)
-        edges ++ candidateEdges.flatMap { case (src, exprId) =>
-          if (outputAttrSet.contains(exprId)) {
-            Some(s"$src -> $tempView:nodeName")
+        val (edges, candidateEdges, refMap) = traversePlanRecursively(tempView, ss.plan, nodeMap)
+        edges ++ candidateEdges.flatMap { case ((inputNodeId, input), candidates) =>
+          val edges = candidates.flatMap { case (src, exprId) =>
+            if (outputAttrSet.contains(exprId)) {
+              Some(s"$src -> $tempView:nodeName")
+            } else {
+              None
+            }
+          }
+          if (edges.isEmpty) {
+            // TODO: Makes it more precise
+            input.zipWithIndex.filter { i => refMap.contains(i._1.exprId) }.map { case (_, i) =>
+              s""""$inputNodeId":$i -> $tempView:nodeName"""
+            }
           } else {
-            None
+            edges
           }
         }
       }
@@ -545,7 +565,9 @@ case class SQLContractedFlow() extends BaseSQLFlow {
   private def traversePlanRecursively(
       tempView: String,
       plan: LogicalPlan,
-      nodeMap: mutable.Map[String, String]): (Seq[String], Seq[(String, ExprId)]) = {
+      nodeMap: mutable.Map[String, String])
+    : (Seq[String], Seq[((String, Seq[Attribute]), Seq[(String, ExprId)])],
+      Map[ExprId, Set[ExprId]]) = {
     // Collect input nodes
     val inputNodes = plan.collectLeaves().map { p =>
       val nodeName = getNodeName(p)
@@ -579,8 +601,8 @@ case class SQLContractedFlow() extends BaseSQLFlow {
       }
     }
 
-    val candidateEdges = inputNodes.toSeq.flatMap { case (inputNodeId, input) =>
-      input.zipWithIndex.flatMap { case (a, i) =>
+    val candidateEdges = inputNodes.toSeq.map { case (inputNodeId, input) =>
+      (inputNodeId, input) -> input.zipWithIndex.flatMap { case (a, i) =>
         traverseInRefMap(a.exprId).map { exprId =>
           (s""""$inputNodeId":$i""", exprId)
         }
@@ -590,7 +612,7 @@ case class SQLContractedFlow() extends BaseSQLFlow {
     // Handles subqueries if necessary
     val edgesInSubqueries = collectEdgesInSubqueries(tempView, plan, nodeMap)
 
-    (edgesInSubqueries, candidateEdges)
+    (edgesInSubqueries, candidateEdges, refMap.mapValues(_.toSet).toMap)
   }
 }
 
