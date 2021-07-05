@@ -55,6 +55,7 @@ class TPCDSFlowTestSuite extends SQLFlowTestSuite with TPCDSSchema {
     // TODO: Temporarily ignored because the test fails in GitHub Actions
     "q47.sql",
     "q49.sql",
+    "q57.sql",
     "q78.sql"
   )
 
