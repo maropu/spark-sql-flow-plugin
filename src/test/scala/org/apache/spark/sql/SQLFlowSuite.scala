@@ -449,44 +449,60 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
              |  rankdir=LR;
              |
              |
-             |  "Aggregate_2" [label=<
+             |  "Aggregate_1" [label=<
              |  <table border="1" cellborder="0" cellspacing="0">
-             |    <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_2</i></td></tr>
-             |    <tr><td port="0">sum</td></tr>
-             |  <tr><td port="1">count</td></tr>
+             |    <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_1</i></td></tr>
+             |    <tr><td port="0">k</td></tr>
+             |  <tr><td port="1">sum</td></tr>
              |  </table>>];
              |
              |
              |  "Aggregate_4" [label=<
              |  <table border="1" cellborder="0" cellspacing="0">
              |    <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_4</i></td></tr>
+             |    <tr><td port="0">sum</td></tr>
+             |  <tr><td port="1">count</td></tr>
+             |  </table>>];
+             |
+             |
+             |  "Filter_2" [label=<
+             |  <table border="1" cellborder="0" cellspacing="0">
+             |    <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_2</i></td></tr>
              |    <tr><td port="0">k</td></tr>
              |  <tr><td port="1">sum</td></tr>
              |  <tr><td port="2">v2</td></tr>
              |  </table>>];
              |
              |
-             |  "Filter_0" [label=<
+             |  "LocalRelation_0" [label=<
              |  <table border="1" cellborder="0" cellspacing="0">
-             |    <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_0</i></td></tr>
-             |    <tr><td port="0">k</td></tr>
-             |  <tr><td port="1">sum</td></tr>
-             |  <tr><td port="2">v2</td></tr>
-             |  </table>>];
-             |
-             |
-             |  "LocalRelation_3" [label=<
-             |  <table border="1" cellborder="0" cellspacing="0">
-             |    <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_3</i></td></tr>
+             |    <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_0</i></td></tr>
              |    <tr><td port="0">k</td></tr>
              |  <tr><td port="1">v</td></tr>
              |  </table>>];
              |
              |
-             |  "Project_1" [label=<
+             |  "Project_3" [label=<
              |  <table border="1" cellborder="0" cellspacing="0">
-             |    <tr><td bgcolor="lightblue" port="nodeName"><i>Project_1</i></td></tr>
+             |    <tr><td bgcolor="lightblue" port="nodeName"><i>Project_3</i></td></tr>
              |    <tr><td port="0">sum</td></tr>
+             |  </table>>];
+             |
+             |
+             |  "Project_5" [label=<
+             |  <table border="1" cellborder="0" cellspacing="0">
+             |    <tr><td bgcolor="lightgray" port="nodeName"><i>Project_5</i></td></tr>
+             |    <tr><td port="0">k</td></tr>
+             |  <tr><td port="1">sum</td></tr>
+             |  <tr><td port="2">v2</td></tr>
+             |  </table>>];
+             |
+             |
+             |  "default.t1" [label=<
+             |  <table border="1" cellborder="0" cellspacing="0">
+             |    <tr><td bgcolor="lightyellow" port="nodeName"><i>default.t1</i></td></tr>
+             |    <tr><td port="0">k</td></tr>
+             |  <tr><td port="1">sum</td></tr>
              |  </table>>];
              |
              |
@@ -506,21 +522,172 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
              |  <tr><td port="1">count</td></tr>
              |  </table>>];
              |
-             |  "Aggregate_2":0 -> "t3":0;
-             |  "Aggregate_2":1 -> "t3":1;
-             |  "Aggregate_4":0 -> "t2":0;
-             |  "Aggregate_4":1 -> "t2":1;
-             |  "Aggregate_4":2 -> "t2":2;
-             |  "Filter_0":1 -> "Project_1":0;
-             |  "LocalRelation_3":0 -> "Aggregate_4":0;
-             |  "LocalRelation_3":1 -> "Aggregate_4":1;
-             |  "Project_1":0 -> "Aggregate_2":0;
-             |  "t2":0 -> "Filter_0":0;
-             |  "t2":1 -> "Filter_0":1;
-             |  "t2":2 -> "Filter_0":2;
+             |  "Aggregate_1":0 -> "default.t1":0;
+             |  "Aggregate_1":1 -> "default.t1":1;
+             |  "Aggregate_4":0 -> "t3":0;
+             |  "Aggregate_4":1 -> "t3":1;
+             |  "Filter_2":1 -> "Project_3":0;
+             |  "LocalRelation_0":0 -> "Aggregate_1":0;
+             |  "LocalRelation_0":1 -> "Aggregate_1":1;
+             |  "Project_3":0 -> "Aggregate_4":0;
+             |  "Project_5":0 -> "t2":0;
+             |  "Project_5":1 -> "t2":1;
+             |  "Project_5":2 -> "t2":2;
+             |  "default.t1":0 -> "Project_5":0;
+             |  "default.t1":1 -> "Project_5":1;
+             |  "t2":0 -> "Filter_2":0;
+             |  "t2":1 -> "Filter_2":1;
+             |  "t2":2 -> "Filter_2":2;
              |}
            """.stripMargin)
       }
+    }
+  }
+
+  test("handle permanent views correctly") {
+    withView("t1", "t2", "t3") {
+      sql("CREATE VIEW t1 AS SELECT k, SUM(v) sum FROM VALUES (1, 2), (2, 3) t(k, v) GROUP BY k")
+      sql("CREATE VIEW t2 AS SELECT k, sum, rand() v2 FROM t1")
+      sql("CREATE VIEW t3 AS SELECT k FROM t2 WHERE v2 > 0.50")
+
+      val flowString = getOutputAsString {
+        SQLFlow.debugPrintAsSQLFlow()
+      }
+      checkOutputString(flowString,
+        s"""
+           |digraph {
+           |  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
+           |  node [shape=plain]
+           |  rankdir=LR;
+           |
+           |
+           |  "Aggregate_1" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_1</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">sum</td></tr>
+           |  </table>>];
+           |
+           |
+           |  "Filter_3" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_3</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">sum</td></tr>
+           |  <tr><td port="2">v2</td></tr>
+           |  </table>>];
+           |
+           |
+           |  "LocalRelation_0" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_0</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v</td></tr>
+           |  </table>>];
+           |
+           |
+           |  "Project_2" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Project_2</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">sum</td></tr>
+           |  <tr><td port="2">v2</td></tr>
+           |  </table>>];
+           |
+           |
+           |  "Project_4" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Project_4</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  </table>>];
+           |
+           |
+           |  "default.t1" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightyellow" port="nodeName"><i>default.t1</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">sum</td></tr>
+           |  </table>>];
+           |
+           |
+           |  "default.t2" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightyellow" port="nodeName"><i>default.t2</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">sum</td></tr>
+           |  <tr><td port="2">v2</td></tr>
+           |  </table>>];
+           |
+           |
+           |  "default.t3" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightyellow" port="nodeName"><i>default.t3</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  </table>>];
+           |
+           |  "Aggregate_1":0 -> "default.t1":0;
+           |  "Aggregate_1":1 -> "default.t1":1;
+           |  "Filter_3":0 -> "Project_4":0;
+           |  "LocalRelation_0":0 -> "Aggregate_1":0;
+           |  "LocalRelation_0":1 -> "Aggregate_1":1;
+           |  "Project_2":0 -> "default.t2":0;
+           |  "Project_2":1 -> "default.t2":1;
+           |  "Project_2":2 -> "default.t2":2;
+           |  "Project_4":0 -> "default.t3":0;
+           |  "default.t1":0 -> "Project_2":0;
+           |  "default.t1":1 -> "Project_2":1;
+           |  "default.t2":0 -> "Filter_3":0;
+           |  "default.t2":1 -> "Filter_3":1;
+           |  "default.t2":2 -> "Filter_3":2;
+           |}
+         """.stripMargin)
+    }
+  }
+
+  test("TODO: Cannot cache view") {
+    withView("t") {
+      sql("CREATE VIEW t AS SELECT k, SUM(v) sum FROM VALUES (1, 2) t(k, v) GROUP BY k")
+
+      val flowString = getOutputAsString {
+        SQLFlow.debugPrintAsSQLFlow()
+      }
+      checkOutputString(flowString,
+        s"""
+           |digraph {
+           |  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
+           |  node [shape=plain]
+           |  rankdir=LR;
+           |
+           |
+           |  "Aggregate_1" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_1</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">sum</td></tr>
+           |  </table>>];
+           |
+           |
+           |  "LocalRelation_0" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_0</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v</td></tr>
+           |  </table>>];
+           |
+           |
+           |  "default.t" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightyellow" port="nodeName"><i>default.t</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">sum</td></tr>
+           |  </table>>];
+           |
+           |  "Aggregate_1":0 -> "default.t":0;
+           |  "Aggregate_1":1 -> "default.t":1;
+           |  "LocalRelation_0":0 -> "Aggregate_1":0;
+           |  "LocalRelation_0":1 -> "Aggregate_1":1;
+           |}
+         """.stripMargin)
     }
   }
 }

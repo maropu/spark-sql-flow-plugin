@@ -57,8 +57,8 @@ class SQLFlowTestSuite extends QueryTest with SharedSparkSession {
   protected case class TestCase(name: String, inputFile: String, resultFilePrefix: String) {
     val dotFile: String = s"$resultFilePrefix.dot"
     val contractedDotFile: String = resultFilePrefix.replaceAll("\\.sql", "-contracted.sql.dot")
-    val pngFile: String = s"$resultFilePrefix.png"
-    val contractedPngFile: String = resultFilePrefix.replaceAll("\\.sql", "-contracted.sql.png")
+    val svgFile: String = s"$resultFilePrefix.svg"
+    val contractedSvgFile: String = resultFilePrefix.replaceAll("\\.sql", "-contracted.sql.svg")
   }
 
   protected def ignoreList: Set[String] = Set(
@@ -98,10 +98,10 @@ class SQLFlowTestSuite extends QueryTest with SharedSparkSession {
     runQueries(queries, testCase)
   }
 
-  // If the `dot` command exists, convert the generated dot files into png ones
-  private lazy val tryGeneratePngFile = if (TestUtils.testCommandAvailable("dot")) {
+  // If the `dot` command exists, convert the generated dot files into svg ones
+  private lazy val tryGenerateSvgFile = if (TestUtils.testCommandAvailable("dot")) {
     (src: String, dst: String) => {
-      val commands = Seq("bash", "-c", s"dot -Tpng $src > $dst")
+      val commands = Seq("bash", "-c", s"dot -Tsvg $src > $dst")
       BlockingLineStream(commands)
     }
   } else {
@@ -128,8 +128,8 @@ class SQLFlowTestSuite extends QueryTest with SharedSparkSession {
     if (regenerateGoldenFiles) {
       stringToFile(new File(testCase.dotFile), s"$fileHeader$flowString")
       stringToFile(new File(testCase.contractedDotFile), s"$fileHeader$contractedFlowString")
-      tryGeneratePngFile(testCase.dotFile, testCase.pngFile)
-      tryGeneratePngFile(testCase.contractedDotFile, testCase.contractedPngFile)
+      tryGenerateSvgFile(testCase.dotFile, testCase.svgFile)
+      tryGenerateSvgFile(testCase.contractedDotFile, testCase.contractedSvgFile)
     }
 
     def checkSQLFlowString(goldenFile: String, flowString: String): Unit = {
