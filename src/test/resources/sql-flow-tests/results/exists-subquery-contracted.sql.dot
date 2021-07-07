@@ -10,9 +10,8 @@ digraph {
 "LocalRelation_0" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_0</i></td></tr>
-  <tr><td port="0">dept_id</td></tr>
-<tr><td port="1">dept_name</td></tr>
-<tr><td port="2">state</td></tr>
+  <tr><td port="0">emp_name</td></tr>
+<tr><td port="1">bonus_amt</td></tr>
 </table>>];
      
 
@@ -39,9 +38,11 @@ digraph {
 "LocalRelation_11" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_11</i></td></tr>
-  <tr><td port="0">dept_id</td></tr>
-<tr><td port="1">dept_name</td></tr>
-<tr><td port="2">state</td></tr>
+  <tr><td port="0">id</td></tr>
+<tr><td port="1">emp_name</td></tr>
+<tr><td port="2">hiredate</td></tr>
+<tr><td port="3">salary</td></tr>
+<tr><td port="4">dept_id</td></tr>
 </table>>];
      
 
@@ -59,25 +60,28 @@ digraph {
 "LocalRelation_13" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_13</i></td></tr>
-  <tr><td port="0">dept_id</td></tr>
-<tr><td port="1">dept_name</td></tr>
-<tr><td port="2">state</td></tr>
+  <tr><td port="0">emp_name</td></tr>
+<tr><td port="1">bonus_amt</td></tr>
 </table>>];
      
 
 "LocalRelation_2" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_2</i></td></tr>
-  <tr><td port="0">emp_name</td></tr>
-<tr><td port="1">bonus_amt</td></tr>
+  <tr><td port="0">id</td></tr>
+<tr><td port="1">emp_name</td></tr>
+<tr><td port="2">hiredate</td></tr>
+<tr><td port="3">salary</td></tr>
+<tr><td port="4">dept_id</td></tr>
 </table>>];
      
 
 "LocalRelation_3" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_3</i></td></tr>
-  <tr><td port="0">emp_name</td></tr>
-<tr><td port="1">bonus_amt</td></tr>
+  <tr><td port="0">dept_id</td></tr>
+<tr><td port="1">dept_name</td></tr>
+<tr><td port="2">state</td></tr>
 </table>>];
      
 
@@ -104,11 +108,9 @@ digraph {
 "LocalRelation_6" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_6</i></td></tr>
-  <tr><td port="0">id</td></tr>
-<tr><td port="1">emp_name</td></tr>
-<tr><td port="2">hiredate</td></tr>
-<tr><td port="3">salary</td></tr>
-<tr><td port="4">dept_id</td></tr>
+  <tr><td port="0">dept_id</td></tr>
+<tr><td port="1">dept_name</td></tr>
+<tr><td port="2">state</td></tr>
 </table>>];
      
 
@@ -133,11 +135,9 @@ digraph {
 "LocalRelation_9" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_9</i></td></tr>
-  <tr><td port="0">id</td></tr>
-<tr><td port="1">emp_name</td></tr>
-<tr><td port="2">hiredate</td></tr>
-<tr><td port="3">salary</td></tr>
-<tr><td port="4">dept_id</td></tr>
+  <tr><td port="0">dept_id</td></tr>
+<tr><td port="1">dept_name</td></tr>
+<tr><td port="2">state</td></tr>
 </table>>];
      
 
@@ -264,26 +264,26 @@ digraph {
 <tr><td port="4">dept_id</td></tr>
 </table>>];
      
-  "LocalRelation_0":0 -> t4:4
-"LocalRelation_1":0 -> t5:nodeName
-"LocalRelation_10":1 -> t10:0
-"LocalRelation_11":0 -> t10:nodeName
+  "LocalRelation_0":0 -> bonus:0
+"LocalRelation_0":1 -> bonus:1
+"LocalRelation_1":0 -> dept:0
+"LocalRelation_1":1 -> dept:1
+"LocalRelation_1":2 -> dept:2
+"LocalRelation_10":4 -> t6:0
+"LocalRelation_11":4 -> t7:0
 "LocalRelation_12":3 -> t8:1
-"LocalRelation_2":0 -> t9:1
-"LocalRelation_3":0 -> bonus:0
-"LocalRelation_3":1 -> bonus:1
-"LocalRelation_4":0 -> emp:0
-"LocalRelation_4":1 -> emp:1
-"LocalRelation_4":2 -> emp:2
-"LocalRelation_4":3 -> emp:3
-"LocalRelation_4":4 -> emp:4
-"LocalRelation_5":0 -> t3:4
-"LocalRelation_6":4 -> t6:0
-"LocalRelation_7":0 -> dept:0
-"LocalRelation_7":1 -> dept:1
-"LocalRelation_7":2 -> dept:2
-"LocalRelation_8":0 -> t2:4
-"LocalRelation_9":4 -> t7:0
+"LocalRelation_13":0 -> t9:1
+"LocalRelation_2":0 -> emp:0
+"LocalRelation_2":1 -> emp:1
+"LocalRelation_2":2 -> emp:2
+"LocalRelation_2":3 -> emp:3
+"LocalRelation_2":4 -> emp:4
+"LocalRelation_4":1 -> t10:0
+"LocalRelation_5":0 -> t10:nodeName
+"LocalRelation_6":0 -> t2:4
+"LocalRelation_7":0 -> t3:4
+"LocalRelation_8":0 -> t4:4
+"LocalRelation_9":0 -> t5:nodeName
 "bonus":0 -> t10:0
 "bonus":0 -> t8:0
 "bonus":1 -> t10:1
