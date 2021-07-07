@@ -7,187 +7,185 @@ digraph {
   rankdir=LR;
 
   
-"Aggregate_100" [label=<
+"Aggregate_105" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_100</i></td></tr>
-  <tr><td port="0">min_t3d</td></tr>
-</table>>];
-     
-
-"Aggregate_104" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_104</i></td></tr>
-  <tr><td port="0">count(t2d)</td></tr>
-<tr><td port="1">t2a</td></tr>
-<tr><td port="2">alwaysTrue</td></tr>
-</table>>];
-     
-
-"Aggregate_109" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_109</i></td></tr>
-  <tr><td port="0">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
-<tr><td port="1">t2a</td></tr>
-<tr><td port="2">alwaysTrue</td></tr>
-</table>>];
-     
-
-"Aggregate_114" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_114</i></td></tr>
-  <tr><td port="0">approx_count_distinct(t2d)</td></tr>
-<tr><td port="1">t2a</td></tr>
-<tr><td port="2">alwaysTrue</td></tr>
-</table>>];
-     
-
-"Aggregate_119" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_119</i></td></tr>
-  <tr><td port="0">collect_list(t2d)</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_105</i></td></tr>
+  <tr><td port="0">max(t2h)</td></tr>
 <tr><td port="1">t2a</td></tr>
 </table>>];
      
 
-"Aggregate_12" [label=<
+"Aggregate_11" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_12</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_11</i></td></tr>
+  <tr><td port="0">t1a</td></tr>
+<tr><td port="1">count(1)</td></tr>
+</table>>];
+     
+
+"Aggregate_112" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_112</i></td></tr>
   <tr><td port="0">min(t3d)</td></tr>
 </table>>];
      
 
-"Aggregate_125" [label=<
+"Aggregate_117" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_125</i></td></tr>
-  <tr><td port="0">sort_array(collect_set(t2d), true)</td></tr>
-<tr><td port="1">t2a</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_117</i></td></tr>
+  <tr><td port="0">avg(t3d)</td></tr>
 </table>>];
      
 
 "Aggregate_131" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_131</i></td></tr>
+  <tr><td port="0">max(t2b)</td></tr>
+<tr><td port="1">t2c</td></tr>
+</table>>];
+     
+
+"Aggregate_142" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_142</i></td></tr>
+  <tr><td port="0">t2c</td></tr>
+</table>>];
+     
+
+"Aggregate_17" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_17</i></td></tr>
+  <tr><td port="0">min(t2c)</td></tr>
+</table>>];
+     
+
+"Aggregate_23" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_23</i></td></tr>
+  <tr><td port="0">min(t3c)</td></tr>
+</table>>];
+     
+
+"Aggregate_24" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_24</i></td></tr>
+  <tr><td port="0">min_t3d</td></tr>
+</table>>];
+     
+
+"Aggregate_3" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_3</i></td></tr>
+  <tr><td port="0">scalarsubquery()</td></tr>
+<tr><td port="1">count(1)</td></tr>
+</table>>];
+     
+
+"Aggregate_30" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_30</i></td></tr>
+  <tr><td port="0">min(t3d)</td></tr>
+<tr><td port="1">t3a</td></tr>
+</table>>];
+     
+
+"Aggregate_37" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_37</i></td></tr>
+  <tr><td port="0">min(t3d)</td></tr>
+</table>>];
+     
+
+"Aggregate_40" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_40</i></td></tr>
+  <tr><td port="0">min_t3d</td></tr>
+</table>>];
+     
+
+"Aggregate_45" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_45</i></td></tr>
+  <tr><td port="0">min(t3d)</td></tr>
+</table>>];
+     
+
+"Aggregate_48" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_48</i></td></tr>
+  <tr><td port="0">max(t2h)</td></tr>
+</table>>];
+     
+
+"Aggregate_52" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_52</i></td></tr>
+  <tr><td port="0">count(t2d)</td></tr>
+<tr><td port="1">t2a</td></tr>
+<tr><td port="2">alwaysTrue</td></tr>
+</table>>];
+     
+
+"Aggregate_57" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_57</i></td></tr>
+  <tr><td port="0">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
+<tr><td port="1">t2a</td></tr>
+<tr><td port="2">alwaysTrue</td></tr>
+</table>>];
+     
+
+"Aggregate_6" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_6</i></td></tr>
+  <tr><td port="0">min(t3c)</td></tr>
+</table>>];
+     
+
+"Aggregate_62" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_62</i></td></tr>
+  <tr><td port="0">approx_count_distinct(t2d)</td></tr>
+<tr><td port="1">t2a</td></tr>
+<tr><td port="2">alwaysTrue</td></tr>
+</table>>];
+     
+
+"Aggregate_67" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_67</i></td></tr>
+  <tr><td port="0">collect_list(t2d)</td></tr>
+<tr><td port="1">t2a</td></tr>
+</table>>];
+     
+
+"Aggregate_73" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_73</i></td></tr>
+  <tr><td port="0">sort_array(collect_set(t2d), true)</td></tr>
+<tr><td port="1">t2a</td></tr>
+</table>>];
+     
+
+"Aggregate_79" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_79</i></td></tr>
   <tr><td port="0">hex(count_min_sketch(t2d, 0.5, 0.5, 1))</td></tr>
 <tr><td port="1">t2a</td></tr>
 <tr><td port="2">alwaysTrue</td></tr>
 </table>>];
      
 
-"Aggregate_138" [label=<
+"Aggregate_86" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_138</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_86</i></td></tr>
   <tr><td port="0">min(t3d)</td></tr>
 </table>>];
      
 
-"Aggregate_143" [label=<
+"Aggregate_91" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_143</i></td></tr>
-  <tr><td port="0">max(t2h)</td></tr>
-</table>>];
-     
-
-"Aggregate_145" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_145</i></td></tr>
-  <tr><td port="0">min_t3d</td></tr>
-<tr><td port="1">NULL</td></tr>
-</table>>];
-     
-
-"Aggregate_15" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_15</i></td></tr>
-  <tr><td port="0">min_t3d</td></tr>
-</table>>];
-     
-
-"Aggregate_19" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_19</i></td></tr>
-  <tr><td port="0">scalarsubquery()</td></tr>
-<tr><td port="1">count(1)</td></tr>
-</table>>];
-     
-
-"Aggregate_22" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_22</i></td></tr>
-  <tr><td port="0">min(t3c)</td></tr>
-</table>>];
-     
-
-"Aggregate_27" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_27</i></td></tr>
-  <tr><td port="0">t1a</td></tr>
-<tr><td port="1">count(1)</td></tr>
-</table>>];
-     
-
-"Aggregate_33" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_33</i></td></tr>
-  <tr><td port="0">min(t3d)</td></tr>
-<tr><td port="1">t3a</td></tr>
-</table>>];
-     
-
-"Aggregate_39" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_39</i></td></tr>
-  <tr><td port="0">max(t2h)</td></tr>
-<tr><td port="1">t2a</td></tr>
-</table>>];
-     
-
-"Aggregate_46" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_46</i></td></tr>
-  <tr><td port="0">min(t3d)</td></tr>
-</table>>];
-     
-
-"Aggregate_5" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_5</i></td></tr>
-  <tr><td port="0">min(t3d)</td></tr>
-<tr><td port="1">t3a</td></tr>
-</table>>];
-     
-
-"Aggregate_51" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_51</i></td></tr>
-  <tr><td port="0">avg(t3d)</td></tr>
-</table>>];
-     
-
-"Aggregate_65" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_65</i></td></tr>
-  <tr><td port="0">max(t2b)</td></tr>
-<tr><td port="1">t2c</td></tr>
-</table>>];
-     
-
-"Aggregate_76" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_76</i></td></tr>
-  <tr><td port="0">t2c</td></tr>
-</table>>];
-     
-
-"Aggregate_84" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_84</i></td></tr>
-  <tr><td port="0">min(t3d)</td></tr>
-</table>>];
-     
-
-"Aggregate_87" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_87</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_91</i></td></tr>
   <tr><td port="0">max(t2h)</td></tr>
 </table>>];
      
@@ -195,20 +193,37 @@ digraph {
 "Aggregate_93" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_93</i></td></tr>
-  <tr><td port="0">min(t2c)</td></tr>
+  <tr><td port="0">min_t3d</td></tr>
+<tr><td port="1">NULL</td></tr>
 </table>>];
      
 
 "Aggregate_99" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_99</i></td></tr>
-  <tr><td port="0">min(t3c)</td></tr>
+  <tr><td port="0">min(t3d)</td></tr>
+<tr><td port="1">t3a</td></tr>
 </table>>];
      
 
-"Filter_0" [label=<
+"Filter_103" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_0</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_103</i></td></tr>
+  <tr><td port="0">t2a</td></tr>
+<tr><td port="1">t2b</td></tr>
+<tr><td port="2">t2c</td></tr>
+<tr><td port="3">t2d</td></tr>
+<tr><td port="4">t2e</td></tr>
+<tr><td port="5">t2f</td></tr>
+<tr><td port="6">t2g</td></tr>
+<tr><td port="7">t2h</td></tr>
+<tr><td port="8">t2i</td></tr>
+</table>>];
+     
+
+"Filter_108" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_108</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 <tr><td port="1">t1b</td></tr>
 <tr><td port="2">t1c</td></tr>
@@ -221,9 +236,24 @@ digraph {
 </table>>];
      
 
-"Filter_134" [label=<
+"Filter_113" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_134</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_113</i></td></tr>
+  <tr><td port="0">t2a</td></tr>
+<tr><td port="1">t2b</td></tr>
+<tr><td port="2">t2c</td></tr>
+<tr><td port="3">t2d</td></tr>
+<tr><td port="4">t2e</td></tr>
+<tr><td port="5">t2f</td></tr>
+<tr><td port="6">t2g</td></tr>
+<tr><td port="7">t2h</td></tr>
+<tr><td port="8">t2i</td></tr>
+</table>>];
+     
+
+"Filter_12" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_12</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 <tr><td port="1">t1b</td></tr>
 <tr><td port="2">t1c</td></tr>
@@ -236,9 +266,62 @@ digraph {
 </table>>];
      
 
-"Filter_139" [label=<
+"Filter_122" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_139</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_122</i></td></tr>
+  <tr><td port="0">t3a</td></tr>
+<tr><td port="1">t3b</td></tr>
+<tr><td port="2">t3c</td></tr>
+<tr><td port="3">t3d</td></tr>
+<tr><td port="4">t3e</td></tr>
+<tr><td port="5">t3f</td></tr>
+<tr><td port="6">t3g</td></tr>
+<tr><td port="7">t3h</td></tr>
+<tr><td port="8">t3i</td></tr>
+</table>>];
+     
+
+"Filter_125" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_125</i></td></tr>
+  <tr><td port="0">t2a</td></tr>
+<tr><td port="1">t2b</td></tr>
+<tr><td port="2">t2c</td></tr>
+<tr><td port="3">t2d</td></tr>
+<tr><td port="4">t2e</td></tr>
+<tr><td port="5">t2f</td></tr>
+<tr><td port="6">t2g</td></tr>
+<tr><td port="7">t2h</td></tr>
+<tr><td port="8">t2i</td></tr>
+</table>>];
+     
+
+"Filter_132" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_132</i></td></tr>
+  <tr><td port="0">max(t2b)</td></tr>
+<tr><td port="1">t2c</td></tr>
+</table>>];
+     
+
+"Filter_136" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_136</i></td></tr>
+  <tr><td port="0">t2a</td></tr>
+<tr><td port="1">t2b</td></tr>
+<tr><td port="2">t2c</td></tr>
+<tr><td port="3">t2d</td></tr>
+<tr><td port="4">t2e</td></tr>
+<tr><td port="5">t2f</td></tr>
+<tr><td port="6">t2g</td></tr>
+<tr><td port="7">t2h</td></tr>
+<tr><td port="8">t2i</td></tr>
+</table>>];
+     
+
+"Filter_14" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_14</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 <tr><td port="1">t1b</td></tr>
 <tr><td port="2">t1c</td></tr>
@@ -251,32 +334,24 @@ digraph {
 </table>>];
      
 
-"Filter_23" [label=<
+"Filter_25" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_23</i></td></tr>
-  <tr><td port="0">scalarsubquery()</td></tr>
-<tr><td port="1">count(1)</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_25</i></td></tr>
+  <tr><td port="0">t1a</td></tr>
+<tr><td port="1">t1b</td></tr>
+<tr><td port="2">t1c</td></tr>
+<tr><td port="3">t1d</td></tr>
+<tr><td port="4">t1e</td></tr>
+<tr><td port="5">t1f</td></tr>
+<tr><td port="6">t1g</td></tr>
+<tr><td port="7">t1h</td></tr>
+<tr><td port="8">t1i</td></tr>
 </table>>];
      
 
 "Filter_28" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_28</i></td></tr>
-  <tr><td port="0">t1a</td></tr>
-<tr><td port="1">t1b</td></tr>
-<tr><td port="2">t1c</td></tr>
-<tr><td port="3">t1d</td></tr>
-<tr><td port="4">t1e</td></tr>
-<tr><td port="5">t1f</td></tr>
-<tr><td port="6">t1g</td></tr>
-<tr><td port="7">t1h</td></tr>
-<tr><td port="8">t1i</td></tr>
-</table>>];
-     
-
-"Filter_3" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_3</i></td></tr>
   <tr><td port="0">t3a</td></tr>
 <tr><td port="1">t3b</td></tr>
 <tr><td port="2">t3c</td></tr>
@@ -289,9 +364,92 @@ digraph {
 </table>>];
      
 
-"Filter_31" [label=<
+"Filter_33" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_31</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_33</i></td></tr>
+  <tr><td port="0">t1a</td></tr>
+<tr><td port="1">t1b</td></tr>
+<tr><td port="2">t1c</td></tr>
+<tr><td port="3">t1d</td></tr>
+<tr><td port="4">t1e</td></tr>
+<tr><td port="5">t1f</td></tr>
+<tr><td port="6">t1g</td></tr>
+<tr><td port="7">t1h</td></tr>
+<tr><td port="8">t1i</td></tr>
+</table>>];
+     
+
+"Filter_41" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_41</i></td></tr>
+  <tr><td port="0">t1a</td></tr>
+<tr><td port="1">t1b</td></tr>
+<tr><td port="2">t1c</td></tr>
+<tr><td port="3">t1d</td></tr>
+<tr><td port="4">t1e</td></tr>
+<tr><td port="5">t1f</td></tr>
+<tr><td port="6">t1g</td></tr>
+<tr><td port="7">t1h</td></tr>
+<tr><td port="8">t1i</td></tr>
+</table>>];
+     
+
+"Filter_7" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_7</i></td></tr>
+  <tr><td port="0">scalarsubquery()</td></tr>
+<tr><td port="1">count(1)</td></tr>
+</table>>];
+     
+
+"Filter_82" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_82</i></td></tr>
+  <tr><td port="0">t1a</td></tr>
+<tr><td port="1">t1b</td></tr>
+<tr><td port="2">t1c</td></tr>
+<tr><td port="3">t1d</td></tr>
+<tr><td port="4">t1e</td></tr>
+<tr><td port="5">t1f</td></tr>
+<tr><td port="6">t1g</td></tr>
+<tr><td port="7">t1h</td></tr>
+<tr><td port="8">t1i</td></tr>
+</table>>];
+     
+
+"Filter_87" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_87</i></td></tr>
+  <tr><td port="0">t1a</td></tr>
+<tr><td port="1">t1b</td></tr>
+<tr><td port="2">t1c</td></tr>
+<tr><td port="3">t1d</td></tr>
+<tr><td port="4">t1e</td></tr>
+<tr><td port="5">t1f</td></tr>
+<tr><td port="6">t1g</td></tr>
+<tr><td port="7">t1h</td></tr>
+<tr><td port="8">t1i</td></tr>
+</table>>];
+     
+
+"Filter_94" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_94</i></td></tr>
+  <tr><td port="0">t1a</td></tr>
+<tr><td port="1">t1b</td></tr>
+<tr><td port="2">t1c</td></tr>
+<tr><td port="3">t1d</td></tr>
+<tr><td port="4">t1e</td></tr>
+<tr><td port="5">t1f</td></tr>
+<tr><td port="6">t1g</td></tr>
+<tr><td port="7">t1h</td></tr>
+<tr><td port="8">t1i</td></tr>
+</table>>];
+     
+
+"Filter_97" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_97</i></td></tr>
   <tr><td port="0">t3a</td></tr>
 <tr><td port="1">t3b</td></tr>
 <tr><td port="2">t3c</td></tr>
@@ -304,167 +462,9 @@ digraph {
 </table>>];
      
 
-"Filter_37" [label=<
+"Join_FullOuter_118" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_37</i></td></tr>
-  <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2b</td></tr>
-<tr><td port="2">t2c</td></tr>
-<tr><td port="3">t2d</td></tr>
-<tr><td port="4">t2e</td></tr>
-<tr><td port="5">t2f</td></tr>
-<tr><td port="6">t2g</td></tr>
-<tr><td port="7">t2h</td></tr>
-<tr><td port="8">t2i</td></tr>
-</table>>];
-     
-
-"Filter_42" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_42</i></td></tr>
-  <tr><td port="0">t1a</td></tr>
-<tr><td port="1">t1b</td></tr>
-<tr><td port="2">t1c</td></tr>
-<tr><td port="3">t1d</td></tr>
-<tr><td port="4">t1e</td></tr>
-<tr><td port="5">t1f</td></tr>
-<tr><td port="6">t1g</td></tr>
-<tr><td port="7">t1h</td></tr>
-<tr><td port="8">t1i</td></tr>
-</table>>];
-     
-
-"Filter_47" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_47</i></td></tr>
-  <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2b</td></tr>
-<tr><td port="2">t2c</td></tr>
-<tr><td port="3">t2d</td></tr>
-<tr><td port="4">t2e</td></tr>
-<tr><td port="5">t2f</td></tr>
-<tr><td port="6">t2g</td></tr>
-<tr><td port="7">t2h</td></tr>
-<tr><td port="8">t2i</td></tr>
-</table>>];
-     
-
-"Filter_56" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_56</i></td></tr>
-  <tr><td port="0">t3a</td></tr>
-<tr><td port="1">t3b</td></tr>
-<tr><td port="2">t3c</td></tr>
-<tr><td port="3">t3d</td></tr>
-<tr><td port="4">t3e</td></tr>
-<tr><td port="5">t3f</td></tr>
-<tr><td port="6">t3g</td></tr>
-<tr><td port="7">t3h</td></tr>
-<tr><td port="8">t3i</td></tr>
-</table>>];
-     
-
-"Filter_59" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_59</i></td></tr>
-  <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2b</td></tr>
-<tr><td port="2">t2c</td></tr>
-<tr><td port="3">t2d</td></tr>
-<tr><td port="4">t2e</td></tr>
-<tr><td port="5">t2f</td></tr>
-<tr><td port="6">t2g</td></tr>
-<tr><td port="7">t2h</td></tr>
-<tr><td port="8">t2i</td></tr>
-</table>>];
-     
-
-"Filter_66" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_66</i></td></tr>
-  <tr><td port="0">max(t2b)</td></tr>
-<tr><td port="1">t2c</td></tr>
-</table>>];
-     
-
-"Filter_70" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_70</i></td></tr>
-  <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2b</td></tr>
-<tr><td port="2">t2c</td></tr>
-<tr><td port="3">t2d</td></tr>
-<tr><td port="4">t2e</td></tr>
-<tr><td port="5">t2f</td></tr>
-<tr><td port="6">t2g</td></tr>
-<tr><td port="7">t2h</td></tr>
-<tr><td port="8">t2i</td></tr>
-</table>>];
-     
-
-"Filter_8" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_8</i></td></tr>
-  <tr><td port="0">t1a</td></tr>
-<tr><td port="1">t1b</td></tr>
-<tr><td port="2">t1c</td></tr>
-<tr><td port="3">t1d</td></tr>
-<tr><td port="4">t1e</td></tr>
-<tr><td port="5">t1f</td></tr>
-<tr><td port="6">t1g</td></tr>
-<tr><td port="7">t1h</td></tr>
-<tr><td port="8">t1i</td></tr>
-</table>>];
-     
-
-"Filter_80" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_80</i></td></tr>
-  <tr><td port="0">t1a</td></tr>
-<tr><td port="1">t1b</td></tr>
-<tr><td port="2">t1c</td></tr>
-<tr><td port="3">t1d</td></tr>
-<tr><td port="4">t1e</td></tr>
-<tr><td port="5">t1f</td></tr>
-<tr><td port="6">t1g</td></tr>
-<tr><td port="7">t1h</td></tr>
-<tr><td port="8">t1i</td></tr>
-</table>>];
-     
-
-"Filter_88" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_88</i></td></tr>
-  <tr><td port="0">t1a</td></tr>
-<tr><td port="1">t1b</td></tr>
-<tr><td port="2">t1c</td></tr>
-<tr><td port="3">t1d</td></tr>
-<tr><td port="4">t1e</td></tr>
-<tr><td port="5">t1f</td></tr>
-<tr><td port="6">t1g</td></tr>
-<tr><td port="7">t1h</td></tr>
-<tr><td port="8">t1i</td></tr>
-</table>>];
-     
-
-"Filter_90" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_90</i></td></tr>
-  <tr><td port="0">t1a</td></tr>
-<tr><td port="1">t1b</td></tr>
-<tr><td port="2">t1c</td></tr>
-<tr><td port="3">t1d</td></tr>
-<tr><td port="4">t1e</td></tr>
-<tr><td port="5">t1f</td></tr>
-<tr><td port="6">t1g</td></tr>
-<tr><td port="7">t1h</td></tr>
-<tr><td port="8">t1i</td></tr>
-</table>>];
-     
-
-"Join_FullOuter_52" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_FullOuter_52</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_FullOuter_118</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 <tr><td port="1">min_t3d</td></tr>
 <tr><td port="2">t2a</td></tr>
@@ -472,9 +472,9 @@ digraph {
 </table>>];
      
 
-"Join_Inner_67" [label=<
+"Join_Inner_133" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_67</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_133</i></td></tr>
   <tr><td port="0">t3a</td></tr>
 <tr><td port="1">t3b</td></tr>
 <tr><td port="2">t3c</td></tr>
@@ -483,24 +483,80 @@ digraph {
 </table>>];
      
 
-"Join_LeftAnti_13" [label=<
+"Join_LeftAnti_145" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftAnti_13</i></td></tr>
-  <tr><td port="0">min(t3d)</td></tr>
-</table>>];
-     
-
-"Join_LeftAnti_79" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftAnti_79</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftAnti_145</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 <tr><td port="1">t1b</td></tr>
 </table>>];
      
 
-"Join_LeftOuter_105" [label=<
+"Join_LeftAnti_38" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_105</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftAnti_38</i></td></tr>
+  <tr><td port="0">min(t3d)</td></tr>
+</table>>];
+     
+
+"Join_LeftOuter_100" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_100</i></td></tr>
+  <tr><td port="0">t1a</td></tr>
+<tr><td port="1">min(t3d)</td></tr>
+<tr><td port="2">t3a</td></tr>
+</table>>];
+     
+
+"Join_LeftOuter_106" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_106</i></td></tr>
+  <tr><td port="0">t1a</td></tr>
+<tr><td port="1">min(t3d)</td></tr>
+<tr><td port="2">max(t2h)</td></tr>
+<tr><td port="3">t2a</td></tr>
+</table>>];
+     
+
+"Join_LeftOuter_129" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_129</i></td></tr>
+  <tr><td port="0">t2a</td></tr>
+<tr><td port="1">t2b</td></tr>
+<tr><td port="2">t2c</td></tr>
+<tr><td port="3">t1a</td></tr>
+</table>>];
+     
+
+"Join_LeftOuter_140" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_140</i></td></tr>
+  <tr><td port="0">t2a</td></tr>
+<tr><td port="1">t2c</td></tr>
+<tr><td port="2">t1a</td></tr>
+</table>>];
+     
+
+"Join_LeftOuter_143" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_143</i></td></tr>
+  <tr><td port="0">t3a</td></tr>
+<tr><td port="1">t3c</td></tr>
+<tr><td port="2">t2c</td></tr>
+</table>>];
+     
+
+"Join_LeftOuter_31" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_31</i></td></tr>
+  <tr><td port="0">t1a</td></tr>
+<tr><td port="1">min(t3d)</td></tr>
+<tr><td port="2">t3a</td></tr>
+</table>>];
+     
+
+"Join_LeftOuter_53" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_53</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 <tr><td port="1">count(t2d)</td></tr>
 <tr><td port="2">t2a</td></tr>
@@ -508,9 +564,9 @@ digraph {
 </table>>];
      
 
-"Join_LeftOuter_110" [label=<
+"Join_LeftOuter_58" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_110</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_58</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 <tr><td port="1">count(t2d)</td></tr>
 <tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
@@ -519,9 +575,9 @@ digraph {
 </table>>];
      
 
-"Join_LeftOuter_115" [label=<
+"Join_LeftOuter_63" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_115</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_63</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 <tr><td port="1">count(t2d)</td></tr>
 <tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
@@ -531,9 +587,9 @@ digraph {
 </table>>];
      
 
-"Join_LeftOuter_121" [label=<
+"Join_LeftOuter_69" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_121</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_69</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 <tr><td port="1">count(t2d)</td></tr>
 <tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
@@ -544,9 +600,9 @@ digraph {
 </table>>];
      
 
-"Join_LeftOuter_127" [label=<
+"Join_LeftOuter_75" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_127</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_75</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 <tr><td port="1">count(t2d)</td></tr>
 <tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
@@ -558,9 +614,9 @@ digraph {
 </table>>];
      
 
-"Join_LeftOuter_132" [label=<
+"Join_LeftOuter_80" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_132</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_80</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 <tr><td port="1">count(t2d)</td></tr>
 <tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
@@ -573,82 +629,26 @@ digraph {
 </table>>];
      
 
-"Join_LeftOuter_34" [label=<
+"Join_LeftSemi_9" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_34</i></td></tr>
-  <tr><td port="0">t1a</td></tr>
-<tr><td port="1">min(t3d)</td></tr>
-<tr><td port="2">t3a</td></tr>
-</table>>];
-     
-
-"Join_LeftOuter_40" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_40</i></td></tr>
-  <tr><td port="0">t1a</td></tr>
-<tr><td port="1">min(t3d)</td></tr>
-<tr><td port="2">max(t2h)</td></tr>
-<tr><td port="3">t2a</td></tr>
-</table>>];
-     
-
-"Join_LeftOuter_6" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_6</i></td></tr>
-  <tr><td port="0">t1a</td></tr>
-<tr><td port="1">min(t3d)</td></tr>
-<tr><td port="2">t3a</td></tr>
-</table>>];
-     
-
-"Join_LeftOuter_63" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_63</i></td></tr>
-  <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2b</td></tr>
-<tr><td port="2">t2c</td></tr>
-<tr><td port="3">t1a</td></tr>
-</table>>];
-     
-
-"Join_LeftOuter_74" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_74</i></td></tr>
-  <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2c</td></tr>
-<tr><td port="2">t1a</td></tr>
-</table>>];
-     
-
-"Join_LeftOuter_77" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_77</i></td></tr>
-  <tr><td port="0">t3a</td></tr>
-<tr><td port="1">t3c</td></tr>
-<tr><td port="2">t2c</td></tr>
-</table>>];
-     
-
-"Join_LeftSemi_25" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftSemi_25</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftSemi_9</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 <tr><td port="1">t1c</td></tr>
 </table>>];
      
 
-"LocalRelation_10" [label=<
+"LocalRelation_1" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_10</i></td></tr>
-  <tr><td port="0">t3a</td></tr>
-<tr><td port="1">t3b</td></tr>
-<tr><td port="2">t3c</td></tr>
-<tr><td port="3">t3d</td></tr>
-<tr><td port="4">t3e</td></tr>
-<tr><td port="5">t3f</td></tr>
-<tr><td port="6">t3g</td></tr>
-<tr><td port="7">t3h</td></tr>
-<tr><td port="8">t3i</td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_1</i></td></tr>
+  <tr><td port="0">t2a</td></tr>
+<tr><td port="1">t2b</td></tr>
+<tr><td port="2">t2c</td></tr>
+<tr><td port="3">t2d</td></tr>
+<tr><td port="4">t2e</td></tr>
+<tr><td port="5">t2f</td></tr>
+<tr><td port="6">t2g</td></tr>
+<tr><td port="7">t2h</td></tr>
+<tr><td port="8">t2i</td></tr>
 </table>>];
      
 
@@ -667,84 +667,9 @@ digraph {
 </table>>];
      
 
-"LocalRelation_107" [label=<
+"LocalRelation_110" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_107</i></td></tr>
-  <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2b</td></tr>
-<tr><td port="2">t2c</td></tr>
-<tr><td port="3">t2d</td></tr>
-<tr><td port="4">t2e</td></tr>
-<tr><td port="5">t2f</td></tr>
-<tr><td port="6">t2g</td></tr>
-<tr><td port="7">t2h</td></tr>
-<tr><td port="8">t2i</td></tr>
-</table>>];
-     
-
-"LocalRelation_112" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_112</i></td></tr>
-  <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2b</td></tr>
-<tr><td port="2">t2c</td></tr>
-<tr><td port="3">t2d</td></tr>
-<tr><td port="4">t2e</td></tr>
-<tr><td port="5">t2f</td></tr>
-<tr><td port="6">t2g</td></tr>
-<tr><td port="7">t2h</td></tr>
-<tr><td port="8">t2i</td></tr>
-</table>>];
-     
-
-"LocalRelation_117" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_117</i></td></tr>
-  <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2b</td></tr>
-<tr><td port="2">t2c</td></tr>
-<tr><td port="3">t2d</td></tr>
-<tr><td port="4">t2e</td></tr>
-<tr><td port="5">t2f</td></tr>
-<tr><td port="6">t2g</td></tr>
-<tr><td port="7">t2h</td></tr>
-<tr><td port="8">t2i</td></tr>
-</table>>];
-     
-
-"LocalRelation_123" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_123</i></td></tr>
-  <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2b</td></tr>
-<tr><td port="2">t2c</td></tr>
-<tr><td port="3">t2d</td></tr>
-<tr><td port="4">t2e</td></tr>
-<tr><td port="5">t2f</td></tr>
-<tr><td port="6">t2g</td></tr>
-<tr><td port="7">t2h</td></tr>
-<tr><td port="8">t2i</td></tr>
-</table>>];
-     
-
-"LocalRelation_129" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_129</i></td></tr>
-  <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2b</td></tr>
-<tr><td port="2">t2c</td></tr>
-<tr><td port="3">t2d</td></tr>
-<tr><td port="4">t2e</td></tr>
-<tr><td port="5">t2f</td></tr>
-<tr><td port="6">t2g</td></tr>
-<tr><td port="7">t2h</td></tr>
-<tr><td port="8">t2i</td></tr>
-</table>>];
-     
-
-"LocalRelation_136" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_136</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_110</i></td></tr>
   <tr><td port="0">t3a</td></tr>
 <tr><td port="1">t3b</td></tr>
 <tr><td port="2">t3c</td></tr>
@@ -757,9 +682,39 @@ digraph {
 </table>>];
      
 
-"LocalRelation_141" [label=<
+"LocalRelation_115" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_141</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_115</i></td></tr>
+  <tr><td port="0">t3a</td></tr>
+<tr><td port="1">t3b</td></tr>
+<tr><td port="2">t3c</td></tr>
+<tr><td port="3">t3d</td></tr>
+<tr><td port="4">t3e</td></tr>
+<tr><td port="5">t3f</td></tr>
+<tr><td port="6">t3g</td></tr>
+<tr><td port="7">t3h</td></tr>
+<tr><td port="8">t3i</td></tr>
+</table>>];
+     
+
+"LocalRelation_121" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_121</i></td></tr>
+  <tr><td port="0">t3a</td></tr>
+<tr><td port="1">t3b</td></tr>
+<tr><td port="2">t3c</td></tr>
+<tr><td port="3">t3d</td></tr>
+<tr><td port="4">t3e</td></tr>
+<tr><td port="5">t3f</td></tr>
+<tr><td port="6">t3g</td></tr>
+<tr><td port="7">t3h</td></tr>
+<tr><td port="8">t3i</td></tr>
+</table>>];
+     
+
+"LocalRelation_124" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_124</i></td></tr>
   <tr><td port="0">t2a</td></tr>
 <tr><td port="1">t2b</td></tr>
 <tr><td port="2">t2c</td></tr>
@@ -772,9 +727,24 @@ digraph {
 </table>>];
      
 
-"LocalRelation_17" [label=<
+"LocalRelation_127" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_17</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_127</i></td></tr>
+  <tr><td port="0">t1a</td></tr>
+<tr><td port="1">t1b</td></tr>
+<tr><td port="2">t1c</td></tr>
+<tr><td port="3">t1d</td></tr>
+<tr><td port="4">t1e</td></tr>
+<tr><td port="5">t1f</td></tr>
+<tr><td port="6">t1g</td></tr>
+<tr><td port="7">t1h</td></tr>
+<tr><td port="8">t1i</td></tr>
+</table>>];
+     
+
+"LocalRelation_135" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_135</i></td></tr>
   <tr><td port="0">t2a</td></tr>
 <tr><td port="1">t2b</td></tr>
 <tr><td port="2">t2c</td></tr>
@@ -787,54 +757,24 @@ digraph {
 </table>>];
      
 
-"LocalRelation_2" [label=<
+"LocalRelation_138" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_2</i></td></tr>
-  <tr><td port="0">t3a</td></tr>
-<tr><td port="1">t3b</td></tr>
-<tr><td port="2">t3c</td></tr>
-<tr><td port="3">t3d</td></tr>
-<tr><td port="4">t3e</td></tr>
-<tr><td port="5">t3f</td></tr>
-<tr><td port="6">t3g</td></tr>
-<tr><td port="7">t3h</td></tr>
-<tr><td port="8">t3i</td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_138</i></td></tr>
+  <tr><td port="0">t1a</td></tr>
+<tr><td port="1">t1b</td></tr>
+<tr><td port="2">t1c</td></tr>
+<tr><td port="3">t1d</td></tr>
+<tr><td port="4">t1e</td></tr>
+<tr><td port="5">t1f</td></tr>
+<tr><td port="6">t1g</td></tr>
+<tr><td port="7">t1h</td></tr>
+<tr><td port="8">t1i</td></tr>
 </table>>];
      
 
-"LocalRelation_20" [label=<
+"LocalRelation_15" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_20</i></td></tr>
-  <tr><td port="0">t3a</td></tr>
-<tr><td port="1">t3b</td></tr>
-<tr><td port="2">t3c</td></tr>
-<tr><td port="3">t3d</td></tr>
-<tr><td port="4">t3e</td></tr>
-<tr><td port="5">t3f</td></tr>
-<tr><td port="6">t3g</td></tr>
-<tr><td port="7">t3h</td></tr>
-<tr><td port="8">t3i</td></tr>
-</table>>];
-     
-
-"LocalRelation_30" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_30</i></td></tr>
-  <tr><td port="0">t3a</td></tr>
-<tr><td port="1">t3b</td></tr>
-<tr><td port="2">t3c</td></tr>
-<tr><td port="3">t3d</td></tr>
-<tr><td port="4">t3e</td></tr>
-<tr><td port="5">t3f</td></tr>
-<tr><td port="6">t3g</td></tr>
-<tr><td port="7">t3h</td></tr>
-<tr><td port="8">t3i</td></tr>
-</table>>];
-     
-
-"LocalRelation_36" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_36</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_15</i></td></tr>
   <tr><td port="0">t2a</td></tr>
 <tr><td port="1">t2b</td></tr>
 <tr><td port="2">t2c</td></tr>
@@ -847,9 +787,9 @@ digraph {
 </table>>];
      
 
-"LocalRelation_44" [label=<
+"LocalRelation_21" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_44</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_21</i></td></tr>
   <tr><td port="0">t3a</td></tr>
 <tr><td port="1">t3b</td></tr>
 <tr><td port="2">t3c</td></tr>
@@ -862,9 +802,9 @@ digraph {
 </table>>];
      
 
-"LocalRelation_49" [label=<
+"LocalRelation_27" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_49</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_27</i></td></tr>
   <tr><td port="0">t3a</td></tr>
 <tr><td port="1">t3b</td></tr>
 <tr><td port="2">t3c</td></tr>
@@ -874,27 +814,87 @@ digraph {
 <tr><td port="6">t3g</td></tr>
 <tr><td port="7">t3h</td></tr>
 <tr><td port="8">t3i</td></tr>
+</table>>];
+     
+
+"LocalRelation_35" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_35</i></td></tr>
+  <tr><td port="0">t3a</td></tr>
+<tr><td port="1">t3b</td></tr>
+<tr><td port="2">t3c</td></tr>
+<tr><td port="3">t3d</td></tr>
+<tr><td port="4">t3e</td></tr>
+<tr><td port="5">t3f</td></tr>
+<tr><td port="6">t3g</td></tr>
+<tr><td port="7">t3h</td></tr>
+<tr><td port="8">t3i</td></tr>
+</table>>];
+     
+
+"LocalRelation_4" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_4</i></td></tr>
+  <tr><td port="0">t3a</td></tr>
+<tr><td port="1">t3b</td></tr>
+<tr><td port="2">t3c</td></tr>
+<tr><td port="3">t3d</td></tr>
+<tr><td port="4">t3e</td></tr>
+<tr><td port="5">t3f</td></tr>
+<tr><td port="6">t3g</td></tr>
+<tr><td port="7">t3h</td></tr>
+<tr><td port="8">t3i</td></tr>
+</table>>];
+     
+
+"LocalRelation_43" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_43</i></td></tr>
+  <tr><td port="0">t3a</td></tr>
+<tr><td port="1">t3b</td></tr>
+<tr><td port="2">t3c</td></tr>
+<tr><td port="3">t3d</td></tr>
+<tr><td port="4">t3e</td></tr>
+<tr><td port="5">t3f</td></tr>
+<tr><td port="6">t3g</td></tr>
+<tr><td port="7">t3h</td></tr>
+<tr><td port="8">t3i</td></tr>
+</table>>];
+     
+
+"LocalRelation_46" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_46</i></td></tr>
+  <tr><td port="0">t2a</td></tr>
+<tr><td port="1">t2b</td></tr>
+<tr><td port="2">t2c</td></tr>
+<tr><td port="3">t2d</td></tr>
+<tr><td port="4">t2e</td></tr>
+<tr><td port="5">t2f</td></tr>
+<tr><td port="6">t2g</td></tr>
+<tr><td port="7">t2h</td></tr>
+<tr><td port="8">t2i</td></tr>
+</table>>];
+     
+
+"LocalRelation_50" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_50</i></td></tr>
+  <tr><td port="0">t2a</td></tr>
+<tr><td port="1">t2b</td></tr>
+<tr><td port="2">t2c</td></tr>
+<tr><td port="3">t2d</td></tr>
+<tr><td port="4">t2e</td></tr>
+<tr><td port="5">t2f</td></tr>
+<tr><td port="6">t2g</td></tr>
+<tr><td port="7">t2h</td></tr>
+<tr><td port="8">t2i</td></tr>
 </table>>];
      
 
 "LocalRelation_55" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_55</i></td></tr>
-  <tr><td port="0">t3a</td></tr>
-<tr><td port="1">t3b</td></tr>
-<tr><td port="2">t3c</td></tr>
-<tr><td port="3">t3d</td></tr>
-<tr><td port="4">t3e</td></tr>
-<tr><td port="5">t3f</td></tr>
-<tr><td port="6">t3g</td></tr>
-<tr><td port="7">t3h</td></tr>
-<tr><td port="8">t3i</td></tr>
-</table>>];
-     
-
-"LocalRelation_58" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_58</i></td></tr>
   <tr><td port="0">t2a</td></tr>
 <tr><td port="1">t2b</td></tr>
 <tr><td port="2">t2c</td></tr>
@@ -907,114 +907,122 @@ digraph {
 </table>>];
      
 
-"LocalRelation_61" [label=<
+"LocalRelation_60" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_61</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_60</i></td></tr>
+  <tr><td port="0">t2a</td></tr>
+<tr><td port="1">t2b</td></tr>
+<tr><td port="2">t2c</td></tr>
+<tr><td port="3">t2d</td></tr>
+<tr><td port="4">t2e</td></tr>
+<tr><td port="5">t2f</td></tr>
+<tr><td port="6">t2g</td></tr>
+<tr><td port="7">t2h</td></tr>
+<tr><td port="8">t2i</td></tr>
+</table>>];
+     
+
+"LocalRelation_65" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_65</i></td></tr>
+  <tr><td port="0">t2a</td></tr>
+<tr><td port="1">t2b</td></tr>
+<tr><td port="2">t2c</td></tr>
+<tr><td port="3">t2d</td></tr>
+<tr><td port="4">t2e</td></tr>
+<tr><td port="5">t2f</td></tr>
+<tr><td port="6">t2g</td></tr>
+<tr><td port="7">t2h</td></tr>
+<tr><td port="8">t2i</td></tr>
+</table>>];
+     
+
+"LocalRelation_71" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_71</i></td></tr>
+  <tr><td port="0">t2a</td></tr>
+<tr><td port="1">t2b</td></tr>
+<tr><td port="2">t2c</td></tr>
+<tr><td port="3">t2d</td></tr>
+<tr><td port="4">t2e</td></tr>
+<tr><td port="5">t2f</td></tr>
+<tr><td port="6">t2g</td></tr>
+<tr><td port="7">t2h</td></tr>
+<tr><td port="8">t2i</td></tr>
+</table>>];
+     
+
+"LocalRelation_77" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_77</i></td></tr>
+  <tr><td port="0">t2a</td></tr>
+<tr><td port="1">t2b</td></tr>
+<tr><td port="2">t2c</td></tr>
+<tr><td port="3">t2d</td></tr>
+<tr><td port="4">t2e</td></tr>
+<tr><td port="5">t2f</td></tr>
+<tr><td port="6">t2g</td></tr>
+<tr><td port="7">t2h</td></tr>
+<tr><td port="8">t2i</td></tr>
+</table>>];
+     
+
+"LocalRelation_84" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_84</i></td></tr>
+  <tr><td port="0">t3a</td></tr>
+<tr><td port="1">t3b</td></tr>
+<tr><td port="2">t3c</td></tr>
+<tr><td port="3">t3d</td></tr>
+<tr><td port="4">t3e</td></tr>
+<tr><td port="5">t3f</td></tr>
+<tr><td port="6">t3g</td></tr>
+<tr><td port="7">t3h</td></tr>
+<tr><td port="8">t3i</td></tr>
+</table>>];
+     
+
+"LocalRelation_89" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_89</i></td></tr>
+  <tr><td port="0">t2a</td></tr>
+<tr><td port="1">t2b</td></tr>
+<tr><td port="2">t2c</td></tr>
+<tr><td port="3">t2d</td></tr>
+<tr><td port="4">t2e</td></tr>
+<tr><td port="5">t2f</td></tr>
+<tr><td port="6">t2g</td></tr>
+<tr><td port="7">t2h</td></tr>
+<tr><td port="8">t2i</td></tr>
+</table>>];
+     
+
+"LocalRelation_96" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_96</i></td></tr>
+  <tr><td port="0">t3a</td></tr>
+<tr><td port="1">t3b</td></tr>
+<tr><td port="2">t3c</td></tr>
+<tr><td port="3">t3d</td></tr>
+<tr><td port="4">t3e</td></tr>
+<tr><td port="5">t3f</td></tr>
+<tr><td port="6">t3g</td></tr>
+<tr><td port="7">t3h</td></tr>
+<tr><td port="8">t3i</td></tr>
+</table>>];
+     
+
+"Project_0" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_0</i></td></tr>
   <tr><td port="0">t1a</td></tr>
-<tr><td port="1">t1b</td></tr>
-<tr><td port="2">t1c</td></tr>
-<tr><td port="3">t1d</td></tr>
-<tr><td port="4">t1e</td></tr>
-<tr><td port="5">t1f</td></tr>
-<tr><td port="6">t1g</td></tr>
-<tr><td port="7">t1h</td></tr>
-<tr><td port="8">t1i</td></tr>
+<tr><td port="1">t1c</td></tr>
 </table>>];
      
 
-"LocalRelation_69" [label=<
+"Project_10" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_69</i></td></tr>
-  <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2b</td></tr>
-<tr><td port="2">t2c</td></tr>
-<tr><td port="3">t2d</td></tr>
-<tr><td port="4">t2e</td></tr>
-<tr><td port="5">t2f</td></tr>
-<tr><td port="6">t2g</td></tr>
-<tr><td port="7">t2h</td></tr>
-<tr><td port="8">t2i</td></tr>
-</table>>];
-     
-
-"LocalRelation_72" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_72</i></td></tr>
-  <tr><td port="0">t1a</td></tr>
-<tr><td port="1">t1b</td></tr>
-<tr><td port="2">t1c</td></tr>
-<tr><td port="3">t1d</td></tr>
-<tr><td port="4">t1e</td></tr>
-<tr><td port="5">t1f</td></tr>
-<tr><td port="6">t1g</td></tr>
-<tr><td port="7">t1h</td></tr>
-<tr><td port="8">t1i</td></tr>
-</table>>];
-     
-
-"LocalRelation_82" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_82</i></td></tr>
-  <tr><td port="0">t3a</td></tr>
-<tr><td port="1">t3b</td></tr>
-<tr><td port="2">t3c</td></tr>
-<tr><td port="3">t3d</td></tr>
-<tr><td port="4">t3e</td></tr>
-<tr><td port="5">t3f</td></tr>
-<tr><td port="6">t3g</td></tr>
-<tr><td port="7">t3h</td></tr>
-<tr><td port="8">t3i</td></tr>
-</table>>];
-     
-
-"LocalRelation_85" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_85</i></td></tr>
-  <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2b</td></tr>
-<tr><td port="2">t2c</td></tr>
-<tr><td port="3">t2d</td></tr>
-<tr><td port="4">t2e</td></tr>
-<tr><td port="5">t2f</td></tr>
-<tr><td port="6">t2g</td></tr>
-<tr><td port="7">t2h</td></tr>
-<tr><td port="8">t2i</td></tr>
-</table>>];
-     
-
-"LocalRelation_91" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_91</i></td></tr>
-  <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2b</td></tr>
-<tr><td port="2">t2c</td></tr>
-<tr><td port="3">t2d</td></tr>
-<tr><td port="4">t2e</td></tr>
-<tr><td port="5">t2f</td></tr>
-<tr><td port="6">t2g</td></tr>
-<tr><td port="7">t2h</td></tr>
-<tr><td port="8">t2i</td></tr>
-</table>>];
-     
-
-"LocalRelation_97" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_97</i></td></tr>
-  <tr><td port="0">t3a</td></tr>
-<tr><td port="1">t3b</td></tr>
-<tr><td port="2">t3c</td></tr>
-<tr><td port="3">t3d</td></tr>
-<tr><td port="4">t3e</td></tr>
-<tr><td port="5">t3f</td></tr>
-<tr><td port="6">t3g</td></tr>
-<tr><td port="7">t3h</td></tr>
-<tr><td port="8">t3i</td></tr>
-</table>>];
-     
-
-"Project_1" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_1</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_10</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 </table>>];
      
@@ -1023,108 +1031,89 @@ digraph {
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_101</i></td></tr>
   <tr><td port="0">t1a</td></tr>
+<tr><td port="1">min(t3d)</td></tr>
 </table>>];
      
 
-"Project_103" [label=<
+"Project_104" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_103</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_104</i></td></tr>
   <tr><td port="0">t2a</td></tr>
+<tr><td port="1">t2h</td></tr>
 </table>>];
      
 
-"Project_106" [label=<
+"Project_107" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_106</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_107</i></td></tr>
+  <tr><td port="0">min_t3d</td></tr>
+<tr><td port="1">max_t2h</td></tr>
+</table>>];
+     
+
+"Project_109" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_109</i></td></tr>
   <tr><td port="0">t1a</td></tr>
-<tr><td port="1">count(t2d)</td></tr>
-</table>>];
-     
-
-"Project_108" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_108</i></td></tr>
-  <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2d</td></tr>
-</table>>];
-     
-
-"Project_11" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_11</i></td></tr>
-  <tr><td port="0">t3d</td></tr>
+<tr><td port="1">min_t3d</td></tr>
 </table>>];
      
 
 "Project_111" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_111</i></td></tr>
-  <tr><td port="0">t1a</td></tr>
-<tr><td port="1">count(t2d)</td></tr>
-<tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
+  <tr><td port="0">t3d</td></tr>
 </table>>];
      
 
-"Project_113" [label=<
+"Project_114" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_113</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_114</i></td></tr>
   <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2d</td></tr>
+<tr><td port="1">avg_t3d</td></tr>
 </table>>];
      
 
 "Project_116" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_116</i></td></tr>
-  <tr><td port="0">t1a</td></tr>
-<tr><td port="1">count(t2d)</td></tr>
-<tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
-<tr><td port="3">approx_count_distinct(t2d)</td></tr>
+  <tr><td port="0">t3d</td></tr>
 </table>>];
      
 
-"Project_118" [label=<
+"Project_119" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_118</i></td></tr>
-  <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2d</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_119</i></td></tr>
+  <tr><td port="0">t1a</td></tr>
+<tr><td port="1">t2a</td></tr>
+<tr><td port="2">min_t3d</td></tr>
+<tr><td port="3">avg_t3d</td></tr>
 </table>>];
      
 
 "Project_120" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_120</i></td></tr>
-  <tr><td port="0">collect_list(t2d)</td></tr>
-<tr><td port="1">t2a</td></tr>
-<tr><td port="2">alwaysTrue</td></tr>
-</table>>];
-     
-
-"Project_122" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_122</i></td></tr>
   <tr><td port="0">t1a</td></tr>
-<tr><td port="1">count(t2d)</td></tr>
-<tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
-<tr><td port="3">approx_count_distinct(t2d)</td></tr>
-<tr><td port="4">collect_list(t2d)</td></tr>
+<tr><td port="1">t1b</td></tr>
 </table>>];
      
 
-"Project_124" [label=<
+"Project_123" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_124</i></td></tr>
-  <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2d</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_123</i></td></tr>
+  <tr><td port="0">t3a</td></tr>
+<tr><td port="1">t3b</td></tr>
+<tr><td port="2">t3c</td></tr>
 </table>>];
      
 
 "Project_126" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_126</i></td></tr>
-  <tr><td port="0">sort_array(collect_set(t2d), true)</td></tr>
-<tr><td port="1">t2a</td></tr>
-<tr><td port="2">alwaysTrue</td></tr>
+  <tr><td port="0">t2a</td></tr>
+<tr><td port="1">t2b</td></tr>
+<tr><td port="2">t2c</td></tr>
 </table>>];
      
 
@@ -1132,98 +1121,79 @@ digraph {
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_128</i></td></tr>
   <tr><td port="0">t1a</td></tr>
-<tr><td port="1">count(t2d)</td></tr>
-<tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
-<tr><td port="3">approx_count_distinct(t2d)</td></tr>
-<tr><td port="4">collect_list(t2d)</td></tr>
-<tr><td port="5">sort_array(collect_set(t2d), true)</td></tr>
 </table>>];
      
 
 "Project_130" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_130</i></td></tr>
-  <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2d</td></tr>
+  <tr><td port="0">t2b</td></tr>
+<tr><td port="1">t2c</td></tr>
 </table>>];
      
 
-"Project_133" [label=<
+"Project_134" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_133</i></td></tr>
-  <tr><td port="0">t1a</td></tr>
-<tr><td port="1">count_t2</td></tr>
-<tr><td port="2">count_if_t2</td></tr>
-<tr><td port="3">approx_count_distinct_t2</td></tr>
-<tr><td port="4">collect_list_t2</td></tr>
-<tr><td port="5">collect_set_t2_1</td></tr>
-<tr><td port="6">collect_set_t2_2</td></tr>
-</table>>];
-     
-
-"Project_135" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_135</i></td></tr>
-  <tr><td port="0">min_t3d</td></tr>
-<tr><td port="1">NULL</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_134</i></td></tr>
+  <tr><td port="0">t3a</td></tr>
+<tr><td port="1">t3c</td></tr>
 </table>>];
      
 
 "Project_137" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_137</i></td></tr>
-  <tr><td port="0">t3d</td></tr>
+  <tr><td port="0">t2a</td></tr>
+<tr><td port="1">t2c</td></tr>
 </table>>];
      
 
-"Project_14" [label=<
+"Project_139" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_14</i></td></tr>
-  <tr><td port="0">min_t3d</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_139</i></td></tr>
+  <tr><td port="0">t1a</td></tr>
 </table>>];
      
 
-"Project_140" [label=<
+"Project_141" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_140</i></td></tr>
-  <tr><td port="0">NULL</td></tr>
-<tr><td port="1">max_t2h</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_141</i></td></tr>
+  <tr><td port="0">t2c</td></tr>
 </table>>];
      
 
-"Project_142" [label=<
+"Project_144" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_142</i></td></tr>
-  <tr><td port="0">t2h</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_144</i></td></tr>
+  <tr><td port="0">t3a</td></tr>
 </table>>];
      
 
 "Project_16" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_16</i></td></tr>
-  <tr><td port="0">t1a</td></tr>
-<tr><td port="1">t1c</td></tr>
+  <tr><td port="0">t2c</td></tr>
 </table>>];
      
 
-"Project_18" [label=<
+"Project_2" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_18</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_2</i></td></tr>
   <tr><td port="0">t2g</td></tr>
 </table>>];
      
 
-"Project_21" [label=<
+"Project_20" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_21</i></td></tr>
-  <tr><td port="0">t3c</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_20</i></td></tr>
+  <tr><td port="0">min_t3d</td></tr>
 </table>>];
      
 
-"Project_24" [label=<
+"Project_22" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_24</i></td></tr>
-  <tr><td port="0">scalarsubquery()</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_22</i></td></tr>
+  <tr><td port="0">t3c</td></tr>
 </table>>];
      
 
@@ -1237,87 +1207,79 @@ digraph {
 "Project_29" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_29</i></td></tr>
-  <tr><td port="0">t1a</td></tr>
+  <tr><td port="0">t3a</td></tr>
+<tr><td port="1">t3d</td></tr>
 </table>>];
      
 
 "Project_32" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_32</i></td></tr>
-  <tr><td port="0">t3a</td></tr>
-<tr><td port="1">t3d</td></tr>
+  <tr><td port="0">min(t3d)</td></tr>
 </table>>];
      
 
-"Project_35" [label=<
+"Project_34" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_35</i></td></tr>
-  <tr><td port="0">t1a</td></tr>
-<tr><td port="1">min(t3d)</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_34</i></td></tr>
+  <tr><td port="0">abs_min_t3d</td></tr>
 </table>>];
      
 
-"Project_38" [label=<
+"Project_36" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_38</i></td></tr>
-  <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2h</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_36</i></td></tr>
+  <tr><td port="0">t3d</td></tr>
 </table>>];
      
 
-"Project_4" [label=<
+"Project_39" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_4</i></td></tr>
-  <tr><td port="0">t3a</td></tr>
-<tr><td port="1">t3d</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_39</i></td></tr>
+  <tr><td port="0">min_t3d</td></tr>
 </table>>];
      
 
-"Project_41" [label=<
+"Project_42" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_41</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_42</i></td></tr>
   <tr><td port="0">min_t3d</td></tr>
 <tr><td port="1">max_t2h</td></tr>
 </table>>];
      
 
-"Project_43" [label=<
+"Project_44" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_43</i></td></tr>
-  <tr><td port="0">t1a</td></tr>
-<tr><td port="1">min_t3d</td></tr>
-</table>>];
-     
-
-"Project_45" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_45</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_44</i></td></tr>
   <tr><td port="0">t3d</td></tr>
 </table>>];
      
 
-"Project_48" [label=<
+"Project_47" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_48</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_47</i></td></tr>
+  <tr><td port="0">t2h</td></tr>
+</table>>];
+     
+
+"Project_49" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_49</i></td></tr>
+  <tr><td port="0">t1a</td></tr>
+</table>>];
+     
+
+"Project_5" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_5</i></td></tr>
+  <tr><td port="0">t3c</td></tr>
+</table>>];
+     
+
+"Project_51" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_51</i></td></tr>
   <tr><td port="0">t2a</td></tr>
-<tr><td port="1">avg_t3d</td></tr>
-</table>>];
-     
-
-"Project_50" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_50</i></td></tr>
-  <tr><td port="0">t3d</td></tr>
-</table>>];
-     
-
-"Project_53" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_53</i></td></tr>
-  <tr><td port="0">t1a</td></tr>
-<tr><td port="1">t2a</td></tr>
-<tr><td port="2">min_t3d</td></tr>
-<tr><td port="3">avg_t3d</td></tr>
 </table>>];
      
 
@@ -1325,140 +1287,178 @@ digraph {
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_54</i></td></tr>
   <tr><td port="0">t1a</td></tr>
-<tr><td port="1">t1b</td></tr>
+<tr><td port="1">count(t2d)</td></tr>
 </table>>];
      
 
-"Project_57" [label=<
+"Project_56" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_57</i></td></tr>
-  <tr><td port="0">t3a</td></tr>
-<tr><td port="1">t3b</td></tr>
-<tr><td port="2">t3c</td></tr>
-</table>>];
-     
-
-"Project_60" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_60</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_56</i></td></tr>
   <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2b</td></tr>
-<tr><td port="2">t2c</td></tr>
+<tr><td port="1">t2d</td></tr>
 </table>>];
      
 
-"Project_62" [label=<
+"Project_59" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_62</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_59</i></td></tr>
   <tr><td port="0">t1a</td></tr>
+<tr><td port="1">count(t2d)</td></tr>
+<tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
+</table>>];
+     
+
+"Project_61" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_61</i></td></tr>
+  <tr><td port="0">t2a</td></tr>
+<tr><td port="1">t2d</td></tr>
 </table>>];
      
 
 "Project_64" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_64</i></td></tr>
-  <tr><td port="0">t2b</td></tr>
-<tr><td port="1">t2c</td></tr>
+  <tr><td port="0">t1a</td></tr>
+<tr><td port="1">count(t2d)</td></tr>
+<tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
+<tr><td port="3">approx_count_distinct(t2d)</td></tr>
+</table>>];
+     
+
+"Project_66" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_66</i></td></tr>
+  <tr><td port="0">t2a</td></tr>
+<tr><td port="1">t2d</td></tr>
 </table>>];
      
 
 "Project_68" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_68</i></td></tr>
-  <tr><td port="0">t3a</td></tr>
-<tr><td port="1">t3c</td></tr>
+  <tr><td port="0">collect_list(t2d)</td></tr>
+<tr><td port="1">t2a</td></tr>
+<tr><td port="2">alwaysTrue</td></tr>
 </table>>];
      
 
-"Project_7" [label=<
+"Project_70" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_7</i></td></tr>
-  <tr><td port="0">min(t3d)</td></tr>
-</table>>];
-     
-
-"Project_71" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_71</i></td></tr>
-  <tr><td port="0">t2a</td></tr>
-<tr><td port="1">t2c</td></tr>
-</table>>];
-     
-
-"Project_73" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_73</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_70</i></td></tr>
   <tr><td port="0">t1a</td></tr>
+<tr><td port="1">count(t2d)</td></tr>
+<tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
+<tr><td port="3">approx_count_distinct(t2d)</td></tr>
+<tr><td port="4">collect_list(t2d)</td></tr>
 </table>>];
      
 
-"Project_75" [label=<
+"Project_72" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_75</i></td></tr>
-  <tr><td port="0">t2c</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_72</i></td></tr>
+  <tr><td port="0">t2a</td></tr>
+<tr><td port="1">t2d</td></tr>
+</table>>];
+     
+
+"Project_74" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_74</i></td></tr>
+  <tr><td port="0">sort_array(collect_set(t2d), true)</td></tr>
+<tr><td port="1">t2a</td></tr>
+<tr><td port="2">alwaysTrue</td></tr>
+</table>>];
+     
+
+"Project_76" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_76</i></td></tr>
+  <tr><td port="0">t1a</td></tr>
+<tr><td port="1">count(t2d)</td></tr>
+<tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
+<tr><td port="3">approx_count_distinct(t2d)</td></tr>
+<tr><td port="4">collect_list(t2d)</td></tr>
+<tr><td port="5">sort_array(collect_set(t2d), true)</td></tr>
 </table>>];
      
 
 "Project_78" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_78</i></td></tr>
-  <tr><td port="0">t3a</td></tr>
+  <tr><td port="0">t2a</td></tr>
+<tr><td port="1">t2d</td></tr>
+</table>>];
+     
+
+"Project_8" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_8</i></td></tr>
+  <tr><td port="0">scalarsubquery()</td></tr>
 </table>>];
      
 
 "Project_81" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_81</i></td></tr>
-  <tr><td port="0">min_t3d</td></tr>
-<tr><td port="1">max_t2h</td></tr>
+  <tr><td port="0">t1a</td></tr>
+<tr><td port="1">count_t2</td></tr>
+<tr><td port="2">count_if_t2</td></tr>
+<tr><td port="3">approx_count_distinct_t2</td></tr>
+<tr><td port="4">collect_list_t2</td></tr>
+<tr><td port="5">collect_set_t2_1</td></tr>
+<tr><td port="6">collect_set_t2_2</td></tr>
 </table>>];
      
 
 "Project_83" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_83</i></td></tr>
+  <tr><td port="0">min_t3d</td></tr>
+<tr><td port="1">NULL</td></tr>
+</table>>];
+     
+
+"Project_85" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_85</i></td></tr>
   <tr><td port="0">t3d</td></tr>
 </table>>];
      
 
-"Project_86" [label=<
+"Project_88" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_86</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_88</i></td></tr>
+  <tr><td port="0">NULL</td></tr>
+<tr><td port="1">max_t2h</td></tr>
+</table>>];
+     
+
+"Project_90" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_90</i></td></tr>
   <tr><td port="0">t2h</td></tr>
 </table>>];
      
 
-"Project_9" [label=<
+"Project_95" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_9</i></td></tr>
-  <tr><td port="0">abs_min_t3d</td></tr>
-</table>>];
-     
-
-"Project_92" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_92</i></td></tr>
-  <tr><td port="0">t2c</td></tr>
-</table>>];
-     
-
-"Project_96" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_96</i></td></tr>
-  <tr><td port="0">min_t3d</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_95</i></td></tr>
+  <tr><td port="0">t1a</td></tr>
 </table>>];
      
 
 "Project_98" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_98</i></td></tr>
-  <tr><td port="0">t3c</td></tr>
+  <tr><td port="0">t3a</td></tr>
+<tr><td port="1">t3d</td></tr>
 </table>>];
      
 
-"Union_144" [label=<
+"Union_92" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Union_144</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Union_92</i></td></tr>
   <tr><td port="0">min_t3d</td></tr>
 <tr><td port="1">NULL</td></tr>
 </table>>];
@@ -1585,403 +1585,403 @@ digraph {
 <tr><td port="6">collect_set_t2_2</td></tr>
 </table>>];
      
-  "Aggregate_100":0 -> "v4":0;
-"Aggregate_104":0 -> "Join_LeftOuter_105":1;
-"Aggregate_104":1 -> "Join_LeftOuter_105":2;
-"Aggregate_104":2 -> "Join_LeftOuter_105":3;
-"Aggregate_109":0 -> "Join_LeftOuter_110":2;
-"Aggregate_109":1 -> "Join_LeftOuter_110":3;
-"Aggregate_109":2 -> "Join_LeftOuter_110":4;
-"Aggregate_114":0 -> "Join_LeftOuter_115":3;
-"Aggregate_114":1 -> "Join_LeftOuter_115":4;
-"Aggregate_114":2 -> "Join_LeftOuter_115":5;
-"Aggregate_119":0 -> "Project_120":0;
-"Aggregate_119":1 -> "Project_120":1;
-"Aggregate_12":0 -> "Project_9":0
-"Aggregate_125":0 -> "Project_126":0;
-"Aggregate_125":1 -> "Project_126":1;
-"Aggregate_131":0 -> "Join_LeftOuter_132":6;
-"Aggregate_131":1 -> "Join_LeftOuter_132":7;
-"Aggregate_131":2 -> "Join_LeftOuter_132":8;
-"Aggregate_138":0 -> "Project_135":0
-"Aggregate_143":0 -> "Project_140":1
-"Aggregate_145":0 -> "v3":0;
-"Aggregate_145":1 -> "v3":1;
-"Aggregate_15":0 -> "v7":0;
-"Aggregate_19":0 -> "Filter_23":0;
-"Aggregate_19":1 -> "Filter_23":1;
-"Aggregate_22":0 -> "Aggregate_19":0
-"Aggregate_27":0 -> "v2":0;
-"Aggregate_27":1 -> "v2":1;
-"Aggregate_33":0 -> "Join_LeftOuter_34":1;
-"Aggregate_33":1 -> "Join_LeftOuter_34":2;
-"Aggregate_39":0 -> "Join_LeftOuter_40":2;
-"Aggregate_39":1 -> "Join_LeftOuter_40":3;
-"Aggregate_46":0 -> "Project_43":1
-"Aggregate_5":0 -> "Join_LeftOuter_6":1;
-"Aggregate_5":1 -> "Join_LeftOuter_6":2;
-"Aggregate_51":0 -> "Project_48":1
-"Aggregate_65":0 -> "Filter_66":0;
-"Aggregate_65":1 -> "Filter_66":1;
-"Aggregate_76":0 -> "Join_LeftOuter_77":2;
-"Aggregate_84":0 -> "Project_81":0
-"Aggregate_87":0 -> "Project_81":1
-"Aggregate_93":0 -> "Filter_90":nodeName
-"Aggregate_99":0 -> "Project_96":0
-"Filter_0":0 -> "Project_1":0;
-"Filter_23":0 -> "Project_24":0;
+  "Aggregate_105":0 -> "Join_LeftOuter_106":2;
+"Aggregate_105":1 -> "Join_LeftOuter_106":3;
+"Aggregate_11":0 -> "v2":0;
+"Aggregate_11":1 -> "v2":1;
+"Aggregate_112":0 -> "Project_109":1
+"Aggregate_117":0 -> "Project_114":1
+"Aggregate_131":0 -> "Filter_132":0;
+"Aggregate_131":1 -> "Filter_132":1;
+"Aggregate_142":0 -> "Join_LeftOuter_143":2;
+"Aggregate_17":0 -> "Filter_14":nodeName
+"Aggregate_23":0 -> "Project_20":0
+"Aggregate_24":0 -> "v4":0;
+"Aggregate_3":0 -> "Filter_7":0;
+"Aggregate_3":1 -> "Filter_7":1;
+"Aggregate_30":0 -> "Join_LeftOuter_31":1;
+"Aggregate_30":1 -> "Join_LeftOuter_31":2;
+"Aggregate_37":0 -> "Project_34":0
+"Aggregate_40":0 -> "v7":0;
+"Aggregate_45":0 -> "Project_42":0
+"Aggregate_48":0 -> "Project_42":1
+"Aggregate_52":0 -> "Join_LeftOuter_53":1;
+"Aggregate_52":1 -> "Join_LeftOuter_53":2;
+"Aggregate_52":2 -> "Join_LeftOuter_53":3;
+"Aggregate_57":0 -> "Join_LeftOuter_58":2;
+"Aggregate_57":1 -> "Join_LeftOuter_58":3;
+"Aggregate_57":2 -> "Join_LeftOuter_58":4;
+"Aggregate_6":0 -> "Aggregate_3":0
+"Aggregate_62":0 -> "Join_LeftOuter_63":3;
+"Aggregate_62":1 -> "Join_LeftOuter_63":4;
+"Aggregate_62":2 -> "Join_LeftOuter_63":5;
+"Aggregate_67":0 -> "Project_68":0;
+"Aggregate_67":1 -> "Project_68":1;
+"Aggregate_73":0 -> "Project_74":0;
+"Aggregate_73":1 -> "Project_74":1;
+"Aggregate_79":0 -> "Join_LeftOuter_80":6;
+"Aggregate_79":1 -> "Join_LeftOuter_80":7;
+"Aggregate_79":2 -> "Join_LeftOuter_80":8;
+"Aggregate_86":0 -> "Project_83":0
+"Aggregate_91":0 -> "Project_88":1
+"Aggregate_93":0 -> "v3":0;
+"Aggregate_93":1 -> "v3":1;
+"Aggregate_99":0 -> "Join_LeftOuter_100":1;
+"Aggregate_99":1 -> "Join_LeftOuter_100":2;
+"Filter_103":0 -> "Project_104":0;
+"Filter_103":7 -> "Project_104":1;
+"Filter_108":0 -> "Project_109":0;
+"Filter_113":0 -> "Project_114":0;
+"Filter_122":0 -> "Project_123":0;
+"Filter_122":1 -> "Project_123":1;
+"Filter_122":2 -> "Project_123":2;
+"Filter_125":0 -> "Project_126":0;
+"Filter_125":1 -> "Project_126":1;
+"Filter_125":2 -> "Project_126":2;
+"Filter_132":0 -> "Join_Inner_133":3;
+"Filter_132":1 -> "Join_Inner_133":4;
+"Filter_136":0 -> "Project_137":0;
+"Filter_136":2 -> "Project_137":1;
+"Filter_25":0 -> "Project_26":0;
 "Filter_28":0 -> "Project_29":0;
-"Filter_3":0 -> "Project_4":0;
-"Filter_3":3 -> "Project_4":1;
-"Filter_31":0 -> "Project_32":0;
-"Filter_31":3 -> "Project_32":1;
-"Filter_37":0 -> "Project_38":0;
-"Filter_37":7 -> "Project_38":1;
-"Filter_42":0 -> "Project_43":0;
-"Filter_47":0 -> "Project_48":0;
-"Filter_56":0 -> "Project_57":0;
-"Filter_56":1 -> "Project_57":1;
-"Filter_56":2 -> "Project_57":2;
-"Filter_59":0 -> "Project_60":0;
-"Filter_59":1 -> "Project_60":1;
-"Filter_59":2 -> "Project_60":2;
-"Filter_66":0 -> "Join_Inner_67":3;
-"Filter_66":1 -> "Join_Inner_67":4;
-"Filter_70":0 -> "Project_71":0;
-"Filter_70":2 -> "Project_71":1;
-"Join_FullOuter_52":0 -> "Project_53":0;
-"Join_FullOuter_52":1 -> "Project_53":2;
-"Join_FullOuter_52":2 -> "Project_53":1;
-"Join_FullOuter_52":3 -> "Project_53":3;
-"Join_Inner_67":0 -> "Project_68":0;
-"Join_Inner_67":2 -> "Project_68":1;
-"Join_LeftAnti_13":0 -> "Project_14":0;
-"Join_LeftAnti_79":0 -> "v8":0;
-"Join_LeftAnti_79":1 -> "v8":1;
-"Join_LeftOuter_105":0 -> "Project_106":0;
-"Join_LeftOuter_105":1 -> "Project_106":1;
-"Join_LeftOuter_105":3 -> "Project_106":1;
-"Join_LeftOuter_110":0 -> "Project_111":0;
-"Join_LeftOuter_110":1 -> "Project_111":1;
-"Join_LeftOuter_110":2 -> "Project_111":2;
-"Join_LeftOuter_110":4 -> "Project_111":2;
-"Join_LeftOuter_115":0 -> "Project_116":0;
-"Join_LeftOuter_115":1 -> "Project_116":1;
-"Join_LeftOuter_115":2 -> "Project_116":2;
-"Join_LeftOuter_115":3 -> "Project_116":3;
-"Join_LeftOuter_115":5 -> "Project_116":3;
-"Join_LeftOuter_121":0 -> "Project_122":0;
-"Join_LeftOuter_121":1 -> "Project_122":1;
-"Join_LeftOuter_121":2 -> "Project_122":2;
-"Join_LeftOuter_121":3 -> "Project_122":3;
-"Join_LeftOuter_121":4 -> "Project_122":4;
-"Join_LeftOuter_121":6 -> "Project_122":4;
-"Join_LeftOuter_127":0 -> "Project_128":0;
-"Join_LeftOuter_127":1 -> "Project_128":1;
-"Join_LeftOuter_127":2 -> "Project_128":2;
-"Join_LeftOuter_127":3 -> "Project_128":3;
-"Join_LeftOuter_127":4 -> "Project_128":4;
-"Join_LeftOuter_127":5 -> "Project_128":5;
-"Join_LeftOuter_127":7 -> "Project_128":5;
-"Join_LeftOuter_132":0 -> "Project_133":0;
-"Join_LeftOuter_132":1 -> "Project_133":1;
-"Join_LeftOuter_132":2 -> "Project_133":2;
-"Join_LeftOuter_132":3 -> "Project_133":3;
-"Join_LeftOuter_132":4 -> "Project_133":4;
-"Join_LeftOuter_132":5 -> "Project_133":5;
-"Join_LeftOuter_132":6 -> "Project_133":6;
-"Join_LeftOuter_132":8 -> "Project_133":6;
-"Join_LeftOuter_34":0 -> "Project_35":0;
-"Join_LeftOuter_34":1 -> "Project_35":1;
-"Join_LeftOuter_40":1 -> "Project_41":0;
-"Join_LeftOuter_40":2 -> "Project_41":1;
-"Join_LeftOuter_6":1 -> "Project_7":0;
-"Join_LeftOuter_63":1 -> "Project_64":0;
-"Join_LeftOuter_63":2 -> "Project_64":1;
-"Join_LeftOuter_74":1 -> "Project_75":0;
-"Join_LeftOuter_77":0 -> "Project_78":0;
-"Join_LeftSemi_25":0 -> "Project_26":0;
-"LocalRelation_10":3 -> "Project_11":0;
-"LocalRelation_102":0 -> "Project_103":0;
-"LocalRelation_107":0 -> "Project_108":0;
-"LocalRelation_107":3 -> "Project_108":1;
-"LocalRelation_112":0 -> "Project_113":0;
-"LocalRelation_112":3 -> "Project_113":1;
-"LocalRelation_117":0 -> "Project_118":0;
-"LocalRelation_117":3 -> "Project_118":1;
-"LocalRelation_123":0 -> "Project_124":0;
-"LocalRelation_123":3 -> "Project_124":1;
-"LocalRelation_129":0 -> "Project_130":0;
-"LocalRelation_129":3 -> "Project_130":1;
-"LocalRelation_136":3 -> "Project_137":0;
-"LocalRelation_141":7 -> "Project_142":0;
-"LocalRelation_17":6 -> "Project_18":0;
-"LocalRelation_2":0 -> "Filter_3":0;
-"LocalRelation_2":1 -> "Filter_3":1;
-"LocalRelation_2":2 -> "Filter_3":2;
-"LocalRelation_2":3 -> "Filter_3":3;
-"LocalRelation_2":4 -> "Filter_3":4;
-"LocalRelation_2":5 -> "Filter_3":5;
-"LocalRelation_2":6 -> "Filter_3":6;
-"LocalRelation_2":7 -> "Filter_3":7;
-"LocalRelation_2":8 -> "Filter_3":8;
-"LocalRelation_20":2 -> "Project_21":0;
-"LocalRelation_30":0 -> "Filter_31":0;
-"LocalRelation_30":1 -> "Filter_31":1;
-"LocalRelation_30":2 -> "Filter_31":2;
-"LocalRelation_30":3 -> "Filter_31":3;
-"LocalRelation_30":4 -> "Filter_31":4;
-"LocalRelation_30":5 -> "Filter_31":5;
-"LocalRelation_30":6 -> "Filter_31":6;
-"LocalRelation_30":7 -> "Filter_31":7;
-"LocalRelation_30":8 -> "Filter_31":8;
-"LocalRelation_36":0 -> "Filter_37":0;
-"LocalRelation_36":1 -> "Filter_37":1;
-"LocalRelation_36":2 -> "Filter_37":2;
-"LocalRelation_36":3 -> "Filter_37":3;
-"LocalRelation_36":4 -> "Filter_37":4;
-"LocalRelation_36":5 -> "Filter_37":5;
-"LocalRelation_36":6 -> "Filter_37":6;
-"LocalRelation_36":7 -> "Filter_37":7;
-"LocalRelation_36":8 -> "Filter_37":8;
-"LocalRelation_44":3 -> "Project_45":0;
-"LocalRelation_49":3 -> "Project_50":0;
-"LocalRelation_55":0 -> "Filter_56":0;
-"LocalRelation_55":1 -> "Filter_56":1;
-"LocalRelation_55":2 -> "Filter_56":2;
-"LocalRelation_55":3 -> "Filter_56":3;
-"LocalRelation_55":4 -> "Filter_56":4;
-"LocalRelation_55":5 -> "Filter_56":5;
-"LocalRelation_55":6 -> "Filter_56":6;
-"LocalRelation_55":7 -> "Filter_56":7;
-"LocalRelation_55":8 -> "Filter_56":8;
-"LocalRelation_58":0 -> "Filter_59":0;
-"LocalRelation_58":1 -> "Filter_59":1;
-"LocalRelation_58":2 -> "Filter_59":2;
-"LocalRelation_58":3 -> "Filter_59":3;
-"LocalRelation_58":4 -> "Filter_59":4;
-"LocalRelation_58":5 -> "Filter_59":5;
-"LocalRelation_58":6 -> "Filter_59":6;
-"LocalRelation_58":7 -> "Filter_59":7;
-"LocalRelation_58":8 -> "Filter_59":8;
-"LocalRelation_61":0 -> "Project_62":0;
-"LocalRelation_69":0 -> "Filter_70":0;
-"LocalRelation_69":1 -> "Filter_70":1;
-"LocalRelation_69":2 -> "Filter_70":2;
-"LocalRelation_69":3 -> "Filter_70":3;
-"LocalRelation_69":4 -> "Filter_70":4;
-"LocalRelation_69":5 -> "Filter_70":5;
-"LocalRelation_69":6 -> "Filter_70":6;
-"LocalRelation_69":7 -> "Filter_70":7;
-"LocalRelation_69":8 -> "Filter_70":8;
-"LocalRelation_72":0 -> "Project_73":0;
-"LocalRelation_82":3 -> "Project_83":0;
-"LocalRelation_85":7 -> "Project_86":0;
-"LocalRelation_91":2 -> "Project_92":0;
-"LocalRelation_97":2 -> "Project_98":0;
-"Project_1":0 -> "Join_LeftOuter_6":0;
-"Project_101":0 -> "Join_LeftOuter_105":0;
-"Project_103":0 -> "Aggregate_104":1;
-"Project_106":0 -> "Join_LeftOuter_110":0;
-"Project_106":1 -> "Join_LeftOuter_110":1;
-"Project_108":0 -> "Aggregate_109":1;
-"Project_108":1 -> "Aggregate_109":0;
-"Project_11":0 -> "Aggregate_12":0;
-"Project_111":0 -> "Join_LeftOuter_115":0;
-"Project_111":1 -> "Join_LeftOuter_115":1;
-"Project_111":2 -> "Join_LeftOuter_115":2;
-"Project_113":0 -> "Aggregate_114":1;
-"Project_113":1 -> "Aggregate_114":0;
-"Project_116":0 -> "Join_LeftOuter_121":0;
-"Project_116":1 -> "Join_LeftOuter_121":1;
-"Project_116":2 -> "Join_LeftOuter_121":2;
-"Project_116":3 -> "Join_LeftOuter_121":3;
-"Project_118":0 -> "Aggregate_119":1;
-"Project_118":1 -> "Aggregate_119":0;
-"Project_120":0 -> "Join_LeftOuter_121":4;
-"Project_120":1 -> "Join_LeftOuter_121":5;
-"Project_120":2 -> "Join_LeftOuter_121":6;
-"Project_122":0 -> "Join_LeftOuter_127":0;
-"Project_122":1 -> "Join_LeftOuter_127":1;
-"Project_122":2 -> "Join_LeftOuter_127":2;
-"Project_122":3 -> "Join_LeftOuter_127":3;
-"Project_122":4 -> "Join_LeftOuter_127":4;
-"Project_124":0 -> "Aggregate_125":1;
-"Project_124":1 -> "Aggregate_125":0;
-"Project_126":0 -> "Join_LeftOuter_127":5;
-"Project_126":1 -> "Join_LeftOuter_127":6;
-"Project_126":2 -> "Join_LeftOuter_127":7;
-"Project_128":0 -> "Join_LeftOuter_132":0;
-"Project_128":1 -> "Join_LeftOuter_132":1;
-"Project_128":2 -> "Join_LeftOuter_132":2;
-"Project_128":3 -> "Join_LeftOuter_132":3;
-"Project_128":4 -> "Join_LeftOuter_132":4;
-"Project_128":5 -> "Join_LeftOuter_132":5;
-"Project_130":0 -> "Aggregate_131":1;
-"Project_130":1 -> "Aggregate_131":0;
-"Project_133":0 -> "v9":0;
-"Project_133":1 -> "v9":1;
-"Project_133":2 -> "v9":2;
-"Project_133":3 -> "v9":3;
-"Project_133":4 -> "v9":4;
-"Project_133":5 -> "v9":5;
-"Project_133":6 -> "v9":6;
-"Project_135":0 -> "Union_144":0
-"Project_135":1 -> "Union_144":1
-"Project_137":0 -> "Aggregate_138":0;
-"Project_14":0 -> "Aggregate_15":0;
-"Project_140":0 -> "Union_144":0
-"Project_140":1 -> "Union_144":1
-"Project_142":0 -> "Aggregate_143":0;
-"Project_16":0 -> "Join_LeftSemi_25":0;
-"Project_16":1 -> "Join_LeftSemi_25":1;
-"Project_21":0 -> "Aggregate_22":0;
-"Project_24":0 -> "Join_LeftSemi_25":1;
-"Project_26":0 -> "Aggregate_27":0;
-"Project_29":0 -> "Join_LeftOuter_34":0;
-"Project_32":0 -> "Aggregate_33":1;
-"Project_32":1 -> "Aggregate_33":0;
-"Project_35":0 -> "Join_LeftOuter_40":0;
-"Project_35":1 -> "Join_LeftOuter_40":1;
-"Project_38":0 -> "Aggregate_39":1;
-"Project_38":1 -> "Aggregate_39":0;
-"Project_4":0 -> "Aggregate_5":1;
-"Project_4":1 -> "Aggregate_5":0;
-"Project_41":0 -> "v6":0;
-"Project_41":1 -> "v6":1;
-"Project_43":0 -> "Join_FullOuter_52":0;
-"Project_43":1 -> "Join_FullOuter_52":1;
-"Project_45":0 -> "Aggregate_46":0;
-"Project_48":0 -> "Join_FullOuter_52":2;
-"Project_48":1 -> "Join_FullOuter_52":3;
-"Project_50":0 -> "Aggregate_51":0;
-"Project_53":0 -> "v5":0;
-"Project_53":1 -> "v5":1;
-"Project_53":2 -> "v5":2;
-"Project_53":3 -> "v5":3;
-"Project_54":0 -> "Join_LeftAnti_79":0;
-"Project_54":1 -> "Join_LeftAnti_79":1;
-"Project_57":0 -> "Join_Inner_67":0;
-"Project_57":1 -> "Join_Inner_67":1;
-"Project_57":2 -> "Join_Inner_67":2;
-"Project_60":0 -> "Join_LeftOuter_63":0;
-"Project_60":1 -> "Join_LeftOuter_63":1;
-"Project_60":2 -> "Join_LeftOuter_63":2;
-"Project_62":0 -> "Join_LeftOuter_63":3;
-"Project_64":0 -> "Aggregate_65":0;
-"Project_64":1 -> "Aggregate_65":1;
-"Project_68":0 -> "Join_LeftOuter_77":0;
-"Project_68":1 -> "Join_LeftOuter_77":1;
-"Project_7":0 -> "Join_LeftAnti_13":0;
-"Project_71":0 -> "Join_LeftOuter_74":0;
-"Project_71":1 -> "Join_LeftOuter_74":1;
-"Project_73":0 -> "Join_LeftOuter_74":2;
-"Project_75":0 -> "Aggregate_76":0;
-"Project_78":0 -> "Join_LeftAnti_79":0;
-"Project_81":0 -> "v1":0;
-"Project_81":1 -> "v1":1;
-"Project_83":0 -> "Aggregate_84":0;
-"Project_86":0 -> "Aggregate_87":0;
-"Project_9":0 -> "Join_LeftAnti_13":0;
-"Project_92":0 -> "Aggregate_93":0;
-"Project_96":0 -> "Aggregate_100":0;
-"Project_98":0 -> "Aggregate_99":0;
-"Union_144":0 -> "Aggregate_145":0;
-"Union_144":1 -> "Aggregate_145":1;
-"t1":0 -> "Filter_0":0;
-"t1":0 -> "Filter_134":0;
-"t1":0 -> "Filter_139":0;
-"t1":0 -> "Filter_28":0;
-"t1":0 -> "Filter_42":0;
-"t1":0 -> "Filter_8":0;
-"t1":0 -> "Filter_80":0;
-"t1":0 -> "Filter_88":0;
-"t1":0 -> "Filter_90":0;
-"t1":0 -> "Project_101":0;
-"t1":0 -> "Project_16":0;
-"t1":0 -> "Project_54":0;
-"t1":1 -> "Filter_0":1;
-"t1":1 -> "Filter_134":1;
-"t1":1 -> "Filter_139":1;
-"t1":1 -> "Filter_28":1;
-"t1":1 -> "Filter_42":1;
-"t1":1 -> "Filter_8":1;
-"t1":1 -> "Filter_80":1;
-"t1":1 -> "Filter_88":1;
-"t1":1 -> "Filter_90":1;
-"t1":1 -> "Project_54":1;
-"t1":2 -> "Filter_0":2;
-"t1":2 -> "Filter_134":2;
-"t1":2 -> "Filter_139":2;
-"t1":2 -> "Filter_28":2;
-"t1":2 -> "Filter_42":2;
-"t1":2 -> "Filter_8":2;
-"t1":2 -> "Filter_80":2;
-"t1":2 -> "Filter_88":2;
-"t1":2 -> "Filter_90":2;
-"t1":2 -> "Project_16":1;
-"t1":3 -> "Filter_0":3;
-"t1":3 -> "Filter_134":3;
-"t1":3 -> "Filter_139":3;
-"t1":3 -> "Filter_28":3;
-"t1":3 -> "Filter_42":3;
-"t1":3 -> "Filter_8":3;
-"t1":3 -> "Filter_80":3;
-"t1":3 -> "Filter_88":3;
-"t1":3 -> "Filter_90":3;
-"t1":4 -> "Filter_0":4;
-"t1":4 -> "Filter_134":4;
-"t1":4 -> "Filter_139":4;
-"t1":4 -> "Filter_28":4;
-"t1":4 -> "Filter_42":4;
-"t1":4 -> "Filter_8":4;
-"t1":4 -> "Filter_80":4;
-"t1":4 -> "Filter_88":4;
-"t1":4 -> "Filter_90":4;
-"t1":5 -> "Filter_0":5;
-"t1":5 -> "Filter_134":5;
-"t1":5 -> "Filter_139":5;
-"t1":5 -> "Filter_28":5;
-"t1":5 -> "Filter_42":5;
-"t1":5 -> "Filter_8":5;
-"t1":5 -> "Filter_80":5;
-"t1":5 -> "Filter_88":5;
-"t1":5 -> "Filter_90":5;
-"t1":6 -> "Filter_0":6;
-"t1":6 -> "Filter_134":6;
-"t1":6 -> "Filter_139":6;
-"t1":6 -> "Filter_28":6;
-"t1":6 -> "Filter_42":6;
-"t1":6 -> "Filter_8":6;
-"t1":6 -> "Filter_80":6;
-"t1":6 -> "Filter_88":6;
-"t1":6 -> "Filter_90":6;
-"t1":7 -> "Filter_0":7;
-"t1":7 -> "Filter_134":7;
-"t1":7 -> "Filter_139":7;
-"t1":7 -> "Filter_28":7;
-"t1":7 -> "Filter_42":7;
-"t1":7 -> "Filter_8":7;
-"t1":7 -> "Filter_80":7;
-"t1":7 -> "Filter_88":7;
-"t1":7 -> "Filter_90":7;
-"t1":8 -> "Filter_0":8;
-"t1":8 -> "Filter_134":8;
-"t1":8 -> "Filter_139":8;
-"t1":8 -> "Filter_28":8;
-"t1":8 -> "Filter_42":8;
-"t1":8 -> "Filter_8":8;
-"t1":8 -> "Filter_80":8;
-"t1":8 -> "Filter_88":8;
-"t1":8 -> "Filter_90":8;
-"t2":0 -> "Filter_47":0;
-"t2":1 -> "Filter_47":1;
-"t2":2 -> "Filter_47":2;
-"t2":3 -> "Filter_47":3;
-"t2":4 -> "Filter_47":4;
-"t2":5 -> "Filter_47":5;
-"t2":6 -> "Filter_47":6;
-"t2":7 -> "Filter_47":7;
-"t2":8 -> "Filter_47":8;
+"Filter_28":3 -> "Project_29":1;
+"Filter_7":0 -> "Project_8":0;
+"Filter_94":0 -> "Project_95":0;
+"Filter_97":0 -> "Project_98":0;
+"Filter_97":3 -> "Project_98":1;
+"Join_FullOuter_118":0 -> "Project_119":0;
+"Join_FullOuter_118":1 -> "Project_119":2;
+"Join_FullOuter_118":2 -> "Project_119":1;
+"Join_FullOuter_118":3 -> "Project_119":3;
+"Join_Inner_133":0 -> "Project_134":0;
+"Join_Inner_133":2 -> "Project_134":1;
+"Join_LeftAnti_145":0 -> "v8":0;
+"Join_LeftAnti_145":1 -> "v8":1;
+"Join_LeftAnti_38":0 -> "Project_39":0;
+"Join_LeftOuter_100":0 -> "Project_101":0;
+"Join_LeftOuter_100":1 -> "Project_101":1;
+"Join_LeftOuter_106":1 -> "Project_107":0;
+"Join_LeftOuter_106":2 -> "Project_107":1;
+"Join_LeftOuter_129":1 -> "Project_130":0;
+"Join_LeftOuter_129":2 -> "Project_130":1;
+"Join_LeftOuter_140":1 -> "Project_141":0;
+"Join_LeftOuter_143":0 -> "Project_144":0;
+"Join_LeftOuter_31":1 -> "Project_32":0;
+"Join_LeftOuter_53":0 -> "Project_54":0;
+"Join_LeftOuter_53":1 -> "Project_54":1;
+"Join_LeftOuter_53":3 -> "Project_54":1;
+"Join_LeftOuter_58":0 -> "Project_59":0;
+"Join_LeftOuter_58":1 -> "Project_59":1;
+"Join_LeftOuter_58":2 -> "Project_59":2;
+"Join_LeftOuter_58":4 -> "Project_59":2;
+"Join_LeftOuter_63":0 -> "Project_64":0;
+"Join_LeftOuter_63":1 -> "Project_64":1;
+"Join_LeftOuter_63":2 -> "Project_64":2;
+"Join_LeftOuter_63":3 -> "Project_64":3;
+"Join_LeftOuter_63":5 -> "Project_64":3;
+"Join_LeftOuter_69":0 -> "Project_70":0;
+"Join_LeftOuter_69":1 -> "Project_70":1;
+"Join_LeftOuter_69":2 -> "Project_70":2;
+"Join_LeftOuter_69":3 -> "Project_70":3;
+"Join_LeftOuter_69":4 -> "Project_70":4;
+"Join_LeftOuter_69":6 -> "Project_70":4;
+"Join_LeftOuter_75":0 -> "Project_76":0;
+"Join_LeftOuter_75":1 -> "Project_76":1;
+"Join_LeftOuter_75":2 -> "Project_76":2;
+"Join_LeftOuter_75":3 -> "Project_76":3;
+"Join_LeftOuter_75":4 -> "Project_76":4;
+"Join_LeftOuter_75":5 -> "Project_76":5;
+"Join_LeftOuter_75":7 -> "Project_76":5;
+"Join_LeftOuter_80":0 -> "Project_81":0;
+"Join_LeftOuter_80":1 -> "Project_81":1;
+"Join_LeftOuter_80":2 -> "Project_81":2;
+"Join_LeftOuter_80":3 -> "Project_81":3;
+"Join_LeftOuter_80":4 -> "Project_81":4;
+"Join_LeftOuter_80":5 -> "Project_81":5;
+"Join_LeftOuter_80":6 -> "Project_81":6;
+"Join_LeftOuter_80":8 -> "Project_81":6;
+"Join_LeftSemi_9":0 -> "Project_10":0;
+"LocalRelation_1":6 -> "Project_2":0;
+"LocalRelation_102":0 -> "Filter_103":0;
+"LocalRelation_102":1 -> "Filter_103":1;
+"LocalRelation_102":2 -> "Filter_103":2;
+"LocalRelation_102":3 -> "Filter_103":3;
+"LocalRelation_102":4 -> "Filter_103":4;
+"LocalRelation_102":5 -> "Filter_103":5;
+"LocalRelation_102":6 -> "Filter_103":6;
+"LocalRelation_102":7 -> "Filter_103":7;
+"LocalRelation_102":8 -> "Filter_103":8;
+"LocalRelation_110":3 -> "Project_111":0;
+"LocalRelation_115":3 -> "Project_116":0;
+"LocalRelation_121":0 -> "Filter_122":0;
+"LocalRelation_121":1 -> "Filter_122":1;
+"LocalRelation_121":2 -> "Filter_122":2;
+"LocalRelation_121":3 -> "Filter_122":3;
+"LocalRelation_121":4 -> "Filter_122":4;
+"LocalRelation_121":5 -> "Filter_122":5;
+"LocalRelation_121":6 -> "Filter_122":6;
+"LocalRelation_121":7 -> "Filter_122":7;
+"LocalRelation_121":8 -> "Filter_122":8;
+"LocalRelation_124":0 -> "Filter_125":0;
+"LocalRelation_124":1 -> "Filter_125":1;
+"LocalRelation_124":2 -> "Filter_125":2;
+"LocalRelation_124":3 -> "Filter_125":3;
+"LocalRelation_124":4 -> "Filter_125":4;
+"LocalRelation_124":5 -> "Filter_125":5;
+"LocalRelation_124":6 -> "Filter_125":6;
+"LocalRelation_124":7 -> "Filter_125":7;
+"LocalRelation_124":8 -> "Filter_125":8;
+"LocalRelation_127":0 -> "Project_128":0;
+"LocalRelation_135":0 -> "Filter_136":0;
+"LocalRelation_135":1 -> "Filter_136":1;
+"LocalRelation_135":2 -> "Filter_136":2;
+"LocalRelation_135":3 -> "Filter_136":3;
+"LocalRelation_135":4 -> "Filter_136":4;
+"LocalRelation_135":5 -> "Filter_136":5;
+"LocalRelation_135":6 -> "Filter_136":6;
+"LocalRelation_135":7 -> "Filter_136":7;
+"LocalRelation_135":8 -> "Filter_136":8;
+"LocalRelation_138":0 -> "Project_139":0;
+"LocalRelation_15":2 -> "Project_16":0;
+"LocalRelation_21":2 -> "Project_22":0;
+"LocalRelation_27":0 -> "Filter_28":0;
+"LocalRelation_27":1 -> "Filter_28":1;
+"LocalRelation_27":2 -> "Filter_28":2;
+"LocalRelation_27":3 -> "Filter_28":3;
+"LocalRelation_27":4 -> "Filter_28":4;
+"LocalRelation_27":5 -> "Filter_28":5;
+"LocalRelation_27":6 -> "Filter_28":6;
+"LocalRelation_27":7 -> "Filter_28":7;
+"LocalRelation_27":8 -> "Filter_28":8;
+"LocalRelation_35":3 -> "Project_36":0;
+"LocalRelation_4":2 -> "Project_5":0;
+"LocalRelation_43":3 -> "Project_44":0;
+"LocalRelation_46":7 -> "Project_47":0;
+"LocalRelation_50":0 -> "Project_51":0;
+"LocalRelation_55":0 -> "Project_56":0;
+"LocalRelation_55":3 -> "Project_56":1;
+"LocalRelation_60":0 -> "Project_61":0;
+"LocalRelation_60":3 -> "Project_61":1;
+"LocalRelation_65":0 -> "Project_66":0;
+"LocalRelation_65":3 -> "Project_66":1;
+"LocalRelation_71":0 -> "Project_72":0;
+"LocalRelation_71":3 -> "Project_72":1;
+"LocalRelation_77":0 -> "Project_78":0;
+"LocalRelation_77":3 -> "Project_78":1;
+"LocalRelation_84":3 -> "Project_85":0;
+"LocalRelation_89":7 -> "Project_90":0;
+"LocalRelation_96":0 -> "Filter_97":0;
+"LocalRelation_96":1 -> "Filter_97":1;
+"LocalRelation_96":2 -> "Filter_97":2;
+"LocalRelation_96":3 -> "Filter_97":3;
+"LocalRelation_96":4 -> "Filter_97":4;
+"LocalRelation_96":5 -> "Filter_97":5;
+"LocalRelation_96":6 -> "Filter_97":6;
+"LocalRelation_96":7 -> "Filter_97":7;
+"LocalRelation_96":8 -> "Filter_97":8;
+"Project_0":0 -> "Join_LeftSemi_9":0;
+"Project_0":1 -> "Join_LeftSemi_9":1;
+"Project_10":0 -> "Aggregate_11":0;
+"Project_101":0 -> "Join_LeftOuter_106":0;
+"Project_101":1 -> "Join_LeftOuter_106":1;
+"Project_104":0 -> "Aggregate_105":1;
+"Project_104":1 -> "Aggregate_105":0;
+"Project_107":0 -> "v6":0;
+"Project_107":1 -> "v6":1;
+"Project_109":0 -> "Join_FullOuter_118":0;
+"Project_109":1 -> "Join_FullOuter_118":1;
+"Project_111":0 -> "Aggregate_112":0;
+"Project_114":0 -> "Join_FullOuter_118":2;
+"Project_114":1 -> "Join_FullOuter_118":3;
+"Project_116":0 -> "Aggregate_117":0;
+"Project_119":0 -> "v5":0;
+"Project_119":1 -> "v5":1;
+"Project_119":2 -> "v5":2;
+"Project_119":3 -> "v5":3;
+"Project_120":0 -> "Join_LeftAnti_145":0;
+"Project_120":1 -> "Join_LeftAnti_145":1;
+"Project_123":0 -> "Join_Inner_133":0;
+"Project_123":1 -> "Join_Inner_133":1;
+"Project_123":2 -> "Join_Inner_133":2;
+"Project_126":0 -> "Join_LeftOuter_129":0;
+"Project_126":1 -> "Join_LeftOuter_129":1;
+"Project_126":2 -> "Join_LeftOuter_129":2;
+"Project_128":0 -> "Join_LeftOuter_129":3;
+"Project_130":0 -> "Aggregate_131":0;
+"Project_130":1 -> "Aggregate_131":1;
+"Project_134":0 -> "Join_LeftOuter_143":0;
+"Project_134":1 -> "Join_LeftOuter_143":1;
+"Project_137":0 -> "Join_LeftOuter_140":0;
+"Project_137":1 -> "Join_LeftOuter_140":1;
+"Project_139":0 -> "Join_LeftOuter_140":2;
+"Project_141":0 -> "Aggregate_142":0;
+"Project_144":0 -> "Join_LeftAnti_145":0;
+"Project_16":0 -> "Aggregate_17":0;
+"Project_20":0 -> "Aggregate_24":0;
+"Project_22":0 -> "Aggregate_23":0;
+"Project_26":0 -> "Join_LeftOuter_31":0;
+"Project_29":0 -> "Aggregate_30":1;
+"Project_29":1 -> "Aggregate_30":0;
+"Project_32":0 -> "Join_LeftAnti_38":0;
+"Project_34":0 -> "Join_LeftAnti_38":0;
+"Project_36":0 -> "Aggregate_37":0;
+"Project_39":0 -> "Aggregate_40":0;
+"Project_42":0 -> "v1":0;
+"Project_42":1 -> "v1":1;
+"Project_44":0 -> "Aggregate_45":0;
+"Project_47":0 -> "Aggregate_48":0;
+"Project_49":0 -> "Join_LeftOuter_53":0;
+"Project_5":0 -> "Aggregate_6":0;
+"Project_51":0 -> "Aggregate_52":1;
+"Project_54":0 -> "Join_LeftOuter_58":0;
+"Project_54":1 -> "Join_LeftOuter_58":1;
+"Project_56":0 -> "Aggregate_57":1;
+"Project_56":1 -> "Aggregate_57":0;
+"Project_59":0 -> "Join_LeftOuter_63":0;
+"Project_59":1 -> "Join_LeftOuter_63":1;
+"Project_59":2 -> "Join_LeftOuter_63":2;
+"Project_61":0 -> "Aggregate_62":1;
+"Project_61":1 -> "Aggregate_62":0;
+"Project_64":0 -> "Join_LeftOuter_69":0;
+"Project_64":1 -> "Join_LeftOuter_69":1;
+"Project_64":2 -> "Join_LeftOuter_69":2;
+"Project_64":3 -> "Join_LeftOuter_69":3;
+"Project_66":0 -> "Aggregate_67":1;
+"Project_66":1 -> "Aggregate_67":0;
+"Project_68":0 -> "Join_LeftOuter_69":4;
+"Project_68":1 -> "Join_LeftOuter_69":5;
+"Project_68":2 -> "Join_LeftOuter_69":6;
+"Project_70":0 -> "Join_LeftOuter_75":0;
+"Project_70":1 -> "Join_LeftOuter_75":1;
+"Project_70":2 -> "Join_LeftOuter_75":2;
+"Project_70":3 -> "Join_LeftOuter_75":3;
+"Project_70":4 -> "Join_LeftOuter_75":4;
+"Project_72":0 -> "Aggregate_73":1;
+"Project_72":1 -> "Aggregate_73":0;
+"Project_74":0 -> "Join_LeftOuter_75":5;
+"Project_74":1 -> "Join_LeftOuter_75":6;
+"Project_74":2 -> "Join_LeftOuter_75":7;
+"Project_76":0 -> "Join_LeftOuter_80":0;
+"Project_76":1 -> "Join_LeftOuter_80":1;
+"Project_76":2 -> "Join_LeftOuter_80":2;
+"Project_76":3 -> "Join_LeftOuter_80":3;
+"Project_76":4 -> "Join_LeftOuter_80":4;
+"Project_76":5 -> "Join_LeftOuter_80":5;
+"Project_78":0 -> "Aggregate_79":1;
+"Project_78":1 -> "Aggregate_79":0;
+"Project_8":0 -> "Join_LeftSemi_9":1;
+"Project_81":0 -> "v9":0;
+"Project_81":1 -> "v9":1;
+"Project_81":2 -> "v9":2;
+"Project_81":3 -> "v9":3;
+"Project_81":4 -> "v9":4;
+"Project_81":5 -> "v9":5;
+"Project_81":6 -> "v9":6;
+"Project_83":0 -> "Union_92":0
+"Project_83":1 -> "Union_92":1
+"Project_85":0 -> "Aggregate_86":0;
+"Project_88":0 -> "Union_92":0
+"Project_88":1 -> "Union_92":1
+"Project_90":0 -> "Aggregate_91":0;
+"Project_95":0 -> "Join_LeftOuter_100":0;
+"Project_98":0 -> "Aggregate_99":1;
+"Project_98":1 -> "Aggregate_99":0;
+"Union_92":0 -> "Aggregate_93":0;
+"Union_92":1 -> "Aggregate_93":1;
+"t1":0 -> "Filter_108":0;
+"t1":0 -> "Filter_12":0;
+"t1":0 -> "Filter_14":0;
+"t1":0 -> "Filter_25":0;
+"t1":0 -> "Filter_33":0;
+"t1":0 -> "Filter_41":0;
+"t1":0 -> "Filter_82":0;
+"t1":0 -> "Filter_87":0;
+"t1":0 -> "Filter_94":0;
+"t1":0 -> "Project_0":0;
+"t1":0 -> "Project_120":0;
+"t1":0 -> "Project_49":0;
+"t1":1 -> "Filter_108":1;
+"t1":1 -> "Filter_12":1;
+"t1":1 -> "Filter_14":1;
+"t1":1 -> "Filter_25":1;
+"t1":1 -> "Filter_33":1;
+"t1":1 -> "Filter_41":1;
+"t1":1 -> "Filter_82":1;
+"t1":1 -> "Filter_87":1;
+"t1":1 -> "Filter_94":1;
+"t1":1 -> "Project_120":1;
+"t1":2 -> "Filter_108":2;
+"t1":2 -> "Filter_12":2;
+"t1":2 -> "Filter_14":2;
+"t1":2 -> "Filter_25":2;
+"t1":2 -> "Filter_33":2;
+"t1":2 -> "Filter_41":2;
+"t1":2 -> "Filter_82":2;
+"t1":2 -> "Filter_87":2;
+"t1":2 -> "Filter_94":2;
+"t1":2 -> "Project_0":1;
+"t1":3 -> "Filter_108":3;
+"t1":3 -> "Filter_12":3;
+"t1":3 -> "Filter_14":3;
+"t1":3 -> "Filter_25":3;
+"t1":3 -> "Filter_33":3;
+"t1":3 -> "Filter_41":3;
+"t1":3 -> "Filter_82":3;
+"t1":3 -> "Filter_87":3;
+"t1":3 -> "Filter_94":3;
+"t1":4 -> "Filter_108":4;
+"t1":4 -> "Filter_12":4;
+"t1":4 -> "Filter_14":4;
+"t1":4 -> "Filter_25":4;
+"t1":4 -> "Filter_33":4;
+"t1":4 -> "Filter_41":4;
+"t1":4 -> "Filter_82":4;
+"t1":4 -> "Filter_87":4;
+"t1":4 -> "Filter_94":4;
+"t1":5 -> "Filter_108":5;
+"t1":5 -> "Filter_12":5;
+"t1":5 -> "Filter_14":5;
+"t1":5 -> "Filter_25":5;
+"t1":5 -> "Filter_33":5;
+"t1":5 -> "Filter_41":5;
+"t1":5 -> "Filter_82":5;
+"t1":5 -> "Filter_87":5;
+"t1":5 -> "Filter_94":5;
+"t1":6 -> "Filter_108":6;
+"t1":6 -> "Filter_12":6;
+"t1":6 -> "Filter_14":6;
+"t1":6 -> "Filter_25":6;
+"t1":6 -> "Filter_33":6;
+"t1":6 -> "Filter_41":6;
+"t1":6 -> "Filter_82":6;
+"t1":6 -> "Filter_87":6;
+"t1":6 -> "Filter_94":6;
+"t1":7 -> "Filter_108":7;
+"t1":7 -> "Filter_12":7;
+"t1":7 -> "Filter_14":7;
+"t1":7 -> "Filter_25":7;
+"t1":7 -> "Filter_33":7;
+"t1":7 -> "Filter_41":7;
+"t1":7 -> "Filter_82":7;
+"t1":7 -> "Filter_87":7;
+"t1":7 -> "Filter_94":7;
+"t1":8 -> "Filter_108":8;
+"t1":8 -> "Filter_12":8;
+"t1":8 -> "Filter_14":8;
+"t1":8 -> "Filter_25":8;
+"t1":8 -> "Filter_33":8;
+"t1":8 -> "Filter_41":8;
+"t1":8 -> "Filter_82":8;
+"t1":8 -> "Filter_87":8;
+"t1":8 -> "Filter_94":8;
+"t2":0 -> "Filter_113":0;
+"t2":1 -> "Filter_113":1;
+"t2":2 -> "Filter_113":2;
+"t2":3 -> "Filter_113":3;
+"t2":4 -> "Filter_113":4;
+"t2":5 -> "Filter_113":5;
+"t2":6 -> "Filter_113":6;
+"t2":7 -> "Filter_113":7;
+"t2":8 -> "Filter_113":8;
 }
        
