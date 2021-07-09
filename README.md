@@ -54,6 +54,10 @@ scala> SQLFlow.saveAsSQLFlow(path="/tmp/sqlflow-contracted-output", contracted =
 
 <img src="resources/graphviz_3.svg" width="350px">
 
+## TODO
+
+ * Support global temp views
+
 ## Bug reports
 
 If you hit some bugs and requests, please leave some comments on [Issues](https://github.com/maropu/spark-sql-flow-plugin/issues)
