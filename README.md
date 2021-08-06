@@ -54,6 +54,27 @@ scala> SQLFlow.saveAsSQLFlow(path="/tmp/sqlflow-contracted-output", contracted =
 
 <img src="resources/graphviz_3.svg" width="350px">
 
+If you are using PySpark, you can run `bin/python` and use `saveAsSQLFlow` or other functions defined in `bin/.startup.py`:
+
+```
+$ ./bin/python
+
+Welcome to
+      ____              __
+     / __/__  ___ _____/ /__
+    _\ \/ _ \/ _ `/ __/  '_/
+   /__ / .__/\_,_/_/ /_/\_\   version 2.4.8
+      /_/
+
+Using Python version 3.7.10 (default, Jun  4 2021 14:48:32)
+
+>>> spark.sql("CREATE TABLE TestTable (key INT, value INT)")
+>>> spark.sql("CREATE TEMPORARY VIEW TestView1 AS SELECT key, SUM(value) s FROM TestTable GROUP BY key")
+>>> spark.sql("CACHE TABLE TestView1")
+>>> spark.sql("CREATE TEMPORARY VIEW TestView2 AS SELECT t.key, t.value, v.s FROM TestTable t, TestView1 v WHERE t.key = v.key")
+>>> saveAsSQLFlow(path="/tmp/sqlflow-output")
+```
+
 ## Bug reports
 
 If you hit some bugs and requests, please leave some comments on [Issues](https://github.com/maropu/spark-sql-flow-plugin/issues)
