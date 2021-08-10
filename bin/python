@@ -67,7 +67,12 @@ find_package
 . ${ROOT_DIR}/bin/conda.sh && activate_conda_virtual_env "${ROOT_DIR}"
 
 # Then, launches a pyspark with given arguments
-PYTHONPATH="${ROOT_DIR}/python" \
+if [ -z "${PYTHONPATH}" ]; then
+  PYTHONPATH="${ROOT_DIR}/python"
+else
+  PYTHONPATH="${ROOT_DIR}/python:${PYTHONPATH}"
+fi
+PYTHONPATH=${PYTHONPATH} \
 PYTHONSTARTUP="${ROOT_DIR}/bin/.startup.py" \
   exec pyspark --jars=${PACKAGE} $(join_by " " ${SPARK_CONF[@]}) $(join_by " " ${ARGS[@]})
 
