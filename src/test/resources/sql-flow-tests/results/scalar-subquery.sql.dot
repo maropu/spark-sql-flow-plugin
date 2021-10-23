@@ -129,7 +129,7 @@ digraph {
 "Aggregate_57" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_57</i></td></tr>
-  <tr><td port="0">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
+  <tr><td port="0">count_if((t2d &gt; 0))</td></tr>
 <tr><td port="1">t2a</td></tr>
 <tr><td port="2">alwaysTrue</td></tr>
 </table>>];
@@ -569,7 +569,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_58</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 <tr><td port="1">count(t2d)</td></tr>
-<tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
+<tr><td port="2">count_if((t2d &gt; 0))</td></tr>
 <tr><td port="3">t2a</td></tr>
 <tr><td port="4">alwaysTrue</td></tr>
 </table>>];
@@ -580,7 +580,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_63</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 <tr><td port="1">count(t2d)</td></tr>
-<tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
+<tr><td port="2">count_if((t2d &gt; 0))</td></tr>
 <tr><td port="3">approx_count_distinct(t2d)</td></tr>
 <tr><td port="4">t2a</td></tr>
 <tr><td port="5">alwaysTrue</td></tr>
@@ -592,7 +592,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_69</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 <tr><td port="1">count(t2d)</td></tr>
-<tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
+<tr><td port="2">count_if((t2d &gt; 0))</td></tr>
 <tr><td port="3">approx_count_distinct(t2d)</td></tr>
 <tr><td port="4">collect_list(t2d)</td></tr>
 <tr><td port="5">t2a</td></tr>
@@ -605,7 +605,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_75</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 <tr><td port="1">count(t2d)</td></tr>
-<tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
+<tr><td port="2">count_if((t2d &gt; 0))</td></tr>
 <tr><td port="3">approx_count_distinct(t2d)</td></tr>
 <tr><td port="4">collect_list(t2d)</td></tr>
 <tr><td port="5">sort_array(collect_set(t2d), true)</td></tr>
@@ -619,7 +619,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftOuter_80</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 <tr><td port="1">count(t2d)</td></tr>
-<tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
+<tr><td port="2">count_if((t2d &gt; 0))</td></tr>
 <tr><td port="3">approx_count_distinct(t2d)</td></tr>
 <tr><td port="4">collect_list(t2d)</td></tr>
 <tr><td port="5">sort_array(collect_set(t2d), true)</td></tr>
@@ -1304,7 +1304,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_59</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 <tr><td port="1">count(t2d)</td></tr>
-<tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
+<tr><td port="2">count_if((t2d &gt; 0))</td></tr>
 </table>>];
      
 
@@ -1321,7 +1321,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_64</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 <tr><td port="1">count(t2d)</td></tr>
-<tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
+<tr><td port="2">count_if((t2d &gt; 0))</td></tr>
 <tr><td port="3">approx_count_distinct(t2d)</td></tr>
 </table>>];
      
@@ -1348,7 +1348,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_70</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 <tr><td port="1">count(t2d)</td></tr>
-<tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
+<tr><td port="2">count_if((t2d &gt; 0))</td></tr>
 <tr><td port="3">approx_count_distinct(t2d)</td></tr>
 <tr><td port="4">collect_list(t2d)</td></tr>
 </table>>];
@@ -1376,7 +1376,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_76</i></td></tr>
   <tr><td port="0">t1a</td></tr>
 <tr><td port="1">count(t2d)</td></tr>
-<tr><td port="2">count_if((t2d &gt; CAST(0 AS BIGINT)))</td></tr>
+<tr><td port="2">count_if((t2d &gt; 0))</td></tr>
 <tr><td port="3">approx_count_distinct(t2d)</td></tr>
 <tr><td port="4">collect_list(t2d)</td></tr>
 <tr><td port="5">sort_array(collect_set(t2d), true)</td></tr>

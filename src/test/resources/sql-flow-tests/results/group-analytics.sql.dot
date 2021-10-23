@@ -38,7 +38,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_20</i></td></tr>
   <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
-<tr><td port="2">aggOrder</td></tr>
+<tr><td port="2">spark_grouping_id</td></tr>
 </table>>];
      
 
@@ -101,8 +101,8 @@ digraph {
   <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
 <tr><td port="2">grouping_id(course, year)</td></tr>
-<tr><td port="3">aggOrder</td></tr>
-<tr><td port="4">aggOrder</td></tr>
+<tr><td port="3">spark_grouping_id</td></tr>
+<tr><td port="4">spark_grouping_id</td></tr>
 </table>>];
      
 
@@ -149,21 +149,23 @@ digraph {
 <tr><td port="1">year</td></tr>
 <tr><td port="2">grouping(course)</td></tr>
 <tr><td port="3">grouping(year)</td></tr>
+<tr><td port="4">spark_grouping_id</td></tr>
+<tr><td port="5">spark_grouping_id</td></tr>
 </table>>];
      
 
-"Aggregate_67" [label=<
+"Aggregate_68" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_67</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_68</i></td></tr>
   <tr><td port="0">k1</td></tr>
 <tr><td port="1">k2</td></tr>
 <tr><td port="2">sum((a - b))</td></tr>
 </table>>];
      
 
-"Aggregate_70" [label=<
+"Aggregate_71" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_70</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_71</i></td></tr>
   <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
 <tr><td port="2">grouping(course)</td></tr>
@@ -172,9 +174,9 @@ digraph {
 </table>>];
      
 
-"Aggregate_73" [label=<
+"Aggregate_74" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_73</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_74</i></td></tr>
   <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
 <tr><td port="2">sum(earnings)</td></tr>
@@ -195,7 +197,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_1</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
-<tr><td port="2">(a#21867 + b#21868)</td></tr>
+<tr><td port="2">(a#4476 + b#4477)</td></tr>
 <tr><td port="3">b</td></tr>
 <tr><td port="4">spark_grouping_id</td></tr>
 </table>>];
@@ -206,8 +208,8 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_11</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
-<tr><td port="2">(a#21917 + b#21918)</td></tr>
-<tr><td port="3">k</td></tr>
+<tr><td port="2">k</td></tr>
+<tr><td port="3">(a#4524 + b#4525)</td></tr>
 <tr><td port="4">spark_grouping_id</td></tr>
 </table>>];
      
@@ -244,8 +246,8 @@ digraph {
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_28</i></td></tr>
   <tr><td port="0">earnings</td></tr>
-<tr><td port="1">course</td></tr>
-<tr><td port="2">year</td></tr>
+<tr><td port="1">year</td></tr>
+<tr><td port="2">course</td></tr>
 <tr><td port="3">spark_grouping_id</td></tr>
 </table>>];
      
@@ -255,7 +257,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_31</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
-<tr><td port="2">(a#22005 + b#22006)</td></tr>
+<tr><td port="2">(a#4601 + b#4602)</td></tr>
 <tr><td port="3">b</td></tr>
 <tr><td port="4">spark_grouping_id</td></tr>
 </table>>];
@@ -349,23 +351,14 @@ digraph {
 </table>>];
      
 
-"Expand_66" [label=<
+"Expand_67" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_66</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_67</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
 <tr><td port="2">k1</td></tr>
 <tr><td port="3">k2</td></tr>
 <tr><td port="4">spark_grouping_id</td></tr>
-</table>>];
-     
-
-"Expand_69" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_69</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-<tr><td port="2">spark_grouping_id</td></tr>
 </table>>];
      
 
@@ -379,9 +372,18 @@ digraph {
 </table>>];
      
 
-"Expand_72" [label=<
+"Expand_70" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_72</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_70</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+<tr><td port="2">spark_grouping_id</td></tr>
+</table>>];
+     
+
+"Expand_73" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_73</i></td></tr>
   <tr><td port="0">earnings</td></tr>
 <tr><td port="1">course</td></tr>
 <tr><td port="2">year</td></tr>
@@ -406,9 +408,9 @@ digraph {
 </table>>];
      
 
-"LocalRelation_64" [label=<
+"LocalRelation_65" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_64</i></td></tr>
+  <tr><td bgcolor="lightpink" port="nodeName"><i>LocalRelation_65</i></td></tr>
   <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
 <tr><td port="2">earnings</td></tr>
@@ -420,7 +422,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_0</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
-<tr><td port="2">(a#21867 + b#21868)</td></tr>
+<tr><td port="2">(a#4476 + b#4477)</td></tr>
 <tr><td port="3">b</td></tr>
 </table>>];
      
@@ -489,7 +491,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_30</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
-<tr><td port="2">(a#22005 + b#22006)</td></tr>
+<tr><td port="2">(a#4601 + b#4602)</td></tr>
 <tr><td port="3">b</td></tr>
 </table>>];
      
@@ -581,9 +583,19 @@ digraph {
 </table>>];
      
 
-"Project_65" [label=<
+"Project_64" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_65</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_64</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+<tr><td port="2">grouping(course)</td></tr>
+<tr><td port="3">grouping(year)</td></tr>
+</table>>];
+     
+
+"Project_66" [label=<
+<table border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_66</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
 <tr><td port="2">k1</td></tr>
@@ -591,17 +603,17 @@ digraph {
 </table>>];
      
 
-"Project_68" [label=<
+"Project_69" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_68</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_69</i></td></tr>
   <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
 </table>>];
      
 
-"Project_71" [label=<
+"Project_72" [label=<
 <table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_71</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_72</i></td></tr>
   <tr><td port="0">earnings</td></tr>
 <tr><td port="1">course</td></tr>
 <tr><td port="2">year</td></tr>
@@ -621,7 +633,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Sort_21</i></td></tr>
   <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
-<tr><td port="2">aggOrder</td></tr>
+<tr><td port="2">spark_grouping_id</td></tr>
 </table>>];
      
 
@@ -657,8 +669,8 @@ digraph {
   <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
 <tr><td port="2">grouping_id(course, year)</td></tr>
-<tr><td port="3">aggOrder</td></tr>
-<tr><td port="4">aggOrder</td></tr>
+<tr><td port="3">spark_grouping_id</td></tr>
+<tr><td port="4">spark_grouping_id</td></tr>
 </table>>];
      
 
@@ -678,6 +690,8 @@ digraph {
 <tr><td port="1">year</td></tr>
 <tr><td port="2">grouping(course)</td></tr>
 <tr><td port="3">grouping(year)</td></tr>
+<tr><td port="4">spark_grouping_id</td></tr>
+<tr><td port="5">spark_grouping_id</td></tr>
 </table>>];
      
 
@@ -917,7 +931,7 @@ digraph {
 "Aggregate_47":0 -> "Sort_48":0;
 "Aggregate_47":1 -> "Sort_48":1;
 "Aggregate_47":2 -> "Sort_48":2;
-"Aggregate_47":3 -> "Sort_48":3;
+"Aggregate_47":4 -> "Sort_48":3;
 "Aggregate_47":4 -> "Sort_48":4;
 "Aggregate_5":0 -> "t4":0;
 "Aggregate_5":1 -> "t4":1;
@@ -935,17 +949,19 @@ digraph {
 "Aggregate_62":1 -> "Sort_63":1;
 "Aggregate_62":2 -> "Sort_63":2;
 "Aggregate_62":3 -> "Sort_63":3;
-"Aggregate_67":0 -> "t18":0;
-"Aggregate_67":1 -> "t18":1;
-"Aggregate_67":2 -> "t18":2;
-"Aggregate_70":0 -> "t12":0;
-"Aggregate_70":1 -> "t12":1;
-"Aggregate_70":2 -> "t12":2;
-"Aggregate_70":3 -> "t12":3;
-"Aggregate_70":4 -> "t12":4;
-"Aggregate_73":0 -> "t7":0;
-"Aggregate_73":1 -> "t7":1;
-"Aggregate_73":2 -> "t7":2;
+"Aggregate_62":5 -> "Sort_63":4;
+"Aggregate_62":5 -> "Sort_63":5;
+"Aggregate_68":0 -> "t18":0;
+"Aggregate_68":1 -> "t18":1;
+"Aggregate_68":2 -> "t18":2;
+"Aggregate_71":0 -> "t12":0;
+"Aggregate_71":1 -> "t12":1;
+"Aggregate_71":2 -> "t12":2;
+"Aggregate_71":3 -> "t12":3;
+"Aggregate_71":4 -> "t12":4;
+"Aggregate_74":0 -> "t7":0;
+"Aggregate_74":1 -> "t7":1;
+"Aggregate_74":2 -> "t7":2;
 "Aggregate_8":0 -> "Sort_9":0;
 "Aggregate_8":1 -> "Sort_9":1;
 "Aggregate_8":2 -> "Sort_9":2;
@@ -955,8 +971,8 @@ digraph {
 "Expand_1":3 -> "Aggregate_2":1;
 "Expand_11":0 -> "Aggregate_12":2;
 "Expand_11":1 -> "Aggregate_12":2;
-"Expand_11":2 -> "Aggregate_12":0;
-"Expand_11":3 -> "Aggregate_12":1;
+"Expand_11":2 -> "Aggregate_12":1;
+"Expand_11":3 -> "Aggregate_12":0;
 "Expand_14":0 -> "Filter_15":0;
 "Expand_14":1 -> "Filter_15":1;
 "Expand_14":2 -> "Filter_15":2;
@@ -967,8 +983,8 @@ digraph {
 "Expand_24":1 -> "Aggregate_25":0;
 "Expand_24":2 -> "Aggregate_25":1;
 "Expand_28":0 -> "Aggregate_29":2;
-"Expand_28":1 -> "Aggregate_29":0;
-"Expand_28":2 -> "Aggregate_29":1;
+"Expand_28":1 -> "Aggregate_29":1;
+"Expand_28":2 -> "Aggregate_29":0;
 "Expand_31":0 -> "Aggregate_32":2;
 "Expand_31":1 -> "Aggregate_32":2;
 "Expand_31":2 -> "Aggregate_32":0;
@@ -1003,35 +1019,37 @@ digraph {
 "Expand_61":1 -> "Aggregate_62":1;
 "Expand_61":2 -> "Aggregate_62":2;
 "Expand_61":2 -> "Aggregate_62":3;
-"Expand_66":0 -> "Aggregate_67":2;
-"Expand_66":1 -> "Aggregate_67":2;
-"Expand_66":2 -> "Aggregate_67":0;
-"Expand_66":3 -> "Aggregate_67":1;
-"Expand_69":0 -> "Aggregate_70":0;
-"Expand_69":1 -> "Aggregate_70":1;
-"Expand_69":2 -> "Aggregate_70":2;
-"Expand_69":2 -> "Aggregate_70":3;
-"Expand_69":2 -> "Aggregate_70":4;
+"Expand_61":2 -> "Aggregate_62":4;
+"Expand_61":2 -> "Aggregate_62":5;
+"Expand_67":0 -> "Aggregate_68":2;
+"Expand_67":1 -> "Aggregate_68":2;
+"Expand_67":2 -> "Aggregate_68":0;
+"Expand_67":3 -> "Aggregate_68":1;
 "Expand_7":0 -> "Aggregate_8":1;
 "Expand_7":1 -> "Aggregate_8":0;
 "Expand_7":3 -> "Aggregate_8":2;
-"Expand_72":0 -> "Aggregate_73":2;
-"Expand_72":1 -> "Aggregate_73":0;
-"Expand_72":2 -> "Aggregate_73":1;
+"Expand_70":0 -> "Aggregate_71":0;
+"Expand_70":1 -> "Aggregate_71":1;
+"Expand_70":2 -> "Aggregate_71":2;
+"Expand_70":2 -> "Aggregate_71":3;
+"Expand_70":2 -> "Aggregate_71":4;
+"Expand_73":0 -> "Aggregate_74":2;
+"Expand_73":1 -> "Aggregate_74":0;
+"Expand_73":2 -> "Aggregate_74":1;
 "Filter_15":0 -> "Aggregate_16":0;
 "Filter_15":1 -> "Aggregate_16":1;
 "LocalRelation_44":0 -> "testdata":0;
 "LocalRelation_44":1 -> "testdata":1;
-"LocalRelation_64":0 -> "coursesales":0;
-"LocalRelation_64":1 -> "coursesales":1;
-"LocalRelation_64":2 -> "coursesales":2;
+"LocalRelation_65":0 -> "coursesales":0;
+"LocalRelation_65":1 -> "coursesales":1;
+"LocalRelation_65":2 -> "coursesales":2;
 "Project_0":0 -> "Expand_1":0;
 "Project_0":2 -> "Expand_1":2;
 "Project_0":3 -> "Expand_1":1;
 "Project_0":3 -> "Expand_1":3;
 "Project_10":0 -> "Expand_11":0;
 "Project_10":1 -> "Expand_11":1;
-"Project_10":2 -> "Expand_11":3;
+"Project_10":2 -> "Expand_11":2;
 "Project_13":0 -> "Expand_14":0;
 "Project_13":1 -> "Expand_14":1;
 "Project_18":0 -> "Expand_19":0;
@@ -1042,7 +1060,7 @@ digraph {
 "Project_23":1 -> "Expand_24":1;
 "Project_23":2 -> "Expand_24":2;
 "Project_27":0 -> "Expand_28":0;
-"Project_27":1 -> "Expand_28":2;
+"Project_27":1 -> "Expand_28":1;
 "Project_3":1 -> "Expand_4":1;
 "Project_3":2 -> "Expand_4":0;
 "Project_3":2 -> "Expand_4":2;
@@ -1077,15 +1095,19 @@ digraph {
 "Project_6":2 -> "Expand_7":2;
 "Project_60":0 -> "Expand_61":0;
 "Project_60":1 -> "Expand_61":1;
-"Project_65":0 -> "Expand_66":0;
-"Project_65":1 -> "Expand_66":1;
-"Project_65":2 -> "Expand_66":2;
-"Project_65":3 -> "Expand_66":3;
-"Project_68":0 -> "Expand_69":0;
-"Project_68":1 -> "Expand_69":1;
-"Project_71":0 -> "Expand_72":0;
-"Project_71":1 -> "Expand_72":1;
-"Project_71":2 -> "Expand_72":2;
+"Project_64":0 -> "t15":0;
+"Project_64":1 -> "t15":1;
+"Project_64":2 -> "t15":2;
+"Project_64":3 -> "t15":3;
+"Project_66":0 -> "Expand_67":0;
+"Project_66":1 -> "Expand_67":1;
+"Project_66":2 -> "Expand_67":2;
+"Project_66":3 -> "Expand_67":3;
+"Project_69":0 -> "Expand_70":0;
+"Project_69":1 -> "Expand_70":1;
+"Project_72":0 -> "Expand_73":0;
+"Project_72":1 -> "Expand_73":1;
+"Project_72":2 -> "Expand_73":2;
 "Sort_17":0 -> "t14":0;
 "Sort_17":1 -> "t14":1;
 "Sort_21":0 -> "Project_22":0;
@@ -1104,10 +1126,10 @@ digraph {
 "Sort_56":0 -> "t5":0;
 "Sort_56":1 -> "t5":1;
 "Sort_56":2 -> "t5":2;
-"Sort_63":0 -> "t15":0;
-"Sort_63":1 -> "t15":1;
-"Sort_63":2 -> "t15":2;
-"Sort_63":3 -> "t15":3;
+"Sort_63":0 -> "Project_64":0;
+"Sort_63":1 -> "Project_64":1;
+"Sort_63":2 -> "Project_64":2;
+"Sort_63":3 -> "Project_64":3;
 "Sort_9":0 -> "t11":0;
 "Sort_9":1 -> "t11":1;
 "Sort_9":2 -> "t11":2;
@@ -1121,8 +1143,8 @@ digraph {
 "coursesales":0 -> "Project_57":1;
 "coursesales":0 -> "Project_6":1;
 "coursesales":0 -> "Project_60":0;
-"coursesales":0 -> "Project_68":0;
-"coursesales":0 -> "Project_71":1;
+"coursesales":0 -> "Project_69":0;
+"coursesales":0 -> "Project_72":1;
 "coursesales":1 -> "Project_13":1;
 "coursesales":1 -> "Project_18":1;
 "coursesales":1 -> "Project_23":2;
@@ -1131,8 +1153,8 @@ digraph {
 "coursesales":1 -> "Project_45":1;
 "coursesales":1 -> "Project_53":2;
 "coursesales":1 -> "Project_60":1;
-"coursesales":1 -> "Project_68":1;
-"coursesales":1 -> "Project_71":2;
+"coursesales":1 -> "Project_69":1;
+"coursesales":1 -> "Project_72":2;
 "coursesales":2 -> "Project_23":0;
 "coursesales":2 -> "Project_27":0;
 "coursesales":2 -> "Project_36":0;
@@ -1141,7 +1163,7 @@ digraph {
 "coursesales":2 -> "Project_57":0;
 "coursesales":2 -> "Project_6":0;
 "coursesales":2 -> "Project_6":2;
-"coursesales":2 -> "Project_71":0;
+"coursesales":2 -> "Project_72":0;
 "testdata":0 -> "Project_0":0;
 "testdata":0 -> "Project_0":2;
 "testdata":0 -> "Project_10":0;
@@ -1151,8 +1173,8 @@ digraph {
 "testdata":0 -> "Project_33":0;
 "testdata":0 -> "Project_33":2;
 "testdata":0 -> "Project_50":1;
-"testdata":0 -> "Project_65":0;
-"testdata":0 -> "Project_65":2;
+"testdata":0 -> "Project_66":0;
+"testdata":0 -> "Project_66":2;
 "testdata":1 -> "Project_0":1;
 "testdata":1 -> "Project_0":2;
 "testdata":1 -> "Project_0":3;
@@ -1168,8 +1190,8 @@ digraph {
 "testdata":1 -> "Project_33":3;
 "testdata":1 -> "Project_50":0;
 "testdata":1 -> "Project_50":2;
-"testdata":1 -> "Project_65":1;
-"testdata":1 -> "Project_65":2;
-"testdata":1 -> "Project_65":3;
+"testdata":1 -> "Project_66":1;
+"testdata":1 -> "Project_66":2;
+"testdata":1 -> "Project_66":3;
 }
        

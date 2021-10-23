@@ -139,8 +139,8 @@ digraph {
 "t17" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t17</i></td></tr>
-  <tr><td port="0">corr(DISTINCT CAST(x AS DOUBLE), CAST(y AS DOUBLE))</td></tr>
-<tr><td port="1">corr(DISTINCT CAST(y AS DOUBLE), CAST(x AS DOUBLE))</td></tr>
+  <tr><td port="0">corr(DISTINCT x, y)</td></tr>
+<tr><td port="1">corr(DISTINCT y, x)</td></tr>
 <tr><td port="2">count(1)</td></tr>
 </table>>];
      
@@ -235,13 +235,13 @@ digraph {
 "t9" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t9</i></td></tr>
-  <tr><td port="0">skewness(CAST(a AS DOUBLE))</td></tr>
-<tr><td port="1">kurtosis(CAST(a AS DOUBLE))</td></tr>
+  <tr><td port="0">skewness(a)</td></tr>
+<tr><td port="1">kurtosis(a)</td></tr>
 <tr><td port="2">min(a)</td></tr>
 <tr><td port="3">max(a)</td></tr>
 <tr><td port="4">avg(a)</td></tr>
-<tr><td port="5">variance(CAST(a AS DOUBLE))</td></tr>
-<tr><td port="6">stddev(CAST(a AS DOUBLE))</td></tr>
+<tr><td port="5">variance(a)</td></tr>
+<tr><td port="6">stddev(a)</td></tr>
 <tr><td port="7">sum(a)</td></tr>
 <tr><td port="8">count(a)</td></tr>
 </table>>];

@@ -125,7 +125,8 @@ digraph {
 "Project_10" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_10</i></td></tr>
-  <tr><td port="0">v1</td></tr>
+  <tr><td port="0">k</td></tr>
+<tr><td port="1">v1</td></tr>
 </table>>];
      
 
@@ -184,7 +185,8 @@ digraph {
 "Project_24" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_24</i></td></tr>
-  <tr><td port="0">v1</td></tr>
+  <tr><td port="0">k</td></tr>
+<tr><td port="1">v1</td></tr>
 </table>>];
      
 
@@ -221,7 +223,8 @@ digraph {
 "Project_30" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_30</i></td></tr>
-  <tr><td port="0">v1</td></tr>
+  <tr><td port="0">k</td></tr>
+<tr><td port="1">v1</td></tr>
 </table>>];
      
 
@@ -330,21 +333,24 @@ digraph {
 "t5" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t5</i></td></tr>
-  <tr><td port="0">v1</td></tr>
+  <tr><td port="0">k</td></tr>
+<tr><td port="1">v1</td></tr>
 </table>>];
      
 
 "t6" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t6</i></td></tr>
-  <tr><td port="0">v1</td></tr>
+  <tr><td port="0">k</td></tr>
+<tr><td port="1">v1</td></tr>
 </table>>];
      
 
 "t7" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightyellow" port="nodeName"><i>t7</i></td></tr>
-  <tr><td port="0">v1</td></tr>
+  <tr><td port="0">k</td></tr>
+<tr><td port="1">v1</td></tr>
 </table>>];
      
 
@@ -367,14 +373,16 @@ digraph {
 "Filter_7":1 -> "Join_Inner_9":1;
 "Join_Cross_21":0 -> "t13":0;
 "Join_Cross_21":1 -> "t13":1;
-"Join_FullOuter_29":1 -> "Project_30":0;
+"Join_FullOuter_29":0 -> "Project_30":0;
+"Join_FullOuter_29":1 -> "Project_30":1;
 "Join_FullOuter_5":0 -> "Project_6":0;
 "Join_FullOuter_5":1 -> "Project_6":1;
 "Join_Inner_15":0 -> "Project_16":0;
 "Join_Inner_15":1 -> "Project_16":1;
 "Join_Inner_26":0 -> "Project_27":0;
 "Join_Inner_26":1 -> "Project_27":1;
-"Join_Inner_9":1 -> "Project_10":0;
+"Join_Inner_9":0 -> "Project_10":0;
+"Join_Inner_9":1 -> "Project_10":1;
 "Join_LeftOuter_0":0 -> "Project_1":0;
 "Join_LeftOuter_0":1 -> "Project_1":1;
 "Join_LeftOuter_0":3 -> "Project_1":2;
@@ -384,11 +392,13 @@ digraph {
 "Join_LeftSemi_32":1 -> "t12":1;
 "Join_RightOuter_18":0 -> "Project_19":0;
 "Join_RightOuter_18":1 -> "Project_19":1;
-"Join_RightOuter_23":1 -> "Project_24":0;
+"Join_RightOuter_23":0 -> "Project_24":0;
+"Join_RightOuter_23":1 -> "Project_24":1;
 "Project_1":0 -> "Sort_2":0;
 "Project_1":1 -> "Sort_2":1;
 "Project_1":2 -> "Sort_2":2;
 "Project_10":0 -> "t6":0;
+"Project_10":1 -> "t6":1;
 "Project_11":0 -> "Join_LeftOuter_12":2;
 "Project_13":0 -> "t9":0;
 "Project_13":1 -> "t9":1;
@@ -400,6 +410,7 @@ digraph {
 "Project_19":1 -> "t10":1;
 "Project_22":0 -> "Join_RightOuter_23":2;
 "Project_24":0 -> "t5":0;
+"Project_24":1 -> "t5":1;
 "Project_25":0 -> "Join_Inner_26":2;
 "Project_27":0 -> "t8":0;
 "Project_27":1 -> "t8":1;
@@ -407,6 +418,7 @@ digraph {
 "Project_3":0 -> "t4":0;
 "Project_3":1 -> "t4":1;
 "Project_30":0 -> "t7":0;
+"Project_30":1 -> "t7":1;
 "Project_31":0 -> "Join_LeftSemi_32":0;
 "Project_4":0 -> "Join_FullOuter_5":2;
 "Project_6":0 -> "t11":0;

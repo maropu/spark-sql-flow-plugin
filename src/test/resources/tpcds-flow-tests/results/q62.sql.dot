@@ -280,9 +280,9 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_17</i></td></tr>
   <tr><td port="0">ws_sold_date_sk</td></tr>
 <tr><td port="1">ws_ship_date_sk</td></tr>
-<tr><td port="2">w_warehouse_name</td></tr>
-<tr><td port="3">sm_type</td></tr>
-<tr><td port="4">web_name</td></tr>
+<tr><td port="2">sm_type</td></tr>
+<tr><td port="3">web_name</td></tr>
+<tr><td port="4">_groupingexpression</td></tr>
 </table>>];
      
 
@@ -524,9 +524,9 @@ digraph {
 "Join_Inner_12":6 -> "Project_13":4;
 "Join_Inner_16":0 -> "Project_17":0;
 "Join_Inner_16":1 -> "Project_17":1;
-"Join_Inner_16":2 -> "Project_17":2;
-"Join_Inner_16":3 -> "Project_17":3;
-"Join_Inner_16":4 -> "Project_17":4;
+"Join_Inner_16":2 -> "Project_17":4;
+"Join_Inner_16":3 -> "Project_17":2;
+"Join_Inner_16":4 -> "Project_17":3;
 "Join_Inner_4":0 -> "Project_5":0;
 "Join_Inner_4":1 -> "Project_5":1;
 "Join_Inner_4":2 -> "Project_5":2;
@@ -568,9 +568,9 @@ digraph {
 "Project_17":1 -> "Aggregate_18":5;
 "Project_17":1 -> "Aggregate_18":6;
 "Project_17":1 -> "Aggregate_18":7;
-"Project_17":2 -> "Aggregate_18":0;
-"Project_17":3 -> "Aggregate_18":1;
-"Project_17":4 -> "Aggregate_18":2;
+"Project_17":2 -> "Aggregate_18":1;
+"Project_17":3 -> "Aggregate_18":2;
+"Project_17":4 -> "Aggregate_18":0;
 "Project_3":0 -> "Join_Inner_4":5;
 "Project_3":1 -> "Join_Inner_4":6;
 "Project_5":0 -> "Join_Inner_8":0;

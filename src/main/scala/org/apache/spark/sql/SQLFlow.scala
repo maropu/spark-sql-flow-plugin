@@ -650,6 +650,9 @@ case class CachedNode(cachedPlan: LogicalPlan) extends UnaryNode {
   override lazy val resolved: Boolean = true
   override def output: Seq[Attribute] = cachedPlan.output
   override def child: LogicalPlan = cachedPlan
+  override protected def withNewChildInternal(newChild: LogicalPlan): LogicalPlan = {
+    copy(cachedPlan = newChild)
+  }
 }
 
 case class ViewNode(name: String, output: Seq[Attribute]) extends LeafNode {

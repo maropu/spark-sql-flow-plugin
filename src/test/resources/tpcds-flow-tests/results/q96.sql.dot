@@ -177,13 +177,6 @@ digraph {
 </table>>];
      
 
-"Sort_15" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort_15</i></td></tr>
-  <tr><td port="0">count(1)</td></tr>
-</table>>];
-     
-
 "default.household_demographics" [label=<
 <table border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightpink" port="nodeName"><i>default.household_demographics</i></td></tr>
@@ -281,7 +274,7 @@ digraph {
   <tr><td port="0">count(1)</td></tr>
 </table>>];
      
-  "Aggregate_14":0 -> "Sort_15":0;
+  "Aggregate_14":0 -> "v":0;
 "Filter_0":1 -> "Project_1":0;
 "Filter_0":5 -> "Project_1":1;
 "Filter_0":7 -> "Project_1":2;
@@ -300,7 +293,6 @@ digraph {
 "Project_5":1 -> "Join_Inner_8":1;
 "Project_7":0 -> "Join_Inner_8":2;
 "Project_9":0 -> "Join_Inner_12":0;
-"Sort_15":0 -> "v":0;
 "default.household_demographics":0 -> "Filter_2":0;
 "default.household_demographics":1 -> "Filter_2":1;
 "default.household_demographics":2 -> "Filter_2":2;
