@@ -75,9 +75,10 @@ Using Python version 3.7.10 (default, Jun  4 2021 14:48:32)
 >>> save_data_lineage(output_path="/tmp/sqlflow-output")
 ```
 
-## Automatic Tracking with Python decorators
+## Automatic Tracking with Python Decorators
 
-XXX
+If you have a set of the functions that take and return `DataFrame` for data transformation,
+a Python decorator `@auto_tracking` is useful to track data lineage automatically:
 
 ```
 $ ./bin/python
@@ -94,20 +95,26 @@ $ ./bin/python
 ... def transform_gamma(df):
 ...     return df.selectExpr('explode(value)')
 ...
+
+# Applies a chain of transformation functions
 >>> transform_gamma(transform_beta(transform_alpha(spark.range(10))))
 DataFrame[col: bigint]
->>>
+
 >>> save_data_lineage(output_path='/tmp/sqlflow-output', contracted=True)
 ```
 
-<img src="resources/graphviz_4.svg" width="350px">
+An automatically generated data lineage is as follows:
+
+<img src="resources/graphviz_4.svg" width="700px">
 
 ## TODO
 
- * Support global temp views
+ * Supports global temp views
+ * Refines Graphviz params to improve a generated image, e.g., node colors and size
+ * Add Python tests
 
 ## Bug Reports
 
-If you hit some bugs and requests, please leave some comments on [Issues](https://github.com/maropu/spark-sql-flow-plugin/issues)
+If you hit some bugs and have requests, please leave some comments on [Issues](https://github.com/maropu/spark-sql-flow-plugin/issues)
 or Twitter ([@maropu](http://twitter.com/#!/maropu)).
 

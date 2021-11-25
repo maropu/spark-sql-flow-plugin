@@ -39,6 +39,14 @@ def _create_temp_name(prefix: str = "temp") -> str:
     return f'{prefix}_{uuid.uuid4().hex.lower()[:7]}'
 
 
+def _check_if_table_exists(ident: str) -> bool:
+    try:
+        SparkSession.getActiveSession().table(ident)
+        return True
+    except Exception as e:
+        return False
+
+
 def auto_tracking(f):  # type: ignore
     @functools.wraps(f)
     def wrapper(self, *args, **kwargs):  # type: ignore
@@ -47,7 +55,10 @@ def auto_tracking(f):  # type: ignore
         ret = f(self, *args, **kwargs)
         if type(ret) is DataFrame:
             _logger.info(f'Automatically tracking: {f.__name__}({",".join(ret.columns)})')
-            ret.createOrReplaceTempView(_create_temp_name(f.__name__))
+            if _check_if_table_exists(f.__name__):
+                ret.createOrReplaceTempView(_create_temp_name(f.__name__))
+            else:
+                ret.createTempView(f.__name__)
 
         return ret
 
