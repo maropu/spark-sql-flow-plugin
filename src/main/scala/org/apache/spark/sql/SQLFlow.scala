@@ -77,12 +77,21 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     }
 
     val tempViewSet = tempViews.map(_._1)
-    val edges = (views ++ tempViews).map { case (tempView, analyzed) =>
+    val subplanToTempViewMap = tempViews.map { case (viewName, analyzed) =>
+      (analyzed.semanticHash(), viewName)
+    }.toMap
+
+    val edges = (views ++ tempViews).map { case (viewName, analyzed) =>
       val optimized = {
         val plan = analyzed.transformUp {
           case p if isCached(p) =>
             CachedNode(p)
         }.transformDown {
+          case p if subplanToTempViewMap.contains(p.semanticHash()) &&
+              viewName != subplanToTempViewMap(p.semanticHash()) =>
+            val v = subplanToTempViewMap(p.semanticHash())
+            TempViewNode(v, p.output)
+
           case s @ SubqueryAlias(AliasIdentifier(name, _), v: View) =>
             if (!v.isTempView) {
               ViewNode(v.desc.identifier.unquotedString, s.output)
@@ -98,7 +107,7 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
       }
 
       if (!optimized.isInstanceOf[ViewNode] || !optimized.isInstanceOf[TempViewNode]) {
-        collectEdges(tempView, optimized, nodeMap)
+        collectEdges(viewName, optimized, nodeMap)
       } else {
         // If a given plan is `TempView t1, [a#102, b#103]`, `nodeName` should be equal to
         // `tempView` and we don't need a new node and edges for `TempView`.

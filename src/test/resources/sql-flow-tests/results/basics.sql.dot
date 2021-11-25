@@ -322,12 +322,14 @@ digraph {
 "default.testdata":1 -> "Aggregate_12":1;
 "default.testdata":1 -> "Join_LeftOuter_1":1;
 "default.testdata":1 -> "LocalLimit_21":1;
-"t1":0 -> "Project_3":0;
-"t1":1 -> "Project_3":1;
 "t2":0 -> "Filter_14":0;
+"t2":0 -> "Project_3":0;
 "t2":0 -> "Project_4":0;
+"t2":0 -> "t1":0;
 "t2":1 -> "Filter_14":1;
+"t2":1 -> "Project_3":1;
 "t2":1 -> "Project_4":1;
+"t2":1 -> "t1":1;
 "t3":0 -> "Filter_7":0;
 "t3":0 -> "Union_5":0
 "t3":1 -> "Filter_7":1;

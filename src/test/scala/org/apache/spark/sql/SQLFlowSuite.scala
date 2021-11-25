@@ -21,6 +21,7 @@ import java.io.File
 
 import org.apache.spark.TestUtils
 import org.apache.spark.sql.catalyst.util._
+import org.apache.spark.sql.functions._
 import org.apache.spark.sql.test.{SharedSparkSession, SQLTestUtils}
 
 class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
@@ -686,6 +687,110 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |  "Aggregate_1":1 -> "default.t":1;
            |  "LocalRelation_0":0 -> "Aggregate_1":0;
            |  "LocalRelation_0":1 -> "Aggregate_1":1;
+           |}
+         """.stripMargin)
+    }
+  }
+
+  test("handle data lineage for DataFrames") {
+    withTempView("df1", "df2", "df3") {
+      val df1 = {
+        val df = spark.range(1).selectExpr("id as k", "id as v")
+        df.createOrReplaceTempView("df1")
+        df
+      }
+
+      val df2 = {
+        val df = df1.groupBy("k").agg(expr("collect_set(v)").as("v"))
+        df.createOrReplaceTempView("df2")
+        df
+      }
+
+      df2.selectExpr("explode(v)")
+        .createOrReplaceTempView("df3")
+
+      val flowString = getOutputAsString {
+        SQLFlow.debugPrintAsSQLFlow()
+      }
+      checkOutputString(flowString,
+        s"""
+           |digraph {
+           |  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
+           |  node [shape=plain]
+           |  rankdir=LR;
+           |
+           |  "Aggregate_0" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_0</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v</td></tr>
+           |  </table>>];
+           |
+           |  "Filter_3" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_3</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v</td></tr>
+           |  </table>>];
+           |
+           |  "Generate_5" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Generate_5</i></td></tr>
+           |    <tr><td port="0">col</td></tr>
+           |  </table>>];
+           |
+           |  "Project_2" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Project_2</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v</td></tr>
+           |  </table>>];
+           |
+           |  "Project_4" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Project_4</i></td></tr>
+           |    <tr><td port="0">v</td></tr>
+           |  </table>>];
+           |
+           |  "Range_1" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightpink" port="nodeName"><i>Range_1</i></td></tr>
+           |    <tr><td port="0">id</td></tr>
+           |  </table>>];
+           |
+           |  "df1" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightyellow" port="nodeName"><i>df1</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v</td></tr>
+           |  </table>>];
+           |
+           |  "df2" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightyellow" port="nodeName"><i>df2</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v</td></tr>
+           |  </table>>];
+           |
+           |  "df3" [label=<
+           |  <table border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightyellow" port="nodeName"><i>df3</i></td></tr>
+           |    <tr><td port="0">col</td></tr>
+           |  </table>>];
+           |
+           |  "Aggregate_0":0 -> "df2":0;
+           |  "Aggregate_0":1 -> "df2":1;
+           |  "Filter_3":1 -> "Project_4":0;
+           |  "Generate_5":0 -> "df3":0;
+           |  "Project_2":0 -> "df1":0;
+           |  "Project_2":1 -> "df1":1;
+           |  "Project_4":0 -> "Generate_5":0
+           |  "Range_1":0 -> "Project_2":0;
+           |  "Range_1":0 -> "Project_2":1;
+           |  "df1":0 -> "Aggregate_0":0;
+           |  "df1":1 -> "Aggregate_0":1;
+           |  "df2":0 -> "Filter_3":0;
+           |  "df2":1 -> "Filter_3":1;
            |}
          """.stripMargin)
     }
