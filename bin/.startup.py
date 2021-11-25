@@ -17,14 +17,4 @@
 # limitations under the License.
 #
 
-from pyspark.sql import SparkSession
-
-spark = SparkSession.builder.getOrCreate()
-jvm = spark.sparkContext._active_spark_context._jvm
-
-def saveAsSQLFlow(path: str, format: str = "svg", contracted: bool = False):
-    jvm.SQLFlowApi.saveAsSQLFlow(path, format, contracted)
-
-def debugPrintAsSQLFlow(contracted: bool = False):
-    jvm.SQLFlowApi.debugPrintAsSQLFlow(contracted)
-
+from auto_tracking import *

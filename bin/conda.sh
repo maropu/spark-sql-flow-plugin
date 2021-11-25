@@ -27,7 +27,7 @@ activate_conda_virtual_env() {
   CONDA_COMMAND=${_ROOTT_DIR}/bin/conda.py
   CONDA_ENV_ID=`grep "<project.package.name>" "${_ROOTT_DIR}/pom.xml" | head -n1 | awk -F '[<>]' '{print $3}'`
   ${CONDA_COMMAND} --command=create_env_only --env_id=${CONDA_ENV_ID}
-  echo -ne "\n=== Launching pyspark on conda virtual env '$(${CONDA_COMMAND} --command=get_env_name --env_id=${CONDA_ENV_ID})' ===\n"
+  echo -ne "\n=== Launching conda virtual env '$(${CONDA_COMMAND} --command=get_env_name --env_id=${CONDA_ENV_ID})' ===\n"
 
   # Gets virtual env home
   CONDA_ENV_HOME=$(${CONDA_COMMAND} --command=get_env_home --env_id=${CONDA_ENV_ID})

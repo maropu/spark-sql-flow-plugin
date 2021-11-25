@@ -434,7 +434,7 @@ case class SQLContractedFlow() extends BaseSQLFlow {
     edges ++ candidateEdges.flatMap { case ((inputNodeId, input), candidates) =>
       val edges = candidates.flatMap { case (input, exprId) =>
         if (inputNodeId != tempView && outputAttrMap.contains(exprId)) {
-          Some(s"$input -> $tempView:${outputAttrMap(exprId)}")
+          Some(s"""$input -> "$tempView":${outputAttrMap(exprId)}""")
         } else {
           None
         }
@@ -442,7 +442,7 @@ case class SQLContractedFlow() extends BaseSQLFlow {
       if (edges.isEmpty) {
         // TODO: Makes it more precise
         input.zipWithIndex.filter { i => refMap.contains(i._1.exprId) }.map { case (_, i) =>
-          s""""$inputNodeId":$i -> $tempView:nodeName"""
+          s""""$inputNodeId":$i -> "$tempView":nodeName"""
         }
       } else {
         edges
@@ -581,7 +581,7 @@ case class SQLContractedFlow() extends BaseSQLFlow {
         edges ++ candidateEdges.flatMap { case ((inputNodeId, input), candidates) =>
           val edges = candidates.flatMap { case (input, exprId) =>
             if (outputAttrSet.contains(exprId)) {
-              Some(s"$input -> $tempView:nodeName")
+              Some(s"""$input -> "$tempView":nodeName""")
             } else {
               None
             }
@@ -589,7 +589,7 @@ case class SQLContractedFlow() extends BaseSQLFlow {
           if (edges.isEmpty) {
             // TODO: Makes it more precise
             input.zipWithIndex.filter { i => refMap.contains(i._1.exprId) }.map { case (_, i) =>
-              s""""$inputNodeId":$i -> $tempView:nodeName"""
+              s""""$inputNodeId":$i -> "$tempView":nodeName"""
             }
           } else {
             edges

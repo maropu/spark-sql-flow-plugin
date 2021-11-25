@@ -54,7 +54,7 @@ scala> SQLFlow.saveAsSQLFlow(path="/tmp/sqlflow-contracted-output", contracted =
 
 <img src="resources/graphviz_3.svg" width="350px">
 
-If you are using PySpark, you can run `bin/python` and use `saveAsSQLFlow` or other functions defined in `bin/.startup.py`:
+If you are using PySpark, you can run `bin/python` and use `save_data_lineage` to generate a dot file as follows:
 
 ```
 $ ./bin/python
@@ -72,8 +72,35 @@ Using Python version 3.7.10 (default, Jun  4 2021 14:48:32)
 >>> spark.sql("CREATE TEMPORARY VIEW TestView1 AS SELECT key, SUM(value) s FROM TestTable GROUP BY key")
 >>> spark.sql("CACHE TABLE TestView1")
 >>> spark.sql("CREATE TEMPORARY VIEW TestView2 AS SELECT t.key, t.value, v.s FROM TestTable t, TestView1 v WHERE t.key = v.key")
->>> saveAsSQLFlow(path="/tmp/sqlflow-output")
+>>> save_data_lineage(output_path="/tmp/sqlflow-output")
 ```
+
+## Automatic Tracking with Python decorators
+
+XXX
+
+```
+$ ./bin/python
+
+>>> @auto_tracking
+... def transform_alpha(df):
+...     return df.selectExpr('id % 3 AS key', 'id % 5 AS value')
+...
+>>> @auto_tracking
+... def transform_beta(df):
+...     return df.groupBy('key').agg(f.expr('collect_set(value)').alias('value'))
+...
+>>> @auto_tracking
+... def transform_gamma(df):
+...     return df.selectExpr('explode(value)')
+...
+>>> transform_gamma(transform_beta(transform_alpha(spark.range(10))))
+DataFrame[col: bigint]
+>>>
+>>> save_data_lineage(output_path='/tmp/sqlflow-output', contracted=True)
+```
+
+<img src="resources/graphviz_4.svg" width="350px">
 
 ## TODO
 

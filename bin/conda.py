@@ -41,7 +41,7 @@ class ShellCommandException(Exception):
 def _get_conda_env_name(conda_env_path, env_name_prefix):
     conda_env_contents = open(conda_env_path).read() if conda_env_path else ""
     return "{}-{}".format(env_name_prefix,
-                          hashlib.sha1(conda_env_contents.encode("utf-8")).hexdigest())
+                          hashlib.sha1(conda_env_contents.encode("utf-8")).hexdigest()[:7])
 
 
 def _exec_cmd(cmd, throw_on_error=True, env=None, stream_output=False, cwd=None, cmd_stdin=None,
