@@ -10,7 +10,7 @@ Note that the diagram above shows the column-level references of views that
 [spark-data-repair-plugin](https://github.com/maropu/spark-data-repair-plugin) generates to repair the cells of an input table.
 In the diagram, light-pink, light-yellow, and light-blue nodes represent leaf plans, views, and cached plan, respectively.
 
-## How to visualize your views
+## How to Visualize Data Lineage for Your Views
 
 ```
 $ git clone https://github.com/maropu/spark-sql-flow-plugin.git
@@ -79,7 +79,7 @@ Using Python version 3.7.10 (default, Jun  4 2021 14:48:32)
 
  * Support global temp views
 
-## Bug reports
+## Bug Reports
 
 If you hit some bugs and requests, please leave some comments on [Issues](https://github.com/maropu/spark-sql-flow-plugin/issues)
 or Twitter ([@maropu](http://twitter.com/#!/maropu)).
