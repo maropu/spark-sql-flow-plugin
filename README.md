@@ -1,6 +1,8 @@
 [![License](http://img.shields.io/:license-Apache_v2-blue.svg)](https://github.com/maropu/spark-sql-flow-plugin/blob/master/LICENSE)
 [![Build and test](https://github.com/maropu/spark-sql-flow-plugin/workflows/Build%20and%20test/badge.svg)](https://github.com/maropu/spark-sql-flow-plugin/actions?query=workflow%3A%22Build+and+test%22)
 
+**This branch is no longer maintained.**
+
 This experimental plugin enables you to easily analyze a column-level reference relationship between views registered in Spark SQL.
 The feature is useful for deciding which view should be cached and which one should not.
 
