@@ -25,6 +25,10 @@ object SQLFlowApi {
     SQLFlow.debugPrintAsSQLFlow(contracted)
   }
 
+  def toSQLFlowString(contracted: Boolean): String = {
+    SQLFlow.toSQLFlowString(contracted)
+  }
+
   def saveAsSQLFlow(path: String, format: String, contracted: Boolean): Unit = {
     SQLFlow.saveAsSQLFlow(path, format, contracted)
   }

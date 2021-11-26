@@ -111,7 +111,6 @@ An automatically generated data lineage is as follows:
 
  * Supports global temp views
  * Refines Graphviz params to improve a generated image, e.g., node colors and size
- * Add Python tests
 
 ## Bug Reports
 

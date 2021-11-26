@@ -743,23 +743,27 @@ object SQLFlow extends Logging {
     }
   }
 
+  def toSQLFlowString(contracted: Boolean = false): String = {
+    SparkSession.getActiveSession.map { session =>
+      if (contracted) {
+        SQLContractedFlow().catalogToSQLFlow(session)
+      } else {
+        SQLFlow().catalogToSQLFlow(session)
+      }
+    }.getOrElse {
+      logWarning("Active SparkSession not found")
+      ""
+    }
+  }
+
   // Indicates whether Spark is currently running unit tests
   private[sql] lazy val isTesting: Boolean = {
     System.getenv("SPARK_TESTING") != null || System.getProperty("spark.testing") != null
   }
 
   def debugPrintAsSQLFlow(contracted: Boolean = false): Unit = {
-    SparkSession.getActiveSession.map { session =>
-      val flowString = if (contracted) {
-        SQLContractedFlow().catalogToSQLFlow(session)
-      } else {
-        SQLFlow().catalogToSQLFlow(session)
-      }
-      // scalastyle:off println
-      println(flowString)
-      // scalastyle:on println
-    }.getOrElse {
-      logWarning("Active SparkSession not found")
-    }
+    // scalastyle:off println
+    println(toSQLFlowString(contracted))
+    // scalastyle:on println
   }
 }
