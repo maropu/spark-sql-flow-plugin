@@ -706,9 +706,12 @@ case class SQLFlowHolder[T] private[sql](private val ds: Dataset[T]) {
     // scalastyle:on println
   }
 
-  def saveAsSQLFlow(path: String, format: String = "svg"): Unit = {
+  def saveAsSQLFlow(
+      outputDirPath: String,
+      filenamePrefix: String = "sqlflow",
+      format: String = "svg"): Unit = {
     val flowString = SQLFlow().planToSQLFlow(ds.queryExecution.optimizedPlan)
-    writeSQLFlow(path, format, flowString)
+    writeSQLFlow(outputDirPath, filenamePrefix, format, flowString)
   }
 }
 
@@ -740,29 +743,36 @@ object SQLFlow extends Logging {
     }
   }
 
-  def writeSQLFlow(path: String, format: String, flowString: String): Unit = {
+  def writeSQLFlow(
+      outputDirPath: String,
+      filenamePrefix: String,
+      format: String,
+      flowString: String): Unit = {
     if (!SQLFlow.validImageFormatSet.contains(format.toLowerCase(Locale.ROOT))) {
       throw new AnalysisException(s"Invalid image format: $format")
     }
-    val outputDir = new File(path)
+    val outputDir = new File(outputDirPath)
     if (!outputDir.mkdir()) {
-      throw new AnalysisException(s"path file:$path already exists")
+      throw new AnalysisException(s"output dir path '$outputDirPath' already exists")
     }
-    val filePrefix = "sqlflow"
-    val dotFile = stringToFile(new File(outputDir, s"$filePrefix.dot"), flowString)
+    val dotFile = stringToFile(new File(outputDir, s"$filenamePrefix.dot"), flowString)
     val srcFile = dotFile.getAbsolutePath
-    val dstFile = new File(outputDir, s"$filePrefix.$format").getAbsolutePath
+    val dstFile = new File(outputDir, s"$filenamePrefix.$format").getAbsolutePath
     tryGenerateImageFile(format, srcFile, dstFile)
   }
 
-  def saveAsSQLFlow(path: String, format: String = "svg", contracted: Boolean = false): Unit = {
+  def saveAsSQLFlow(
+      outputDirPath: String,
+      filenamePrefix: String = "sqlflow",
+      format: String = "svg",
+      contracted: Boolean = false): Unit = {
     SparkSession.getActiveSession.map { session =>
       val flowString = if (contracted) {
         SQLContractedFlow().catalogToSQLFlow(session)
       } else {
         SQLFlow().catalogToSQLFlow(session)
       }
-      SQLFlow.writeSQLFlow(path, format, flowString)
+      SQLFlow.writeSQLFlow(outputDirPath, filenamePrefix, format, flowString)
     }.getOrElse {
       logWarning(s"Active SparkSession not found")
     }

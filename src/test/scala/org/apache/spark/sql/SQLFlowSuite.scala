@@ -235,8 +235,8 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
 
       SQLFlow.validImageFormatSet.foreach { format =>
         val outputPath = s"${dirPath.getAbsolutePath}/$format"
-        df.saveAsSQLFlow(outputPath, format)
-        val imgFile = new File(s"${outputPath}/sqlflow.$format")
+        df.saveAsSQLFlow(outputPath, format = format)
+        val imgFile = new File(s"$outputPath/sqlflow.$format")
         assert(imgFile.exists())
       }
     }
@@ -250,8 +250,8 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
 
         SQLFlow.validImageFormatSet.foreach { format =>
           val outputPath = s"${dirPath.getAbsolutePath}/$format"
-          SQLFlow.saveAsSQLFlow(outputPath, format)
-          val imgFile = new File(s"${outputPath}/sqlflow.$format")
+          SQLFlow.saveAsSQLFlow(outputPath, format = format)
+          val imgFile = new File(s"$outputPath/sqlflow.$format")
           assert(imgFile.exists())
         }
       }

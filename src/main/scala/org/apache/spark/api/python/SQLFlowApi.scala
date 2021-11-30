@@ -29,7 +29,11 @@ object SQLFlowApi {
     SQLFlow.toSQLFlowString(contracted)
   }
 
-  def saveAsSQLFlow(path: String, format: String, contracted: Boolean): Unit = {
-    SQLFlow.saveAsSQLFlow(path, format, contracted)
+  def saveAsSQLFlow(
+      path: String,
+      filenamePrefix: String,
+      format: String,
+      contracted: Boolean): Unit = {
+    SQLFlow.saveAsSQLFlow(path, filenamePrefix, format, contracted)
   }
 }
