@@ -18,7 +18,6 @@
 #
 
 import functools
-import shutil
 import uuid
 from pyspark.sql import DataFrame, SparkSession
 from typing import Any
