@@ -12,7 +12,7 @@ digraph {
   <tr><td port="0">ss_customer_sk</td></tr>
 <tr><td port="1">sumsales</td></tr>
 </table>>];
-     
+       
 
 "Filter_1" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -38,7 +38,7 @@ digraph {
 <tr><td port="18">sr_store_credit</td></tr>
 <tr><td port="19">sr_net_loss</td></tr>
 </table>>];
-     
+       
 
 "Filter_5" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -47,7 +47,7 @@ digraph {
 <tr><td port="1">r_reason_id</td></tr>
 <tr><td port="2">r_reason_desc</td></tr>
 </table>>];
-     
+       
 
 "GlobalLimit_12" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -55,7 +55,7 @@ digraph {
   <tr><td port="0">ss_customer_sk</td></tr>
 <tr><td port="1">sumsales</td></tr>
 </table>>];
-     
+       
 
 "Join_Inner_3" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -70,7 +70,7 @@ digraph {
 <tr><td port="7">sr_ticket_number</td></tr>
 <tr><td port="8">sr_return_quantity</td></tr>
 </table>>];
-     
+       
 
 "Join_Inner_7" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -82,7 +82,7 @@ digraph {
 <tr><td port="4">sr_return_quantity</td></tr>
 <tr><td port="5">r_reason_sk</td></tr>
 </table>>];
-     
+       
 
 "LocalLimit_11" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -90,7 +90,7 @@ digraph {
   <tr><td port="0">ss_customer_sk</td></tr>
 <tr><td port="1">sumsales</td></tr>
 </table>>];
-     
+       
 
 "Project_0" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -101,7 +101,7 @@ digraph {
 <tr><td port="3">ss_quantity</td></tr>
 <tr><td port="4">ss_sales_price</td></tr>
 </table>>];
-     
+       
 
 "Project_2" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -111,7 +111,7 @@ digraph {
 <tr><td port="2">sr_ticket_number</td></tr>
 <tr><td port="3">sr_return_quantity</td></tr>
 </table>>];
-     
+       
 
 "Project_4" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -122,14 +122,14 @@ digraph {
 <tr><td port="3">sr_reason_sk</td></tr>
 <tr><td port="4">sr_return_quantity</td></tr>
 </table>>];
-     
+       
 
 "Project_6" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_6</i></td></tr>
   <tr><td port="0">r_reason_sk</td></tr>
 </table>>];
-     
+       
 
 "Project_8" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -137,7 +137,7 @@ digraph {
   <tr><td port="0">ss_customer_sk</td></tr>
 <tr><td port="1">act_sales</td></tr>
 </table>>];
-     
+       
 
 "Sort_10" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -145,7 +145,7 @@ digraph {
   <tr><td port="0">ss_customer_sk</td></tr>
 <tr><td port="1">sumsales</td></tr>
 </table>>];
-     
+       
 
 "default.reason" [color="black" label=<
 <table>
@@ -154,7 +154,7 @@ digraph {
 <tr><td port="1">r_reason_id</td></tr>
 <tr><td port="2">r_reason_desc</td></tr>
 </table>>];
-     
+       
 
 "default.store_returns" [color="black" label=<
 <table>
@@ -180,7 +180,7 @@ digraph {
 <tr><td port="18">sr_store_credit</td></tr>
 <tr><td port="19">sr_net_loss</td></tr>
 </table>>];
-     
+       
 
 "default.store_sales" [color="black" label=<
 <table>
@@ -209,7 +209,7 @@ digraph {
 <tr><td port="21">ss_net_paid_inc_tax</td></tr>
 <tr><td port="22">ss_net_profit</td></tr>
 </table>>];
-     
+       
 
 "v" [color="black" label=<
 <table>
@@ -217,7 +217,7 @@ digraph {
   <tr><td port="0">ss_customer_sk</td></tr>
 <tr><td port="1">sumsales</td></tr>
 </table>>];
-     
+       
   "Aggregate_9":0 -> "Sort_10":0;
 "Aggregate_9":1 -> "Sort_10":1;
 "Filter_1":10 -> "Project_2":3;

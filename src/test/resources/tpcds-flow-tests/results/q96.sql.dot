@@ -11,7 +11,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_14</i></td></tr>
   <tr><td port="0">count(1)</td></tr>
 </table>>];
-     
+       
 
 "Filter_0" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -40,7 +40,7 @@ digraph {
 <tr><td port="21">ss_net_paid_inc_tax</td></tr>
 <tr><td port="22">ss_net_profit</td></tr>
 </table>>];
-     
+       
 
 "Filter_10" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -75,7 +75,7 @@ digraph {
 <tr><td port="27">s_gmt_offset</td></tr>
 <tr><td port="28">s_tax_percentage</td></tr>
 </table>>];
-     
+       
 
 "Filter_2" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -86,7 +86,7 @@ digraph {
 <tr><td port="3">hd_dep_count</td></tr>
 <tr><td port="4">hd_vehicle_count</td></tr>
 </table>>];
-     
+       
 
 "Filter_6" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -102,7 +102,7 @@ digraph {
 <tr><td port="8">t_sub_shift</td></tr>
 <tr><td port="9">t_meal_time</td></tr>
 </table>>];
-     
+       
 
 "Join_Inner_12" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -110,7 +110,7 @@ digraph {
   <tr><td port="0">ss_store_sk</td></tr>
 <tr><td port="1">s_store_sk</td></tr>
 </table>>];
-     
+       
 
 "Join_Inner_4" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -120,7 +120,7 @@ digraph {
 <tr><td port="2">ss_store_sk</td></tr>
 <tr><td port="3">hd_demo_sk</td></tr>
 </table>>];
-     
+       
 
 "Join_Inner_8" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -129,7 +129,7 @@ digraph {
 <tr><td port="1">ss_store_sk</td></tr>
 <tr><td port="2">t_time_sk</td></tr>
 </table>>];
-     
+       
 
 "Project_1" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -138,21 +138,21 @@ digraph {
 <tr><td port="1">ss_hdemo_sk</td></tr>
 <tr><td port="2">ss_store_sk</td></tr>
 </table>>];
-     
+       
 
 "Project_11" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_11</i></td></tr>
   <tr><td port="0">s_store_sk</td></tr>
 </table>>];
-     
+       
 
 "Project_3" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_3</i></td></tr>
   <tr><td port="0">hd_demo_sk</td></tr>
 </table>>];
-     
+       
 
 "Project_5" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -160,21 +160,21 @@ digraph {
   <tr><td port="0">ss_sold_time_sk</td></tr>
 <tr><td port="1">ss_store_sk</td></tr>
 </table>>];
-     
+       
 
 "Project_7" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_7</i></td></tr>
   <tr><td port="0">t_time_sk</td></tr>
 </table>>];
-     
+       
 
 "Project_9" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_9</i></td></tr>
   <tr><td port="0">ss_store_sk</td></tr>
 </table>>];
-     
+       
 
 "default.household_demographics" [color="black" label=<
 <table>
@@ -185,7 +185,7 @@ digraph {
 <tr><td port="3">hd_dep_count</td></tr>
 <tr><td port="4">hd_vehicle_count</td></tr>
 </table>>];
-     
+       
 
 "default.store" [color="black" label=<
 <table>
@@ -220,7 +220,7 @@ digraph {
 <tr><td port="27">s_gmt_offset</td></tr>
 <tr><td port="28">s_tax_percentage</td></tr>
 </table>>];
-     
+       
 
 "default.store_sales" [color="black" label=<
 <table>
@@ -249,7 +249,7 @@ digraph {
 <tr><td port="21">ss_net_paid_inc_tax</td></tr>
 <tr><td port="22">ss_net_profit</td></tr>
 </table>>];
-     
+       
 
 "default.time_dim" [color="black" label=<
 <table>
@@ -265,14 +265,14 @@ digraph {
 <tr><td port="8">t_sub_shift</td></tr>
 <tr><td port="9">t_meal_time</td></tr>
 </table>>];
-     
+       
 
 "v" [color="black" label=<
 <table>
   <tr><td bgcolor="black" port="nodeName"><i><font color="white">v</font></i></td></tr>
   <tr><td port="0">count(1)</td></tr>
 </table>>];
-     
+       
   "Aggregate_14":0 -> "v":0;
 "Filter_0":1 -> "Project_1":0;
 "Filter_0":5 -> "Project_1":1;
