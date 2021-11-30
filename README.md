@@ -32,7 +32,7 @@ scala> sql("CREATE TEMPORARY VIEW TestView2 AS SELECT t.key, t.value, v.s FROM T
 
 # Generates a Graphviz dot file to represent reference relationships between views
 scala> import org.apache.spark.sql.SQLFlow
-scala> SQLFlow.saveAsSQLFlow(path="/tmp/sqlflow-output")
+scala> SQLFlow.saveAsSQLFlow(outputDirPath="/tmp/sqlflow-output")
 
 $ cd /tmp/sqlflow-output
 $ ls
@@ -52,7 +52,7 @@ If `contracted` is set to `true`, a generated diagram shows nodes for leaf plans
 scala> SQLFlow.saveAsSQLFlow(path="/tmp/sqlflow-contracted-output", contracted = true)
 ```
 
-<img src="resources/graphviz_3.svg" width="350px">
+<img src="resources/graphviz_3.svg" width="450px">
 
 If you are using PySpark, you can run `bin/python` and use `save_data_lineage` to generate a dot file as follows:
 
@@ -83,6 +83,8 @@ a Python decorator `@auto_tracking` is useful to track data lineage automaticall
 ```
 $ ./bin/python
 
+>>> from pyspark.sql import functions as f
+
 >>> @auto_tracking
 ... def transform_alpha(df):
 ...     return df.selectExpr('id % 3 AS key', 'id % 5 AS value')
@@ -100,7 +102,7 @@ $ ./bin/python
 >>> transform_gamma(transform_beta(transform_alpha(spark.range(10))))
 DataFrame[col: bigint]
 
->>> save_data_lineage(output_path='/tmp/sqlflow-output', contracted=True)
+>>> save_data_lineage(output_dir_path='/tmp/sqlflow-output', contracted=True)
 ```
 
 An automatically generated data lineage is as follows:
