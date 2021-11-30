@@ -44,7 +44,6 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
       val df = sql("SELECT k, sum(v) FROM VALUES (1, 2), (3, 4) t(k, v) GROUP BY k")
       df.debugPrintAsSQLFlow()
     }
-    // TODO: Needs to name 't' for `LocalRelation`
     checkOutputString(flowString,
       s"""
          |digraph {
@@ -72,10 +71,10 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
   }
 
   test("SQLFlow.printAsSQLFlow") {
-    withTempView("t1") {
+    withTempView("t") {
       // TODO: If 't1' is changed to 't', the generated graph gets incorrect
       sql(s"""
-           |CREATE OR REPLACE TEMPORARY VIEW t1 AS
+           |CREATE OR REPLACE TEMPORARY VIEW t AS
            |  SELECT k, sum(v) FROM VALUES (1, 2), (3, 4) t(k, v) GROUP BY k
          """.stripMargin)
 
@@ -95,24 +94,24 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |  <tr><td port="1">sum(v)</td></tr>
            |  </table>>];
            |
-           |  "LocalRelation_0" [color="black" label=<
+           |  "t" [color="black" label=<
            |  <table>
-           |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation_0</font></i></td></tr>
-           |    <tr><td port="0">k</td></tr>
-           |  <tr><td port="1">v</td></tr>
-           |  </table>>];
-           |
-           |  "t1" [color="black" label=<
-           |  <table>
-           |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">t1</font></i></td></tr>
+           |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">t</font></i></td></tr>
            |    <tr><td port="0">k</td></tr>
            |  <tr><td port="1">sum(v)</td></tr>
            |  </table>>];
            |
-           |  "Aggregate_1":0 -> "t1":0;
-           |  "Aggregate_1":1 -> "t1":1;
-           |  "LocalRelation_0":0 -> "Aggregate_1":0;
-           |  "LocalRelation_0":1 -> "Aggregate_1":1;
+           |  "t_0" [color="black" label=<
+           |  <table>
+           |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">t_0</font></i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v</td></tr>
+           |  </table>>];
+           |
+           |  "Aggregate_1":0 -> "t":0;
+           |  "Aggregate_1":1 -> "t":1;
+           |  "t_0":0 -> "Aggregate_1":0;
+           |  "t_0":1 -> "Aggregate_1":1;
            |}
          """.stripMargin)
     }
@@ -153,10 +152,10 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
   }
 
   test("SQLFlow.saveAsSQLFlow") {
-    withTempView("t1") {
+    withTempView("t") {
       withTempDir { dirPath =>
         sql(s"""
-             |CREATE OR REPLACE TEMPORARY VIEW t1 AS
+             |CREATE OR REPLACE TEMPORARY VIEW t AS
              |  SELECT k, sum(v) FROM VALUES (1, 2), (3, 4) t(k, v) GROUP BY k
            """.stripMargin)
 
@@ -175,24 +174,24 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
              |  <tr><td port="1">sum(v)</td></tr>
              |  </table>>];
              |
-             |  "LocalRelation_0" [color="black" label=<
+             |  "t" [color="black" label=<
              |  <table>
-             |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation_0</font></i></td></tr>
-             |    <tr><td port="0">k</td></tr>
-             |  <tr><td port="1">v</td></tr>
-             |  </table>>];
-             |
-             |  "t1" [color="black" label=<
-             |  <table>
-             |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">t1</font></i></td></tr>
+             |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">t</font></i></td></tr>
              |    <tr><td port="0">k</td></tr>
              |  <tr><td port="1">sum(v)</td></tr>
              |  </table>>];
              |
-             |  "Aggregate_1":0 -> "t1":0;
-             |  "Aggregate_1":1 -> "t1":1;
-             |  "LocalRelation_0":0 -> "Aggregate_1":0;
-             |  "LocalRelation_0":1 -> "Aggregate_1":1;
+             |  "t_0" [color="black" label=<
+             |  <table>
+             |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">t_0</font></i></td></tr>
+             |    <tr><td port="0">k</td></tr>
+             |  <tr><td port="1">v</td></tr>
+             |  </table>>];
+             |
+             |  "Aggregate_1":0 -> "t":0;
+             |  "Aggregate_1":1 -> "t":1;
+             |  "t_0":0 -> "Aggregate_1":0;
+             |  "t_0":1 -> "Aggregate_1":1;
              |}
            """.stripMargin)
       }
@@ -240,11 +239,11 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
         assert(imgFile.exists())
       }
     }
-    withTempView("t1") {
+    withTempView("t") {
       withTempDir { dirPath =>
         sql(
           s"""
-             |CREATE OR REPLACE TEMPORARY VIEW t1 AS
+             |CREATE OR REPLACE TEMPORARY VIEW t AS
              |  SELECT k, sum(v) FROM VALUES (1, 2), (3, 4) t(k, v) GROUP BY k
            """.stripMargin)
 
@@ -460,13 +459,6 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
              |  <tr><td port="2">v2</td></tr>
              |  </table>>];
              |
-             |  "LocalRelation_0" [color="black" label=<
-             |  <table>
-             |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation_0</font></i></td></tr>
-             |    <tr><td port="0">k</td></tr>
-             |  <tr><td port="1">v</td></tr>
-             |  </table>>];
-             |
              |  "Project_3" [label=<
              |  <table color="lightblue" border="1" cellborder="0" cellspacing="0">
              |    <tr><td bgcolor="lightblue" port="nodeName"><i>Project_3</i></td></tr>
@@ -503,13 +495,18 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
              |  <tr><td port="1">count</td></tr>
              |  </table>>];
              |
+             |  "t_0" [color="black" label=<
+             |  <table>
+             |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">t_0</font></i></td></tr>
+             |    <tr><td port="0">k</td></tr>
+             |  <tr><td port="1">v</td></tr>
+             |  </table>>];
+             |
              |  "Aggregate_1":0 -> "default.t1":0;
              |  "Aggregate_1":1 -> "default.t1":1;
              |  "Aggregate_4":0 -> "t3":0;
              |  "Aggregate_4":1 -> "t3":1;
              |  "Filter_2":1 -> "Project_3":0;
-             |  "LocalRelation_0":0 -> "Aggregate_1":0;
-             |  "LocalRelation_0":1 -> "Aggregate_1":1;
              |  "Project_3":0 -> "Aggregate_4":0;
              |  "Project_5":0 -> "t2":0;
              |  "Project_5":1 -> "t2":1;
@@ -519,6 +516,8 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
              |  "t2":0 -> "Filter_2":0;
              |  "t2":1 -> "Filter_2":1;
              |  "t2":2 -> "Filter_2":2;
+             |  "t_0":0 -> "Aggregate_1":0;
+             |  "t_0":1 -> "Aggregate_1":1;
              |}
            """.stripMargin)
       }
@@ -553,13 +552,6 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |    <tr><td port="0">k</td></tr>
            |  <tr><td port="1">sum</td></tr>
            |  <tr><td port="2">v2</td></tr>
-           |  </table>>];
-           |
-           |  "LocalRelation_0" [color="black" label=<
-           |  <table>
-           |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation_0</font></i></td></tr>
-           |    <tr><td port="0">k</td></tr>
-           |  <tr><td port="1">v</td></tr>
            |  </table>>];
            |
            |  "Project_2" [label=<
@@ -597,11 +589,16 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |    <tr><td port="0">k</td></tr>
            |  </table>>];
            |
+           |  "t_0" [color="black" label=<
+           |  <table>
+           |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">t_0</font></i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v</td></tr>
+           |  </table>>];
+           |
            |  "Aggregate_1":0 -> "default.t1":0;
            |  "Aggregate_1":1 -> "default.t1":1;
            |  "Filter_3":0 -> "Project_4":0;
-           |  "LocalRelation_0":0 -> "Aggregate_1":0;
-           |  "LocalRelation_0":1 -> "Aggregate_1":1;
            |  "Project_2":0 -> "default.t2":0;
            |  "Project_2":1 -> "default.t2":1;
            |  "Project_2":2 -> "default.t2":2;
@@ -611,6 +608,8 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |  "default.t2":0 -> "Filter_3":0;
            |  "default.t2":1 -> "Filter_3":1;
            |  "default.t2":2 -> "Filter_3":2;
+           |  "t_0":0 -> "Aggregate_1":0;
+           |  "t_0":1 -> "Aggregate_1":1;
            |}
          """.stripMargin)
     }
@@ -636,13 +635,6 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |  <tr><td port="1">sum</td></tr>
            |  </table>>];
            |
-           |  "LocalRelation_0" [color="black" label=<
-           |  <table>
-           |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation_0</font></i></td></tr>
-           |    <tr><td port="0">k</td></tr>
-           |  <tr><td port="1">v</td></tr>
-           |  </table>>];
-           |
            |  "default.t" [color="black" label=<
            |  <table>
            |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.t</font></i></td></tr>
@@ -650,10 +642,17 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |  <tr><td port="1">sum</td></tr>
            |  </table>>];
            |
+           |  "t_0" [color="black" label=<
+           |  <table>
+           |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">t_0</font></i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v</td></tr>
+           |  </table>>];
+           |
            |  "Aggregate_1":0 -> "default.t":0;
            |  "Aggregate_1":1 -> "default.t":1;
-           |  "LocalRelation_0":0 -> "Aggregate_1":0;
-           |  "LocalRelation_0":1 -> "Aggregate_1":1;
+           |  "t_0":0 -> "Aggregate_1":0;
+           |  "t_0":1 -> "Aggregate_1":1;
            |}
          """.stripMargin)
     }

@@ -74,38 +74,81 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
 
     // Generate node labels for views if necessary
     (tempViews ++ views).foreach { case (viewName, analyzed) =>
-      nodeMap(viewName) = generateTableNodeString(analyzed, viewName, isCached(viewName))
+      nodeMap(viewName) = generateTableNodeString(analyzed, viewName, isCached(analyzed))
     }
 
-    val tempViewSet = tempViews.map(_._1)
     val subplanToTempViewMap = tempViews.map { case (viewName, analyzed) =>
       (analyzed.semanticHash(), viewName)
     }.toMap
 
+    def skipToReplaceWithTempView(p: LogicalPlan): Boolean = p match {
+      case p if p.isInstanceOf[LeafNode] => true
+      case _: View => true
+      case _ => false
+    }
+
+    def blacklistToReplaceSubplan(p: LogicalPlan): Boolean = p match {
+      case Project(_, sp) if blacklistToReplaceSubplan(sp) => true
+      case SubqueryAlias(_, _: LocalRelation | _: OneRowRelation) => true
+      case _ => false
+    }
+
     val edges = (views ++ tempViews).map { case (viewName, analyzed) =>
-      val optimized = {
-        val plan = analyzed.transformUp {
-          case p if isCached(p) =>
-            CachedNode(p)
-        }.transformDown {
-          case p if subplanToTempViewMap.contains(p.semanticHash()) &&
-              viewName != subplanToTempViewMap(p.semanticHash()) =>
-            val v = subplanToTempViewMap(p.semanticHash())
-            TempViewNode(v, p.output)
+      def replaceWithTempViewNode(p: LogicalPlan): LogicalPlan = p match {
+        case p if skipToReplaceWithTempView(p) => p
 
-          case s @ SubqueryAlias(AliasIdentifier(name, _), v: View) =>
-            if (!v.isTempView) {
-              ViewNode(v.desc.identifier.unquotedString, s.output)
-            } else {
-              TempViewNode(name, s.output)
-            }
-
-          case s @ SubqueryAlias(AliasIdentifier(name, Nil), _)
-              if tempViewSet.contains(name) =>
+        case s @ SubqueryAlias(AliasIdentifier(name, _), v: View) =>
+          if (!v.isTempView) {
+            ViewNode(v.desc.identifier.unquotedString, s.output)
+          } else {
             TempViewNode(name, s.output)
-        }
-        session.sessionState.optimizer.execute(plan)
+          }
+
+        case s @ SubqueryAlias(AliasIdentifier(name, Nil),
+            Project(_, _: LocalRelation | _: OneRowRelation)) =>
+          TempViewNode(getNodeNameWithId(name), s.output)
+
+        case s @ SubqueryAlias(AliasIdentifier(name, Nil), _: LocalRelation) =>
+          TempViewNode(getNodeNameWithId(name), s.output)
+
+        case p if subplanToTempViewMap.contains(p.semanticHash()) &&
+            viewName != subplanToTempViewMap(p.semanticHash()) &&
+            !blacklistToReplaceSubplan(p) =>
+          val v = subplanToTempViewMap(p.semanticHash())
+          TempViewNode(v, p.output)
+
+        case Filter(cond, child) if SubqueryExpression.hasSubquery(cond) =>
+          val newCond = cond.transform {
+            case sq @ ScalarSubquery(sp, _, _, _) =>
+              sq.copy(plan = sp.transformDown {
+                case p => replaceWithTempViewNode(p)
+              })
+
+            case sq @ Exists(sp, _, _, _) =>
+              sq.copy(plan = sp.transformDown {
+                case p => replaceWithTempViewNode(p)
+              })
+
+            case sq @ InSubquery(_, q @ ListQuery(sp, _, _, _, _)) =>
+              sq.copy(query = q.copy(plan = sp.transformDown {
+                case p => replaceWithTempViewNode(p)
+              }))
+
+            case sq @ LateralSubquery(sp, _, _, _) =>
+              sq.copy(plan = sp.transformDown {
+                case p => replaceWithTempViewNode(p)
+              })
+          }
+          Filter(newCond, child)
+
+        case p => p // Do nothing
       }
+
+      val optimized = session.sessionState.optimizer.execute(analyzed.transformUp {
+        case p if isCached(p) => CachedNode(p)
+      }.transformDown {
+        case p => replaceWithTempViewNode(p)
+      })
 
       if (!optimized.isInstanceOf[ViewNode] || !optimized.isInstanceOf[TempViewNode]) {
         collectEdges(viewName, optimized, nodeMap)
@@ -126,14 +169,8 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     session.sharedState.cacheManager.lookupCachedData(plan).isDefined
   }
 
-  private def isCached(name: String): Boolean = {
-    val session = SparkSession.getActiveSession.getOrElse {
-      throw new IllegalStateException("Active SparkSession not found")
-    }
-    session.sessionState.catalog.getTempView(name).exists { p =>
-      val analyzed = session.sessionState.analyzer.execute(p)
-      session.sharedState.cacheManager.lookupCachedData(analyzed).isDefined
-    }
+  private def getNodeNameWithId(name: String): String = {
+    s"${name}_${nextNodeId.getAndIncrement()}"
   }
 
   protected def getNodeName(p: LogicalPlan) = p match {
@@ -141,8 +178,8 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     case TempViewNode(name, _) => name
     case LogicalRelation(_, _, Some(table), false) => table.qualifiedName
     case HiveTableRelation(table, _, _, _, _) => table.qualifiedName
-    case j: Join => s"${p.nodeName}_${j.joinType}_${nextNodeId.getAndIncrement()}"
-    case _ => s"${p.nodeName}_${nextNodeId.getAndIncrement()}"
+    case j: Join => getNodeNameWithId(s"${p.nodeName}_${j.joinType}")
+    case _ => getNodeNameWithId(p.nodeName)
   }
 
   private def normalizeForHtml(str: String) = {
@@ -169,36 +206,44 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
 
   private def generateTableNodeString(
       p: LogicalPlan, nodeName: String, isCached: Boolean = false) = {
-    val nodeColor = if (isCached) cachedNodeColor else "black"
-    val outputAttrs = p.output.zipWithIndex.map { case (attr, i) =>
-      s"""<tr><td port="$i">${normalizeForHtml(attr.name)}</td></tr>"""
+    if (p.output.nonEmpty) {
+      val nodeColor = if (isCached) cachedNodeColor else "black"
+      val outputAttrs = p.output.zipWithIndex.map { case (attr, i) =>
+        s"""<tr><td port="$i">${normalizeForHtml(attr.name)}</td></tr>"""
+      }
+      // scalastyle:off line.size.limit
+      s"""
+         |"$nodeName" [color="$nodeColor" label=<
+         |<table>
+         |  <tr><td bgcolor="$nodeColor" port="nodeName"><i><font color="white">$nodeName</font></i></td></tr>
+         |  ${outputAttrs.mkString("\n")}
+         |</table>>];
+       """.stripMargin
+      // scalastyle:on line.size.limit
+    } else {
+      ""
     }
-    // scalastyle:off line.size.limit
-    s"""
-       |"$nodeName" [color="$nodeColor" label=<
-       |<table>
-       |  <tr><td bgcolor="$nodeColor" port="nodeName"><i><font color="white">$nodeName</font></i></td></tr>
-       |  ${outputAttrs.mkString("\n")}
-       |</table>>];
-     """.stripMargin
-    // scalastyle:on line.size.limit
   }
 
   private def generatePlanNodeString(
       p: LogicalPlan, nodeName: String, isCached: Boolean = false) = {
-    val nodeColor = if (isCached) cachedNodeColor else "lightgray"
-    val outputAttrs = p.output.zipWithIndex.map { case (attr, i) =>
-      s"""<tr><td port="$i">${normalizeForHtml(attr.name)}</td></tr>"""
+    if (p.output.nonEmpty) {
+      val nodeColor = if (isCached) cachedNodeColor else "lightgray"
+      val outputAttrs = p.output.zipWithIndex.map { case (attr, i) =>
+        s"""<tr><td port="$i">${normalizeForHtml(attr.name)}</td></tr>"""
+      }
+      // scalastyle:off line.size.limit
+      s"""
+         |"$nodeName" [label=<
+         |<table color="$nodeColor" border="1" cellborder="0" cellspacing="0">
+         |  <tr><td bgcolor="$nodeColor" port="nodeName"><i>$nodeName</i></td></tr>
+         |  ${outputAttrs.mkString("\n")}
+         |</table>>];
+       """.stripMargin
+      // scalastyle:on line.size.limit
+    } else {
+      ""
     }
-    // scalastyle:off line.size.limit
-    s"""
-       |"$nodeName" [label=<
-       |<table color="$nodeColor" border="1" cellborder="0" cellspacing="0">
-       |  <tr><td bgcolor="$nodeColor" port="nodeName"><i>$nodeName</i></td></tr>
-       |  ${outputAttrs.mkString("\n")}
-       |</table>>];
-     """.stripMargin
-    // scalastyle:on line.size.limit
   }
 
   protected def generateNodeString(p: LogicalPlan, nodeName: String, isCached: Boolean): String = {
@@ -585,7 +630,7 @@ case class SQLContractedFlow() extends BaseSQLFlow {
           if (!SQLFlow.isTesting) {
             logWarning(warningMsg)
           } else {
-            assert(false, warningMsg)
+            throw new IllegalStateException(warningMsg)
           }
         }
     }
