@@ -33,9 +33,12 @@ import org.apache.spark.sql.catalyst.expressions._
 import org.apache.spark.sql.catalyst.plans.{ExistenceJoin, LeftExistence}
 import org.apache.spark.sql.catalyst.plans.logical._
 import org.apache.spark.sql.catalyst.util._
+import org.apache.spark.sql.execution.columnar.InMemoryRelation
 import org.apache.spark.sql.execution.datasources.LogicalRelation
 
 abstract class BaseSQLFlow extends PredicateHelper with Logging {
+
+  private val cachedNodeColor = "lightblue"
 
   private val nextNodeId = new AtomicInteger(0)
 
@@ -71,9 +74,7 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
 
     // Generate node labels for views if necessary
     (tempViews ++ views).foreach { case (viewName, analyzed) =>
-      nodeMap(viewName) = generateNodeString(analyzed, viewName, {
-        if (isCached(analyzed)) "lightblue" else "lightyellow"
-      })
+      nodeMap(viewName) = generateTableNodeString(analyzed, viewName, isCached(viewName))
     }
 
     val tempViewSet = tempViews.map(_._1)
@@ -144,13 +145,6 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     case _ => s"${p.nodeName}_${nextNodeId.getAndIncrement()}"
   }
 
-  private def getNodeColor(plan: LogicalPlan): String = plan match {
-    case TempViewNode(name, _) if isCached(name) => "lightblue"
-    case _: View | _: TempViewNode => "lightyellow"
-    case _: LeafNode => "lightpink"
-    case _ => "lightgray"
-  }
-
   private def normalizeForHtml(str: String) = {
     str.replaceAll("&", "&amp;")
       .replaceAll("<", "&lt;")
@@ -161,9 +155,8 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     if (nodes.nonEmpty) {
       s"""
          |digraph {
-         |  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
-         |  node [shape=plain]
-         |  rankdir=LR;
+         |  graph [pad="0.5" nodesep="0.5" ranksep="1" fontname="Helvetica" rankdir=LR];
+         |  node [shape=plaintext]
          |
          |  ${nodes.sorted.mkString("\n")}
          |  ${edges.sorted.mkString("\n")}
@@ -174,19 +167,52 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     }
   }
 
-  protected def generateNodeString(p: LogicalPlan, nodeName: String, nodeColor: String = "") = {
+  private def generateTableNodeString(
+      p: LogicalPlan, nodeName: String, isCached: Boolean = false) = {
+    val nodeColor = if (isCached) cachedNodeColor else "black"
+    val outputAttrs = p.output.zipWithIndex.map { case (attr, i) =>
+      s"""<tr><td port="$i">${normalizeForHtml(attr.name)}</td></tr>"""
+    }
+    // scalastyle:off line.size.limit
+    s"""
+       |"$nodeName" [color="$nodeColor" label=<
+       |<table>
+       |  <tr><td bgcolor="$nodeColor" port="nodeName"><i><font color="white">$nodeName</font></i></td></tr>
+       |  ${outputAttrs.mkString("\n")}
+       |</table>>];
+     """.stripMargin
+    // scalastyle:on line.size.limit
+  }
+
+  private def generatePlanNodeString(
+      p: LogicalPlan, nodeName: String, isCached: Boolean = false) = {
+    val nodeColor = if (isCached) cachedNodeColor else "lightgray"
     val outputAttrs = p.output.zipWithIndex.map { case (attr, i) =>
       s"""<tr><td port="$i">${normalizeForHtml(attr.name)}</td></tr>"""
     }
     // scalastyle:off line.size.limit
     s"""
        |"$nodeName" [label=<
-       |<table border="1" cellborder="0" cellspacing="0">
-       |  <tr><td bgcolor="${if (nodeColor.isEmpty) getNodeColor(p) else nodeColor}" port="nodeName"><i>$nodeName</i></td></tr>
+       |<table color="$nodeColor" border="1" cellborder="0" cellspacing="0">
+       |  <tr><td bgcolor="$nodeColor" port="nodeName"><i>$nodeName</i></td></tr>
        |  ${outputAttrs.mkString("\n")}
        |</table>>];
      """.stripMargin
     // scalastyle:on line.size.limit
+  }
+
+  protected def generateNodeString(p: LogicalPlan, nodeName: String, isCached: Boolean): String = {
+    p match {
+      case _: View | _: ViewNode |_: TempViewNode | _: LocalRelation | _: LogicalRelation |
+           _: InMemoryRelation | _: HiveTableRelation =>
+        generateTableNodeString(p, nodeName, isCached)
+      case _ =>
+        generatePlanNodeString(p, nodeName, isCached)
+    }
+  }
+
+  protected def generateNodeString(p: LogicalPlan, nodeName: String): String = {
+    generateNodeString(p, nodeName, isCached(p))
   }
 }
 
@@ -390,8 +416,7 @@ case class SQLFlow() extends BaseSQLFlow {
     val nodeName = getNodeName(plan)
     if (plan.output.nonEmpty) {
       // Generate a node label for a plan if necessary
-      val nodeColor = if (cached) "lightblue" else ""
-      nodeMap.getOrElseUpdate(nodeName, generateNodeString(plan, nodeName, nodeColor))
+      nodeMap.getOrElseUpdate(nodeName, generateNodeString(plan, nodeName, cached))
     }
     nodeName
   }

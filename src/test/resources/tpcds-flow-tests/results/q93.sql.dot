@@ -2,13 +2,12 @@
 
 
 digraph {
-  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
-  node [shape=plain]
-  rankdir=LR;
+  graph [pad="0.5" nodesep="0.5" ranksep="1" fontname="Helvetica" rankdir=LR];
+  node [shape=plaintext]
 
   
 "Aggregate_9" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_9</i></td></tr>
   <tr><td port="0">ss_customer_sk</td></tr>
 <tr><td port="1">sumsales</td></tr>
@@ -16,7 +15,7 @@ digraph {
      
 
 "Filter_1" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_1</i></td></tr>
   <tr><td port="0">sr_returned_date_sk</td></tr>
 <tr><td port="1">sr_return_time_sk</td></tr>
@@ -42,7 +41,7 @@ digraph {
      
 
 "Filter_5" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_5</i></td></tr>
   <tr><td port="0">r_reason_sk</td></tr>
 <tr><td port="1">r_reason_id</td></tr>
@@ -51,7 +50,7 @@ digraph {
      
 
 "GlobalLimit_12" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>GlobalLimit_12</i></td></tr>
   <tr><td port="0">ss_customer_sk</td></tr>
 <tr><td port="1">sumsales</td></tr>
@@ -59,7 +58,7 @@ digraph {
      
 
 "Join_Inner_3" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_3</i></td></tr>
   <tr><td port="0">ss_item_sk</td></tr>
 <tr><td port="1">ss_customer_sk</td></tr>
@@ -74,7 +73,7 @@ digraph {
      
 
 "Join_Inner_7" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_7</i></td></tr>
   <tr><td port="0">ss_customer_sk</td></tr>
 <tr><td port="1">ss_quantity</td></tr>
@@ -86,7 +85,7 @@ digraph {
      
 
 "LocalLimit_11" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>LocalLimit_11</i></td></tr>
   <tr><td port="0">ss_customer_sk</td></tr>
 <tr><td port="1">sumsales</td></tr>
@@ -94,7 +93,7 @@ digraph {
      
 
 "Project_0" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_0</i></td></tr>
   <tr><td port="0">ss_item_sk</td></tr>
 <tr><td port="1">ss_customer_sk</td></tr>
@@ -105,7 +104,7 @@ digraph {
      
 
 "Project_2" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_2</i></td></tr>
   <tr><td port="0">sr_item_sk</td></tr>
 <tr><td port="1">sr_reason_sk</td></tr>
@@ -115,7 +114,7 @@ digraph {
      
 
 "Project_4" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_4</i></td></tr>
   <tr><td port="0">ss_customer_sk</td></tr>
 <tr><td port="1">ss_quantity</td></tr>
@@ -126,14 +125,14 @@ digraph {
      
 
 "Project_6" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_6</i></td></tr>
   <tr><td port="0">r_reason_sk</td></tr>
 </table>>];
      
 
 "Project_8" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_8</i></td></tr>
   <tr><td port="0">ss_customer_sk</td></tr>
 <tr><td port="1">act_sales</td></tr>
@@ -141,25 +140,25 @@ digraph {
      
 
 "Sort_10" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Sort_10</i></td></tr>
   <tr><td port="0">ss_customer_sk</td></tr>
 <tr><td port="1">sumsales</td></tr>
 </table>>];
      
 
-"default.reason" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.reason</i></td></tr>
+"default.reason" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.reason</font></i></td></tr>
   <tr><td port="0">r_reason_sk</td></tr>
 <tr><td port="1">r_reason_id</td></tr>
 <tr><td port="2">r_reason_desc</td></tr>
 </table>>];
      
 
-"default.store_returns" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.store_returns</i></td></tr>
+"default.store_returns" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.store_returns</font></i></td></tr>
   <tr><td port="0">sr_returned_date_sk</td></tr>
 <tr><td port="1">sr_return_time_sk</td></tr>
 <tr><td port="2">sr_item_sk</td></tr>
@@ -183,9 +182,9 @@ digraph {
 </table>>];
      
 
-"default.store_sales" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.store_sales</i></td></tr>
+"default.store_sales" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.store_sales</font></i></td></tr>
   <tr><td port="0">ss_sold_date_sk</td></tr>
 <tr><td port="1">ss_sold_time_sk</td></tr>
 <tr><td port="2">ss_item_sk</td></tr>
@@ -212,9 +211,9 @@ digraph {
 </table>>];
      
 
-"v" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow" port="nodeName"><i>v</i></td></tr>
+"v" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">v</font></i></td></tr>
   <tr><td port="0">ss_customer_sk</td></tr>
 <tr><td port="1">sumsales</td></tr>
 </table>>];

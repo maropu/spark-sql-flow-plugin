@@ -2,23 +2,22 @@
 
 
 digraph {
-  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
-  node [shape=plain]
-  rankdir=LR;
+  graph [pad="0.5" nodesep="0.5" ranksep="1" fontname="Helvetica" rankdir=LR];
+  node [shape=plaintext]
 
   
-"default.reason" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.reason</i></td></tr>
+"default.reason" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.reason</font></i></td></tr>
   <tr><td port="0">r_reason_sk</td></tr>
 <tr><td port="1">r_reason_id</td></tr>
 <tr><td port="2">r_reason_desc</td></tr>
 </table>>];
      
 
-"default.store_returns" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.store_returns</i></td></tr>
+"default.store_returns" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.store_returns</font></i></td></tr>
   <tr><td port="0">sr_returned_date_sk</td></tr>
 <tr><td port="1">sr_return_time_sk</td></tr>
 <tr><td port="2">sr_item_sk</td></tr>
@@ -42,9 +41,9 @@ digraph {
 </table>>];
      
 
-"default.store_sales" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.store_sales</i></td></tr>
+"default.store_sales" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.store_sales</font></i></td></tr>
   <tr><td port="0">ss_sold_date_sk</td></tr>
 <tr><td port="1">ss_sold_time_sk</td></tr>
 <tr><td port="2">ss_item_sk</td></tr>
@@ -71,9 +70,9 @@ digraph {
 </table>>];
      
 
-"v" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow" port="nodeName"><i>v</i></td></tr>
+"v" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">v</font></i></td></tr>
   <tr><td port="0">ss_customer_sk</td></tr>
 <tr><td port="1">sumsales</td></tr>
 </table>>];

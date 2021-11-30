@@ -2,14 +2,13 @@
 
 
 digraph {
-  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
-  node [shape=plain]
-  rankdir=LR;
+  graph [pad="0.5" nodesep="0.5" ranksep="1" fontname="Helvetica" rankdir=LR];
+  node [shape=plaintext]
 
   
-"default.date_dim" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.date_dim</i></td></tr>
+"default.date_dim" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.date_dim</font></i></td></tr>
   <tr><td port="0">d_date_sk</td></tr>
 <tr><td port="1">d_date_id</td></tr>
 <tr><td port="2">d_date</td></tr>
@@ -41,9 +40,9 @@ digraph {
 </table>>];
      
 
-"default.inventory" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.inventory</i></td></tr>
+"default.inventory" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.inventory</font></i></td></tr>
   <tr><td port="0">inv_date_sk</td></tr>
 <tr><td port="1">inv_item_sk</td></tr>
 <tr><td port="2">inv_warehouse_sk</td></tr>
@@ -51,9 +50,9 @@ digraph {
 </table>>];
      
 
-"default.item" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.item</i></td></tr>
+"default.item" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.item</font></i></td></tr>
   <tr><td port="0">i_item_sk</td></tr>
 <tr><td port="1">i_item_id</td></tr>
 <tr><td port="2">i_rec_start_date</td></tr>
@@ -79,9 +78,9 @@ digraph {
 </table>>];
      
 
-"default.warehouse" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.warehouse</i></td></tr>
+"default.warehouse" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.warehouse</font></i></td></tr>
   <tr><td port="0">w_warehouse_sk</td></tr>
 <tr><td port="1">w_warehouse_id</td></tr>
 <tr><td port="2">w_warehouse_name</td></tr>
@@ -99,9 +98,9 @@ digraph {
 </table>>];
      
 
-"v" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow" port="nodeName"><i>v</i></td></tr>
+"v" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">v</font></i></td></tr>
   <tr><td port="0">w_warehouse_sk</td></tr>
 <tr><td port="1">i_item_sk</td></tr>
 <tr><td port="2">d_moy</td></tr>

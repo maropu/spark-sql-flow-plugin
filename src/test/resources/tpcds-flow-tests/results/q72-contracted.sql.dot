@@ -2,14 +2,13 @@
 
 
 digraph {
-  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
-  node [shape=plain]
-  rankdir=LR;
+  graph [pad="0.5" nodesep="0.5" ranksep="1" fontname="Helvetica" rankdir=LR];
+  node [shape=plaintext]
 
   
-"default.catalog_returns" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.catalog_returns</i></td></tr>
+"default.catalog_returns" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.catalog_returns</font></i></td></tr>
   <tr><td port="0">cr_returned_date_sk</td></tr>
 <tr><td port="1">cr_returned_time_sk</td></tr>
 <tr><td port="2">cr_item_sk</td></tr>
@@ -40,9 +39,9 @@ digraph {
 </table>>];
      
 
-"default.catalog_sales" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.catalog_sales</i></td></tr>
+"default.catalog_sales" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.catalog_sales</font></i></td></tr>
   <tr><td port="0">cs_sold_date_sk</td></tr>
 <tr><td port="1">cs_sold_time_sk</td></tr>
 <tr><td port="2">cs_ship_date_sk</td></tr>
@@ -80,9 +79,9 @@ digraph {
 </table>>];
      
 
-"default.customer_demographics" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.customer_demographics</i></td></tr>
+"default.customer_demographics" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.customer_demographics</font></i></td></tr>
   <tr><td port="0">cd_demo_sk</td></tr>
 <tr><td port="1">cd_gender</td></tr>
 <tr><td port="2">cd_marital_status</td></tr>
@@ -95,9 +94,9 @@ digraph {
 </table>>];
      
 
-"default.date_dim" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.date_dim</i></td></tr>
+"default.date_dim" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.date_dim</font></i></td></tr>
   <tr><td port="0">d_date_sk</td></tr>
 <tr><td port="1">d_date_id</td></tr>
 <tr><td port="2">d_date</td></tr>
@@ -129,9 +128,9 @@ digraph {
 </table>>];
      
 
-"default.household_demographics" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.household_demographics</i></td></tr>
+"default.household_demographics" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.household_demographics</font></i></td></tr>
   <tr><td port="0">hd_demo_sk</td></tr>
 <tr><td port="1">hd_income_band_sk</td></tr>
 <tr><td port="2">hd_buy_potential</td></tr>
@@ -140,9 +139,9 @@ digraph {
 </table>>];
      
 
-"default.inventory" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.inventory</i></td></tr>
+"default.inventory" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.inventory</font></i></td></tr>
   <tr><td port="0">inv_date_sk</td></tr>
 <tr><td port="1">inv_item_sk</td></tr>
 <tr><td port="2">inv_warehouse_sk</td></tr>
@@ -150,9 +149,9 @@ digraph {
 </table>>];
      
 
-"default.item" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.item</i></td></tr>
+"default.item" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.item</font></i></td></tr>
   <tr><td port="0">i_item_sk</td></tr>
 <tr><td port="1">i_item_id</td></tr>
 <tr><td port="2">i_rec_start_date</td></tr>
@@ -178,9 +177,9 @@ digraph {
 </table>>];
      
 
-"default.promotion" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.promotion</i></td></tr>
+"default.promotion" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.promotion</font></i></td></tr>
   <tr><td port="0">p_promo_sk</td></tr>
 <tr><td port="1">p_promo_id</td></tr>
 <tr><td port="2">p_start_date_sk</td></tr>
@@ -203,9 +202,9 @@ digraph {
 </table>>];
      
 
-"default.warehouse" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.warehouse</i></td></tr>
+"default.warehouse" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.warehouse</font></i></td></tr>
   <tr><td port="0">w_warehouse_sk</td></tr>
 <tr><td port="1">w_warehouse_id</td></tr>
 <tr><td port="2">w_warehouse_name</td></tr>
@@ -223,9 +222,9 @@ digraph {
 </table>>];
      
 
-"v" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow" port="nodeName"><i>v</i></td></tr>
+"v" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">v</font></i></td></tr>
   <tr><td port="0">i_item_desc</td></tr>
 <tr><td port="1">w_warehouse_name</td></tr>
 <tr><td port="2">d_week_seq</td></tr>

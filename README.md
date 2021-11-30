@@ -110,7 +110,6 @@ An automatically generated data lineage is as follows:
 ## TODO
 
  * Supports global temp views
- * Refines Graphviz params to improve a generated image, e.g., node colors and size
 
 ## Bug Reports
 

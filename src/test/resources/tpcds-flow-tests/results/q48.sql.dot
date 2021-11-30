@@ -2,20 +2,19 @@
 
 
 digraph {
-  graph [pad="0.5", nodesep="0.5", ranksep="2", fontname="Helvetica"];
-  node [shape=plain]
-  rankdir=LR;
+  graph [pad="0.5" nodesep="0.5" ranksep="1" fontname="Helvetica" rankdir=LR];
+  node [shape=plaintext]
 
   
 "Aggregate_18" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_18</i></td></tr>
   <tr><td port="0">sum(ss_quantity)</td></tr>
 </table>>];
      
 
 "Filter_0" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_0</i></td></tr>
   <tr><td port="0">ss_sold_date_sk</td></tr>
 <tr><td port="1">ss_sold_time_sk</td></tr>
@@ -44,7 +43,7 @@ digraph {
      
 
 "Filter_10" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_10</i></td></tr>
   <tr><td port="0">ca_address_sk</td></tr>
 <tr><td port="1">ca_address_id</td></tr>
@@ -63,7 +62,7 @@ digraph {
      
 
 "Filter_14" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_14</i></td></tr>
   <tr><td port="0">d_date_sk</td></tr>
 <tr><td port="1">d_date_id</td></tr>
@@ -97,7 +96,7 @@ digraph {
      
 
 "Filter_2" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_2</i></td></tr>
   <tr><td port="0">s_store_sk</td></tr>
 <tr><td port="1">s_store_id</td></tr>
@@ -132,7 +131,7 @@ digraph {
      
 
 "Filter_6" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_6</i></td></tr>
   <tr><td port="0">cd_demo_sk</td></tr>
 <tr><td port="1">cd_gender</td></tr>
@@ -147,7 +146,7 @@ digraph {
      
 
 "Join_Inner_12" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_12</i></td></tr>
   <tr><td port="0">ss_sold_date_sk</td></tr>
 <tr><td port="1">ss_addr_sk</td></tr>
@@ -159,7 +158,7 @@ digraph {
      
 
 "Join_Inner_16" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_16</i></td></tr>
   <tr><td port="0">ss_sold_date_sk</td></tr>
 <tr><td port="1">ss_quantity</td></tr>
@@ -168,7 +167,7 @@ digraph {
      
 
 "Join_Inner_4" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_4</i></td></tr>
   <tr><td port="0">ss_sold_date_sk</td></tr>
 <tr><td port="1">ss_cdemo_sk</td></tr>
@@ -182,7 +181,7 @@ digraph {
      
 
 "Join_Inner_8" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_8</i></td></tr>
   <tr><td port="0">ss_sold_date_sk</td></tr>
 <tr><td port="1">ss_cdemo_sk</td></tr>
@@ -197,7 +196,7 @@ digraph {
      
 
 "Project_1" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_1</i></td></tr>
   <tr><td port="0">ss_sold_date_sk</td></tr>
 <tr><td port="1">ss_cdemo_sk</td></tr>
@@ -210,7 +209,7 @@ digraph {
      
 
 "Project_11" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_11</i></td></tr>
   <tr><td port="0">ca_address_sk</td></tr>
 <tr><td port="1">ca_state</td></tr>
@@ -218,7 +217,7 @@ digraph {
      
 
 "Project_13" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_13</i></td></tr>
   <tr><td port="0">ss_sold_date_sk</td></tr>
 <tr><td port="1">ss_quantity</td></tr>
@@ -226,28 +225,28 @@ digraph {
      
 
 "Project_15" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_15</i></td></tr>
   <tr><td port="0">d_date_sk</td></tr>
 </table>>];
      
 
 "Project_17" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_17</i></td></tr>
   <tr><td port="0">ss_quantity</td></tr>
 </table>>];
      
 
 "Project_3" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_3</i></td></tr>
   <tr><td port="0">s_store_sk</td></tr>
 </table>>];
      
 
 "Project_5" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_5</i></td></tr>
   <tr><td port="0">ss_sold_date_sk</td></tr>
 <tr><td port="1">ss_cdemo_sk</td></tr>
@@ -259,7 +258,7 @@ digraph {
      
 
 "Project_7" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_7</i></td></tr>
   <tr><td port="0">cd_demo_sk</td></tr>
 <tr><td port="1">cd_marital_status</td></tr>
@@ -268,7 +267,7 @@ digraph {
      
 
 "Project_9" [label=<
-<table border="1" cellborder="0" cellspacing="0">
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_9</i></td></tr>
   <tr><td port="0">ss_sold_date_sk</td></tr>
 <tr><td port="1">ss_addr_sk</td></tr>
@@ -277,9 +276,9 @@ digraph {
 </table>>];
      
 
-"default.customer_address" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.customer_address</i></td></tr>
+"default.customer_address" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.customer_address</font></i></td></tr>
   <tr><td port="0">ca_address_sk</td></tr>
 <tr><td port="1">ca_address_id</td></tr>
 <tr><td port="2">ca_street_number</td></tr>
@@ -296,9 +295,9 @@ digraph {
 </table>>];
      
 
-"default.customer_demographics" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.customer_demographics</i></td></tr>
+"default.customer_demographics" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.customer_demographics</font></i></td></tr>
   <tr><td port="0">cd_demo_sk</td></tr>
 <tr><td port="1">cd_gender</td></tr>
 <tr><td port="2">cd_marital_status</td></tr>
@@ -311,9 +310,9 @@ digraph {
 </table>>];
      
 
-"default.date_dim" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.date_dim</i></td></tr>
+"default.date_dim" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.date_dim</font></i></td></tr>
   <tr><td port="0">d_date_sk</td></tr>
 <tr><td port="1">d_date_id</td></tr>
 <tr><td port="2">d_date</td></tr>
@@ -345,9 +344,9 @@ digraph {
 </table>>];
      
 
-"default.store" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.store</i></td></tr>
+"default.store" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.store</font></i></td></tr>
   <tr><td port="0">s_store_sk</td></tr>
 <tr><td port="1">s_store_id</td></tr>
 <tr><td port="2">s_rec_start_date</td></tr>
@@ -380,9 +379,9 @@ digraph {
 </table>>];
      
 
-"default.store_sales" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightpink" port="nodeName"><i>default.store_sales</i></td></tr>
+"default.store_sales" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.store_sales</font></i></td></tr>
   <tr><td port="0">ss_sold_date_sk</td></tr>
 <tr><td port="1">ss_sold_time_sk</td></tr>
 <tr><td port="2">ss_item_sk</td></tr>
@@ -409,9 +408,9 @@ digraph {
 </table>>];
      
 
-"v" [label=<
-<table border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightyellow" port="nodeName"><i>v</i></td></tr>
+"v" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">v</font></i></td></tr>
   <tr><td port="0">sum(ss_quantity)</td></tr>
 </table>>];
      
