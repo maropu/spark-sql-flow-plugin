@@ -9,62 +9,38 @@ digraph {
 "LocalRelation_0" [color="black" label=<
 <table>
   <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation_0</font></i></td></tr>
-  <tr><td port="0">a2</td></tr>
-<tr><td port="1">b2</td></tr>
-</table>>];
-     
-
-"LocalRelation_1" [color="black" label=<
-<table>
-  <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation_1</font></i></td></tr>
   <tr><td port="0">col1</td></tr>
 <tr><td port="1">col2</td></tr>
 </table>>];
-     
-
-"LocalRelation_2" [color="black" label=<
-<table>
-  <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation_2</font></i></td></tr>
-  <tr><td port="0">a2</td></tr>
-<tr><td port="1">b2</td></tr>
-</table>>];
-     
-
-"LocalRelation_3" [color="black" label=<
-<table>
-  <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation_3</font></i></td></tr>
-  <tr><td port="0">a2</td></tr>
-<tr><td port="1">b2</td></tr>
-</table>>];
-     
+       
 
 "struct_tab" [color="black" label=<
 <table>
   <tr><td bgcolor="black" port="nodeName"><i><font color="white">struct_tab</font></i></td></tr>
   <tr><td port="0">record</td></tr>
 </table>>];
-     
+       
 
 "t1" [color="black" label=<
 <table>
   <tr><td bgcolor="black" port="nodeName"><i><font color="white">t1</font></i></td></tr>
   <tr><td port="0">1</td></tr>
 </table>>];
-     
+       
 
 "t2" [color="black" label=<
 <table>
   <tr><td bgcolor="black" port="nodeName"><i><font color="white">t2</font></i></td></tr>
   <tr><td port="0">count(1)</td></tr>
 </table>>];
-     
+       
 
 "t3" [color="black" label=<
 <table>
   <tr><td bgcolor="black" port="nodeName"><i><font color="white">t3</font></i></td></tr>
   <tr><td port="0">count(1)</td></tr>
 </table>>];
-     
+       
 
 "tab_a" [color="black" label=<
 <table>
@@ -72,7 +48,15 @@ digraph {
   <tr><td port="0">a1</td></tr>
 <tr><td port="1">b1</td></tr>
 </table>>];
-     
+       
+
+"tab_a_2" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">tab_a_2</font></i></td></tr>
+  <tr><td port="0">a1</td></tr>
+<tr><td port="1">b1</td></tr>
+</table>>];
+       
 
 "tab_b" [color="black" label=<
 <table>
@@ -80,20 +64,30 @@ digraph {
   <tr><td port="0">a2</td></tr>
 <tr><td port="1">b2</td></tr>
 </table>>];
-     
-  "LocalRelation_0":0 -> "t1":nodeName
-"LocalRelation_0":1 -> "t1":nodeName
-"LocalRelation_1":0 -> "struct_tab":0
-"LocalRelation_1":1 -> "struct_tab":0
-"LocalRelation_2":0 -> "t3":nodeName
-"LocalRelation_2":1 -> "t3":nodeName
-"LocalRelation_3":0 -> "t2":nodeName
-"LocalRelation_3":1 -> "t2":nodeName
+       
+
+"tab_b_1" [color="black" label=<
+<table>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">tab_b_1</font></i></td></tr>
+  <tr><td port="0">a2</td></tr>
+<tr><td port="1">b2</td></tr>
+</table>>];
+       
+  "LocalRelation_0":0 -> "struct_tab":0
+"LocalRelation_0":1 -> "struct_tab":0
 "struct_tab":0 -> "t2":nodeName
 "struct_tab":0 -> "t3":nodeName
 "tab_a":0 -> "t1":nodeName
-"tab_a":0 -> "tab_b":0
 "tab_a":1 -> "t1":nodeName
-"tab_a":1 -> "tab_b":1
+"tab_a_2":0 -> "tab_a":0
+"tab_a_2":1 -> "tab_a":1
+"tab_b":0 -> "t1":nodeName
+"tab_b":0 -> "t2":nodeName
+"tab_b":0 -> "t3":nodeName
+"tab_b":1 -> "t1":nodeName
+"tab_b":1 -> "t2":nodeName
+"tab_b":1 -> "t3":nodeName
+"tab_b_1":0 -> "tab_b":0
+"tab_b_1":1 -> "tab_b":1
 }
        
