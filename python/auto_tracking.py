@@ -67,10 +67,8 @@ def auto_tracking(f):  # type: ignore
 
 def save_data_lineage(output_dir_path: str, filename_prefix: str = "sqlflow", format: str = "svg",
                       contracted: bool = False, overwrite: bool = False) -> None:
-    if overwrite:
-        shutil.rmtree(output_dir_path, ignore_errors=True)
     try:
         jvm = SparkSession.builder.getOrCreate().sparkContext._active_spark_context._jvm  # type: ignore
-        jvm.SQLFlowApi.saveAsSQLFlow(output_dir_path, filename_prefix, format, contracted)
+        jvm.SQLFlowApi.saveAsSQLFlow(output_dir_path, filename_prefix, format, contracted, overwrite)
     except:
         _logger.warning(f'Failed to save data lineage in {output_dir_path}')

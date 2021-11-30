@@ -25,6 +25,8 @@ import scala.collection.mutable
 import scala.sys.process.{Process, ProcessLogger}
 import scala.util.Try
 
+import org.apache.commons.io.FileUtils;
+
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql.catalyst.AliasIdentifier
 import org.apache.spark.sql.catalyst.analysis.NoSuchTableException
@@ -754,9 +756,10 @@ case class SQLFlowHolder[T] private[sql](private val ds: Dataset[T]) {
   def saveAsSQLFlow(
       outputDirPath: String,
       filenamePrefix: String = "sqlflow",
-      format: String = "svg"): Unit = {
+      format: String = "svg",
+      overwrite: Boolean = false): Unit = {
     val flowString = SQLFlow().planToSQLFlow(ds.queryExecution.optimizedPlan)
-    writeSQLFlow(outputDirPath, filenamePrefix, format, flowString)
+    writeSQLFlow(outputDirPath, filenamePrefix, format, flowString, overwrite)
   }
 }
 
@@ -792,13 +795,21 @@ object SQLFlow extends Logging {
       outputDirPath: String,
       filenamePrefix: String,
       format: String,
-      flowString: String): Unit = {
+      flowString: String,
+      overwrite: Boolean = false): Unit = {
     if (!SQLFlow.validImageFormatSet.contains(format.toLowerCase(Locale.ROOT))) {
       throw new AnalysisException(s"Invalid image format: $format")
     }
     val outputDir = new File(outputDirPath)
+    if (overwrite) {
+      FileUtils.deleteDirectory(outputDir)
+    }
     if (!outputDir.mkdir()) {
-      throw new AnalysisException(s"output dir path '$outputDirPath' already exists")
+      throw new AnalysisException(if (overwrite) {
+        s"`overwrite` is set to true, but could not remove output dir path '$outputDirPath'"
+      } else {
+        s"output dir path '$outputDirPath' already exists"
+      })
     }
     val dotFile = stringToFile(new File(outputDir, s"$filenamePrefix.dot"), flowString)
     val srcFile = dotFile.getAbsolutePath
@@ -810,14 +821,15 @@ object SQLFlow extends Logging {
       outputDirPath: String,
       filenamePrefix: String = "sqlflow",
       format: String = "svg",
-      contracted: Boolean = false): Unit = {
+      contracted: Boolean = false,
+      overwrite: Boolean = false): Unit = {
     SparkSession.getActiveSession.map { session =>
       val flowString = if (contracted) {
         SQLContractedFlow().catalogToSQLFlow(session)
       } else {
         SQLFlow().catalogToSQLFlow(session)
       }
-      SQLFlow.writeSQLFlow(outputDirPath, filenamePrefix, format, flowString)
+      SQLFlow.writeSQLFlow(outputDirPath, filenamePrefix, format, flowString, overwrite)
     }.getOrElse {
       logWarning(s"Active SparkSession not found")
     }

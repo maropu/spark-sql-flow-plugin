@@ -201,14 +201,26 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
   test("path already exists") {
     withTempDir { dir =>
       import SQLFlow._
+      val outputDir = new File(dir, "outputDir")
+      assert(outputDir.mkdir())
+
       val errMsg1 = intercept[AnalysisException] {
-        spark.range(1).saveAsSQLFlow(dir.getAbsolutePath)
+        spark.range(1).saveAsSQLFlow(outputDir.getAbsolutePath)
       }.getMessage
       assert(errMsg1.contains(" already exists"))
+
+      spark.range(1).saveAsSQLFlow(outputDir.getAbsolutePath, overwrite = true)
+      val dotFile = new File(outputDir, "sqlflow.dot")
+      assert(dotFile.exists())
+      assert(dotFile.delete())
+
       val errMsg2 = intercept[AnalysisException] {
-        SQLFlow.saveAsSQLFlow(dir.getAbsolutePath)
+        SQLFlow.saveAsSQLFlow(outputDir.getAbsolutePath)
       }.getMessage
       assert(errMsg2.contains(" already exists"))
+
+      SQLFlow.saveAsSQLFlow(outputDir.getAbsolutePath, overwrite = true)
+      assert(dotFile.exists())
     }
   }
 

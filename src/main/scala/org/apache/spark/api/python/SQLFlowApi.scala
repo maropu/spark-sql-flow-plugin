@@ -33,7 +33,8 @@ object SQLFlowApi {
       path: String,
       filenamePrefix: String,
       format: String,
-      contracted: Boolean): Unit = {
-    SQLFlow.saveAsSQLFlow(path, filenamePrefix, format, contracted)
+      contracted: Boolean,
+      overwrite: Boolean): Unit = {
+    SQLFlow.saveAsSQLFlow(path, filenamePrefix, format, contracted, overwrite)
   }
 }
