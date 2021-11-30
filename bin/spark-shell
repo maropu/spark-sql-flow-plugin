@@ -17,16 +17,15 @@
 # limitations under the License.
 #
 
-# Determine the current working directory
-CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-ROOT_DIR="$( cd "`dirname $0`"/..; pwd )"
+# Sets the root directory
+ROOT_DIR="$(cd "`dirname $0`"/..; pwd)"
 
 if [ -z "${SPARK_HOME}" ]; then
   # Preserve the calling directory
   _CALLING_DIR="$(pwd)"
 
   # Install the proper version of Spark for this package
-  . ${CURRENT_DIR}/install.sh
+  . ${ROOT_DIR}/bin/install.sh
   install_spark
 
   # Reset the current working directory
@@ -36,15 +35,15 @@ else
 fi
 
 # Loads some variables from `pom.xml`
-. ${CURRENT_DIR}/package.sh && get_package_variables_from_pom
+. ${ROOT_DIR}/bin/package.sh && get_package_variables_from_pom "${ROOT_DIR}"
 
 # Resolve a jar location for the TPCDS data generator
 find_resource() {
-  local built_pkg="$CURRENT_DIR/../target/${PACKAGE_JAR_NAME}"
+  local built_pkg="$ROOT_DIR/target/${PACKAGE_JAR_NAME}"
   if [ -e "$built_pkg" ]; then
     RESOURCE=$built_pkg
   else
-    RESOURCE="$CURRENT_DIR/../assembly/${PACKAGE_JAR_NAME}"
+    RESOURCE="$ROOT_DIR/assembly/${PACKAGE_JAR_NAME}"
     echo "${built_pkg} not found, so use pre-compiled ${RESOURCE}" 1>&2
   fi
 }
