@@ -314,6 +314,13 @@ digraph {
 </table>>];
        
 
+"Project_32" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_32</i></td></tr>
+  
+</table>>];
+       
+
 "Project_34" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_34</i></td></tr>
@@ -624,6 +631,8 @@ digraph {
 "Filter_14":0 -> "Project_15":0;
 "Filter_21":0 -> "t19":0;
 "Filter_21":1 -> "t19":1;
+"Filter_31":0 -> "Project_32":nodeName
+"Filter_31":1 -> "Project_32":nodeName
 "Filter_37":0 -> "Join_LeftSemi_41":0;
 "Filter_37":1 -> "Join_LeftSemi_41":1;
 "Filter_38":1 -> "Project_39":0;
@@ -639,6 +648,7 @@ digraph {
 "Join_LeftSemi_41":1 -> "Aggregate_42":1;
 "Join_LeftSemi_8":0 -> "Aggregate_9":0;
 "Join_LeftSemi_8":1 -> "Aggregate_9":1;
+"LocalRelation_10":nodeName -> "Aggregate_11":nodeName
 "LocalRelation_26":0 -> "t13":0;
 "LocalRelation_26":1 -> "t13":1;
 "LocalRelation_29":0 -> "t16":0;
@@ -653,6 +663,7 @@ digraph {
 "Project_17":0 -> "Aggregate_18":6;
 "Project_17":0 -> "Aggregate_18":7;
 "Project_17":0 -> "Aggregate_18":8;
+"Project_32":nodeName -> "Aggregate_33":nodeName
 "Project_34":0 -> "Aggregate_35":1;
 "Project_34":1 -> "Aggregate_35":0;
 "Project_36":0 -> "t15":0;
@@ -661,6 +672,7 @@ digraph {
 "Project_6":0 -> "Aggregate_7":0;
 "t11":0 -> "Filter_49":0;
 "t11":1 -> "Filter_49":1;
+"t14":0 -> "Project_36":nodeName
 "t_12":0 -> "Aggregate_13":0;
 "t_12":0 -> "Aggregate_13":1;
 "t_12":1 -> "Aggregate_13":0;

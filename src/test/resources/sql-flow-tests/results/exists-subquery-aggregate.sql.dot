@@ -237,6 +237,13 @@ digraph {
 </table>>];
        
 
+"Project_21" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_21</i></td></tr>
+  
+</table>>];
+       
+
 "Project_23" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_23</i></td></tr>
@@ -315,6 +322,13 @@ digraph {
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_40</i></td></tr>
   <tr><td port="0">dept_id</td></tr>
+</table>>];
+       
+
+"Project_43" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_43</i></td></tr>
+  
 </table>>];
        
 
@@ -451,9 +465,11 @@ digraph {
 "Join_LeftAnti_30":1 -> "Aggregate_31":0;
 "Join_LeftAnti_37":0 -> "t8":0;
 "Join_LeftAnti_37":1 -> "t8":1;
+"Join_LeftAnti_42":0 -> "Project_43":nodeName
 "Join_LeftSemi_2":0 -> "Aggregate_3":1;
 "Join_LeftSemi_2":0 -> "Aggregate_3":2;
 "Join_LeftSemi_2":1 -> "Aggregate_3":0;
+"Join_LeftSemi_20":0 -> "Project_21":nodeName
 "Join_LeftSemi_26":0 -> "Project_27":0;
 "Join_LeftSemi_35":0 -> "Project_36":0;
 "Join_LeftSemi_7":0 -> "Project_8":0;
@@ -468,6 +484,7 @@ digraph {
 "Project_16":0 -> "t6":0;
 "Project_17":0 -> "Join_LeftSemi_20":0;
 "Project_18":0 -> "Aggregate_19":0;
+"Project_21":nodeName -> "Aggregate_22":nodeName
 "Project_23":0 -> "Join_LeftSemi_26":0;
 "Project_23":1 -> "Join_LeftSemi_26":1;
 "Project_24":0 -> "Aggregate_25":0;
@@ -483,6 +500,7 @@ digraph {
 "Project_4":0 -> "Join_LeftSemi_7":0;
 "Project_4":1 -> "Join_LeftSemi_7":1;
 "Project_40":0 -> "Aggregate_41":0;
+"Project_43":nodeName -> "Aggregate_44":nodeName
 "Project_5":0 -> "Aggregate_6":0;
 "Project_8":0 -> "Join_LeftSemi_9":0;
 "bonus":0 -> "Join_LeftAnti_37":0;

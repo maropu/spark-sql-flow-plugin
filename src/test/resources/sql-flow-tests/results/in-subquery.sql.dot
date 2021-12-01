@@ -57,6 +57,13 @@ digraph {
 </table>>];
        
 
+"Project_11" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_11</i></td></tr>
+  
+</table>>];
+       
+
 "Project_3" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_3</i></td></tr>
@@ -68,6 +75,13 @@ digraph {
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_4</i></td></tr>
   <tr><td port="0">named_struct(a, a2 AS a, b, b2 AS b)</td></tr>
+</table>>];
+       
+
+"Project_6" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_6</i></td></tr>
+  
 </table>>];
        
 
@@ -139,11 +153,17 @@ digraph {
        
   "Aggregate_12":0 -> "t2":0;
 "Aggregate_7":0 -> "t3":0;
+"Join_LeftAnti_0":0 -> "Project_1":nodeName
+"Join_LeftAnti_0":1 -> "Project_1":nodeName
+"Join_LeftAnti_5":0 -> "Project_6":nodeName
+"Join_LeftSemi_10":0 -> "Project_11":nodeName
 "LocalRelation_2":0 -> "Project_3":0;
 "LocalRelation_2":1 -> "Project_3":0;
 "Project_1":0 -> "t1":0;
+"Project_11":nodeName -> "Aggregate_12":nodeName
 "Project_3":0 -> "struct_tab":0;
 "Project_4":0 -> "Join_LeftAnti_5":0;
+"Project_6":nodeName -> "Aggregate_7":nodeName
 "Project_9":0 -> "Join_LeftSemi_10":0;
 "struct_tab":0 -> "Join_LeftAnti_5":0;
 "struct_tab":0 -> "Join_LeftSemi_10":0;
