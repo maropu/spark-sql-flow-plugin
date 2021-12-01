@@ -368,10 +368,26 @@ case class SQLFlow() extends BaseSQLFlow {
             }
         }
 
-      case _ =>
-        outputAttrWithIndex.flatMap { case (attr, i) =>
+      // TODO: Needs to check if the other Python-related plan nodes are handled correctly
+      case _: FlatMapGroupsInPandas =>
+        inputAttrSeq.head.zip(outputAttrWithIndex).map { case ((_, input), (_, i)) =>
+          s"""$input -> "$curNodeName":$i;"""
+        }
+
+      case p =>
+        val edges = outputAttrWithIndex.flatMap { case (attr, i) =>
           inputAttrMap.get(attr).map { input => s"""$input -> "$curNodeName":$i;"""}
         }
+        if (edges.isEmpty && p.references.nonEmpty) {
+          val msg = "No edge generated even if a reference exists in " +
+            s"${inputNodeIds.mkString(",")} -> $curNodeName"
+          if (SQLFlow.isTesting) {
+            throw new IllegalStateException(msg)
+          } else {
+            logWarning(msg)
+          }
+        }
+        edges
     }
   }
 
@@ -624,15 +640,15 @@ case class SQLContractedFlow() extends BaseSQLFlow {
           candidateOutputRefs.contains(a.exprId)
         }
         if (missingRefs.nonEmpty) {
-          val warningMsg =
-            s"""refMap does not have enough entries for ${plan.nodeName}:
+          val msg = s"""
+               |refMap does not have enough entries for ${plan.nodeName}:
                |missingRefs: ${missingRefs.mkString(", ")}
                |${plan.treeString}
              """.stripMargin
-          if (!SQLFlow.isTesting) {
-            logWarning(warningMsg)
+          if (SQLFlow.isTesting) {
+            throw new IllegalStateException(msg)
           } else {
-            throw new IllegalStateException(warningMsg)
+            logWarning(msg)
           }
         }
     }
