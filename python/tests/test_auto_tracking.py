@@ -34,17 +34,24 @@ class AutoTrackingTests(ReusedSQLTestCase):
             .set("spark.driver.memory", "4g") \
             .set("spark.jars", os.getenv("SQLFLOW_LIB"))
 
-    @classmethod
-    def setUpClass(cls):
-        super(AutoTrackingTests, cls).setUpClass()
+    def setUp(self):
+        super(ReusedSQLTestCase, self).setUp()
+        assert(self.spark.sql('SHOW VIEWS').count() == 0)
 
-    @classmethod
-    def tearDownClass(cls):
-        super(ReusedSQLTestCase, cls).tearDownClass()
+    def tearDown(self):
+        super(ReusedSQLTestCase, self).tearDown()
+        views = map(lambda r: r.viewName, filter(lambda r: r.isTemporary, self.spark.sql('SHOW VIEWS').collect()))
+        for v in views:
+            self.spark.catalog.dropTempView(v)
 
     def _debug_print_as_sqlflow(self, contracted: bool = False) -> str:
         jvm = self.spark.sparkContext._active_spark_context._jvm
         return jvm.SQLFlowApi.toSQLFlowString(contracted)
+
+    def _test_generated_edges(self, expected: List[str]) -> None:
+        sqlflow = re.sub('_\d+', '_X', self._debug_print_as_sqlflow())
+        edges = re.findall(r'"[a-zA-Z_]+":\d -> "[a-zA-Z_]+":\d;', sqlflow)
+        self.assertEqual(set(edges), set(expected))
 
     def test_basics(self):
         @auto_tracking
@@ -62,10 +69,7 @@ class AutoTrackingTests(ReusedSQLTestCase):
         # Applies a chain of transformation functions
         df = transform_gamma(transform_beta(transform_alpha(self.spark.range(3))))
         self.assertEqual(df.collect(), [Row(col=0), Row(col=1), Row(col=2)])
-
-        sqlflow = re.sub('_\d+', '_X', self._debug_print_as_sqlflow())
-        edges = re.findall(r'"[a-zA-Z_]+":\d -> "[a-zA-Z_]+":\d;', sqlflow)
-        self.assertEqual(set(edges), set([
+        self._test_generated_edges([
             '"Aggregate_X":0 -> "transform_beta":0;',
             '"Aggregate_X":1 -> "transform_beta":1;',
             '"Filter_X":1 -> "Project_X":0;',
@@ -77,7 +81,70 @@ class AutoTrackingTests(ReusedSQLTestCase):
             '"transform_alpha":0 -> "Aggregate_X":0;',
             '"transform_alpha":1 -> "Aggregate_X":1;',
             '"transform_beta":0 -> "Filter_X":0;',
-            '"transform_beta":1 -> "Filter_X":1;']))
+            '"transform_beta":1 -> "Filter_X":1;'])
+
+    def test_list_case(self):
+        @auto_tracking
+        def transform_alpha(df):
+            df1 = df.selectExpr('id % 3 AS v')
+            df2 = df.selectExpr('id % 5 AS v')
+            return [df1, df2]  # list
+
+        @auto_tracking
+        def transform_beta(dfs):
+            import functools
+            df = functools.reduce(lambda x, y: x.union(y), dfs)
+            return df.distinct()
+
+        # Applies a chain of transformation functions
+        df = transform_beta(transform_alpha(self.spark.range(5)))
+        self.assertEqual(df.collect(), [Row(v=0), Row(v=1), Row(v=2), Row(v=3), Row(v=4)])
+        self._test_generated_edges([
+            '"Aggregate_X":0 -> "transform_beta":0;',
+            '"Union_X":0 -> "Aggregate_X":0;',
+            '"Range_X":0 -> "Project_X":0;'])
+
+    def test_tuple_case(self):
+        @auto_tracking
+        def transform_alpha(df):
+            df1 = df.selectExpr('id % 3 AS v')
+            df2 = df.selectExpr('id % 5 AS v')
+            return (df1, df2)  # tuple
+
+        @auto_tracking
+        def transform_beta(dfs):
+            import functools
+            df = functools.reduce(lambda x, y: x.union(y), dfs)
+            return df.distinct()
+
+        # Applies a chain of transformation functions
+        df = transform_beta(transform_alpha(self.spark.range(5)))
+        self.assertEqual(df.collect(), [Row(v=0), Row(v=1), Row(v=2), Row(v=3), Row(v=4)])
+        self._test_generated_edges([
+            '"Aggregate_X":0 -> "transform_beta":0;',
+            '"Union_X":0 -> "Aggregate_X":0;',
+            '"Range_X":0 -> "Project_X":0;'])
+
+    def test_dict_case(self):
+        @auto_tracking
+        def transform_alpha(df):
+            df1 = df.selectExpr('id % 3 AS v')
+            df2 = df.selectExpr('id % 5 AS v')
+            return {'df1': df1, 'df2': df2}  # dict
+
+        @auto_tracking
+        def transform_beta(dfs):
+            import functools
+            df = functools.reduce(lambda x, y: x.union(y), dfs.values())
+            return df.distinct()
+
+        # Applies a chain of transformation functions
+        df = transform_beta(transform_alpha(self.spark.range(5)))
+        self.assertEqual(df.collect(), [Row(v=0), Row(v=1), Row(v=2), Row(v=3), Row(v=4)])
+        self._test_generated_edges([
+            '"Aggregate_X":0 -> "transform_beta":0;',
+            '"Union_X":0 -> "Aggregate_X":0;',
+            '"Range_X":0 -> "Project_X":0;'])
 
 
 if __name__ == "__main__":

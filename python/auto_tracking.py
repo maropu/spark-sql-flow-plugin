@@ -20,7 +20,7 @@
 import functools
 import uuid
 from pyspark.sql import DataFrame, SparkSession
-from typing import Any
+from typing import Any, List
 
 
 def _setup_logger() -> Any:
@@ -46,18 +46,37 @@ def _check_if_table_exists(ident: str) -> bool:
         return False
 
 
+def _create_temp_view_for_tracking(df: DataFrame, ident: str) -> str:
+    if _check_if_table_exists(ident):
+        new_ident = _create_temp_name(ident)
+        df.createOrReplaceTempView(new_ident)
+        return new_ident
+    else:
+        df.createTempView(ident)
+        return ident
+
+
+def _extract_dataframes(ret: Any) -> List[DataFrame]:
+    if type(ret) is DataFrame:
+        return [ret]
+    if type(ret) in (list, tuple):
+        return [e for e in ret if e is DataFrame]
+    if type(ret) is dict:
+        return [e for e in ret.values() if e is DataFrame]
+
+    return []
+
+
 def auto_tracking(f):  # type: ignore
     @functools.wraps(f)
     def wrapper(self, *args, **kwargs):  # type: ignore
-        # If ret is `DataFrame`, creates a temp table for tracking
-        # transformation process.
         ret = f(self, *args, **kwargs)
-        if type(ret) is DataFrame:
-            _logger.info(f'Automatically tracking: {f.__name__}({",".join(ret.columns)})')
-            if _check_if_table_exists(f.__name__):
-                ret.createOrReplaceTempView(_create_temp_name(f.__name__))
-            else:
-                ret.createTempView(f.__name__)
+
+        # If ret holds `DataFrame`s, creates temp tables for tracking
+        # transformation process.
+        for df in _extract_dataframes(ret):
+            ident = _create_temp_view_for_tracking(df, f.__name__)
+            _logger.info(f'Automatically tracking: {ident}({",".join(df.columns)})')
 
         return ret
 
