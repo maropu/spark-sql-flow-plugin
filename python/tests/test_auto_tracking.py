@@ -68,7 +68,7 @@ class AutoTrackingTests(ReusedSQLTestCase):
 
         # Applies a chain of transformation functions
         df = transform_gamma(transform_beta(transform_alpha(self.spark.range(3))))
-        self.assertEqual(df.collect(), [Row(col=0), Row(col=1), Row(col=2)])
+        self.assertEqual(df.orderBy('col').collect(), [Row(col=0), Row(col=1), Row(col=2)])
         self._test_generated_edges([
             '"Aggregate_X":0 -> "transform_beta":0;',
             '"Aggregate_X":1 -> "transform_beta":1;',
@@ -98,7 +98,7 @@ class AutoTrackingTests(ReusedSQLTestCase):
 
         # Applies a chain of transformation functions
         df = transform_beta(transform_alpha(self.spark.range(5)))
-        self.assertEqual(df.collect(), [Row(v=0), Row(v=1), Row(v=2), Row(v=3), Row(v=4)])
+        self.assertEqual(df.orderBy('v').collect(), [Row(v=0), Row(v=1), Row(v=2), Row(v=3), Row(v=4)])
         self._test_generated_edges([
             '"Aggregate_X":0 -> "transform_beta":0;',
             '"Union_X":0 -> "Aggregate_X":0;',
@@ -119,7 +119,7 @@ class AutoTrackingTests(ReusedSQLTestCase):
 
         # Applies a chain of transformation functions
         df = transform_beta(transform_alpha(self.spark.range(5)))
-        self.assertEqual(df.collect(), [Row(v=0), Row(v=1), Row(v=2), Row(v=3), Row(v=4)])
+        self.assertEqual(df.orderBy('v').collect(), [Row(v=0), Row(v=1), Row(v=2), Row(v=3), Row(v=4)])
         self._test_generated_edges([
             '"Aggregate_X":0 -> "transform_beta":0;',
             '"Union_X":0 -> "Aggregate_X":0;',
@@ -140,7 +140,7 @@ class AutoTrackingTests(ReusedSQLTestCase):
 
         # Applies a chain of transformation functions
         df = transform_beta(transform_alpha(self.spark.range(5)))
-        self.assertEqual(df.collect(), [Row(v=0), Row(v=1), Row(v=2), Row(v=3), Row(v=4)])
+        self.assertEqual(df.orderBy('v').collect(), [Row(v=0), Row(v=1), Row(v=2), Row(v=3), Row(v=4)])
         self._test_generated_edges([
             '"Aggregate_X":0 -> "transform_beta":0;',
             '"Union_X":0 -> "Aggregate_X":0;',
