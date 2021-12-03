@@ -56,7 +56,9 @@ digraph {
 <tr><td port="8">_w6</td></tr>
 <tr><td port="9">_w7</td></tr>
 <tr><td port="10">_w8</td></tr>
-<tr><td port="11">val_double</td></tr>
+<tr><td port="11">_w9</td></tr>
+<tr><td port="12">_w10</td></tr>
+<tr><td port="13">val_double</td></tr>
 </table>>];
        
 
@@ -136,7 +138,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_31</i></td></tr>
   <tr><td port="0">val_timestamp</td></tr>
 <tr><td port="1">cate</td></tr>
-<tr><td port="2">avg(val_timestamp) OVER (PARTITION BY cate ORDER BY val_timestamp ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND INTERVAL '23 04' DAY TO HOUR FOLLOWING)</td></tr>
+<tr><td port="2">avg(CAST(val_timestamp AS DOUBLE)) OVER (PARTITION BY cate ORDER BY val_timestamp ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND INTERVAL '23 days 4 hours' FOLLOWING)</td></tr>
 </table>>];
        
 
@@ -152,7 +154,8 @@ digraph {
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_37</i></td></tr>
   <tr><td port="0">cate</td></tr>
-<tr><td port="1">val</td></tr>
+<tr><td port="1">_w0</td></tr>
+<tr><td port="2">val</td></tr>
 </table>>];
        
 
@@ -160,7 +163,7 @@ digraph {
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_39</i></td></tr>
   <tr><td port="0">cate</td></tr>
-<tr><td port="1">sum(val) OVER (PARTITION BY cate ORDER BY val ASC NULLS FIRST RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)</td></tr>
+<tr><td port="1">sum(CAST(val AS BIGINT)) OVER (PARTITION BY cate ORDER BY val ASC NULLS FIRST RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)</td></tr>
 </table>>];
        
 
@@ -185,7 +188,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Sort_11</i></td></tr>
   <tr><td port="0">val_double</td></tr>
 <tr><td port="1">cate</td></tr>
-<tr><td port="2">sum(val_double) OVER (PARTITION BY cate ORDER BY val_double ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND 2.5 FOLLOWING)</td></tr>
+<tr><td port="2">sum(val_double) OVER (PARTITION BY cate ORDER BY val_double ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND CAST(2.5 AS DOUBLE) FOLLOWING)</td></tr>
 </table>>];
        
 
@@ -277,7 +280,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Sort_32</i></td></tr>
   <tr><td port="0">val_timestamp</td></tr>
 <tr><td port="1">cate</td></tr>
-<tr><td port="2">avg(val_timestamp) OVER (PARTITION BY cate ORDER BY val_timestamp ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND INTERVAL '23 04' DAY TO HOUR FOLLOWING)</td></tr>
+<tr><td port="2">avg(CAST(val_timestamp AS DOUBLE)) OVER (PARTITION BY cate ORDER BY val_timestamp ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND INTERVAL '23 days 4 hours' FOLLOWING)</td></tr>
 </table>>];
        
 
@@ -327,7 +330,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Window_10</i></td></tr>
   <tr><td port="0">val_double</td></tr>
 <tr><td port="1">cate</td></tr>
-<tr><td port="2">sum(val_double) OVER (PARTITION BY cate ORDER BY val_double ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND 2.5 FOLLOWING)</td></tr>
+<tr><td port="2">sum(val_double) OVER (PARTITION BY cate ORDER BY val_double ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND CAST(2.5 AS DOUBLE) FOLLOWING)</td></tr>
 </table>>];
        
 
@@ -363,37 +366,39 @@ digraph {
 <tr><td port="8">_w6</td></tr>
 <tr><td port="9">_w7</td></tr>
 <tr><td port="10">_w8</td></tr>
-<tr><td port="11">val_double</td></tr>
-<tr><td port="12">max</td></tr>
-<tr><td port="13">min1</td></tr>
-<tr><td port="14">min2</td></tr>
-<tr><td port="15">count</td></tr>
-<tr><td port="16">sum</td></tr>
-<tr><td port="17">avg</td></tr>
-<tr><td port="18">stddev</td></tr>
-<tr><td port="19">first_value</td></tr>
-<tr><td port="20">first_value_ignore_null</td></tr>
-<tr><td port="21">first_value_contain_null</td></tr>
-<tr><td port="22">last_value</td></tr>
-<tr><td port="23">last_value_ignore_null</td></tr>
-<tr><td port="24">last_value_contain_null</td></tr>
-<tr><td port="25">rank</td></tr>
-<tr><td port="26">dense_rank</td></tr>
-<tr><td port="27">cume_dist</td></tr>
-<tr><td port="28">percent_rank</td></tr>
-<tr><td port="29">ntile</td></tr>
-<tr><td port="30">row_number</td></tr>
-<tr><td port="31">var_pop</td></tr>
-<tr><td port="32">var_samp</td></tr>
-<tr><td port="33">approx_count_distinct</td></tr>
-<tr><td port="34">covar_pop</td></tr>
-<tr><td port="35">corr</td></tr>
-<tr><td port="36">stddev_samp</td></tr>
-<tr><td port="37">stddev_pop</td></tr>
-<tr><td port="38">collect_list</td></tr>
-<tr><td port="39">collect_set</td></tr>
-<tr><td port="40">skewness</td></tr>
-<tr><td port="41">kurtosis</td></tr>
+<tr><td port="11">_w9</td></tr>
+<tr><td port="12">_w10</td></tr>
+<tr><td port="13">val_double</td></tr>
+<tr><td port="14">max</td></tr>
+<tr><td port="15">min1</td></tr>
+<tr><td port="16">min2</td></tr>
+<tr><td port="17">count</td></tr>
+<tr><td port="18">sum</td></tr>
+<tr><td port="19">avg</td></tr>
+<tr><td port="20">stddev</td></tr>
+<tr><td port="21">first_value</td></tr>
+<tr><td port="22">first_value_ignore_null</td></tr>
+<tr><td port="23">first_value_contain_null</td></tr>
+<tr><td port="24">last_value</td></tr>
+<tr><td port="25">last_value_ignore_null</td></tr>
+<tr><td port="26">last_value_contain_null</td></tr>
+<tr><td port="27">rank</td></tr>
+<tr><td port="28">dense_rank</td></tr>
+<tr><td port="29">cume_dist</td></tr>
+<tr><td port="30">percent_rank</td></tr>
+<tr><td port="31">ntile</td></tr>
+<tr><td port="32">row_number</td></tr>
+<tr><td port="33">var_pop</td></tr>
+<tr><td port="34">var_samp</td></tr>
+<tr><td port="35">approx_count_distinct</td></tr>
+<tr><td port="36">covar_pop</td></tr>
+<tr><td port="37">corr</td></tr>
+<tr><td port="38">stddev_samp</td></tr>
+<tr><td port="39">stddev_pop</td></tr>
+<tr><td port="40">collect_list</td></tr>
+<tr><td port="41">collect_set</td></tr>
+<tr><td port="42">skewness</td></tr>
+<tr><td port="43">kurtosis</td></tr>
 </table>>];
        
 
@@ -421,7 +426,7 @@ digraph {
   <tr><td port="0">val_timestamp</td></tr>
 <tr><td port="1">cate</td></tr>
 <tr><td port="2">_w0</td></tr>
-<tr><td port="3">avg(val_timestamp) OVER (PARTITION BY cate ORDER BY val_timestamp ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND INTERVAL '23 04' DAY TO HOUR FOLLOWING)</td></tr>
+<tr><td port="3">avg(CAST(val_timestamp AS DOUBLE)) OVER (PARTITION BY cate ORDER BY val_timestamp ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND INTERVAL '23 days 4 hours' FOLLOWING)</td></tr>
 </table>>];
        
 
@@ -438,8 +443,9 @@ digraph {
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Window_38</i></td></tr>
   <tr><td port="0">cate</td></tr>
-<tr><td port="1">val</td></tr>
-<tr><td port="2">sum(val) OVER (PARTITION BY cate ORDER BY val ASC NULLS FIRST RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)</td></tr>
+<tr><td port="1">_w0</td></tr>
+<tr><td port="2">val</td></tr>
+<tr><td port="3">sum(CAST(val AS BIGINT)) OVER (PARTITION BY cate ORDER BY val ASC NULLS FIRST RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)</td></tr>
 </table>>];
        
 
@@ -531,7 +537,7 @@ digraph {
 <table>
   <tr><td bgcolor="black" port="nodeName"><i><font color="white">t12</font></i></td></tr>
   <tr><td port="0">cate</td></tr>
-<tr><td port="1">sum(val) OVER (PARTITION BY cate ORDER BY val ASC NULLS FIRST RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)</td></tr>
+<tr><td port="1">sum(CAST(val AS BIGINT)) OVER (PARTITION BY cate ORDER BY val ASC NULLS FIRST RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)</td></tr>
 </table>>];
        
 
@@ -576,7 +582,7 @@ digraph {
   <tr><td bgcolor="black" port="nodeName"><i><font color="white">t6</font></i></td></tr>
   <tr><td port="0">val_double</td></tr>
 <tr><td port="1">cate</td></tr>
-<tr><td port="2">sum(val_double) OVER (PARTITION BY cate ORDER BY val_double ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND 2.5 FOLLOWING)</td></tr>
+<tr><td port="2">sum(val_double) OVER (PARTITION BY cate ORDER BY val_double ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND CAST(2.5 AS DOUBLE) FOLLOWING)</td></tr>
 </table>>];
        
 
@@ -594,7 +600,7 @@ digraph {
   <tr><td bgcolor="black" port="nodeName"><i><font color="white">t8</font></i></td></tr>
   <tr><td port="0">val_timestamp</td></tr>
 <tr><td port="1">cate</td></tr>
-<tr><td port="2">avg(val_timestamp) OVER (PARTITION BY cate ORDER BY val_timestamp ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND INTERVAL '23 04' DAY TO HOUR FOLLOWING)</td></tr>
+<tr><td port="2">avg(CAST(val_timestamp AS DOUBLE)) OVER (PARTITION BY cate ORDER BY val_timestamp ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND INTERVAL '23 days 4 hours' FOLLOWING)</td></tr>
 </table>>];
        
 
@@ -631,6 +637,7 @@ digraph {
 </table>>];
        
   "Filter_36":0 -> "Project_37":1;
+"Filter_36":0 -> "Project_37":2;
 "Filter_36":5 -> "Project_37":0;
 "Project_0":0 -> "Window_1":0;
 "Project_0":1 -> "Window_1":1;
@@ -642,6 +649,8 @@ digraph {
 "Project_18":1 -> "Window_19":1;
 "Project_18":10 -> "Window_19":10;
 "Project_18":11 -> "Window_19":11;
+"Project_18":12 -> "Window_19":12;
+"Project_18":13 -> "Window_19":13;
 "Project_18":2 -> "Window_19":2;
 "Project_18":3 -> "Window_19":3;
 "Project_18":4 -> "Window_19":4;
@@ -698,6 +707,7 @@ digraph {
 "Project_33":1 -> "Window_34":1;
 "Project_37":0 -> "Window_38":0;
 "Project_37":1 -> "Window_38":1;
+"Project_37":2 -> "Window_38":2;
 "Project_39":0 -> "t12":0;
 "Project_39":1 -> "t12":1;
 "Project_6":0 -> "Window_7":0;
@@ -785,36 +795,36 @@ digraph {
 "Window_16":2 -> "Sort_17":2;
 "Window_19":0 -> "Project_20":0;
 "Window_19":1 -> "Project_20":1;
-"Window_19":12 -> "Project_20":2;
-"Window_19":13 -> "Project_20":3;
-"Window_19":14 -> "Project_20":4;
-"Window_19":15 -> "Project_20":5;
-"Window_19":16 -> "Project_20":6;
-"Window_19":17 -> "Project_20":7;
-"Window_19":18 -> "Project_20":8;
-"Window_19":19 -> "Project_20":9;
-"Window_19":20 -> "Project_20":10;
-"Window_19":21 -> "Project_20":11;
-"Window_19":22 -> "Project_20":12;
-"Window_19":23 -> "Project_20":13;
-"Window_19":24 -> "Project_20":14;
-"Window_19":25 -> "Project_20":15;
-"Window_19":26 -> "Project_20":16;
-"Window_19":27 -> "Project_20":17;
-"Window_19":28 -> "Project_20":18;
-"Window_19":29 -> "Project_20":19;
-"Window_19":30 -> "Project_20":20;
-"Window_19":31 -> "Project_20":21;
-"Window_19":32 -> "Project_20":22;
-"Window_19":33 -> "Project_20":23;
-"Window_19":34 -> "Project_20":24;
-"Window_19":35 -> "Project_20":25;
-"Window_19":36 -> "Project_20":26;
-"Window_19":37 -> "Project_20":27;
-"Window_19":38 -> "Project_20":28;
-"Window_19":39 -> "Project_20":29;
-"Window_19":40 -> "Project_20":30;
-"Window_19":41 -> "Project_20":31;
+"Window_19":14 -> "Project_20":2;
+"Window_19":15 -> "Project_20":3;
+"Window_19":16 -> "Project_20":4;
+"Window_19":17 -> "Project_20":5;
+"Window_19":18 -> "Project_20":6;
+"Window_19":19 -> "Project_20":7;
+"Window_19":20 -> "Project_20":8;
+"Window_19":21 -> "Project_20":9;
+"Window_19":22 -> "Project_20":10;
+"Window_19":23 -> "Project_20":11;
+"Window_19":24 -> "Project_20":12;
+"Window_19":25 -> "Project_20":13;
+"Window_19":26 -> "Project_20":14;
+"Window_19":27 -> "Project_20":15;
+"Window_19":28 -> "Project_20":16;
+"Window_19":29 -> "Project_20":17;
+"Window_19":30 -> "Project_20":18;
+"Window_19":31 -> "Project_20":19;
+"Window_19":32 -> "Project_20":20;
+"Window_19":33 -> "Project_20":21;
+"Window_19":34 -> "Project_20":22;
+"Window_19":35 -> "Project_20":23;
+"Window_19":36 -> "Project_20":24;
+"Window_19":37 -> "Project_20":25;
+"Window_19":38 -> "Project_20":26;
+"Window_19":39 -> "Project_20":27;
+"Window_19":40 -> "Project_20":28;
+"Window_19":41 -> "Project_20":29;
+"Window_19":42 -> "Project_20":30;
+"Window_19":43 -> "Project_20":31;
 "Window_24":0 -> "Sort_25":0;
 "Window_24":1 -> "Sort_25":1;
 "Window_24":2 -> "Sort_25":2;
@@ -828,7 +838,7 @@ digraph {
 "Window_34":1 -> "Sort_35":1;
 "Window_34":2 -> "Sort_35":2;
 "Window_38":0 -> "Project_39":0;
-"Window_38":2 -> "Project_39":1;
+"Window_38":3 -> "Project_39":1;
 "Window_4":0 -> "Sort_5":0;
 "Window_4":1 -> "Sort_5":1;
 "Window_4":2 -> "Sort_5":2;
@@ -851,22 +861,24 @@ digraph {
 "testdata":0 -> "Project_12":0;
 "testdata":0 -> "Project_15":0;
 "testdata":0 -> "Project_18":0;
-"testdata":0 -> "Project_18":10;
+"testdata":0 -> "Project_18":11;
+"testdata":0 -> "Project_18":12;
 "testdata":0 -> "Project_18":2;
 "testdata":0 -> "Project_18":3;
 "testdata":0 -> "Project_18":4;
 "testdata":0 -> "Project_18":5;
+"testdata":0 -> "Project_18":6;
 "testdata":0 -> "Project_18":7;
 "testdata":0 -> "Project_18":9;
 "testdata":0 -> "Project_23":0;
 "testdata":0 -> "Project_3":0;
 "testdata":0 -> "Project_6":0;
 "testdata":1 -> "Filter_36":1;
-"testdata":1 -> "Project_18":6;
+"testdata":1 -> "Project_18":10;
 "testdata":1 -> "Project_18":8;
 "testdata":1 -> "Project_26":0;
 "testdata":2 -> "Filter_36":2;
-"testdata":2 -> "Project_18":11;
+"testdata":2 -> "Project_18":13;
 "testdata":2 -> "Project_9":0;
 "testdata":3 -> "Filter_36":3;
 "testdata":3 -> "Project_33":0;

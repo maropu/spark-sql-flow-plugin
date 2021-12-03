@@ -30,6 +30,14 @@ class SQLFlowTestSuite extends QueryTest with SharedSparkSession {
 
   private val regenerateGoldenFiles: Boolean = System.getenv("SPARK_GENERATE_GOLDEN_FILES") == "1"
 
+  protected def getWorkspaceFilePath(first: String, more: String*) = {
+    if (!(sys.props.contains("spark.test.home") || sys.env.contains("SPARK_HOME"))) {
+      fail("spark.test.home or SPARK_HOME is not set.")
+    }
+    val sparkHome = sys.props.getOrElse("spark.test.home", sys.env("SPARK_HOME"))
+    java.nio.file.Paths.get(sparkHome, first +: more: _*)
+  }
+
   protected def baseResourcePath = {
     getWorkspaceFilePath("src", "test", "resources", "sql-flow-tests").toFile
   }

@@ -205,7 +205,7 @@ digraph {
   <tr><td bgcolor="black" port="nodeName"><i><font color="white">v</font></i></td></tr>
   <tr><td port="0">promotions</td></tr>
 <tr><td port="1">total</td></tr>
-<tr><td port="2">((CAST(promotions AS DECIMAL(15,4)) / CAST(total AS DECIMAL(15,4))) * 100)</td></tr>
+<tr><td port="2">(CAST((CAST(CAST(promotions AS DECIMAL(15,4)) AS DECIMAL(15,4)) / CAST(CAST(total AS DECIMAL(15,4)) AS DECIMAL(15,4))) AS DECIMAL(35,20)) * CAST(CAST(100 AS DECIMAL(3,0)) AS DECIMAL(35,20)))</td></tr>
 </table>>];
        
   "default.customer":0 -> "v":nodeName

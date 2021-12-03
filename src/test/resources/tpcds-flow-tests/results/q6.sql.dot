@@ -17,7 +17,7 @@ digraph {
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_21</i></td></tr>
   <tr><td port="0">avg(i_current_price)</td></tr>
-<tr><td port="1">i_category</td></tr>
+<tr><td port="1">i_category#505</td></tr>
 </table>>];
        
 
@@ -26,6 +26,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_27</i></td></tr>
   <tr><td port="0">state</td></tr>
 <tr><td port="1">cnt</td></tr>
+<tr><td port="2">count(1)</td></tr>
 </table>>];
        
 
@@ -203,7 +204,7 @@ digraph {
 <tr><td port="1">i_current_price</td></tr>
 <tr><td port="2">i_category</td></tr>
 <tr><td port="3">avg(i_current_price)</td></tr>
-<tr><td port="4">i_category</td></tr>
+<tr><td port="4">i_category#505</td></tr>
 </table>>];
        
 
@@ -212,6 +213,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_28</i></td></tr>
   <tr><td port="0">state</td></tr>
 <tr><td port="1">cnt</td></tr>
+<tr><td port="2">count(1)</td></tr>
 </table>>];
        
 
@@ -244,9 +246,9 @@ digraph {
 </table>>];
        
 
-"GlobalLimit_31" [label=<
+"GlobalLimit_32" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>GlobalLimit_31</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>GlobalLimit_32</i></td></tr>
   <tr><td port="0">state</td></tr>
 <tr><td port="1">cnt</td></tr>
 </table>>];
@@ -299,13 +301,13 @@ digraph {
 <tr><td port="1">i_current_price</td></tr>
 <tr><td port="2">i_category</td></tr>
 <tr><td port="3">avg(i_current_price)</td></tr>
-<tr><td port="4">i_category</td></tr>
+<tr><td port="4">i_category#505</td></tr>
 </table>>];
        
 
-"LocalLimit_30" [label=<
+"LocalLimit_31" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>LocalLimit_30</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>LocalLimit_31</i></td></tr>
   <tr><td port="0">state</td></tr>
 <tr><td port="1">cnt</td></tr>
 </table>>];
@@ -372,6 +374,14 @@ digraph {
 </table>>];
        
 
+"Project_29" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_29</i></td></tr>
+  <tr><td port="0">state</td></tr>
+<tr><td port="1">cnt</td></tr>
+</table>>];
+       
+
 "Project_3" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_3</i></td></tr>
@@ -406,9 +416,9 @@ digraph {
 </table>>];
        
 
-"Sort_29" [label=<
+"Sort_30" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort_29</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort_30</i></td></tr>
   <tr><td port="0">state</td></tr>
 <tr><td port="1">cnt</td></tr>
 </table>>];
@@ -560,6 +570,7 @@ digraph {
 "Aggregate_21":1 -> "Join_LeftOuter_22":4;
 "Aggregate_27":0 -> "Filter_28":0;
 "Aggregate_27":1 -> "Filter_28":1;
+"Aggregate_27":2 -> "Filter_28":2;
 "Filter_0":0 -> "Project_1":0;
 "Filter_0":8 -> "Project_1":1;
 "Filter_10":0 -> "Project_14":0;
@@ -572,13 +583,13 @@ digraph {
 "Filter_2":0 -> "Project_3":0;
 "Filter_2":4 -> "Project_3":1;
 "Filter_23":0 -> "Project_24":0;
-"Filter_28":0 -> "Sort_29":0;
-"Filter_28":1 -> "Sort_29":1;
+"Filter_28":0 -> "Project_29":0;
+"Filter_28":1 -> "Project_29":1;
 "Filter_6":0 -> "Project_7":0;
 "Filter_6":2 -> "Project_7":1;
 "Filter_6":3 -> "Project_7":2;
-"GlobalLimit_31":0 -> "v":0;
-"GlobalLimit_31":1 -> "v":1;
+"GlobalLimit_32":0 -> "v":0;
+"GlobalLimit_32":1 -> "v":1;
 "Join_Inner_15":0 -> "Project_16":0;
 "Join_Inner_15":2 -> "Project_16":1;
 "Join_Inner_25":0 -> "Project_26":0;
@@ -592,8 +603,8 @@ digraph {
 "Join_LeftOuter_22":2 -> "Filter_23":2;
 "Join_LeftOuter_22":3 -> "Filter_23":3;
 "Join_LeftOuter_22":4 -> "Filter_23":4;
-"LocalLimit_30":0 -> "GlobalLimit_31":0;
-"LocalLimit_30":1 -> "GlobalLimit_31":1;
+"LocalLimit_31":0 -> "GlobalLimit_32":0;
+"LocalLimit_31":1 -> "GlobalLimit_32":1;
 "Project_1":0 -> "Join_Inner_4":0;
 "Project_1":1 -> "Join_Inner_4":1;
 "Project_12":0 -> "Aggregate_13":0;
@@ -607,6 +618,8 @@ digraph {
 "Project_20":1 -> "Aggregate_21":1;
 "Project_24":0 -> "Join_Inner_25":2;
 "Project_26":0 -> "Aggregate_27":0;
+"Project_29":0 -> "Sort_30":0;
+"Project_29":1 -> "Sort_30":1;
 "Project_3":0 -> "Join_Inner_4":2;
 "Project_3":1 -> "Join_Inner_4":3;
 "Project_5":0 -> "Join_Inner_8":0;
@@ -617,8 +630,8 @@ digraph {
 "Project_9":0 -> "Join_Inner_15":0;
 "Project_9":1 -> "Join_Inner_15":1;
 "Project_9":2 -> "Join_Inner_15":2;
-"Sort_29":0 -> "LocalLimit_30":0;
-"Sort_29":1 -> "LocalLimit_30":1;
+"Sort_30":0 -> "LocalLimit_31":0;
+"Sort_30":1 -> "LocalLimit_31":1;
 "default.customer":0 -> "Filter_2":0;
 "default.customer":1 -> "Filter_2":1;
 "default.customer":10 -> "Filter_2":10;

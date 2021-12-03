@@ -71,7 +71,7 @@ digraph {
 <table>
   <tr><td bgcolor="black" port="nodeName"><i><font color="white">t12</font></i></td></tr>
   <tr><td port="0">cate</td></tr>
-<tr><td port="1">sum(val) OVER (PARTITION BY cate ORDER BY val ASC NULLS FIRST RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)</td></tr>
+<tr><td port="1">sum(CAST(val AS BIGINT)) OVER (PARTITION BY cate ORDER BY val ASC NULLS FIRST RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)</td></tr>
 </table>>];
        
 
@@ -116,7 +116,7 @@ digraph {
   <tr><td bgcolor="black" port="nodeName"><i><font color="white">t6</font></i></td></tr>
   <tr><td port="0">val_double</td></tr>
 <tr><td port="1">cate</td></tr>
-<tr><td port="2">sum(val_double) OVER (PARTITION BY cate ORDER BY val_double ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND 2.5 FOLLOWING)</td></tr>
+<tr><td port="2">sum(val_double) OVER (PARTITION BY cate ORDER BY val_double ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND CAST(2.5 AS DOUBLE) FOLLOWING)</td></tr>
 </table>>];
        
 
@@ -134,7 +134,7 @@ digraph {
   <tr><td bgcolor="black" port="nodeName"><i><font color="white">t8</font></i></td></tr>
   <tr><td port="0">val_timestamp</td></tr>
 <tr><td port="1">cate</td></tr>
-<tr><td port="2">avg(val_timestamp) OVER (PARTITION BY cate ORDER BY val_timestamp ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND INTERVAL '23 04' DAY TO HOUR FOLLOWING)</td></tr>
+<tr><td port="2">avg(CAST(val_timestamp AS DOUBLE)) OVER (PARTITION BY cate ORDER BY val_timestamp ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND INTERVAL '23 days 4 hours' FOLLOWING)</td></tr>
 </table>>];
        
 

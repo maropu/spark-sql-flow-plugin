@@ -23,6 +23,7 @@ digraph {
 <tr><td port="1">c_first_name</td></tr>
 <tr><td port="2">s_store_name</td></tr>
 <tr><td port="3">paid</td></tr>
+<tr><td port="4">sum(netpaid#9942)</td></tr>
 </table>>];
        
 
@@ -36,7 +37,7 @@ digraph {
 "Aggregate_48" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_48</i></td></tr>
-  <tr><td port="0">(0.05 * avg(netpaid))</td></tr>
+  <tr><td port="0">(CAST(0.05 AS DECIMAL(21,6)) * CAST(avg(netpaid) AS DECIMAL(21,6)))</td></tr>
 </table>>];
        
 
@@ -173,6 +174,7 @@ digraph {
 <tr><td port="1">c_first_name</td></tr>
 <tr><td port="2">s_store_name</td></tr>
 <tr><td port="3">paid</td></tr>
+<tr><td port="4">sum(netpaid#9942)</td></tr>
 </table>>];
        
 
@@ -778,6 +780,16 @@ digraph {
 </table>>];
        
 
+"Project_49" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_49</i></td></tr>
+  <tr><td port="0">c_last_name</td></tr>
+<tr><td port="1">c_first_name</td></tr>
+<tr><td port="2">s_store_name</td></tr>
+<tr><td port="3">paid</td></tr>
+</table>>];
+       
+
 "Project_5" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_5</i></td></tr>
@@ -984,12 +996,14 @@ digraph {
 "Aggregate_22":1 -> "Aggregate_23":1;
 "Aggregate_22":2 -> "Aggregate_23":2;
 "Aggregate_22":3 -> "Aggregate_23":3;
+"Aggregate_22":3 -> "Aggregate_23":4;
 "Aggregate_23":0 -> "Filter_24":0;
 "Aggregate_23":1 -> "Filter_24":1;
 "Aggregate_23":2 -> "Filter_24":2;
 "Aggregate_23":3 -> "Filter_24":3;
+"Aggregate_23":4 -> "Filter_24":4;
 "Aggregate_47":0 -> "Aggregate_48":0;
-"Aggregate_48":0 -> "Filter_24":3
+"Aggregate_48":0 -> "Filter_24":4
 "Filter_0":2 -> "Project_1":0;
 "Filter_0":20 -> "Project_1":4;
 "Filter_0":3 -> "Project_1":1;
@@ -1010,10 +1024,10 @@ digraph {
 "Filter_18":9 -> "Project_19":1;
 "Filter_2":2 -> "Project_3":0;
 "Filter_2":9 -> "Project_3":1;
-"Filter_24":0 -> "v":0;
-"Filter_24":1 -> "v":1;
-"Filter_24":2 -> "v":2;
-"Filter_24":3 -> "v":3;
+"Filter_24":0 -> "Project_49":0;
+"Filter_24":1 -> "Project_49":1;
+"Filter_24":2 -> "Project_49":2;
+"Filter_24":3 -> "Project_49":3;
 "Filter_25":2 -> "Project_26":0;
 "Filter_25":20 -> "Project_26":4;
 "Filter_25":3 -> "Project_26":1;
@@ -1231,6 +1245,10 @@ digraph {
 "Project_44":1 -> "Join_Inner_45":13;
 "Project_44":2 -> "Join_Inner_45":14;
 "Project_46":0 -> "Aggregate_47":0;
+"Project_49":0 -> "v":0;
+"Project_49":1 -> "v":1;
+"Project_49":2 -> "v":2;
+"Project_49":3 -> "v":3;
 "Project_5":0 -> "Join_Inner_8":0;
 "Project_5":1 -> "Join_Inner_8":1;
 "Project_5":2 -> "Join_Inner_8":2;

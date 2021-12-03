@@ -383,6 +383,15 @@ digraph {
 </table>>];
        
 
+"GlobalLimit_54" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>GlobalLimit_54</i></td></tr>
+  <tr><td port="0">promotions</td></tr>
+<tr><td port="1">total</td></tr>
+<tr><td port="2">(CAST((CAST(CAST(promotions AS DECIMAL(15,4)) AS DECIMAL(15,4)) / CAST(CAST(total AS DECIMAL(15,4)) AS DECIMAL(15,4))) AS DECIMAL(35,20)) * CAST(CAST(100 AS DECIMAL(3,0)) AS DECIMAL(35,20)))</td></tr>
+</table>>];
+       
+
 "Join_Inner_12" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_12</i></td></tr>
@@ -507,6 +516,15 @@ digraph {
 <tr><td port="3">ss_promo_sk</td></tr>
 <tr><td port="4">ss_ext_sales_price</td></tr>
 <tr><td port="5">p_promo_sk</td></tr>
+</table>>];
+       
+
+"LocalLimit_53" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>LocalLimit_53</i></td></tr>
+  <tr><td port="0">promotions</td></tr>
+<tr><td port="1">total</td></tr>
+<tr><td port="2">(CAST((CAST(CAST(promotions AS DECIMAL(15,4)) AS DECIMAL(15,4)) / CAST(CAST(total AS DECIMAL(15,4)) AS DECIMAL(15,4))) AS DECIMAL(35,20)) * CAST(CAST(100 AS DECIMAL(3,0)) AS DECIMAL(35,20)))</td></tr>
 </table>>];
        
 
@@ -697,7 +715,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_51</i></td></tr>
   <tr><td port="0">promotions</td></tr>
 <tr><td port="1">total</td></tr>
-<tr><td port="2">((CAST(promotions AS DECIMAL(15,4)) / CAST(total AS DECIMAL(15,4))) * 100)</td></tr>
+<tr><td port="2">(CAST((CAST(CAST(promotions AS DECIMAL(15,4)) AS DECIMAL(15,4)) / CAST(CAST(total AS DECIMAL(15,4)) AS DECIMAL(15,4))) AS DECIMAL(35,20)) * CAST(CAST(100 AS DECIMAL(3,0)) AS DECIMAL(35,20)))</td></tr>
 </table>>];
        
 
@@ -715,6 +733,15 @@ digraph {
 <tr><td port="1">ss_item_sk</td></tr>
 <tr><td port="2">ss_customer_sk</td></tr>
 <tr><td port="3">ss_ext_sales_price</td></tr>
+</table>>];
+       
+
+"Sort_52" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort_52</i></td></tr>
+  <tr><td port="0">promotions</td></tr>
+<tr><td port="1">total</td></tr>
+<tr><td port="2">(CAST((CAST(CAST(promotions AS DECIMAL(15,4)) AS DECIMAL(15,4)) / CAST(CAST(total AS DECIMAL(15,4)) AS DECIMAL(15,4))) AS DECIMAL(35,20)) * CAST(CAST(100 AS DECIMAL(3,0)) AS DECIMAL(35,20)))</td></tr>
 </table>>];
        
 
@@ -917,7 +944,7 @@ digraph {
   <tr><td bgcolor="black" port="nodeName"><i><font color="white">v</font></i></td></tr>
   <tr><td port="0">promotions</td></tr>
 <tr><td port="1">total</td></tr>
-<tr><td port="2">((CAST(promotions AS DECIMAL(15,4)) / CAST(total AS DECIMAL(15,4))) * 100)</td></tr>
+<tr><td port="2">(CAST((CAST(CAST(promotions AS DECIMAL(15,4)) AS DECIMAL(15,4)) / CAST(CAST(total AS DECIMAL(15,4)) AS DECIMAL(15,4))) AS DECIMAL(35,20)) * CAST(CAST(100 AS DECIMAL(3,0)) AS DECIMAL(35,20)))</td></tr>
 </table>>];
        
   "Aggregate_26":0 -> "Join_Inner_50":0;
@@ -946,6 +973,9 @@ digraph {
 "Filter_41":0 -> "Project_42":0;
 "Filter_45":0 -> "Project_46":0;
 "Filter_6":0 -> "Project_7":0;
+"GlobalLimit_54":0 -> "v":0;
+"GlobalLimit_54":1 -> "v":1;
+"GlobalLimit_54":2 -> "v":2;
 "Join_Inner_12":1 -> "Project_13":0;
 "Join_Inner_12":2 -> "Project_13":1;
 "Join_Inner_12":3 -> "Project_13":2;
@@ -981,6 +1011,9 @@ digraph {
 "Join_Inner_8":1 -> "Project_9":1;
 "Join_Inner_8":2 -> "Project_9":2;
 "Join_Inner_8":4 -> "Project_9":3;
+"LocalLimit_53":0 -> "GlobalLimit_54":0;
+"LocalLimit_53":1 -> "GlobalLimit_54":1;
+"LocalLimit_53":2 -> "GlobalLimit_54":2;
 "Project_1":0 -> "Join_Inner_4":0;
 "Project_1":1 -> "Join_Inner_4":1;
 "Project_1":2 -> "Join_Inner_4":2;
@@ -1031,14 +1064,17 @@ digraph {
 "Project_5":2 -> "Join_Inner_8":2;
 "Project_5":3 -> "Join_Inner_8":3;
 "Project_5":4 -> "Join_Inner_8":4;
-"Project_51":0 -> "v":0;
-"Project_51":1 -> "v":1;
-"Project_51":2 -> "v":2;
+"Project_51":0 -> "Sort_52":0;
+"Project_51":1 -> "Sort_52":1;
+"Project_51":2 -> "Sort_52":2;
 "Project_7":0 -> "Join_Inner_8":5;
 "Project_9":0 -> "Join_Inner_12":0;
 "Project_9":1 -> "Join_Inner_12":1;
 "Project_9":2 -> "Join_Inner_12":2;
 "Project_9":3 -> "Join_Inner_12":3;
+"Sort_52":0 -> "LocalLimit_53":0;
+"Sort_52":1 -> "LocalLimit_53":1;
+"Sort_52":2 -> "LocalLimit_53":2;
 "default.customer":0 -> "Filter_14":0;
 "default.customer":0 -> "Filter_37":0;
 "default.customer":1 -> "Filter_14":1;

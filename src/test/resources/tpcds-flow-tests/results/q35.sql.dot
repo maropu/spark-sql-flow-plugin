@@ -26,7 +26,7 @@ digraph {
 <tr><td port="14">min(cd_dep_college_count)</td></tr>
 <tr><td port="15">max(cd_dep_college_count)</td></tr>
 <tr><td port="16">avg(cd_dep_college_count)</td></tr>
-<tr><td port="17">cd_dep_count</td></tr>
+<tr><td port="17">aggOrder</td></tr>
 </table>>];
        
 
@@ -333,9 +333,9 @@ digraph {
 </table>>];
        
 
-"Join_ExistenceJoin(exists#6477)_15" [label=<
+"Join_ExistenceJoin(exists#2993)_15" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_ExistenceJoin(exists#6477)_15</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_ExistenceJoin(exists#2993)_15</i></td></tr>
   <tr><td port="0">c_customer_sk</td></tr>
 <tr><td port="1">c_current_cdemo_sk</td></tr>
 <tr><td port="2">c_current_addr_sk</td></tr>
@@ -343,9 +343,9 @@ digraph {
 </table>>];
        
 
-"Join_ExistenceJoin(exists#6478)_22" [label=<
+"Join_ExistenceJoin(exists#2994)_22" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_ExistenceJoin(exists#6478)_22</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_ExistenceJoin(exists#2994)_22</i></td></tr>
   <tr><td port="0">c_customer_sk</td></tr>
 <tr><td port="1">c_current_cdemo_sk</td></tr>
 <tr><td port="2">c_current_addr_sk</td></tr>
@@ -603,7 +603,7 @@ digraph {
 <tr><td port="14">min(cd_dep_college_count)</td></tr>
 <tr><td port="15">max(cd_dep_college_count)</td></tr>
 <tr><td port="16">avg(cd_dep_college_count)</td></tr>
-<tr><td port="17">cd_dep_count</td></tr>
+<tr><td port="17">aggOrder</td></tr>
 </table>>];
        
 
@@ -887,15 +887,15 @@ digraph {
 "GlobalLimit_37":7 -> "v":7;
 "GlobalLimit_37":8 -> "v":8;
 "GlobalLimit_37":9 -> "v":9;
-"Join_ExistenceJoin(exists#6477)_15":0 -> "Join_ExistenceJoin(exists#6478)_22":0;
-"Join_ExistenceJoin(exists#6477)_15":1 -> "Join_ExistenceJoin(exists#6478)_22":1;
-"Join_ExistenceJoin(exists#6477)_15":2 -> "Join_ExistenceJoin(exists#6478)_22":2;
-"Join_ExistenceJoin(exists#6477)_15":3 -> "Join_ExistenceJoin(exists#6478)_22":3;
-"Join_ExistenceJoin(exists#6478)_22":0 -> "Filter_23":0;
-"Join_ExistenceJoin(exists#6478)_22":1 -> "Filter_23":1;
-"Join_ExistenceJoin(exists#6478)_22":2 -> "Filter_23":2;
-"Join_ExistenceJoin(exists#6478)_22":3 -> "Filter_23":3;
-"Join_ExistenceJoin(exists#6478)_22":4 -> "Filter_23":4;
+"Join_ExistenceJoin(exists#2993)_15":0 -> "Join_ExistenceJoin(exists#2994)_22":0;
+"Join_ExistenceJoin(exists#2993)_15":1 -> "Join_ExistenceJoin(exists#2994)_22":1;
+"Join_ExistenceJoin(exists#2993)_15":2 -> "Join_ExistenceJoin(exists#2994)_22":2;
+"Join_ExistenceJoin(exists#2993)_15":3 -> "Join_ExistenceJoin(exists#2994)_22":3;
+"Join_ExistenceJoin(exists#2994)_22":0 -> "Filter_23":0;
+"Join_ExistenceJoin(exists#2994)_22":1 -> "Filter_23":1;
+"Join_ExistenceJoin(exists#2994)_22":2 -> "Filter_23":2;
+"Join_ExistenceJoin(exists#2994)_22":3 -> "Filter_23":3;
+"Join_ExistenceJoin(exists#2994)_22":4 -> "Filter_23":4;
 "Join_Inner_13":1 -> "Project_14":0;
 "Join_Inner_20":1 -> "Project_21":0;
 "Join_Inner_27":0 -> "Project_28":0;
@@ -907,9 +907,9 @@ digraph {
 "Join_Inner_31":6 -> "Project_32":4;
 "Join_Inner_31":7 -> "Project_32":5;
 "Join_Inner_6":1 -> "Project_7":0;
-"Join_LeftSemi_8":0 -> "Join_ExistenceJoin(exists#6477)_15":0;
-"Join_LeftSemi_8":1 -> "Join_ExistenceJoin(exists#6477)_15":1;
-"Join_LeftSemi_8":2 -> "Join_ExistenceJoin(exists#6477)_15":2;
+"Join_LeftSemi_8":0 -> "Join_ExistenceJoin(exists#2993)_15":0;
+"Join_LeftSemi_8":1 -> "Join_ExistenceJoin(exists#2993)_15":1;
+"Join_LeftSemi_8":2 -> "Join_ExistenceJoin(exists#2993)_15":2;
 "LocalLimit_36":0 -> "GlobalLimit_37":0;
 "LocalLimit_36":1 -> "GlobalLimit_37":1;
 "LocalLimit_36":10 -> "GlobalLimit_37":10;
@@ -933,11 +933,11 @@ digraph {
 "Project_10":0 -> "Join_Inner_13":0;
 "Project_10":1 -> "Join_Inner_13":1;
 "Project_12":0 -> "Join_Inner_13":2;
-"Project_14":0 -> "Join_ExistenceJoin(exists#6477)_15":0;
+"Project_14":0 -> "Join_ExistenceJoin(exists#2993)_15":0;
 "Project_17":0 -> "Join_Inner_20":0;
 "Project_17":1 -> "Join_Inner_20":1;
 "Project_19":0 -> "Join_Inner_20":2;
-"Project_21":0 -> "Join_ExistenceJoin(exists#6478)_22":0;
+"Project_21":0 -> "Join_ExistenceJoin(exists#2994)_22":0;
 "Project_24":0 -> "Join_Inner_27":0;
 "Project_24":1 -> "Join_Inner_27":1;
 "Project_26":0 -> "Join_Inner_27":2;

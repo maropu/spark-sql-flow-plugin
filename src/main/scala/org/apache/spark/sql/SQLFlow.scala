@@ -98,25 +98,20 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     val edges = (views ++ tempViews).map { case (viewName, analyzed) =>
       def replaceWithTempViewNodeInSubqueries(expr: Expression): Expression = {
         expr.transformDown {
-          case sq @ ScalarSubquery(sp, _, _, _) =>
+          case sq @ ScalarSubquery(sp, _, _) =>
             sq.copy(plan = sp.transformDown {
               case p => replaceWithTempViewNode(p)
             })
 
-          case sq @ Exists(sp, _, _, _) =>
+          case sq @ Exists(sp, _, _) =>
             sq.copy(plan = sp.transformDown {
               case p => replaceWithTempViewNode(p)
             })
 
-          case sq @ InSubquery(_, q @ ListQuery(sp, _, _, _, _)) =>
+          case sq @ InSubquery(_, q @ ListQuery(sp, _, _, _)) =>
             sq.copy(query = q.copy(plan = sp.transformDown {
               case p => replaceWithTempViewNode(p)
             }))
-
-          case sq @ LateralSubquery(sp, _, _, _) =>
-            sq.copy(plan = sp.transformDown {
-              case p => replaceWithTempViewNode(p)
-            })
         }
       }
       def replaceWithTempViewNode(p: LogicalPlan): LogicalPlan = p match {
@@ -783,9 +778,6 @@ case class CachedNode(cachedPlan: LogicalPlan) extends UnaryNode {
   override lazy val resolved: Boolean = true
   override def output: Seq[Attribute] = cachedPlan.output
   override def child: LogicalPlan = cachedPlan
-  override protected def withNewChildInternal(newChild: LogicalPlan): LogicalPlan = {
-    copy(cachedPlan = newChild)
-  }
 }
 
 case class ViewNode(name: String, output: Seq[Attribute]) extends LeafNode {

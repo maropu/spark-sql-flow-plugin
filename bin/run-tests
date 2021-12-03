@@ -20,14 +20,14 @@
 FWDIR="$(cd "`dirname $0`"/..; pwd)"
 cd "$FWDIR"
 
-if [ -z "$CONDA_DISABLE" ]; then
+if [ -z "$CONDA_DISABLED" ]; then
   # Activate a conda virtual env
   . ./bin/conda.sh && activate_conda_virtual_env "${FWDIR}"
 fi
 
-PYTHON_VERSION_CHECK=$(python3 -c 'import sys; print(sys.version_info < (3, 7, 0))')
+PYTHON_VERSION_CHECK=$(python3 -c 'import sys; print(sys.version_info < (3, 6, 0))')
 if [[ "$PYTHON_VERSION_CHECK" == "True" ]]; then
-  echo "Python versions prior to 3.7 are not supported."
+  echo "Python versions prior to 3.6 are not supported."
   exit -1
 fi
 

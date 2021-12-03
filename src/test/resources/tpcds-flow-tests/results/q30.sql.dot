@@ -26,7 +26,7 @@ digraph {
 "Aggregate_23" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_23</i></td></tr>
-  <tr><td port="0">(avg(ctr_total_return) * 1.2)</td></tr>
+  <tr><td port="0">(CAST(avg(ctr_total_return) AS DECIMAL(21,6)) * CAST(1.2 AS DECIMAL(21,6)))</td></tr>
 <tr><td port="1">ctr_state#15</td></tr>
 </table>>];
        
@@ -190,7 +190,7 @@ digraph {
 "Filter_24" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_24</i></td></tr>
-  <tr><td port="0">(avg(ctr_total_return) * 1.2)</td></tr>
+  <tr><td port="0">(CAST(avg(ctr_total_return) AS DECIMAL(21,6)) * CAST(1.2 AS DECIMAL(21,6)))</td></tr>
 <tr><td port="1">ctr_state#15</td></tr>
 </table>>];
        
@@ -304,7 +304,7 @@ digraph {
   <tr><td port="0">ctr_customer_sk</td></tr>
 <tr><td port="1">ctr_state</td></tr>
 <tr><td port="2">ctr_total_return</td></tr>
-<tr><td port="3">(avg(ctr_total_return) * 1.2)</td></tr>
+<tr><td port="3">(CAST(avg(ctr_total_return) AS DECIMAL(21,6)) * CAST(1.2 AS DECIMAL(21,6)))</td></tr>
 <tr><td port="4">ctr_state#15</td></tr>
 </table>>];
        

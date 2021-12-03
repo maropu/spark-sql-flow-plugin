@@ -10,7 +10,7 @@ digraph {
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_12</i></td></tr>
   <tr><td port="0">item_sk</td></tr>
-<tr><td port="1">cnt</td></tr>
+<tr><td port="1">count(1)</td></tr>
 </table>>];
        
 
@@ -18,7 +18,7 @@ digraph {
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_23</i></td></tr>
   <tr><td port="0">c_customer_sk</td></tr>
-<tr><td port="1">ssales</td></tr>
+<tr><td port="1">sum(CheckOverflow((promote_precision(cast(cast(ss_quantity#16932 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#16935 as decimal(12,2)))), DecimalType(18,2), true))</td></tr>
 </table>>];
        
 
@@ -40,7 +40,7 @@ digraph {
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_56</i></td></tr>
   <tr><td port="0">item_sk</td></tr>
-<tr><td port="1">cnt</td></tr>
+<tr><td port="1">count(1)</td></tr>
 </table>>];
        
 
@@ -48,7 +48,7 @@ digraph {
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_67</i></td></tr>
   <tr><td port="0">c_customer_sk</td></tr>
-<tr><td port="1">ssales</td></tr>
+<tr><td port="1">sum(CheckOverflow((promote_precision(cast(cast(ss_quantity#16932 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#16935 as decimal(12,2)))), DecimalType(18,2), true))</td></tr>
 </table>>];
        
 
@@ -117,7 +117,7 @@ digraph {
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_13</i></td></tr>
   <tr><td port="0">item_sk</td></tr>
-<tr><td port="1">cnt</td></tr>
+<tr><td port="1">count(1)</td></tr>
 </table>>];
        
 
@@ -207,7 +207,7 @@ digraph {
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_24</i></td></tr>
   <tr><td port="0">c_customer_sk</td></tr>
-<tr><td port="1">ssales</td></tr>
+<tr><td port="1">sum(CheckOverflow((promote_precision(cast(cast(ss_quantity#16932 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#16935 as decimal(12,2)))), DecimalType(18,2), true))</td></tr>
 </table>>];
        
 
@@ -501,7 +501,7 @@ digraph {
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_57</i></td></tr>
   <tr><td port="0">item_sk</td></tr>
-<tr><td port="1">cnt</td></tr>
+<tr><td port="1">count(1)</td></tr>
 </table>>];
        
 
@@ -562,7 +562,7 @@ digraph {
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_68</i></td></tr>
   <tr><td port="0">c_customer_sk</td></tr>
-<tr><td port="1">ssales</td></tr>
+<tr><td port="1">sum(CheckOverflow((promote_precision(cast(cast(ss_quantity#16932 as decimal(10,0)) as decimal(12,2))) * promote_precision(cast(ss_sales_price#16935 as decimal(12,2)))), DecimalType(18,2), true))</td></tr>
 </table>>];
        
 
@@ -897,7 +897,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_11</i></td></tr>
   <tr><td port="0">d_date</td></tr>
 <tr><td port="1">i_item_sk</td></tr>
-<tr><td port="2">_groupingexpression</td></tr>
+<tr><td port="2">i_item_desc</td></tr>
 </table>>];
        
 
@@ -1080,7 +1080,7 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_55</i></td></tr>
   <tr><td port="0">d_date</td></tr>
 <tr><td port="1">i_item_sk</td></tr>
-<tr><td port="2">_groupingexpression</td></tr>
+<tr><td port="2">i_item_desc</td></tr>
 </table>>];
        
 

@@ -261,8 +261,8 @@ digraph {
 "Project_2" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_2</i></td></tr>
-  <tr><td port="0">ws_warehouse_sk</td></tr>
-<tr><td port="1">ws_order_number</td></tr>
+  <tr><td port="0">ws_warehouse_sk#9010</td></tr>
+<tr><td port="1">ws_order_number#9012</td></tr>
 </table>>];
        
 
@@ -289,6 +289,15 @@ digraph {
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_8</i></td></tr>
   <tr><td port="0">d_date_sk</td></tr>
+</table>>];
+       
+
+"Sort_20" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort_20</i></td></tr>
+  <tr><td port="0">order count </td></tr>
+<tr><td port="1">total shipping cost </td></tr>
+<tr><td port="2">total net profit </td></tr>
 </table>>];
        
 
@@ -455,9 +464,9 @@ digraph {
 <tr><td port="2">total net profit </td></tr>
 </table>>];
        
-  "Aggregate_19":0 -> "v":0;
-"Aggregate_19":1 -> "v":1;
-"Aggregate_19":2 -> "v":2;
+  "Aggregate_19":0 -> "Sort_20":0;
+"Aggregate_19":1 -> "Sort_20":1;
+"Aggregate_19":2 -> "Sort_20":2;
 "Filter_0":11 -> "Project_1":1;
 "Filter_0":13 -> "Project_1":2;
 "Filter_0":15 -> "Project_1":3;
@@ -523,6 +532,9 @@ digraph {
 "Project_4":5 -> "Join_LeftAnti_6":5;
 "Project_5":0 -> "Join_LeftAnti_6":3;
 "Project_8":0 -> "Join_Inner_9":6;
+"Sort_20":0 -> "v":0;
+"Sort_20":1 -> "v":1;
+"Sort_20":2 -> "v":2;
 "default.customer_address":0 -> "Filter_11":0;
 "default.customer_address":1 -> "Filter_11":1;
 "default.customer_address":10 -> "Filter_11":10;
