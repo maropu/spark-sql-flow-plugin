@@ -63,8 +63,10 @@ join_by() {
 parse_args_for_pyspark "$@"
 find_package
 
-# Activate a conda virtual env
-. ${ROOT_DIR}/bin/conda.sh && activate_conda_virtual_env "${ROOT_DIR}"
+if [ -z "$CONDA_DISABLED" ]; then
+  # Activate a conda virtual env
+  . ${ROOT_DIR}/bin/conda.sh && activate_conda_virtual_env "${ROOT_DIR}"
+fi
 
 # Then, launches a pyspark with given arguments
 if [ -z "${PYTHONPATH}" ]; then
