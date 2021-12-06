@@ -117,6 +117,14 @@ Automatically tracked data lineage is as follows:
 
 <img src="resources/graphviz_4.svg" width="700px">
 
+## References
+
+ - Datafold, Column-level lineage, https://www.datafold.com/column-level-lineage
+ - SQLFlow, Automated SQL data lineage analysis, https://www.gudusoft.com
+ - Prophecy, Spark: Column Level Lineage, https://medium.com/prophecy-io/spark-column-level-lineage-478c1fe4701d
+ - Collibra/SQLDep, Introducing Collibra Lineage - Automated Data Lineage, https://www.collibra.com/us/en/blog/introducing-collibra-lineage
+ - Tokern, Automate data engineering tasks with column-level data lineage, https://tokern.io
+
 ## TODO
 
  * Supports global temp views
