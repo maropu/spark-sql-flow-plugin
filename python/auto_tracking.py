@@ -67,20 +67,30 @@ def _extract_dataframes(ret: Any) -> List[DataFrame]:
     return []
 
 
+def _auto_track_dataframes(ret: Any, name: str) -> Any:
+    # If ret holds `DataFrame`s, creates temp tables for tracking
+    # transformation process.
+    for df in _extract_dataframes(ret):
+        ident = _create_temp_view_for_tracking(df, name)
+        _logger.info(f'Automatically tracking: {ident}({",".join(df.columns)})')
+
+    return ret
+
+
 def auto_tracking(f):  # type: ignore
     @functools.wraps(f)
     def wrapper(self, *args, **kwargs):  # type: ignore
-        ret = f(self, *args, **kwargs)
-
-        # If ret holds `DataFrame`s, creates temp tables for tracking
-        # transformation process.
-        for df in _extract_dataframes(ret):
-            ident = _create_temp_view_for_tracking(df, f.__name__)
-            _logger.info(f'Automatically tracking: {ident}({",".join(df.columns)})')
-
-        return ret
-
+        return _auto_track_dataframes(f(self, *args, **kwargs), f.__name__)
     return wrapper
+
+
+def auto_tracking_with(name):  # type: ignore
+    def _auto_tracking(f):  # type: ignore
+        @functools.wraps(f)
+        def wrapper(self, *args, **kwargs):  # type: ignore
+            return _auto_track_dataframes(f(self, *args, **kwargs), name)
+        return wrapper
+    return _auto_tracking
 
 
 def save_data_lineage(output_dir_path: str, filename_prefix: str = "sqlflow", format: str = "svg",

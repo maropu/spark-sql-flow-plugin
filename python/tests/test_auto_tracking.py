@@ -58,7 +58,7 @@ class AutoTrackingTests(ReusedSQLTestCase):
         def transform_alpha(df):
             return df.selectExpr('id % 3 AS key', 'id % 5 AS value')
 
-        @auto_tracking
+        @auto_tracking_with('transform_delta')
         def transform_beta(df):
             return df.groupBy('key').agg(f.expr('collect_set(value)').alias('value'))
 
@@ -70,8 +70,8 @@ class AutoTrackingTests(ReusedSQLTestCase):
         df = transform_gamma(transform_beta(transform_alpha(self.spark.range(3))))
         self.assertEqual(df.orderBy('col').collect(), [Row(col=0), Row(col=1), Row(col=2)])
         self._test_generated_edges([
-            '"Aggregate_X":0 -> "transform_beta":0;',
-            '"Aggregate_X":1 -> "transform_beta":1;',
+            '"Aggregate_X":0 -> "transform_delta":0;',
+            '"Aggregate_X":1 -> "transform_delta":1;',
             '"Filter_X":1 -> "Project_X":0;',
             '"Generate_X":0 -> "transform_gamma":0;',
             '"Project_X":0 -> "transform_alpha":0;',
@@ -80,8 +80,8 @@ class AutoTrackingTests(ReusedSQLTestCase):
             '"Range_X":0 -> "Project_X":1;',
             '"transform_alpha":0 -> "Aggregate_X":0;',
             '"transform_alpha":1 -> "Aggregate_X":1;',
-            '"transform_beta":0 -> "Filter_X":0;',
-            '"transform_beta":1 -> "Filter_X":1;'])
+            '"transform_delta":0 -> "Filter_X":0;',
+            '"transform_delta":1 -> "Filter_X":1;'])
 
     def test_list_case(self):
         @auto_tracking
