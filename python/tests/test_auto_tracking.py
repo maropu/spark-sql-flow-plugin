@@ -49,8 +49,9 @@ class AutoTrackingTests(ReusedSQLTestCase):
         return jvm.SQLFlowApi.toSQLFlowString(contracted)
 
     def _test_generated_edges(self, expected: List[str]) -> None:
-        sqlflow = re.sub('_\d+', '_X', self._debug_print_as_sqlflow())
-        edges = re.findall(r'"[a-zA-Z_]+":\d -> "[a-zA-Z_]+":\d;', sqlflow)
+        sqlflow = re.sub('_[0-9]+":', '_X":', self._debug_print_as_sqlflow())
+        sqlflow = re.sub('_[a-z0-9]{7}":', '_X":', sqlflow)
+        edges = re.findall(r'"[a-zA-Z_]+":\d -> "[a-zA-Z_]+":\d', sqlflow)
         self.assertEqual(set(edges), set(expected))
 
     def test_basics(self):
@@ -58,7 +59,7 @@ class AutoTrackingTests(ReusedSQLTestCase):
         def transform_alpha(df):
             return df.selectExpr('id % 3 AS key', 'id % 5 AS value')
 
-        @auto_tracking
+        @auto_tracking_with('transform_delta')
         def transform_beta(df):
             return df.groupBy('key').agg(f.expr('collect_set(value)').alias('value'))
 
@@ -66,22 +67,28 @@ class AutoTrackingTests(ReusedSQLTestCase):
         def transform_gamma(df):
             return df.selectExpr('explode(value)')
 
+        @auto_tracking
+        def transform_lambda(df):
+            return df.count()
+
         # Applies a chain of transformation functions
-        df = transform_gamma(transform_beta(transform_alpha(self.spark.range(3))))
-        self.assertEqual(df.orderBy('col').collect(), [Row(col=0), Row(col=1), Row(col=2)])
+        cnt = transform_lambda(transform_gamma(transform_beta(transform_alpha(self.spark.range(3)))))
+        self.assertEqual(cnt, 3)
         self._test_generated_edges([
-            '"Aggregate_X":0 -> "transform_beta":0;',
-            '"Aggregate_X":1 -> "transform_beta":1;',
-            '"Filter_X":1 -> "Project_X":0;',
-            '"Generate_X":0 -> "transform_gamma":0;',
-            '"Project_X":0 -> "transform_alpha":0;',
-            '"Project_X":1 -> "transform_alpha":1;',
-            '"Range_X":0 -> "Project_X":0;',
-            '"Range_X":0 -> "Project_X":1;',
-            '"transform_alpha":0 -> "Aggregate_X":0;',
-            '"transform_alpha":1 -> "Aggregate_X":1;',
-            '"transform_beta":0 -> "Filter_X":0;',
-            '"transform_beta":1 -> "Filter_X":1;'])
+            '"Aggregate_X":0 -> "transform_delta":0',
+            '"Project_X":1 -> "transform_alpha":1',
+            '"transform_delta":0 -> "Filter_X":0',
+            '"transform_alpha":0 -> "Aggregate_X":0',
+            '"Range_X":0 -> "Project_X":0',
+            '"transform_delta":1 -> "Filter_X":1',
+            '"Range_X":0 -> "Project_X":1',
+            '"Aggregate_X":1 -> "transform_delta":1',
+            '"Project_X":0 -> "transform_alpha":0',
+            '"Project_X":0 -> "Generate_X":0',
+            '"transform_alpha":1 -> "Aggregate_X":1',
+            '"Filter_X":1 -> "Project_X":0',
+            '"Generate_X":0 -> "transform_lambda":0',
+            '"transform_lambda":0 -> "transform_gamma":0'])
 
     def test_list_case(self):
         @auto_tracking
@@ -100,16 +107,20 @@ class AutoTrackingTests(ReusedSQLTestCase):
         df = transform_beta(transform_alpha(self.spark.range(5)))
         self.assertEqual(df.orderBy('v').collect(), [Row(v=0), Row(v=1), Row(v=2), Row(v=3), Row(v=4)])
         self._test_generated_edges([
-            '"Aggregate_X":0 -> "transform_beta":0;',
-            '"Union_X":0 -> "Aggregate_X":0;',
-            '"Range_X":0 -> "Project_X":0;'])
+            '"Range_X":0 -> "Project_X":0',
+            '"transform_alpha_X":0 -> "Union_X":0',
+            '"Project_X":0 -> "transform_alpha":0',
+            '"Aggregate_X":0 -> "transform_beta":0',
+            '"transform_alpha":0 -> "Union_X":0',
+            '"Union_X":0 -> "Aggregate_X":0',
+            '"Project_X":0 -> "transform_alpha_X":0'])
 
     def test_tuple_case(self):
         @auto_tracking
         def transform_alpha(df):
             df1 = df.selectExpr('id % 3 AS v')
             df2 = df.selectExpr('id % 5 AS v')
-            return (df1, df2)  # tuple
+            return df1, df2  # tuple
 
         @auto_tracking
         def transform_beta(dfs):
@@ -121,9 +132,13 @@ class AutoTrackingTests(ReusedSQLTestCase):
         df = transform_beta(transform_alpha(self.spark.range(5)))
         self.assertEqual(df.orderBy('v').collect(), [Row(v=0), Row(v=1), Row(v=2), Row(v=3), Row(v=4)])
         self._test_generated_edges([
-            '"Aggregate_X":0 -> "transform_beta":0;',
-            '"Union_X":0 -> "Aggregate_X":0;',
-            '"Range_X":0 -> "Project_X":0;'])
+            '"Project_X":0 -> "transform_alpha_X":0',
+            '"transform_alpha":0 -> "Union_X":0',
+            '"Project_X":0 -> "transform_alpha":0',
+            '"Union_X":0 -> "Aggregate_X":0',
+            '"Aggregate_X":0 -> "transform_beta":0',
+            '"transform_alpha_X":0 -> "Union_X":0',
+            '"Range_X":0 -> "Project_X":0'])
 
     def test_dict_case(self):
         @auto_tracking
@@ -142,9 +157,13 @@ class AutoTrackingTests(ReusedSQLTestCase):
         df = transform_beta(transform_alpha(self.spark.range(5)))
         self.assertEqual(df.orderBy('v').collect(), [Row(v=0), Row(v=1), Row(v=2), Row(v=3), Row(v=4)])
         self._test_generated_edges([
-            '"Aggregate_X":0 -> "transform_beta":0;',
-            '"Union_X":0 -> "Aggregate_X":0;',
-            '"Range_X":0 -> "Project_X":0;'])
+            '"Project_X":0 -> "transform_alpha_X":0',
+            '"transform_alpha":0 -> "Union_X":0',
+            '"Project_X":0 -> "transform_alpha":0',
+            '"Union_X":0 -> "Aggregate_X":0',
+            '"Aggregate_X":0 -> "transform_beta":0',
+            '"transform_alpha_X":0 -> "Union_X":0',
+            '"Range_X":0 -> "Project_X":0'])
 
 
 if __name__ == "__main__":
