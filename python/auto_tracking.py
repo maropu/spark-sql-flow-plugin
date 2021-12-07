@@ -104,7 +104,8 @@ def auto_tracking_with(name):  # type: ignore
             # transformation process.
             output_dfs = _extract_dataframes_from(ret)
             if not output_dfs:
-                _create_tracking_views(_extract_dataframes_from(list(args) + list(kwargs.values())), name)
+                input_values = [v for v in inspect.signature(f).bind(self, *args, **kwargs).arguments.values()]
+                _create_tracking_views(_extract_dataframes_from(input_values), name)
             else:
                 _create_tracking_views(output_dfs, name)
 
