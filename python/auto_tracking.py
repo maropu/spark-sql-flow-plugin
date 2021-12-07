@@ -18,6 +18,7 @@
 #
 
 import functools
+import inspect
 import uuid
 from pyspark.sql import DataFrame, SparkSession
 from typing import Any, List
@@ -46,41 +47,50 @@ def _check_if_table_exists(ident: str) -> bool:
         return False
 
 
-def _create_temp_view_for_tracking(df: DataFrame, ident: str) -> str:
-    if _check_if_table_exists(ident):
-        new_ident = _create_temp_name(ident)
-        df.createOrReplaceTempView(new_ident)
-        return new_ident
-    else:
-        df.createTempView(ident)
-        return ident
-
-
-def _extract_dataframes(ret: Any) -> List[DataFrame]:
+def _extract_dataframes_from(ret: Any) -> List[DataFrame]:
     if type(ret) is DataFrame:
         return [ret]
     if type(ret) in (list, tuple):
-        return [e for e in ret if e is DataFrame]
+        return [e for e in ret if type(e) is DataFrame]
     if type(ret) is dict:
-        return [e for e in ret.values() if e is DataFrame]
+        return [e for e in ret.values() if type(e) is DataFrame]
 
     return []
 
 
-def _auto_track_dataframes(ret: Any, name: str) -> Any:
+def _create_tracking_view(df: DataFrame, name: str) -> str:
+    if _check_if_table_exists(name):
+        new_name = _create_temp_name(name)
+        df.createOrReplaceTempView(new_name)
+        return new_name
+    else:
+        df.createTempView(name)
+        return name
+
+
+def _create_tracking_views(dfs: List[DataFrame], name: str) -> None:
     # If ret holds `DataFrame`s, creates temp tables for tracking
     # transformation process.
-    for df in _extract_dataframes(ret):
-        ident = _create_temp_view_for_tracking(df, name)
+    for df in dfs:
+        ident = _create_tracking_view(df, name)
         _logger.info(f'Automatically tracking: {ident}({",".join(df.columns)})')
-
-    return ret
 
 
 def auto_tracking(f):  # type: ignore
     @functools.wraps(f)
     def wrapper(self, *args, **kwargs):  # type: ignore
-        return _auto_track_dataframes(f(self, *args, **kwargs), f.__name__)
+        ret = f(self, *args, **kwargs)
+
+        # If ret holds `DataFrame`s, creates temp tables for tracking
+        # transformation process.
+        output_dfs = _extract_dataframes_from(ret)
+        if not output_dfs:
+            input_values = [v for v in inspect.signature(f).bind(self, *args, **kwargs).arguments.values()]
+            _create_tracking_views(_extract_dataframes_from(input_values), f.__name__)
+        else:
+            _create_tracking_views(output_dfs, f.__name__)
+
+        return ret
     return wrapper
 
 
@@ -88,7 +98,17 @@ def auto_tracking_with(name):  # type: ignore
     def _auto_tracking(f):  # type: ignore
         @functools.wraps(f)
         def wrapper(self, *args, **kwargs):  # type: ignore
-            return _auto_track_dataframes(f(self, *args, **kwargs), name)
+            ret = f(self, *args, **kwargs)
+
+            # If ret holds `DataFrame`s, creates temp tables for tracking
+            # transformation process.
+            output_dfs = _extract_dataframes_from(ret)
+            if not output_dfs:
+                _create_tracking_views(_extract_dataframes_from(list(args) + list(kwargs.values())), name)
+            else:
+                _create_tracking_views(output_dfs, name)
+
+            return ret
         return wrapper
     return _auto_tracking
 
