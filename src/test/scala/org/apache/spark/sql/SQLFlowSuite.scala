@@ -772,4 +772,65 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
          """.stripMargin)
     }
   }
+
+  test("handle cache leaf plan nodes correctly") {
+    withTempView("v1", "v2") {
+      spark.range(1).cache().createOrReplaceTempView("v1")
+
+      spark.range(1)
+        .selectExpr("id as k", "id as v")
+        .groupBy("k")
+        .count()
+        .createOrReplaceTempView("v2")
+
+      val flowString = getOutputAsString {
+        SQLFlow.debugPrintAsSQLFlow()
+      }
+      checkOutputString(flowString,
+        s"""
+           |digraph {
+           |  graph [pad="0.5" nodesep="0.5" ranksep="1" fontname="Helvetica" rankdir=LR];
+           |  node [shape=plaintext]
+           |
+           |  "Aggregate_1" [label=<
+           |  <table color="lightgray" border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_1</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">count</td></tr>
+           |  </table>>];
+           |
+           |  "Project_0" [label=<
+           |  <table color="lightgray" border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Project_0</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  </table>>];
+           |
+           |  "Range_2" [label=<
+           |  <table color="lightgray" border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Range_2</i></td></tr>
+           |    <tr><td port="0">id</td></tr>
+           |  </table>>];
+           |
+           |  "v1" [color="lightblue" label=<
+           |  <table>
+           |    <tr><td bgcolor="lightblue" port="nodeName"><i><font color="white">v1</font></i></td></tr>
+           |    <tr><td port="0">id</td></tr>
+           |  </table>>];
+           |
+           |  "v2" [color="black" label=<
+           |  <table>
+           |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">v2</font></i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">count</td></tr>
+           |  </table>>];
+           |
+           |  "Aggregate_1":0 -> "v2":0;
+           |  "Aggregate_1":1 -> "v2":1;
+           |  "Project_0":0 -> "Aggregate_1":0;
+           |  "Range_2":0 -> "v1":0;
+           |  "v1":0 -> "Project_0":0;
+           |}
+         """.stripMargin)
+    }
+  }
 }

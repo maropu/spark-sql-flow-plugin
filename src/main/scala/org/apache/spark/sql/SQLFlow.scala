@@ -84,7 +84,6 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     }.toMap
 
     def skipToReplaceWithTempView(p: LogicalPlan): Boolean = p match {
-      case p if p.isInstanceOf[LeafNode] => true
       case _: View => true
       case _ => false
     }
