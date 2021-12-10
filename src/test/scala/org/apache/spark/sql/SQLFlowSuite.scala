@@ -47,8 +47,8 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
     checkOutputString(flowString,
       s"""
          |digraph {
-         |  graph [pad="0.5" nodesep="0.5" ranksep="1" fontname="Helvetica" rankdir=LR];
-         |  node [shape=plaintext]
+         |   graph [pad="0.5" nodesep="0.5" ranksep="1" fontname="Helvetica" rankdir=LR];
+         |   node [shape=plaintext]
          |
          |  "Aggregate_1" [label=<
          |  <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -64,6 +64,15 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
          |  <tr><td port="1">v</td></tr>
          |  </table>>];
          |
+         |  "plan_133579176" [color="black" label=<
+         |  <table>
+         |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">plan_133579176</font></i></td></tr>
+         |    <tr><td port="0">k</td></tr>
+         |  <tr><td port="1">sum(v)</td></tr>
+         |  </table>>];
+         |
+         |  "Aggregate_1":0 -> "plan_133579176":0;
+         |  "Aggregate_1":1 -> "plan_133579176":1;
          |  "LocalRelation_0":0 -> "Aggregate_1":0;
          |  "LocalRelation_0":1 -> "Aggregate_1":1;
          |}
@@ -144,9 +153,18 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |  <tr><td port="1">v</td></tr>
            |  </table>>];
            |
+           |  "plan_133579176" [color="black" label=<
+           |  <table>
+           |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">plan_133579176</font></i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">sum(v)</td></tr>
+           |  </table>>];
+           |
+           |  "Aggregate_1":0 -> "plan_133579176":0;
+           |  "Aggregate_1":1 -> "plan_133579176":1;
            |  "LocalRelation_0":0 -> "Aggregate_1":0;
            |  "LocalRelation_0":1 -> "Aggregate_1":1;
-           |  }
+           |}
          """.stripMargin)
     }
   }

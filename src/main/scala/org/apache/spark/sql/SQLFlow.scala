@@ -183,7 +183,7 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     session.sharedState.cacheManager.lookupCachedData(plan).isDefined
   }
 
-  private def getNodeNameWithId(name: String): String = {
+  protected def getNodeNameWithId(name: String): String = {
     s"${name}_${nextNodeId.getAndIncrement()}"
   }
 
@@ -218,7 +218,7 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     }
   }
 
-  private def generateTableNodeString(
+  protected def generateTableNodeString(
       p: LogicalPlan,
       nodeName: String,
       isCached: Boolean = false,
@@ -304,8 +304,13 @@ case class SQLFlow() extends BaseSQLFlow {
 
   def planToSQLFlow(plan: LogicalPlan): String = {
     val nodeMap = mutable.Map[String, String]()
-    val (_, edges) = traversePlanRecursively(plan, nodeMap)
-    generateGraphString(nodeMap.values.toSeq, edges)
+    val (inputNodeId, edges) = traversePlanRecursively(plan, nodeMap)
+    val topNodeName = s"plan_${Math.abs(plan.semanticHash())}"
+    val topNode = generateTableNodeString(plan, topNodeName, isCached = false, force = true)
+    val edgesToTopNode = plan.output.indices.map { i =>
+      s""""$inputNodeId":$i -> "$topNodeName":$i;"""
+    }
+    generateGraphString(topNode +: nodeMap.values.toSeq, edgesToTopNode ++ edges)
   }
 
   private def collectEdgesInPlan(
