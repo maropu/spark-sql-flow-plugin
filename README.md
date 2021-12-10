@@ -127,6 +127,8 @@ Automatically tracked data lineage is as follows:
 
 ## TODO
 
+ * Exports data lineage into other graph systems, e.g., Apache Atlas, neo4j, ... ([Issue#3](https://github.com/maropu/spark-sql-flow-plugin/issues/3))
+ * Tracks data lineage between table/views via `INSERT` queries ([Issue#5](https://github.com/maropu/spark-sql-flow-plugin/issues/5))
  * Supports global temp views
 
 ## Bug Reports
