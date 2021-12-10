@@ -81,7 +81,6 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
 
   test("SQLFlow.printAsSQLFlow") {
     withTempView("t") {
-      // TODO: If 't1' is changed to 't', the generated graph gets incorrect
       sql(s"""
            |CREATE OR REPLACE TEMPORARY VIEW t AS
            |  SELECT k, sum(v) FROM VALUES (1, 2), (3, 4) t(k, v) GROUP BY k
@@ -645,9 +644,11 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
     }
   }
 
-  test("TODO: Cannot cache view") {
+  test("cache permanent view") {
     withView("t") {
       sql("CREATE VIEW t AS SELECT k, SUM(v) sum FROM VALUES (1, 2) t(k, v) GROUP BY k")
+
+      spark.table("t").cache()
 
       val flowString = getOutputAsString {
         SQLFlow.debugPrintAsSQLFlow()
@@ -665,9 +666,9 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |  <tr><td port="1">sum</td></tr>
            |  </table>>];
            |
-           |  "default.t" [color="black" label=<
+           |  "default.t" [color="lightblue" label=<
            |  <table>
-           |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.t</font></i></td></tr>
+           |    <tr><td bgcolor="lightblue" port="nodeName"><i><font color="white">default.t</font></i></td></tr>
            |    <tr><td port="0">k</td></tr>
            |  <tr><td port="1">sum</td></tr>
            |  </table>>];
