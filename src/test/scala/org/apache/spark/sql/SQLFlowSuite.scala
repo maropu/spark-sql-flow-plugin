@@ -765,7 +765,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
     }
   }
 
-  test("cache permanent view") {
+  ignore("TODO: cache permanent view") {
     withView("t") {
       sql("CREATE VIEW t AS SELECT k, SUM(v) sum FROM VALUES (1, 2) t(k, v) GROUP BY k")
 
