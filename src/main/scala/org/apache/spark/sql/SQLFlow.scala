@@ -49,6 +49,14 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     plan: LogicalPlan,
     nodeMap: mutable.Map[String, String]): Seq[String]
 
+  def planToSQLFlow(plan: LogicalPlan): String = {
+    val nodeMap = mutable.Map[String, String]()
+    val topNodeName = s"plan_${Math.abs(plan.semanticHash())}"
+    val topNode = generateTableNodeString(plan, topNodeName, isCached = false, force = true)
+    val edges = collectEdges(topNodeName, plan, nodeMap)
+    generateGraphString(topNode +: nodeMap.values.toSeq, edges)
+  }
+
   def catalogToSQLFlow(session: SparkSession): String = {
     val nodeMap = mutable.Map[String, String]()
 
@@ -178,7 +186,7 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     session.sharedState.cacheManager.lookupCachedData(plan).isDefined
   }
 
-  private def getNodeNameWithId(name: String): String = {
+  protected def getNodeNameWithId(name: String): String = {
     s"${name}_${nextNodeId.getAndIncrement()}"
   }
 
@@ -213,7 +221,7 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     }
   }
 
-  private def generateTableNodeString(
+  protected def generateTableNodeString(
       p: LogicalPlan,
       nodeName: String,
       isCached: Boolean = false,
@@ -295,12 +303,6 @@ case class SQLFlow() extends BaseSQLFlow {
       Nil
     }
     edges ++ edgesToTempView
-  }
-
-  def planToSQLFlow(plan: LogicalPlan): String = {
-    val nodeMap = mutable.Map[String, String]()
-    val (_, edges) = traversePlanRecursively(plan, nodeMap)
-    generateGraphString(nodeMap.values.toSeq, edges)
   }
 
   private def collectEdgesInPlan(
@@ -790,9 +792,10 @@ case class TempViewNode(name: String, output: Seq[Attribute]) extends LeafNode {
 case class SQLFlowHolder[T] private[sql](private val ds: Dataset[T]) {
   import SQLFlow._
 
-  def debugPrintAsSQLFlow(): Unit = {
+  def debugPrintAsSQLFlow(contracted: Boolean = false): Unit = {
     // scalastyle:off println
-    println(SQLFlow().planToSQLFlow(ds.queryExecution.optimizedPlan))
+    val sqlFlow = if (contracted) SQLContractedFlow() else SQLFlow()
+    println(sqlFlow.planToSQLFlow(ds.queryExecution.optimizedPlan))
     // scalastyle:on println
   }
 
@@ -800,8 +803,10 @@ case class SQLFlowHolder[T] private[sql](private val ds: Dataset[T]) {
       outputDirPath: String,
       filenamePrefix: String = "sqlflow",
       format: String = "svg",
-      overwrite: Boolean = false): Unit = {
-    val flowString = SQLFlow().planToSQLFlow(ds.queryExecution.optimizedPlan)
+      overwrite: Boolean = false,
+      contracted: Boolean = false): Unit = {
+    val sqlFlow = if (contracted) SQLContractedFlow() else SQLFlow()
+    val flowString = sqlFlow.planToSQLFlow(ds.queryExecution.optimizedPlan)
     writeSQLFlow(outputDirPath, filenamePrefix, format, flowString, overwrite)
   }
 }

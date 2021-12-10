@@ -39,41 +39,142 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
   }
 
   test("df.printAsSQLFlow") {
-    import SQLFlow._
-    val flowString = getOutputAsString {
-      val df = sql("SELECT k, sum(v) FROM VALUES (1, 2), (3, 4) t(k, v) GROUP BY k")
-      df.debugPrintAsSQLFlow()
+    withTempView("t1", "t2") {
+      sql("CREATE OR REPLACE TEMPORARY VIEW t1 AS SELECT k, v v1 FROM VALUES (1, 2) t(k, v)")
+      sql("CREATE OR REPLACE TEMPORARY VIEW t2 AS SELECT k, v v2 FROM VALUES (1, 3) t(k, v)")
+
+      import SQLFlow._
+      val flowString = getOutputAsString {
+        val df = sql("SELECT t1.k, sum(v1 + v2) FROM t1, t2 WHERE t1.k = t2.k GROUP BY t1.k")
+        df.debugPrintAsSQLFlow()
+      }
+      checkOutputString(flowString,
+        s"""
+           |digraph {
+           |  graph [pad="0.5" nodesep="0.5" ranksep="1" fontname="Helvetica" rankdir=LR];
+           |  node [shape=plaintext]
+           |
+           |  "Aggregate_6" [label=<
+           |  <table color="lightgray" border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_6</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">sum((v1 + v2))</td></tr>
+           |  </table>>];
+           |
+           |  "Join_Inner_4" [label=<
+           |  <table color="lightgray" border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_4</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v1</td></tr>
+           |  <tr><td port="2">k</td></tr>
+           |  <tr><td port="3">v2</td></tr>
+           |  </table>>];
+           |
+           |  "LocalRelation_0" [color="black" label=<
+           |  <table>
+           |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation_0</font></i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v</td></tr>
+           |  </table>>];
+           |
+           |  "LocalRelation_2" [color="black" label=<
+           |  <table>
+           |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation_2</font></i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v</td></tr>
+           |  </table>>];
+           |
+           |  "Project_1" [label=<
+           |  <table color="lightgray" border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Project_1</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v1</td></tr>
+           |  </table>>];
+           |
+           |  "Project_3" [label=<
+           |  <table color="lightgray" border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Project_3</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v2</td></tr>
+           |  </table>>];
+           |
+           |  "Project_5" [label=<
+           |  <table color="lightgray" border="1" cellborder="0" cellspacing="0">
+           |    <tr><td bgcolor="lightgray" port="nodeName"><i>Project_5</i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v1</td></tr>
+           |  <tr><td port="2">v2</td></tr>
+           |  </table>>];
+           |
+           |  "plan_1111919741" [color="black" label=<
+           |  <table>
+           |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">plan_1111919741</font></i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">sum((v1 + v2))</td></tr>
+           |  </table>>];
+           |
+           |  "Aggregate_6":0 -> "plan_1111919741":0;
+           |  "Aggregate_6":1 -> "plan_1111919741":1;
+           |  "Join_Inner_4":0 -> "Project_5":0;
+           |  "Join_Inner_4":1 -> "Project_5":1;
+           |  "Join_Inner_4":3 -> "Project_5":2;
+           |  "LocalRelation_0":0 -> "Project_1":0;
+           |  "LocalRelation_0":1 -> "Project_1":1;
+           |  "LocalRelation_2":0 -> "Project_3":0;
+           |  "LocalRelation_2":1 -> "Project_3":1;
+           |  "Project_1":0 -> "Join_Inner_4":0;
+           |  "Project_1":1 -> "Join_Inner_4":1;
+           |  "Project_3":0 -> "Join_Inner_4":2;
+           |  "Project_3":1 -> "Join_Inner_4":3;
+           |  "Project_5":0 -> "Aggregate_6":0;
+           |  "Project_5":1 -> "Aggregate_6":1;
+           |  "Project_5":2 -> "Aggregate_6":1;
+           |}
+         """.stripMargin)
+
+      val contractedFlowString = getOutputAsString {
+        val df = sql("SELECT t1.k, sum(v1 + v2) FROM t1, t2 WHERE t1.k = t2.k GROUP BY t1.k")
+        df.debugPrintAsSQLFlow(contracted = true)
+      }
+      checkOutputString(contractedFlowString,
+        s"""
+           |digraph {
+           |   graph [pad="0.5" nodesep="0.5" ranksep="1" fontname="Helvetica" rankdir=LR];
+           |   node [shape=plaintext]
+           |
+           |  "LocalRelation_0" [color="black" label=<
+           |  <table>
+           |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation_0</font></i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v</td></tr>
+           |  </table>>];
+           |
+           |  "LocalRelation_1" [color="black" label=<
+           |  <table>
+           |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation_1</font></i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v</td></tr>
+           |  </table>>];
+           |
+           |  "plan_1111919741" [color="black" label=<
+           |  <table>
+           |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">plan_1111919741</font></i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">sum((v1 + v2))</td></tr>
+           |  </table>>];
+           |
+           |  "LocalRelation_0":0 -> "plan_1111919741":0
+           |  "LocalRelation_0":1 -> "plan_1111919741":1
+           |  "LocalRelation_1":0 -> "plan_1111919741":0
+           |  "LocalRelation_1":1 -> "plan_1111919741":1
+           |}
+         """.stripMargin)
     }
-    checkOutputString(flowString,
-      s"""
-         |digraph {
-         |  graph [pad="0.5" nodesep="0.5" ranksep="1" fontname="Helvetica" rankdir=LR];
-         |  node [shape=plaintext]
-         |
-         |  "Aggregate_1" [label=<
-         |  <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-         |    <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_1</i></td></tr>
-         |    <tr><td port="0">k</td></tr>
-         |  <tr><td port="1">sum(v)</td></tr>
-         |  </table>>];
-         |
-         |  "LocalRelation_0" [color="black" label=<
-         |  <table>
-         |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation_0</font></i></td></tr>
-         |    <tr><td port="0">k</td></tr>
-         |  <tr><td port="1">v</td></tr>
-         |  </table>>];
-         |
-         |  "LocalRelation_0":0 -> "Aggregate_1":0;
-         |  "LocalRelation_0":1 -> "Aggregate_1":1;
-         |}
-       """.stripMargin)
   }
 
   test("SQLFlow.printAsSQLFlow") {
     withTempView("t") {
-      // TODO: If 't1' is changed to 't', the generated graph gets incorrect
-      sql(s"""
+      sql("""
            |CREATE OR REPLACE TEMPORARY VIEW t AS
            |  SELECT k, sum(v) FROM VALUES (1, 2), (3, 4) t(k, v) GROUP BY k
          """.stripMargin)
@@ -114,6 +215,34 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |  "t_0":1 -> "Aggregate_1":1;
            |}
          """.stripMargin)
+
+      val contractedFlowString = getOutputAsString {
+        SQLFlow.debugPrintAsSQLFlow(contracted = true)
+      }
+      checkOutputString(contractedFlowString,
+        s"""
+           |digraph {
+           |  graph [pad="0.5" nodesep="0.5" ranksep="1" fontname="Helvetica" rankdir=LR];
+           |  node [shape=plaintext]
+           |
+           |  "t" [color="black" label=<
+           |  <table>
+           |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">t</font></i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">sum(v)</td></tr>
+           |  </table>>];
+           |
+           |  "t_0" [color="black" label=<
+           |  <table>
+           |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">t_0</font></i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">v</td></tr>
+           |  </table>>];
+           |
+           |  "t_0":0 -> "t":0
+           |  "t_0":1 -> "t":1
+           |}
+         """.stripMargin)
     }
   }
 
@@ -144,9 +273,18 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |  <tr><td port="1">v</td></tr>
            |  </table>>];
            |
+           |  "plan_133579176" [color="black" label=<
+           |  <table>
+           |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">plan_133579176</font></i></td></tr>
+           |    <tr><td port="0">k</td></tr>
+           |  <tr><td port="1">sum(v)</td></tr>
+           |  </table>>];
+           |
+           |  "Aggregate_1":0 -> "plan_133579176":0;
+           |  "Aggregate_1":1 -> "plan_133579176":1;
            |  "LocalRelation_0":0 -> "Aggregate_1":0;
            |  "LocalRelation_0":1 -> "Aggregate_1":1;
-           |  }
+           |}
          """.stripMargin)
     }
   }
@@ -154,7 +292,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
   test("SQLFlow.saveAsSQLFlow") {
     withTempView("t") {
       withTempDir { dirPath =>
-        sql(s"""
+        sql("""
              |CREATE OR REPLACE TEMPORARY VIEW t AS
              |  SELECT k, sum(v) FROM VALUES (1, 2), (3, 4) t(k, v) GROUP BY k
            """.stripMargin)
@@ -254,7 +392,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
     withTempView("t") {
       withTempDir { dirPath =>
         sql(
-          s"""
+          """
              |CREATE OR REPLACE TEMPORARY VIEW t AS
              |  SELECT k, sum(v) FROM VALUES (1, 2), (3, 4) t(k, v) GROUP BY k
            """.stripMargin)
@@ -627,9 +765,11 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
     }
   }
 
-  test("TODO: Cannot cache view") {
+  test("cache permanent view") {
     withView("t") {
       sql("CREATE VIEW t AS SELECT k, SUM(v) sum FROM VALUES (1, 2) t(k, v) GROUP BY k")
+
+      spark.table("t").cache()
 
       val flowString = getOutputAsString {
         SQLFlow.debugPrintAsSQLFlow()
@@ -647,9 +787,9 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |  <tr><td port="1">sum</td></tr>
            |  </table>>];
            |
-           |  "default.t" [color="black" label=<
+           |  "default.t" [color="lightblue" label=<
            |  <table>
-           |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">default.t</font></i></td></tr>
+           |    <tr><td bgcolor="lightblue" port="nodeName"><i><font color="white">default.t</font></i></td></tr>
            |    <tr><td port="0">k</td></tr>
            |  <tr><td port="1">sum</td></tr>
            |  </table>>];
