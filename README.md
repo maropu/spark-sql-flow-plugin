@@ -31,10 +31,10 @@ Welcome to
       ____              __
      / __/__  ___ _____/ /__
     _\ \/ _ \/ _ `/ __/  '_/
-   /__ / .__/\_,_/_/ /_/\_\   version 3.2.0
+   /__ / .__/\_,_/_/ /_/\_\   version 3.1.2
       /_/
 
-Using Python version 3.7.10 (default, Jun  4 2021 14:48:32)
+Using Python version 3.6.8 (default, Dec 29 2018 19:04:46)
 
 # Defines some views for this example
 >>> sql("CREATE TABLE TestTable (key INT, value INT)")
