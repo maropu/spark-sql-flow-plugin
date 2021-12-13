@@ -13,7 +13,7 @@ digraph {
 <tr><td port="1">cate</td></tr>
 <tr><td port="2">count(val) OVER (PARTITION BY cate ORDER BY val ASC NULLS FIRST ROWS BETWEEN CURRENT ROW AND CURRENT ROW)</td></tr>
 </table>>];
-       
+     
 
 "t10" [color="black" label=<
 <table>
@@ -51,7 +51,7 @@ digraph {
 <tr><td port="30">skewness</td></tr>
 <tr><td port="31">kurtosis</td></tr>
 </table>>];
-       
+     
 
 "t11" [color="black" label=<
 <table>
@@ -65,7 +65,7 @@ digraph {
 <tr><td port="6">last_value_ignore_null</td></tr>
 <tr><td port="7">last_value_contain_null</td></tr>
 </table>>];
-       
+     
 
 "t12" [color="black" label=<
 <table>
@@ -73,7 +73,7 @@ digraph {
   <tr><td port="0">cate</td></tr>
 <tr><td port="1">sum(CAST(val AS BIGINT)) OVER (PARTITION BY cate ORDER BY val ASC NULLS FIRST RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)</td></tr>
 </table>>];
-       
+     
 
 "t2" [color="black" label=<
 <table>
@@ -82,7 +82,7 @@ digraph {
 <tr><td port="1">cate</td></tr>
 <tr><td port="2">sum(val) OVER (PARTITION BY cate ORDER BY val ASC NULLS FIRST ROWS BETWEEN UNBOUNDED PRECEDING AND 1 FOLLOWING)</td></tr>
 </table>>];
-       
+     
 
 "t3" [color="black" label=<
 <table>
@@ -91,7 +91,7 @@ digraph {
 <tr><td port="1">cate</td></tr>
 <tr><td port="2">count(val) OVER (PARTITION BY cate ORDER BY val ASC NULLS FIRST RANGE BETWEEN 1 PRECEDING AND CURRENT ROW)</td></tr>
 </table>>];
-       
+     
 
 "t4" [color="black" label=<
 <table>
@@ -100,7 +100,7 @@ digraph {
 <tr><td port="1">cate</td></tr>
 <tr><td port="2">sum(val) OVER (PARTITION BY cate ORDER BY val ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND 1 FOLLOWING)</td></tr>
 </table>>];
-       
+     
 
 "t5" [color="black" label=<
 <table>
@@ -109,7 +109,7 @@ digraph {
 <tr><td port="1">cate</td></tr>
 <tr><td port="2">sum(val_long) OVER (PARTITION BY cate ORDER BY val_long ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND 2147483648 FOLLOWING)</td></tr>
 </table>>];
-       
+     
 
 "t6" [color="black" label=<
 <table>
@@ -118,7 +118,7 @@ digraph {
 <tr><td port="1">cate</td></tr>
 <tr><td port="2">sum(val_double) OVER (PARTITION BY cate ORDER BY val_double ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND CAST(2.5 AS DOUBLE) FOLLOWING)</td></tr>
 </table>>];
-       
+     
 
 "t7" [color="black" label=<
 <table>
@@ -127,7 +127,7 @@ digraph {
 <tr><td port="1">cate</td></tr>
 <tr><td port="2">max(val_date) OVER (PARTITION BY cate ORDER BY val_date ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND 2 FOLLOWING)</td></tr>
 </table>>];
-       
+     
 
 "t8" [color="black" label=<
 <table>
@@ -136,7 +136,7 @@ digraph {
 <tr><td port="1">cate</td></tr>
 <tr><td port="2">avg(CAST(val_timestamp AS DOUBLE)) OVER (PARTITION BY cate ORDER BY val_timestamp ASC NULLS FIRST RANGE BETWEEN CURRENT ROW AND INTERVAL '23 days 4 hours' FOLLOWING)</td></tr>
 </table>>];
-       
+     
 
 "t9" [color="black" label=<
 <table>
@@ -145,7 +145,7 @@ digraph {
 <tr><td port="1">cate</td></tr>
 <tr><td port="2">sum(val) OVER (PARTITION BY cate ORDER BY val DESC NULLS LAST RANGE BETWEEN CURRENT ROW AND 1 FOLLOWING)</td></tr>
 </table>>];
-       
+     
 
 "testData_0" [color="black" label=<
 <table>
@@ -157,7 +157,7 @@ digraph {
 <tr><td port="4">val_timestamp</td></tr>
 <tr><td port="5">cate</td></tr>
 </table>>];
-       
+     
 
 "testdata" [color="black" label=<
 <table>
@@ -169,35 +169,35 @@ digraph {
 <tr><td port="4">val_timestamp</td></tr>
 <tr><td port="5">cate</td></tr>
 </table>>];
-       
-  "testData_0":0 -> "testdata":0
-"testData_0":1 -> "testdata":1
-"testData_0":2 -> "testdata":2
-"testData_0":3 -> "testdata":3
-"testData_0":4 -> "testdata":4
-"testData_0":5 -> "testdata":5
-"testdata":0 -> "t1":0
-"testdata":0 -> "t10":0
-"testdata":0 -> "t11":0
-"testdata":0 -> "t2":0
-"testdata":0 -> "t3":0
-"testdata":0 -> "t4":0
-"testdata":0 -> "t9":0
-"testdata":1 -> "t5":0
-"testdata":2 -> "t6":0
-"testdata":3 -> "t7":0
-"testdata":4 -> "t8":0
-"testdata":5 -> "t1":1
-"testdata":5 -> "t10":1
-"testdata":5 -> "t11":1
-"testdata":5 -> "t12":0
-"testdata":5 -> "t2":1
-"testdata":5 -> "t3":1
-"testdata":5 -> "t4":1
-"testdata":5 -> "t5":1
-"testdata":5 -> "t6":1
-"testdata":5 -> "t7":1
-"testdata":5 -> "t8":1
-"testdata":5 -> "t9":1
+     
+  "testData_0":0 -> "testdata":0;
+"testData_0":1 -> "testdata":1;
+"testData_0":2 -> "testdata":2;
+"testData_0":3 -> "testdata":3;
+"testData_0":4 -> "testdata":4;
+"testData_0":5 -> "testdata":5;
+"testdata":0 -> "t1":0;
+"testdata":0 -> "t10":0;
+"testdata":0 -> "t11":0;
+"testdata":0 -> "t2":0;
+"testdata":0 -> "t3":0;
+"testdata":0 -> "t4":0;
+"testdata":0 -> "t9":0;
+"testdata":1 -> "t5":0;
+"testdata":2 -> "t6":0;
+"testdata":3 -> "t7":0;
+"testdata":4 -> "t8":0;
+"testdata":5 -> "t1":1;
+"testdata":5 -> "t10":1;
+"testdata":5 -> "t11":1;
+"testdata":5 -> "t12":0;
+"testdata":5 -> "t2":1;
+"testdata":5 -> "t3":1;
+"testdata":5 -> "t4":1;
+"testdata":5 -> "t5":1;
+"testdata":5 -> "t6":1;
+"testdata":5 -> "t7":1;
+"testdata":5 -> "t8":1;
+"testdata":5 -> "t9":1;
 }
        

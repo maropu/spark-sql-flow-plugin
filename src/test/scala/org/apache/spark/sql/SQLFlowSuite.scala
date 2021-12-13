@@ -38,7 +38,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
       s"`$actual` didn't match an expected string `$expected`")
   }
 
-  test("df.printAsSQLFlow") {
+  test("df.debugPrintAsSQLFlow") {
     withTempView("t1", "t2") {
       sql("CREATE OR REPLACE TEMPORARY VIEW t1 AS SELECT k, v v1 FROM VALUES (1, 2) t(k, v)")
       sql("CREATE OR REPLACE TEMPORARY VIEW t2 AS SELECT k, v v2 FROM VALUES (1, 3) t(k, v)")
@@ -163,16 +163,33 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |  <tr><td port="1">sum((v1 + v2))</td></tr>
            |  </table>>];
            |
-           |  "LocalRelation_0":0 -> "plan_1111919741":0
-           |  "LocalRelation_0":1 -> "plan_1111919741":1
-           |  "LocalRelation_1":0 -> "plan_1111919741":0
-           |  "LocalRelation_1":1 -> "plan_1111919741":1
+           |  "LocalRelation_0":0 -> "plan_1111919741":0;
+           |  "LocalRelation_0":1 -> "plan_1111919741":1;
+           |  "LocalRelation_1":0 -> "plan_1111919741":0;
+           |  "LocalRelation_1":1 -> "plan_1111919741":1;
            |}
          """.stripMargin)
     }
   }
 
-  test("SQLFlow.printAsSQLFlow") {
+  test("df.debugPrintAsSQLFlow - custom graph format") {
+    withTempView("t1", "t2") {
+      sql("CREATE OR REPLACE TEMPORARY VIEW t1 AS SELECT k, v v1 FROM VALUES (1, 2) t(k, v)")
+      sql("CREATE OR REPLACE TEMPORARY VIEW t2 AS SELECT k, v v2 FROM VALUES (1, 3) t(k, v)")
+
+      import SQLFlow._
+      val outputString = getOutputAsString {
+        val df = sql("SELECT t1.k, sum(v1 + v2) FROM t1, t2 WHERE t1.k = t2.k GROUP BY t1.k")
+        df.debugPrintAsSQLFlow(contracted = true,
+          (nodes: Seq[SQLFlowGraphNode], edges: Seq[SQLFlowGraphEdge]) => {
+            s"#nodes:${nodes.length} #edges:${edges.length}"
+          })
+      }
+      assert(outputString.contains("#nodes:3 #edges:4"))
+    }
+  }
+
+  test("SQLFlow.debugPrintAsSQLFlow") {
     withTempView("t") {
       sql("""
            |CREATE OR REPLACE TEMPORARY VIEW t AS
@@ -239,10 +256,27 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |  <tr><td port="1">v</td></tr>
            |  </table>>];
            |
-           |  "t_0":0 -> "t":0
-           |  "t_0":1 -> "t":1
+           |  "t_0":0 -> "t":0;
+           |  "t_0":1 -> "t":1;
            |}
          """.stripMargin)
+    }
+  }
+
+  test("SQLFlow.printAsSQLFlow - custom graph format") {
+    withTempView("t") {
+      sql("""
+            |CREATE OR REPLACE TEMPORARY VIEW t AS
+            |  SELECT k, sum(v) FROM VALUES (1, 2), (3, 4) t(k, v) GROUP BY k
+         """.stripMargin)
+
+      val outputString = getOutputAsString {
+        SQLFlow.debugPrintAsSQLFlow(contracted = true,
+          (nodes: Seq[SQLFlowGraphNode], edges: Seq[SQLFlowGraphEdge]) => {
+            s"#nodes:${nodes.length} #edges:${edges.length}"
+          })
+      }
+      assert(outputString.contains("#nodes:2 #edges:2"))
     }
   }
 
@@ -337,42 +371,49 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
   }
 
   test("path already exists") {
-    withTempDir { dir =>
-      import SQLFlow._
-      val outputDir = new File(dir, "outputDir")
-      assert(outputDir.mkdir())
+    withTempView("t") {
+      spark.range(1).groupBy("id").count().createOrReplaceTempView("t")
+      withTempDir { dir =>
+        import SQLFlow._
+        val outputDir = new File(dir, "outputDir")
+        assert(outputDir.mkdir())
 
-      val errMsg1 = intercept[AnalysisException] {
-        spark.range(1).saveAsSQLFlow(outputDir.getAbsolutePath)
-      }.getMessage
-      assert(errMsg1.contains(" already exists"))
+        val errMsg1 = intercept[AnalysisException] {
+          spark.table("t").saveAsSQLFlow(outputDir.getAbsolutePath)
+        }.getMessage
+        assert(errMsg1.contains(" already exists"))
 
-      spark.range(1).saveAsSQLFlow(outputDir.getAbsolutePath, overwrite = true)
-      val dotFile = new File(outputDir, "sqlflow.dot")
-      assert(dotFile.exists())
-      assert(dotFile.delete())
+        spark.range(1).groupBy("id").count()
+          .saveAsSQLFlow(outputDir.getAbsolutePath, overwrite = true)
+        val dotFile = new File(outputDir, "sqlflow.dot")
+        assert(dotFile.exists())
+        assert(dotFile.delete())
 
-      val errMsg2 = intercept[AnalysisException] {
-        SQLFlow.saveAsSQLFlow(outputDir.getAbsolutePath)
-      }.getMessage
-      assert(errMsg2.contains(" already exists"))
+        val errMsg2 = intercept[AnalysisException] {
+          SQLFlow.saveAsSQLFlow(outputDir.getAbsolutePath)
+        }.getMessage
+        assert(errMsg2.contains(" already exists"))
 
-      SQLFlow.saveAsSQLFlow(outputDir.getAbsolutePath, overwrite = true)
-      assert(dotFile.exists())
+        SQLFlow.saveAsSQLFlow(outputDir.getAbsolutePath, overwrite = true)
+        assert(dotFile.exists())
+      }
     }
   }
 
   test("invalid image format") {
-    withTempDir { dir =>
-      import SQLFlow._
-      val errMsg1 = intercept[AnalysisException] {
-        spark.range(1).saveAsSQLFlow(s"${dir.getAbsolutePath}/d", format = "invalid")
-      }.getMessage
-      assert(errMsg1.contains("Invalid image format: invalid"))
-      val errMsg2 = intercept[AnalysisException] {
-        SQLFlow.saveAsSQLFlow(s"${dir.getAbsolutePath}/d", format = "invalid")
-      }.getMessage
-      assert(errMsg2.contains("Invalid image format: invalid"))
+    withTempView("t") {
+      spark.range(1).groupBy("id").count().createOrReplaceTempView("t")
+      withTempDir { dir =>
+        import SQLFlow._
+        val errMsg1 = intercept[AnalysisException] {
+          spark.table("t").saveAsSQLFlow(s"${dir.getAbsolutePath}/d", format = "invalid")
+        }.getMessage
+        assert(errMsg1.contains("Invalid image format: invalid"))
+        val errMsg2 = intercept[AnalysisException] {
+          SQLFlow.saveAsSQLFlow(s"${dir.getAbsolutePath}/d", format = "invalid")
+        }.getMessage
+        assert(errMsg2.contains("Invalid image format: invalid"))
+      }
     }
   }
 
@@ -901,7 +942,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession with SQLTestUtils {
            |  "Generate_5":0 -> "df3":0;
            |  "Project_2":0 -> "df1":0;
            |  "Project_2":1 -> "df1":1;
-           |  "Project_4":0 -> "Generate_5":0
+           |  "Project_4":0 -> "Generate_5":0;
            |  "Range_1":0 -> "Project_2":0;
            |  "Range_1":0 -> "Project_2":1;
            |  "df1":0 -> "Aggregate_0":0;

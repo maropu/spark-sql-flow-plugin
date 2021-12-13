@@ -1,3 +1,4 @@
+
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -22,8 +23,6 @@ import java.util.Locale
 import java.util.concurrent.atomic.AtomicInteger
 
 import scala.collection.mutable
-import scala.sys.process.{Process, ProcessLogger}
-import scala.util.Try
 
 import org.apache.commons.io.FileUtils;
 
@@ -38,27 +37,50 @@ import org.apache.spark.sql.catalyst.util._
 import org.apache.spark.sql.execution.columnar.InMemoryRelation
 import org.apache.spark.sql.execution.datasources.LogicalRelation
 
+object GraphNodeType extends Enumeration {
+  val TableNode, PlanNode = Value
+}
+
+case class SQLFlowGraphNode(
+  ident: String,
+  attributes: Seq[String],
+  tpe: GraphNodeType.Value,
+  isCached: Boolean)
+
+case class SQLFlowGraphEdge(
+  from: String,
+  fromIdx: Option[Int],
+  to: String,
+  toIdx: Option[Int])
+
+// TODO: Supports more formats to export data lineage into other systems,
+// e.g., Apache Atlas, neo4j, ...
+abstract class BaseGraphFormat {
+  def toGraphString(nodes: Seq[SQLFlowGraphNode], edges: Seq[SQLFlowGraphEdge]): String
+}
+
 abstract class BaseSQLFlow extends PredicateHelper with Logging {
 
-  private val cachedNodeColor = "lightblue"
-
   private val nextNodeId = new AtomicInteger(0)
+
+  protected def graphFormat: BaseGraphFormat
 
   def collectEdges(
     tempView: String,
     plan: LogicalPlan,
-    nodeMap: mutable.Map[String, String]): Seq[String]
+    nodeMap: mutable.Map[String, SQLFlowGraphNode]): Seq[SQLFlowGraphEdge]
 
   def planToSQLFlow(plan: LogicalPlan): String = {
-    val nodeMap = mutable.Map[String, String]()
+    val nodeMap = mutable.Map[String, SQLFlowGraphNode]()
     val topNodeName = s"plan_${Math.abs(plan.semanticHash())}"
-    val topNode = generateTableNodeString(plan, topNodeName, isCached = false, force = true)
+    val outputAttrNames = plan.output.map(_.name)
+    val topNode = generateTableNode(outputAttrNames, topNodeName, isCached = false )
     val edges = collectEdges(topNodeName, plan, nodeMap)
-    generateGraphString(topNode +: nodeMap.values.toSeq, edges)
+    graphFormat.toGraphString(topNode +: nodeMap.values.toSeq, edges)
   }
 
   def catalogToSQLFlow(session: SparkSession): String = {
-    val nodeMap = mutable.Map[String, String]()
+    val nodeMap = mutable.Map[String, SQLFlowGraphNode]()
 
     val catalog = session.sessionState.catalog
     val views = catalog.listDatabases().flatMap { db =>
@@ -84,7 +106,8 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
 
     // Generate node labels for views if necessary
     (tempViews ++ views).foreach { case (viewName, analyzed) =>
-      nodeMap(viewName) = generateTableNodeString(analyzed, viewName, isCached(analyzed))
+      val outputAttrNames = analyzed.output.map(_.name)
+      nodeMap(viewName) = generateTableNode(outputAttrNames, viewName, isCached(analyzed))
     }
 
     val subplanToTempViewMap = tempViews.map { case (viewName, analyzed) =>
@@ -176,10 +199,10 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
       }
     }
 
-    generateGraphString(nodeMap.values.toSeq, edges.flatten)
+    graphFormat.toGraphString(nodeMap.values.toSeq, edges.flatten)
   }
 
-  private def isCached(plan: LogicalPlan): Boolean = {
+  protected def isCached(plan: LogicalPlan): Boolean = {
     val session = SparkSession.getActiveSession.getOrElse {
       throw new IllegalStateException("Active SparkSession not found")
     }
@@ -199,105 +222,45 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     case _ => getNodeNameWithId(p.nodeName)
   }
 
-  private def normalizeForHtml(str: String) = {
-    str.replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
+  protected def generateTableNode(
+      outputAttrNames: Seq[String],
+      nodeName: String,
+      isCached: Boolean = false): SQLFlowGraphNode = {
+    SQLFlowGraphNode(nodeName, outputAttrNames, GraphNodeType.TableNode, isCached)
   }
 
-  protected def generateGraphString(nodes: Seq[String], edges: Seq[String]) = {
-    if (nodes.nonEmpty) {
-      s"""
-         |digraph {
-         |  graph [pad="0.5" nodesep="0.5" ranksep="1" fontname="Helvetica" rankdir=LR];
-         |  node [shape=plaintext]
-         |
-         |  ${nodes.sorted.mkString("\n")}
-         |  ${edges.sorted.mkString("\n")}
-         |}
-       """.stripMargin
-    } else {
-      ""
-    }
+  protected def generatePlanNode(
+      outputAttrNames: Seq[String],
+      nodeName: String,
+      isCached: Boolean = false): SQLFlowGraphNode = {
+    SQLFlowGraphNode(nodeName, outputAttrNames, GraphNodeType.PlanNode, isCached)
   }
 
-  protected def generateTableNodeString(
+  protected def generateGraphNode(
       p: LogicalPlan,
       nodeName: String,
-      isCached: Boolean = false,
-      force: Boolean = false) = {
-    if (force || p.output.nonEmpty) {
-      val nodeColor = if (isCached) cachedNodeColor else "black"
-      val outputAttrs = p.output.zipWithIndex.map { case (attr, i) =>
-        s"""<tr><td port="$i">${normalizeForHtml(attr.name)}</td></tr>"""
-      }
-      // scalastyle:off line.size.limit
-      s"""
-         |"$nodeName" [color="$nodeColor" label=<
-         |<table>
-         |  <tr><td bgcolor="$nodeColor" port="nodeName"><i><font color="white">$nodeName</font></i></td></tr>
-         |  ${outputAttrs.mkString("\n")}
-         |</table>>];
-       """.stripMargin
-      // scalastyle:on line.size.limit
-    } else {
-      ""
-    }
-  }
-
-  private def generatePlanNodeString(
-      p: LogicalPlan,
-      nodeName: String,
-      isCached: Boolean = false,
-      force: Boolean = false) = {
-    if (force || p.output.nonEmpty) {
-      val nodeColor = if (isCached) cachedNodeColor else "lightgray"
-      val outputAttrs = p.output.zipWithIndex.map { case (attr, i) =>
-        s"""<tr><td port="$i">${normalizeForHtml(attr.name)}</td></tr>"""
-      }
-      // scalastyle:off line.size.limit
-      s"""
-         |"$nodeName" [label=<
-         |<table color="$nodeColor" border="1" cellborder="0" cellspacing="0">
-         |  <tr><td bgcolor="$nodeColor" port="nodeName"><i>$nodeName</i></td></tr>
-         |  ${outputAttrs.mkString("\n")}
-         |</table>>];
-       """.stripMargin
-      // scalastyle:on line.size.limit
-    } else {
-      ""
-    }
-  }
-
-  protected def generateNodeString(
-      p: LogicalPlan,
-      nodeName: String,
-      isCached: Boolean,
-      force: Boolean = false): String = {
+      isCached: Boolean): SQLFlowGraphNode = {
+    val outputAttrNames = p.output.map(_.name)
     p match {
-      case _: View | _: ViewNode |_: TempViewNode | _: LocalRelation | _: LogicalRelation |
+      case _: View | _: ViewNode | _: TempViewNode | _: LocalRelation | _: LogicalRelation |
            _: InMemoryRelation | _: HiveTableRelation =>
-        generateTableNodeString(p, nodeName, isCached, force)
+        generateTableNode(outputAttrNames, nodeName, isCached)
       case _ =>
-        generatePlanNodeString(p, nodeName, isCached, force)
+        generatePlanNode(outputAttrNames, nodeName, isCached)
     }
-  }
-
-  protected def generateNodeString(p: LogicalPlan, nodeName: String): String = {
-    generateNodeString(p, nodeName, isCached(p))
   }
 }
 
-case class SQLFlow() extends BaseSQLFlow {
+case class SQLFlow(graphFormat: BaseGraphFormat) extends BaseSQLFlow {
 
   override def collectEdges(
       tempView: String,
       plan: LogicalPlan,
-      nodeMap: mutable.Map[String, String]): Seq[String] = {
+      nodeMap: mutable.Map[String, SQLFlowGraphNode]): Seq[SQLFlowGraphEdge] = {
     val (inputNodeId, edges) = traversePlanRecursively(plan, nodeMap, isRoot = true)
     val edgesToTempView = if (inputNodeId != tempView) {
       plan.output.indices.map { i =>
-        s""""$inputNodeId":$i -> "$tempView":$i;"""
+        SQLFlowGraphEdge(inputNodeId, Some(i), tempView, Some(i))
       }
     } else {
       Nil
@@ -308,11 +271,11 @@ case class SQLFlow() extends BaseSQLFlow {
   private def collectEdgesInPlan(
       plan: LogicalPlan,
       curNodeName: String,
-      inputNodeIds: Seq[String]): Seq[String] = {
+      inputNodeIds: Seq[String]): Seq[SQLFlowGraphEdge] = {
     val inputNodeIdsWithOutput = inputNodeIds.zip(plan.children.map(_.output))
     val inputAttrSeq = inputNodeIdsWithOutput.map { case (nodeId, output) =>
       output.zipWithIndex.map { case (a, i) =>
-        a -> s""""$nodeId":$i"""
+        a -> (nodeId, i)
       }
     }
     val inputAttrMap = AttributeMap(inputAttrSeq.flatten)
@@ -321,25 +284,30 @@ case class SQLFlow() extends BaseSQLFlow {
       case Aggregate(_, aggExprs, _) =>
         aggExprs.zip(outputAttrWithIndex).flatMap { case (ne, (_, i)) =>
           ne.references.filter(inputAttrMap.contains).map { attr =>
-            s"""${inputAttrMap(attr)} -> "$curNodeName":$i;"""
+            val (inputNodeId, fromIdx) = inputAttrMap(attr)
+            SQLFlowGraphEdge(inputNodeId, Some(fromIdx), curNodeName, Some(i))
           }
         }
 
       case Project(projList, _) =>
         projList.zip(outputAttrWithIndex).flatMap { case (ne, (_, i)) =>
           ne.references.filter(inputAttrMap.contains).map { attr =>
-            s"""${inputAttrMap(attr)} -> "$curNodeName":$i;"""
+            val (inputNodeId, fromIdx) = inputAttrMap(attr)
+            SQLFlowGraphEdge(inputNodeId, Some(fromIdx), curNodeName, Some(i))
           }
         }
 
       case g @ Generate(generator, _, _, _, generatorOutput, _) =>
         val edgesForChildren = g.requiredChildOutput.zipWithIndex.flatMap { case (attr, i) =>
-          inputAttrMap.get(attr).map { input => s"""$input -> "$curNodeName":$i;"""}
+          inputAttrMap.get(attr).map { case (inputNodeId, fromIdx) =>
+            SQLFlowGraphEdge(inputNodeId, Some(fromIdx), curNodeName, Some(i))
+          }
         }
         val edgeForGenerator = generator.references.flatMap(inputAttrMap.get).headOption
-          .map { genInput =>
+          .map { case (inputNodeId, fromIdx) =>
             generatorOutput.zipWithIndex.map { case (attr, i) =>
-              s"""$genInput -> "$curNodeName":${g.requiredChildOutput.size + i}"""
+              val toIdx = g.requiredChildOutput.size + i
+              SQLFlowGraphEdge(inputNodeId, Some(fromIdx), curNodeName, Some(toIdx))
             }
           }
         edgesForChildren ++ edgeForGenerator.seq.flatten
@@ -347,13 +315,16 @@ case class SQLFlow() extends BaseSQLFlow {
       case Expand(projections, _, _) =>
         projections.transpose.zipWithIndex.flatMap { case (projs, i) =>
           projs.flatMap(e => e.references.flatMap(inputAttrMap.get))
-            .map { input => s"""$input -> "$curNodeName":$i;"""}
-            .distinct
+            .map { case (inputNodeId, fromIdx) =>
+              SQLFlowGraphEdge(inputNodeId, Some(fromIdx), curNodeName, Some(i))
+            }.distinct
         }
 
       case _: Union =>
         inputAttrSeq.transpose.zipWithIndex.flatMap { case (attrs, i) =>
-          attrs.map { case (_, input) => s"""$input -> "$curNodeName":$i"""}
+          attrs.map { case (_, (inputNodeId, fromIdx)) =>
+            SQLFlowGraphEdge(inputNodeId, Some(fromIdx), curNodeName, Some(i))
+          }
         }
 
       case Join(_, _, joinType, condition, _) =>
@@ -365,7 +336,7 @@ case class SQLFlow() extends BaseSQLFlow {
             val leftAttrIndexMap = AttributeMap(left.map(_._1).zipWithIndex)
             val predicateEdges = condition.map { c =>
               val referenceSeq = splitConjunctivePredicates(c).map(_.references)
-              right.flatMap { case (attr, input) =>
+              right.flatMap { case (attr, (inputNodeId, fromIdx)) =>
                 val leftAttrs = referenceSeq.flatMap { refs =>
                   if (refs.contains(attr)) {
                     refs.intersect(leftAttrSet).toSeq
@@ -374,39 +345,45 @@ case class SQLFlow() extends BaseSQLFlow {
                   }
                 }
                 leftAttrs.map { attr =>
-                  s"""$input -> "$curNodeName":${leftAttrIndexMap(attr)};"""
+                  val toIdx = leftAttrIndexMap(attr)
+                  SQLFlowGraphEdge(inputNodeId, Some(fromIdx), curNodeName, Some(toIdx))
                 }
               }
             }
-            val joinOutputEdges = left.map(_._2).zipWithIndex.map { case (input, i) =>
-              s"""$input -> "$curNodeName":$i;"""
+            val joinOutputEdges = left.map(_._2).zipWithIndex.map {
+              case ((inputNodeId, fromIdx), i) =>
+                SQLFlowGraphEdge(inputNodeId, Some(fromIdx), curNodeName, Some(i))
             }
             joinOutputEdges ++ predicateEdges.getOrElse(Nil)
           case _ =>
-            (left ++ right).map(_._2).zipWithIndex.map { case (input, i) =>
-              s"""$input -> "$curNodeName":$i;"""
+            (left ++ right).map(_._2).zipWithIndex.map {
+              case ((inputNodeId, fromIdx), i) =>
+                SQLFlowGraphEdge(inputNodeId, Some(fromIdx), curNodeName, Some(i))
             }
         }
 
       // TODO: Needs to check if the other Python-related plan nodes are handled correctly
       case _: FlatMapGroupsInPandas =>
-        inputAttrSeq.head.zip(outputAttrWithIndex).map { case ((_, input), (_, i)) =>
-          s"""$input -> "$curNodeName":$i;"""
+        inputAttrSeq.head.zip(outputAttrWithIndex).map {
+          case ((_, (inputNodeId, fromIdx)), (_, i)) =>
+            SQLFlowGraphEdge(inputNodeId, Some(fromIdx), curNodeName, Some(i))
         }
 
       case _ =>
         outputAttrWithIndex.flatMap { case (attr, i) =>
-          inputAttrMap.get(attr).map { input => s"""$input -> "$curNodeName":$i;"""}
+          inputAttrMap.get(attr).map { case (inputNodeId, fromIdx) =>
+            SQLFlowGraphEdge(inputNodeId, Some(fromIdx), curNodeName, Some(i))
+          }
         }
     }
 
     if (edges.isEmpty) {
       inputNodeIdsWithOutput.flatMap { case (inputNodeId, output) =>
         if (output.isEmpty) {
-          s""""$inputNodeId":nodeName -> "$curNodeName":nodeName""" :: Nil
+          SQLFlowGraphEdge(inputNodeId, None, curNodeName, None) :: Nil
         } else {
           output.zipWithIndex.map { case (_, i) =>
-            s""""$inputNodeId":$i -> "$curNodeName":nodeName"""
+            SQLFlowGraphEdge(inputNodeId, Some(i), curNodeName, None)
           }
         }
       }
@@ -433,21 +410,21 @@ case class SQLFlow() extends BaseSQLFlow {
   private def collectEdgesInSubqueries(
       nodeName: String,
       plan: LogicalPlan,
-      nodeMap: mutable.Map[String, String]): Seq[String] = {
+      nodeMap: mutable.Map[String, SQLFlowGraphNode]): Seq[SQLFlowGraphEdge] = {
     val hasSbuqueres = plan.expressions.exists(SubqueryExpression.hasSubquery)
     if (hasSbuqueres) {
       val planOutputMap = AttributeMap(plan.output.zipWithIndex)
 
-      def collectEdgesInExprs(ne: NamedExpression): Seq[String] = {
+      def collectEdgesInExprs(ne: NamedExpression): Seq[SQLFlowGraphEdge] = {
         val attr = ne.toAttribute
         val subquries = ne.collect { case ss: ScalarSubquery => ss }
         subquries.flatMap { ss =>
           val (inputNodeId, edges) = traversePlanRecursively(ss.plan, nodeMap)
           edges ++ ss.plan.output.indices.map { i =>
             if (planOutputMap.contains(attr)) {
-              s""""$inputNodeId":$i -> "$nodeName":${planOutputMap(attr)}"""
+              SQLFlowGraphEdge(inputNodeId, Some(i), nodeName, Some(planOutputMap(attr)))
             } else {
-              s""""$inputNodeId":$i -> "$nodeName":nodeName"""
+              SQLFlowGraphEdge(inputNodeId, Some(i), nodeName, None)
             }
           }
         }
@@ -460,7 +437,7 @@ case class SQLFlow() extends BaseSQLFlow {
             edges ++ ss.plan.output.indices.flatMap { i =>
               val edgesInSubqueries = attrs.flatMap { attr =>
                 if (planOutputMap.contains(attr)) {
-                  Some(s""""$inputNodeId":$i -> "$nodeName":${planOutputMap(attr)}""")
+                  Some(SQLFlowGraphEdge(inputNodeId, Some(i), nodeName, Some(planOutputMap(attr))))
                 } else {
                   None
                 }
@@ -469,7 +446,7 @@ case class SQLFlow() extends BaseSQLFlow {
               if (edgesInSubqueries.nonEmpty) {
                 edgesInSubqueries
               } else {
-                s""""$inputNodeId":$i -> "$nodeName":nodeName""" :: Nil
+                SQLFlowGraphEdge(inputNodeId, Some(i), nodeName, None) :: Nil
               }
             }
           }
@@ -489,7 +466,7 @@ case class SQLFlow() extends BaseSQLFlow {
           subqueries.flatMap { ss =>
             val (inputNodeId, edges) = traversePlanRecursively(ss.plan, nodeMap)
             edges ++ ss.plan.output.indices.map { i =>
-              s""""$inputNodeId":$i -> "$nodeName":nodeName"""
+              SQLFlowGraphEdge(inputNodeId, Some(i), nodeName, None)
             }
           }
       }
@@ -498,26 +475,23 @@ case class SQLFlow() extends BaseSQLFlow {
     }
   }
 
-  private def tryCreateNode(
+  private def getOrCreateNode(
       plan: LogicalPlan,
-      nodeMap: mutable.Map[String, String],
-      cached: Boolean = false,
-      force: Boolean = false): String = {
+      nodeMap: mutable.Map[String, SQLFlowGraphNode],
+      cached: Boolean = false): String = {
     val nodeName = getNodeName(plan)
-    if (force || plan.output.nonEmpty) {
-      // Generate a node label for a plan if necessary
-      nodeMap.getOrElseUpdate(nodeName, generateNodeString(plan, nodeName, cached, force))
-    }
+    // Generate a node label for a plan if necessary
+    nodeMap.getOrElseUpdate(nodeName, generateGraphNode(plan, nodeName, cached))
     nodeName
   }
 
   private def traversePlanRecursively(
     plan: LogicalPlan,
-    nodeMap: mutable.Map[String, String],
+    nodeMap: mutable.Map[String, SQLFlowGraphNode],
     cached: Boolean = false,
-    isRoot: Boolean = false): (String, Seq[String]) = plan match {
+    isRoot: Boolean = false): (String, Seq[SQLFlowGraphEdge]) = plan match {
     case _: LeafNode =>
-      val nodeName = tryCreateNode(plan, nodeMap)
+      val nodeName = getOrCreateNode(plan, nodeMap)
       (nodeName, Nil)
 
     case CachedNode(cachedPlan) =>
@@ -526,16 +500,16 @@ case class SQLFlow() extends BaseSQLFlow {
     case _ =>
       val edgesInChildren = plan.children.map(traversePlanRecursively(_, nodeMap))
       if (plan.output.nonEmpty) {
-        val nodeName = tryCreateNode(plan, nodeMap, cached)
+        val nodeName = getOrCreateNode(plan, nodeMap, cached)
         val edges = collectEdgesInPlan(plan, nodeName, edgesInChildren.map(_._1))
         val edgesInSubqueries = collectEdgesInSubqueries(nodeName, plan, nodeMap)
         (nodeName, edges ++ edgesInChildren.flatMap(_._2) ++ edgesInSubqueries)
       } else {
-        val nodeName = tryCreateNode(plan, nodeMap, force = true)
+        val nodeName = getOrCreateNode(plan, nodeMap)
         val edges = edgesInChildren.map(_._1).zip(plan.children.map(_.output))
           .flatMap { case (inputNodeId, output) =>
             output.zipWithIndex.map { case (_, i) =>
-              s""""$inputNodeId":$i -> "$nodeName":nodeName"""
+              SQLFlowGraphEdge(inputNodeId, Some(i), nodeName, None)
             }
           }
         (nodeName, edges ++ edgesInChildren.flatMap(_._2))
@@ -543,18 +517,19 @@ case class SQLFlow() extends BaseSQLFlow {
   }
 }
 
-case class SQLContractedFlow() extends BaseSQLFlow {
+case class SQLContractedFlow(graphFormat: BaseGraphFormat) extends BaseSQLFlow {
 
   override def collectEdges(
       tempView: String,
       plan: LogicalPlan,
-      nodeMap: mutable.Map[String, String]): Seq[String] = {
+      nodeMap: mutable.Map[String, SQLFlowGraphNode]): Seq[SQLFlowGraphEdge] = {
     val outputAttrMap = plan.output.map(_.exprId).zipWithIndex.toMap
     val (edges, candidateEdges, refMap) = traversePlanRecursively(tempView, plan, nodeMap)
     edges ++ candidateEdges.flatMap { case ((inputNodeId, input), candidates) =>
-      val edges = candidates.flatMap { case (input, exprId) =>
+      val edges = candidates.flatMap { case ((inputNodeId, fromIdx), exprId) =>
         if (inputNodeId != tempView && outputAttrMap.contains(exprId)) {
-          Some(s"""$input -> "$tempView":${outputAttrMap(exprId)}""")
+          val toIdx = outputAttrMap(exprId)
+          Some(SQLFlowGraphEdge(inputNodeId, Some(fromIdx), tempView, Some(toIdx)))
         } else {
           None
         }
@@ -562,7 +537,7 @@ case class SQLContractedFlow() extends BaseSQLFlow {
       if (edges.isEmpty) {
         // TODO: Makes it more precise
         input.zipWithIndex.filter { i => refMap.contains(i._1.exprId) }.map { case (_, i) =>
-          s""""$inputNodeId":$i -> "$tempView":nodeName"""
+          SQLFlowGraphEdge(inputNodeId, Some(i), tempView, None)
         }
       } else {
         edges
@@ -689,7 +664,7 @@ case class SQLContractedFlow() extends BaseSQLFlow {
   private def collectEdgesInSubqueries(
       tempView: String,
       plan: LogicalPlan,
-      nodeMap: mutable.Map[String, String]): Seq[String] = {
+      nodeMap: mutable.Map[String, SQLFlowGraphNode]): Seq[SQLFlowGraphEdge] = {
     val subqueries = plan.collect { case p =>
       p.expressions.flatMap(_.collect { case ss: ScalarSubquery => ss })
     }.flatten
@@ -699,9 +674,9 @@ case class SQLContractedFlow() extends BaseSQLFlow {
         val outputAttrSet = ss.plan.output.map(_.exprId).toSet
         val (edges, candidateEdges, refMap) = traversePlanRecursively(tempView, ss.plan, nodeMap)
         edges ++ candidateEdges.flatMap { case ((inputNodeId, input), candidates) =>
-          val edges = candidates.flatMap { case (input, exprId) =>
+          val edges = candidates.flatMap { case ((inputNodeId, i), exprId) =>
             if (outputAttrSet.contains(exprId)) {
-              Some(s"""$input -> "$tempView":nodeName""")
+              Some(SQLFlowGraphEdge(inputNodeId, Some(i), tempView, None))
             } else {
               None
             }
@@ -709,7 +684,7 @@ case class SQLContractedFlow() extends BaseSQLFlow {
           if (edges.isEmpty) {
             // TODO: Makes it more precise
             input.zipWithIndex.filter { i => refMap.contains(i._1.exprId) }.map { case (_, i) =>
-              s""""$inputNodeId":$i -> "$tempView":nodeName"""
+              SQLFlowGraphEdge(inputNodeId, Some(i), tempView, None)
             }
           } else {
             edges
@@ -724,13 +699,13 @@ case class SQLContractedFlow() extends BaseSQLFlow {
   private def traversePlanRecursively(
       tempView: String,
       plan: LogicalPlan,
-      nodeMap: mutable.Map[String, String])
-    : (Seq[String], Seq[((String, Seq[Attribute]), Seq[(String, ExprId)])],
+      nodeMap: mutable.Map[String, SQLFlowGraphNode])
+    : (Seq[SQLFlowGraphEdge], Seq[((String, Seq[Attribute]), Seq[((String, Int), ExprId)])],
       Map[ExprId, Set[ExprId]]) = {
     // Collect input nodes
     val inputNodes = plan.collectLeaves().map { p =>
       val nodeName = getNodeName(p)
-      nodeMap.getOrElseUpdate(nodeName, generateNodeString(p, nodeName))
+      nodeMap.getOrElseUpdate(nodeName, generateGraphNode(p, nodeName, isCached(p)))
       (nodeName, p.output)
     }.groupBy(_._1).map { case (_, v) =>
       v.head
@@ -763,7 +738,7 @@ case class SQLContractedFlow() extends BaseSQLFlow {
     val candidateEdges = inputNodes.toSeq.map { case (inputNodeId, input) =>
       (inputNodeId, input) -> input.zipWithIndex.flatMap { case (a, i) =>
         traverseInRefMap(a.exprId).map { exprId =>
-          (s""""$inputNodeId":$i""", exprId)
+          ((inputNodeId, i), exprId)
         }
       }
     }
@@ -792,9 +767,11 @@ case class TempViewNode(name: String, output: Seq[Attribute]) extends LeafNode {
 case class SQLFlowHolder[T] private[sql](private val ds: Dataset[T]) {
   import SQLFlow._
 
-  def debugPrintAsSQLFlow(contracted: Boolean = false): Unit = {
+  def debugPrintAsSQLFlow(
+      contracted: Boolean = false,
+      graphFormat: BaseGraphFormat = GraphVizFormat): Unit = {
     // scalastyle:off println
-    val sqlFlow = if (contracted) SQLContractedFlow() else SQLFlow()
+    val sqlFlow = if (contracted) SQLContractedFlow(graphFormat) else SQLFlow(graphFormat)
     println(sqlFlow.planToSQLFlow(ds.queryExecution.optimizedPlan))
     // scalastyle:on println
   }
@@ -805,9 +782,11 @@ case class SQLFlowHolder[T] private[sql](private val ds: Dataset[T]) {
       format: String = "svg",
       overwrite: Boolean = false,
       contracted: Boolean = false): Unit = {
-    val sqlFlow = if (contracted) SQLContractedFlow() else SQLFlow()
+    val sqlFlow = if (contracted) SQLContractedFlow(GraphVizFormat) else SQLFlow(GraphVizFormat)
     val flowString = sqlFlow.planToSQLFlow(ds.queryExecution.optimizedPlan)
-    writeSQLFlow(outputDirPath, filenamePrefix, format, flowString, overwrite)
+    val dotFile = writeSQLFlow(outputDirPath, filenamePrefix, format, flowString, overwrite)
+    val dstFile = new File(outputDirPath, s"$filenamePrefix.$format").getAbsolutePath
+    GraphVizFormat.tryGenerateImageFile(format, dotFile.getAbsolutePath, dstFile)
   }
 }
 
@@ -819,32 +798,12 @@ object SQLFlow extends Logging {
     new SQLFlowHolder[T](ds)
   }
 
-  private def isCommandAvailable(command: String): Boolean = {
-    val attempt = {
-      Try(Process(Seq("sh", "-c", s"command -v $command")).run(ProcessLogger(_ => ())).exitValue())
-    }
-    attempt.isSuccess && attempt.get == 0
-  }
-
-  // If the Graphviz dot command installed, converts the generated dot file
-  // into a specified-formatted image.
-  private def tryGenerateImageFile(format: String, src: String, dst: String): Unit = {
-    if (isCommandAvailable("dot")) {
-      try {
-        val commands = Seq("bash", "-c", s"dot -T$format $src > $dst")
-        BlockingLineStream(commands)
-      } catch {
-        case _ => // Do nothing
-      }
-    }
-  }
-
-  def writeSQLFlow(
+  private[sql] def writeSQLFlow(
       outputDirPath: String,
       filenamePrefix: String,
       format: String,
       flowString: String,
-      overwrite: Boolean = false): Unit = {
+      overwrite: Boolean = false): File = {
     if (!SQLFlow.validImageFormatSet.contains(format.toLowerCase(Locale.ROOT))) {
       throw new AnalysisException(s"Invalid image format: $format")
     }
@@ -859,10 +818,22 @@ object SQLFlow extends Logging {
         s"output dir path '$outputDirPath' already exists"
       })
     }
-    val dotFile = stringToFile(new File(outputDir, s"$filenamePrefix.dot"), flowString)
-    val srcFile = dotFile.getAbsolutePath
-    val dstFile = new File(outputDir, s"$filenamePrefix.$format").getAbsolutePath
-    tryGenerateImageFile(format, srcFile, dstFile)
+    stringToFile(new File(outputDir, s"$filenamePrefix.dot"), flowString)
+  }
+
+  private[spark] def toSQLFlowString(
+      contracted: Boolean = false,
+      graphFormat: BaseGraphFormat): String = {
+    SparkSession.getActiveSession.map { session =>
+      if (contracted) {
+        SQLContractedFlow(graphFormat).catalogToSQLFlow(session)
+      } else {
+        SQLFlow(graphFormat).catalogToSQLFlow(session)
+      }
+    }.getOrElse {
+      logWarning("Active SparkSession not found")
+      ""
+    }
   }
 
   def saveAsSQLFlow(
@@ -871,28 +842,11 @@ object SQLFlow extends Logging {
       format: String = "svg",
       contracted: Boolean = false,
       overwrite: Boolean = false): Unit = {
-    SparkSession.getActiveSession.map { session =>
-      val flowString = if (contracted) {
-        SQLContractedFlow().catalogToSQLFlow(session)
-      } else {
-        SQLFlow().catalogToSQLFlow(session)
-      }
-      SQLFlow.writeSQLFlow(outputDirPath, filenamePrefix, format, flowString, overwrite)
-    }.getOrElse {
-      logWarning(s"Active SparkSession not found")
-    }
-  }
-
-  def toSQLFlowString(contracted: Boolean = false): String = {
-    SparkSession.getActiveSession.map { session =>
-      if (contracted) {
-        SQLContractedFlow().catalogToSQLFlow(session)
-      } else {
-        SQLFlow().catalogToSQLFlow(session)
-      }
-    }.getOrElse {
-      logWarning("Active SparkSession not found")
-      ""
+    val flowString = toSQLFlowString(contracted, graphFormat = GraphVizFormat)
+    if (flowString.nonEmpty) {
+      val dotFile = writeSQLFlow(outputDirPath, filenamePrefix, format, flowString, overwrite)
+      val dstFile = new File(outputDirPath, s"$filenamePrefix.$format").getAbsolutePath
+      GraphVizFormat.tryGenerateImageFile(format, dotFile.getAbsolutePath, dstFile)
     }
   }
 
@@ -901,9 +855,11 @@ object SQLFlow extends Logging {
     System.getenv("SPARK_TESTING") != null || System.getProperty("spark.testing") != null
   }
 
-  def debugPrintAsSQLFlow(contracted: Boolean = false): Unit = {
+  def debugPrintAsSQLFlow(
+      contracted: Boolean = false,
+      graphFormat: BaseGraphFormat = GraphVizFormat): Unit = {
     // scalastyle:off println
-    println(toSQLFlowString(contracted))
+    println(toSQLFlowString(contracted, graphFormat))
     // scalastyle:on println
   }
 }

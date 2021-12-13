@@ -17,7 +17,7 @@
 
 package org.apache.spark.api.python
 
-import org.apache.spark.sql.SQLFlow
+import org.apache.spark.sql.{GraphVizFormat, SQLFlow}
 
 object SQLFlowApi {
 
@@ -26,7 +26,7 @@ object SQLFlowApi {
   }
 
   def toSQLFlowString(contracted: Boolean): String = {
-    SQLFlow.toSQLFlowString(contracted)
+    SQLFlow.toSQLFlowString(contracted, graphFormat = GraphVizFormat)
   }
 
   def saveAsSQLFlow(
