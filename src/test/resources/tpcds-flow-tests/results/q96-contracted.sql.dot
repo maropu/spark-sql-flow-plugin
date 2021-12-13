@@ -15,7 +15,7 @@ digraph {
 <tr><td port="3">hd_dep_count</td></tr>
 <tr><td port="4">hd_vehicle_count</td></tr>
 </table>>];
-       
+     
 
 "default.store" [color="black" label=<
 <table>
@@ -50,7 +50,7 @@ digraph {
 <tr><td port="27">s_gmt_offset</td></tr>
 <tr><td port="28">s_tax_percentage</td></tr>
 </table>>];
-       
+     
 
 "default.store_sales" [color="black" label=<
 <table>
@@ -79,7 +79,7 @@ digraph {
 <tr><td port="21">ss_net_paid_inc_tax</td></tr>
 <tr><td port="22">ss_net_profit</td></tr>
 </table>>];
-       
+     
 
 "default.time_dim" [color="black" label=<
 <table>
@@ -95,19 +95,19 @@ digraph {
 <tr><td port="8">t_sub_shift</td></tr>
 <tr><td port="9">t_meal_time</td></tr>
 </table>>];
-       
+     
 
 "v" [color="black" label=<
 <table>
   <tr><td bgcolor="black" port="nodeName"><i><font color="white">v</font></i></td></tr>
   <tr><td port="0">count(1)</td></tr>
 </table>>];
-       
-  "default.household_demographics":0 -> "v":nodeName
-"default.store":0 -> "v":nodeName
-"default.store_sales":1 -> "v":nodeName
-"default.store_sales":5 -> "v":nodeName
-"default.store_sales":7 -> "v":nodeName
-"default.time_dim":0 -> "v":nodeName
+     
+  "default.household_demographics":0 -> "v":nodeName;
+"default.store":0 -> "v":nodeName;
+"default.store_sales":1 -> "v":nodeName;
+"default.store_sales":5 -> "v":nodeName;
+"default.store_sales":7 -> "v":nodeName;
+"default.time_dim":0 -> "v":nodeName;
 }
        

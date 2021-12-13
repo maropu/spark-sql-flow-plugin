@@ -28,7 +28,7 @@ digraph {
 <tr><td port="16">c_email_address</td></tr>
 <tr><td port="17">c_last_review_date</td></tr>
 </table>>];
-       
+     
 
 "default.date_dim" [color="black" label=<
 <table>
@@ -62,7 +62,7 @@ digraph {
 <tr><td port="26">d_current_quarter</td></tr>
 <tr><td port="27">d_current_year</td></tr>
 </table>>];
-       
+     
 
 "default.store_sales" [color="black" label=<
 <table>
@@ -91,7 +91,7 @@ digraph {
 <tr><td port="21">ss_net_paid_inc_tax</td></tr>
 <tr><td port="22">ss_net_profit</td></tr>
 </table>>];
-       
+     
 
 "default.web_sales" [color="black" label=<
 <table>
@@ -131,7 +131,7 @@ digraph {
 <tr><td port="32">ws_net_paid_inc_ship_tax</td></tr>
 <tr><td port="33">ws_net_profit</td></tr>
 </table>>];
-       
+     
 
 "v" [color="black" label=<
 <table>
@@ -140,15 +140,15 @@ digraph {
 <tr><td port="1">customer_first_name</td></tr>
 <tr><td port="2">customer_last_name</td></tr>
 </table>>];
-       
-  "default.customer":1 -> "v":0
-"default.date_dim":0 -> "v":nodeName
-"default.date_dim":6 -> "v":nodeName
-"default.store_sales":0 -> "v":nodeName
-"default.store_sales":20 -> "v":nodeName
-"default.store_sales":3 -> "v":nodeName
-"default.web_sales":0 -> "v":nodeName
-"default.web_sales":29 -> "v":nodeName
-"default.web_sales":4 -> "v":nodeName
+     
+  "default.customer":1 -> "v":0;
+"default.date_dim":0 -> "v":nodeName;
+"default.date_dim":6 -> "v":nodeName;
+"default.store_sales":0 -> "v":nodeName;
+"default.store_sales":20 -> "v":nodeName;
+"default.store_sales":3 -> "v":nodeName;
+"default.web_sales":0 -> "v":nodeName;
+"default.web_sales":29 -> "v":nodeName;
+"default.web_sales":4 -> "v":nodeName;
 }
        

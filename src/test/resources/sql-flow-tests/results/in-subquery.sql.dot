@@ -11,14 +11,14 @@ digraph {
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_12</i></td></tr>
   <tr><td port="0">count(1)</td></tr>
 </table>>];
-       
+     
 
 "Aggregate_7" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_7</i></td></tr>
   <tr><td port="0">count(1)</td></tr>
 </table>>];
-       
+     
 
 "Join_LeftAnti_0" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
@@ -26,21 +26,21 @@ digraph {
   <tr><td port="0">a1</td></tr>
 <tr><td port="1">b1</td></tr>
 </table>>];
-       
+     
 
 "Join_LeftAnti_5" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftAnti_5</i></td></tr>
   <tr><td port="0">record</td></tr>
 </table>>];
-       
+     
 
 "Join_LeftSemi_10" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Join_LeftSemi_10</i></td></tr>
   <tr><td port="0">record</td></tr>
 </table>>];
-       
+     
 
 "LocalRelation_2" [color="black" label=<
 <table>
@@ -48,77 +48,77 @@ digraph {
   <tr><td port="0">col1</td></tr>
 <tr><td port="1">col2</td></tr>
 </table>>];
-       
+     
 
 "Project_1" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_1</i></td></tr>
   <tr><td port="0">1</td></tr>
 </table>>];
-       
+     
 
 "Project_11" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_11</i></td></tr>
   
 </table>>];
-       
+     
 
 "Project_3" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_3</i></td></tr>
   <tr><td port="0">record</td></tr>
 </table>>];
-       
+     
 
 "Project_4" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_4</i></td></tr>
   <tr><td port="0">named_struct(a, a2 AS a, b, b2 AS b)</td></tr>
 </table>>];
-       
+     
 
 "Project_6" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_6</i></td></tr>
   
 </table>>];
-       
+     
 
 "Project_9" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
   <tr><td bgcolor="lightgray" port="nodeName"><i>Project_9</i></td></tr>
   <tr><td port="0">named_struct(a, a2 AS a, b, b2 AS b)</td></tr>
 </table>>];
-       
+     
 
 "struct_tab" [color="black" label=<
 <table>
   <tr><td bgcolor="black" port="nodeName"><i><font color="white">struct_tab</font></i></td></tr>
   <tr><td port="0">record</td></tr>
 </table>>];
-       
+     
 
 "t1" [color="black" label=<
 <table>
   <tr><td bgcolor="black" port="nodeName"><i><font color="white">t1</font></i></td></tr>
   <tr><td port="0">1</td></tr>
 </table>>];
-       
+     
 
 "t2" [color="black" label=<
 <table>
   <tr><td bgcolor="black" port="nodeName"><i><font color="white">t2</font></i></td></tr>
   <tr><td port="0">count(1)</td></tr>
 </table>>];
-       
+     
 
 "t3" [color="black" label=<
 <table>
   <tr><td bgcolor="black" port="nodeName"><i><font color="white">t3</font></i></td></tr>
   <tr><td port="0">count(1)</td></tr>
 </table>>];
-       
+     
 
 "tab_a" [color="black" label=<
 <table>
@@ -126,7 +126,7 @@ digraph {
   <tr><td port="0">a1</td></tr>
 <tr><td port="1">b1</td></tr>
 </table>>];
-       
+     
 
 "tab_a_13" [color="black" label=<
 <table>
@@ -134,7 +134,7 @@ digraph {
   <tr><td port="0">a1</td></tr>
 <tr><td port="1">b1</td></tr>
 </table>>];
-       
+     
 
 "tab_b" [color="black" label=<
 <table>
@@ -142,7 +142,7 @@ digraph {
   <tr><td port="0">a2</td></tr>
 <tr><td port="1">b2</td></tr>
 </table>>];
-       
+     
 
 "tab_b_8" [color="black" label=<
 <table>
@@ -150,20 +150,20 @@ digraph {
   <tr><td port="0">a2</td></tr>
 <tr><td port="1">b2</td></tr>
 </table>>];
-       
+     
   "Aggregate_12":0 -> "t2":0;
 "Aggregate_7":0 -> "t3":0;
-"Join_LeftAnti_0":0 -> "Project_1":nodeName
-"Join_LeftAnti_0":1 -> "Project_1":nodeName
-"Join_LeftAnti_5":0 -> "Project_6":nodeName
-"Join_LeftSemi_10":0 -> "Project_11":nodeName
+"Join_LeftAnti_0":0 -> "Project_1":nodeName;
+"Join_LeftAnti_0":1 -> "Project_1":nodeName;
+"Join_LeftAnti_5":0 -> "Project_6":nodeName;
+"Join_LeftSemi_10":0 -> "Project_11":nodeName;
 "LocalRelation_2":0 -> "Project_3":0;
 "LocalRelation_2":1 -> "Project_3":0;
 "Project_1":0 -> "t1":0;
-"Project_11":nodeName -> "Aggregate_12":nodeName
+"Project_11":nodeName -> "Aggregate_12":nodeName;
 "Project_3":0 -> "struct_tab":0;
 "Project_4":0 -> "Join_LeftAnti_5":0;
-"Project_6":nodeName -> "Aggregate_7":nodeName
+"Project_6":nodeName -> "Aggregate_7":nodeName;
 "Project_9":0 -> "Join_LeftSemi_10":0;
 "struct_tab":0 -> "Join_LeftAnti_5":0;
 "struct_tab":0 -> "Join_LeftSemi_10":0;
