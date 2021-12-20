@@ -19,6 +19,7 @@
 
 import functools
 import inspect
+import os
 import uuid
 from pyspark.sql import DataFrame, SparkSession
 from typing import Any, List
@@ -76,19 +77,24 @@ def _create_tracking_views(dfs: List[DataFrame], name: str) -> None:
         _logger.info(f'Automatically tracking: {ident}({",".join(df.columns)})')
 
 
+def _auto_tracking_enabled() -> bool:
+    return os.environ.get("SQLFLOW_AUTO_TRACKING_DISABLED") is None
+
+
 def auto_tracking(f):  # type: ignore
     @functools.wraps(f)
     def wrapper(self, *args, **kwargs):  # type: ignore
         ret = f(self, *args, **kwargs)
 
-        # If ret holds `DataFrame`s, creates temp tables for tracking
-        # transformation process.
-        output_dfs = _extract_dataframes_from(ret)
-        if not output_dfs:
-            input_values = [v for v in inspect.signature(f).bind(self, *args, **kwargs).arguments.values()]
-            _create_tracking_views(_extract_dataframes_from(input_values), f.__name__)
-        else:
-            _create_tracking_views(output_dfs, f.__name__)
+        if _auto_tracking_enabled():
+            # If ret holds `DataFrame`s, creates temp tables for tracking
+            # transformation process.
+            output_dfs = _extract_dataframes_from(ret)
+            if not output_dfs:
+                input_values = [v for v in inspect.signature(f).bind(self, *args, **kwargs).arguments.values()]
+                _create_tracking_views(_extract_dataframes_from(input_values), f.__name__)
+            else:
+                _create_tracking_views(output_dfs, f.__name__)
 
         return ret
     return wrapper
