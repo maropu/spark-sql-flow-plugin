@@ -37,28 +37,6 @@ import org.apache.spark.sql.catalyst.util._
 import org.apache.spark.sql.execution.columnar.InMemoryRelation
 import org.apache.spark.sql.execution.datasources.LogicalRelation
 
-object GraphNodeType extends Enumeration {
-  val TableNode, PlanNode = Value
-}
-
-case class SQLFlowGraphNode(
-  ident: String,
-  attributes: Seq[String],
-  tpe: GraphNodeType.Value,
-  isCached: Boolean)
-
-case class SQLFlowGraphEdge(
-  from: String,
-  fromIdx: Option[Int],
-  to: String,
-  toIdx: Option[Int])
-
-// TODO: Supports more formats to export data lineage into other systems,
-// e.g., Apache Atlas, neo4j, ...
-abstract class BaseGraphFormat {
-  def toGraphString(nodes: Seq[SQLFlowGraphNode], edges: Seq[SQLFlowGraphEdge]): String
-}
-
 abstract class BaseSQLFlow extends PredicateHelper with Logging {
 
   private val nextNodeId = new AtomicInteger(0)
