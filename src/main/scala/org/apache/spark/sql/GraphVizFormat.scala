@@ -85,6 +85,8 @@ private[sql] object BlockingLineStream {
   }
 }
 
+// TODO: Supports more formats to export data lineage into other systems,
+// e.g., Apache Atlas, neo4j, ...
 case object GraphVizFormat extends BaseGraphFormat with Logging {
 
   private val cachedNodeColor = "lightblue"
