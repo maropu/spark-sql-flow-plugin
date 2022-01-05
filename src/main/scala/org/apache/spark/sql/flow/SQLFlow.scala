@@ -16,16 +16,17 @@
  * limitations under the License.
  */
 
-package org.apache.spark.sql
+package org.apache.spark.sql.flow
+
+import scala.collection.mutable
 
 import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
 
-import scala.collection.mutable
-
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FileUtils
 
 import org.apache.spark.internal.Logging
+import org.apache.spark.sql._
 import org.apache.spark.sql.catalyst.AliasIdentifier
 import org.apache.spark.sql.catalyst.analysis.NoSuchTableException
 import org.apache.spark.sql.catalyst.catalog.HiveTableRelation

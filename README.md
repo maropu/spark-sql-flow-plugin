@@ -81,7 +81,7 @@ scala> sql("CREATE TABLE TestTable (key INT, value INT)")
 scala> sql("CREATE TEMPORARY VIEW TestView1 AS SELECT key, SUM(value) s FROM TestTable GROUP BY key")
 scala> sql("CACHE TABLE TestView1")
 scala> sql("CREATE TEMPORARY VIEW TestView2 AS SELECT t.key, t.value, v.s FROM TestTable t, TestView1 v WHERE t.key = v.key")
-scala> import org.apache.spark.sql.SQLFlow
+scala> import org.apache.spark.sql.flow.SQLFlow
 scala> SQLFlow.saveAsSQLFlow(outputDirPath="/tmp/sqlflow-output")
 ```
 
@@ -147,7 +147,7 @@ To generate an adjacency list file of data lineage in Scala, you can specify `Ad
 in `SQLFlow.saveAsSQLFlow` as follows:
 
 ```
-scala> import org.apache.spark.sql.{SQLFlow, AdjacencyListFormat}
+scala> import org.apache.spark.sql.flow.{SQLFlow, AdjacencyListFormat}
 scala> SQLFlow.saveAsSQLFlow(outputDirPath="/tmp/sqlflow-output", graphFormat=AdjacencyListFormat(sep = ","))
 ```
 
@@ -160,7 +160,7 @@ of `SQLFlowGraphNode`s and `SQLFlowGraphEdge`s internally.
 Therefore, you can take extracted references and transform them into string data following your custom format:
 
 ```
-scala> import org.apache.spark.sql.{SQLFlow, SQLFlowGraphEdge, SQLFlowGraphNode}
+scala> import org.apache.spark.sql.flow.{SQLFlow, SQLFlowGraphEdge, SQLFlowGraphNode}
 scala> SQLFlow.printAsSQLFlow(contracted = true,
      |   (nodes: Seq[SQLFlowGraphNode], edges: Seq[SQLFlowGraphEdge]) => {
      |     s"""

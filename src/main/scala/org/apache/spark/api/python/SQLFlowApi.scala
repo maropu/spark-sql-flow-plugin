@@ -20,7 +20,7 @@ package org.apache.spark.api.python
 import java.util.Locale
 
 import org.apache.spark.internal.Logging
-import org.apache.spark.sql.{AdjacencyListFormat, BaseGraphFormat, GraphFileWriter, GraphVizFormat, SQLFlow}
+import org.apache.spark.sql.flow.{AdjacencyListFormat, BaseGraphFormat, GraphFileWriter, GraphVizFormat, SQLFlow}
 import org.apache.spark.util.{Utils => SparkUtils}
 
 object SQLFlowApi extends Logging {

@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-package org.apache.spark.sql
+package org.apache.spark.sql.flow
 
 import java.io.File
 
+import org.apache.spark.sql.{AnalysisException, QueryTest}
 import org.apache.spark.sql.catalyst.util._
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.test.{SharedSparkSession, SQLTestUtils}
@@ -31,7 +32,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession
       sql("CREATE OR REPLACE TEMPORARY VIEW t1 AS SELECT k, v v1 FROM VALUES (1, 2) t(k, v)")
       sql("CREATE OR REPLACE TEMPORARY VIEW t2 AS SELECT k, v v2 FROM VALUES (1, 3) t(k, v)")
 
-      import SQLFlow._
+      import org.apache.spark.sql.flow.SQLFlow._
       val flowString = getOutputAsString {
         val df = sql("SELECT t1.k, sum(v1 + v2) FROM t1, t2 WHERE t1.k = t2.k GROUP BY t1.k")
         df.printAsSQLFlow()
@@ -165,7 +166,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession
       sql("CREATE OR REPLACE TEMPORARY VIEW t1 AS SELECT k, v v1 FROM VALUES (1, 2) t(k, v)")
       sql("CREATE OR REPLACE TEMPORARY VIEW t2 AS SELECT k, v v2 FROM VALUES (1, 3) t(k, v)")
 
-      import SQLFlow._
+      import org.apache.spark.sql.flow.SQLFlow._
       val outputString = getOutputAsString {
         val df = sql("SELECT t1.k, sum(v1 + v2) FROM t1, t2 WHERE t1.k = t2.k GROUP BY t1.k")
         df.printAsSQLFlow(contracted = true,
@@ -270,7 +271,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession
 
   test("df.saveAsSQLFlow") {
     withTempDir { dirPath =>
-      import SQLFlow._
+      import org.apache.spark.sql.flow.SQLFlow._
       val df = sql("SELECT k, sum(v) FROM VALUES (1, 2), (3, 4) t(k, v) GROUP BY k")
 
       df.saveAsSQLFlow(s"${dirPath.getAbsolutePath}/d")
@@ -362,7 +363,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession
     withTempView("t") {
       spark.range(1).groupBy("id").count().createOrReplaceTempView("t")
       withTempDir { dir =>
-        import SQLFlow._
+        import org.apache.spark.sql.flow.SQLFlow._
         val outputDir = new File(dir, "outputDir")
         assert(outputDir.mkdir())
 

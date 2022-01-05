@@ -15,11 +15,12 @@
  * limitations under the License.
  */
 
-package org.apache.spark.sql
+package org.apache.spark.sql.flow
 
 import java.io.File
 
 import org.apache.spark.TestUtils
+import org.apache.spark.sql.QueryTest
 import org.apache.spark.sql.test.{SharedSparkSession, SQLTestUtils}
 
 class GraphFormatSuite extends QueryTest with SharedSparkSession
@@ -31,7 +32,7 @@ class GraphFormatSuite extends QueryTest with SharedSparkSession
     val testImageFormats = Seq("svg", "png", "jpg")
 
     withTempDir { dirPath =>
-      import SQLFlow._
+      import org.apache.spark.sql.flow.SQLFlow._
       val df = sql("SELECT k, sum(v) FROM VALUES (1, 2), (3, 4) t(k, v) GROUP BY k")
 
       testImageFormats.foreach { imageFormat =>

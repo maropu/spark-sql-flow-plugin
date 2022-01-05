@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.spark.sql
+package org.apache.spark.sql.flow
 
 import java.io.File
 import java.util.concurrent.LinkedBlockingQueue
@@ -24,9 +24,10 @@ import scala.collection.immutable.Stream
 import scala.sys.process._
 import scala.util.Try
 
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FileUtils
 
 import org.apache.spark.internal.Logging
+import org.apache.spark.sql._
 import org.apache.spark.sql.catalyst.util._
 
 /**

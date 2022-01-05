@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.apache.spark.sql
+package org.apache.spark.sql.flow
 
 object GraphNodeType extends Enumeration {
   val TableNode, PlanNode = Value

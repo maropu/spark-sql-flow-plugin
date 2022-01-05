@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-package org.apache.spark.sql
+package org.apache.spark.sql.flow
 
+import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.catalyst.TableIdentifier
 
 class TPCDSFlowTestSuite extends SQLFlowTestSuite with TPCDSSchema {
