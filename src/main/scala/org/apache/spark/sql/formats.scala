@@ -17,13 +17,17 @@
 
 package org.apache.spark.sql
 
+import java.io.File
 import java.util.concurrent.LinkedBlockingQueue
 
 import scala.collection.immutable.Stream
 import scala.sys.process._
 import scala.util.Try
 
+import org.apache.commons.io.FileUtils;
+
 import org.apache.spark.internal.Logging
+import org.apache.spark.sql.catalyst.util._
 
 /**
  * Using ProcessBuilder.lineStream produces a stream, that uses
@@ -85,9 +89,71 @@ private[sql] object BlockingLineStream {
   }
 }
 
+object GraphFileWriter {
+  def writeTo(dirPath: String, filename: String, flowString: String, overwrite: Boolean): File = {
+    val outputDir = new File(dirPath)
+    if (overwrite) {
+      FileUtils.deleteDirectory(outputDir)
+    }
+    if (!outputDir.mkdir()) {
+      throw new AnalysisException(if (overwrite) {
+        s"`overwrite` is set to true, but could not remove output dir path '$dirPath'"
+      } else {
+        s"output dir path '$dirPath' already exists"
+      })
+    }
+    stringToFile(new File(outputDir, filename), flowString)
+  }
+}
+
+trait GraphFileWriter {
+  def writeTo(dirPath: String, filenamePrefix: String, flowString: String,
+    overwrite: Boolean): File
+}
+
+trait BaseGraphFileWriter extends GraphFileWriter {
+  def fileSuffix: String
+
+  def writeTo(
+      dirPath: String,
+      filenamePrefix: String,
+      flowString: String,
+      overwrite: Boolean): File = {
+    GraphFileWriter.writeTo(
+      dirPath,
+      s"$filenamePrefix.$fileSuffix",
+      flowString,
+      overwrite)
+  }
+}
+
+object GraphVizFormat extends Logging {
+  private def isCommandAvailable(command: String): Boolean = {
+    val attempt = {
+      Try(Process(Seq("sh", "-c", s"command -v $command")).run(ProcessLogger(_ => ())).exitValue())
+    }
+    attempt.isSuccess && attempt.get == 0
+  }
+
+  // If the Graphviz dot command installed, converts the generated dot file
+  // into a specified-formatted image.
+  def tryGenerateImageFile(format: String, src: String, dst: String): Unit = {
+    if (isCommandAvailable("dot")) {
+      try {
+        val commands = Seq("bash", "-c", s"dot -T$format $src > $dst")
+        BlockingLineStream(commands)
+      } catch {
+        case e =>
+          logWarning(s"Failed to generate a graph image (fmt=$format): ${e.getMessage}")
+      }
+    }
+  }
+}
+
 // TODO: Supports more formats to export data lineage into other systems,
 // e.g., Apache Atlas, neo4j, ...
-case object GraphVizFormat extends BaseGraphFormat with Logging {
+case class GraphVizFormat(imgFormat: String = "svg") extends BaseGraphFormat
+  with BaseGraphFileWriter {
 
   private val cachedNodeColor = "lightblue"
 
@@ -159,24 +225,37 @@ case object GraphVizFormat extends BaseGraphFormat with Logging {
       .replaceAll(">", "&gt;")
   }
 
-  private def isCommandAvailable(command: String): Boolean = {
-    val attempt = {
-      Try(Process(Seq("sh", "-c", s"command -v $command")).run(ProcessLogger(_ => ())).exitValue())
-    }
-    attempt.isSuccess && attempt.get == 0
-  }
+  override val fileSuffix: String = "dot"
 
-  // If the Graphviz dot command installed, converts the generated dot file
-  // into a specified-formatted image.
-  private[sql] def tryGenerateImageFile(format: String, src: String, dst: String): Unit = {
-    if (isCommandAvailable("dot")) {
-      try {
-        val commands = Seq("bash", "-c", s"dot -T$format $src > $dst")
-        BlockingLineStream(commands)
-      } catch {
-        case e =>
-          logWarning(s"Failed to generate a graph image (fmt=$format): ${e.getMessage}")
-      }
+  override def writeTo(
+      dirPath: String,
+      filenamePrefix: String,
+      flowString: String,
+      overwrite: Boolean): File = {
+    val dotFile = super.writeTo(dirPath, filenamePrefix, flowString, overwrite)
+    val dstFile = new File(dirPath, s"$filenamePrefix.$imgFormat").getAbsolutePath
+    GraphVizFormat.tryGenerateImageFile(imgFormat, dotFile.getAbsolutePath, dstFile)
+    dotFile
+  }
+}
+
+object AdjacencyListFormat extends Logging {
+  def apply(sep: String): AdjacencyListFormat = {
+    if (sep.length > 1) {
+      logWarning(s"Length of the specified separator string is greater than 1: $sep")
     }
+    AdjacencyListFormat(sep.toCharArray.head)
+  }
+}
+
+case class AdjacencyListFormat(sep: Char = ',') extends BaseGraphFormat
+  with BaseGraphFileWriter {
+  override val fileSuffix: String = "lst"
+
+  override def toGraphString(nodes: Seq[SQLFlowGraphNode], edges: Seq[SQLFlowGraphEdge]): String = {
+    val edgeListSet = edges.map { e => (e.from, e.to) }.toSet
+    edgeListSet.map { case (from, to) =>
+      s"$from$sep$to"
+    }.mkString("\n")
   }
 }

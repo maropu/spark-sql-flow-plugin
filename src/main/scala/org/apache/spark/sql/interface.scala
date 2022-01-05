@@ -26,13 +26,31 @@ case class SQLFlowGraphNode(
   ident: String,
   attributes: Seq[String],
   tpe: GraphNodeType.Value,
-  isCached: Boolean)
+  isCached: Boolean) {
+
+  private def prettyTypeName(tpe: GraphNodeType.Value) = tpe match {
+    case GraphNodeType.TableNode => "table"
+    case GraphNodeType.PlanNode => "plan"
+  }
+
+  override def toString: String = {
+    s"""name=`$ident`(${attributes.map(a => s"`$a`").mkString(",")}), """ +
+      s"""type=${prettyTypeName(tpe)}, cached=$isCached"""
+  }
+}
 
 case class SQLFlowGraphEdge(
   from: String,
   fromIdx: Option[Int],
   to: String,
-  toIdx: Option[Int])
+  toIdx: Option[Int]) {
+
+  override def toString: String = {
+    val fromIdxOpt = fromIdx.map(i => s"(idx=$i)").getOrElse("")
+    val toIdxOpt = toIdx.map(i => s"(idx=$i)").getOrElse("")
+    s"""from=`$from`$fromIdxOpt, to=`$to`$toIdxOpt"""
+  }
+}
 
 abstract class BaseGraphFormat {
   def toGraphString(nodes: Seq[SQLFlowGraphNode], edges: Seq[SQLFlowGraphEdge]): String

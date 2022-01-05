@@ -117,6 +117,75 @@ Automatically tracked data lineage is as follows:
 
 <img src="resources/graphviz_4.svg" width="700px">
 
+## Exports Data Lineage into Other Systems
+
+### Adjacency List
+
+Most graph processing libraries (e.g., [Neo4j](https://neo4j.com) and [Python NetworkX](https://networkx.org))
+can load a adjacency list file that includes a source node name of an edge
+and its destination node name in each line. To generate it for exporting data lineage into these libraries,
+a Python user can set a `graph_format='adjacency_list'` in `save_data_lineage`. 
+Note that the output file only contains coarse-grained reference relationships between tables/views/plans
+because it is difficult to represent column-level references in an adjacency list.
+
+```
+# NOTE: Valid `graph_format` value is `graphviz` or `adjacency_list` (`graphviz` by default)
+>>> save_data_lineage(output_dir_path='/tmp/sqlflow-output', graph_format='adjacency_list', contracted=False, options='sep=,')
+
+$ cat /tmp/sqlflow-output/sqlflow.lst
+default.testtable,Aggregate_4
+Project_3,testview2
+Join_Inner_2,Project_3
+Aggregate_4,testview1
+default.testtable,Filter_0
+Filter_1,Join_Inner_2
+testview1,Filter_1
+Filter_0,Join_Inner_2
+```
+
+To generate an adjacency list file of data lineage in Scala, you can specify `AdjacencyListFormat`
+in `SQLFlow.saveAsSQLFlow` as follows:
+
+```
+scala> import org.apache.spark.sql.{SQLFlow, AdjacencyListFormat}
+scala> SQLFlow.saveAsSQLFlow(outputDirPath="/tmp/sqlflow-output", graphFormat=AdjacencyListFormat(sep = ","))
+```
+
+See a [resources/networkx_example.ipynb](resources/networkx_example.ipynb) example for how to load it into Python NetowrkX.
+
+### Writes Your Custom Graph Format
+
+`SQLFlow` extracts the column-level references of tables/views/plans as a sequence
+of `SQLFlowGraphNode`s and `SQLFlowGraphEdge`s internally.
+Therefore, you can take extracted references and transform them into string data following your custom format:
+
+```
+scala> import org.apache.spark.sql.{SQLFlow, SQLFlowGraphEdge, SQLFlowGraphNode}
+scala> SQLFlow.printAsSQLFlow(contracted = true,
+     |   (nodes: Seq[SQLFlowGraphNode], edges: Seq[SQLFlowGraphEdge]) => {
+     |     s"""
+     |        |List of nodes:
+     |        |${nodes.map(n => s" => $n").mkString("\n")}
+     |        |
+     |        |List of edges:
+     |        |${edges.map(e => s" => $e").mkString("\n")}
+     |      """.stripMargin
+     |   })
+
+List of nodes:
+ => name=`default.testtable`(`key`,`value`), type=table, cached=false
+ => name=`testview2`(`key`,`value`,`s`), type=table, cached=false
+ => name=`testview1`(`key`,`s`), type=table, cached=true
+
+List of edges:
+ => from=`default.testtable`(idx=0), to=`testview2`(idx=0)
+ => from=`default.testtable`(idx=1), to=`testview2`(idx=1)
+ => from=`testview1`(idx=0), to=`testview2`(idx=0)
+ => from=`testview1`(idx=1), to=`testview2`(idx=2)
+ => from=`default.testtable`(idx=0), to=`testview1`(idx=0)
+ => from=`default.testtable`(idx=1), to=`testview1`(idx=1)
+```
+
 ## References
 
  - Datafold, Column-level lineage, https://www.datafold.com/column-level-lineage
@@ -127,7 +196,7 @@ Automatically tracked data lineage is as follows:
 
 ## TODO
 
- * Exports data lineage into other graph systems, e.g., Apache Atlas, neo4j, ... ([Issue#3](https://github.com/maropu/spark-sql-flow-plugin/issues/3))
+ * Implements a graph formatter for Apache Atlas ([Issue#3](https://github.com/maropu/spark-sql-flow-plugin/issues/3))
  * Tracks data lineage between table/views via `INSERT` queries ([Issue#5](https://github.com/maropu/spark-sql-flow-plugin/issues/5))
  * Supports global temp views
 
