@@ -43,6 +43,7 @@ Using Python version 3.6.8 (default, Dec 29 2018 19:04:46)
 >>> sql("CREATE TEMPORARY VIEW TestView2 AS SELECT t.key, t.value, v.s FROM TestTable t, TestView1 v WHERE t.key = v.key")
 
 # Generates a Graphviz dot file to represent reference relationships between views
+>>> from sqlflow import save_data_lineage
 >>> save_data_lineage(output_path="/tmp/sqlflow-output")
 
 $ ls /tmp/sqlflow-output
@@ -92,6 +93,7 @@ a Python decorator `@auto_tracking` is useful to track data lineage automaticall
 
 ```
 >>> from pyspark.sql import functions as f
+>>> from sqlflow import auto_tracking, save_data_lineage
 
 >>> @auto_tracking
 ... def transform_alpha(df):
@@ -130,6 +132,7 @@ because it is difficult to represent column-level references in an adjacency lis
 
 ```
 # NOTE: Valid `graph_format` value is `graphviz` or `adjacency_list` (`graphviz` by default)
+>>> from sqlflow import save_data_lineage
 >>> save_data_lineage(output_dir_path='/tmp/sqlflow-output', graph_format='adjacency_list', contracted=False, options='sep=,')
 
 $ cat /tmp/sqlflow-output/sqlflow.lst

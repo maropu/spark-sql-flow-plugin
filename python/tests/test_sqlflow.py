@@ -21,7 +21,7 @@ import unittest
 from pyspark import SparkConf
 from pyspark.sql import Row, functions as f
 
-from auto_tracking import *
+from sqlflow import *
 from tests.testutils import ReusedSQLTestCase
 
 
