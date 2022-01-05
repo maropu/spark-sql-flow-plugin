@@ -19,7 +19,6 @@
 package org.apache.spark.sql
 
 import java.io.File
-import java.util.Locale
 import java.util.concurrent.atomic.AtomicInteger
 
 import scala.collection.mutable
@@ -751,11 +750,10 @@ case class TempViewNode(name: String, output: Seq[Attribute]) extends LeafNode {
 }
 
 case class SQLFlowHolder[T] private[sql](private val ds: Dataset[T]) {
-  import SQLFlow._
 
-  def debugPrintAsSQLFlow(
+  def printAsSQLFlow(
       contracted: Boolean = false,
-      graphFormat: BaseGraphFormat = GraphVizFormat): Unit = {
+      graphFormat: BaseGraphFormat = GraphVizFormat()): Unit = {
     // scalastyle:off println
     val sqlFlow = if (contracted) SQLContractedFlow(graphFormat) else SQLFlow(graphFormat)
     println(sqlFlow.planToSQLFlow(ds.queryExecution.optimizedPlan))
@@ -765,20 +763,16 @@ case class SQLFlowHolder[T] private[sql](private val ds: Dataset[T]) {
   def saveAsSQLFlow(
       outputDirPath: String,
       filenamePrefix: String = "sqlflow",
-      format: String = "svg",
+      graphFormat: BaseGraphFormat with GraphFileWriter = GraphVizFormat(),
       overwrite: Boolean = false,
       contracted: Boolean = false): Unit = {
-    val sqlFlow = if (contracted) SQLContractedFlow(GraphVizFormat) else SQLFlow(GraphVizFormat)
+    val sqlFlow = if (contracted) SQLContractedFlow(graphFormat) else SQLFlow(graphFormat)
     val flowString = sqlFlow.planToSQLFlow(ds.queryExecution.optimizedPlan)
-    val dotFile = writeSQLFlow(outputDirPath, filenamePrefix, format, flowString, overwrite)
-    val dstFile = new File(outputDirPath, s"$filenamePrefix.$format").getAbsolutePath
-    GraphVizFormat.tryGenerateImageFile(format, dotFile.getAbsolutePath, dstFile)
+    graphFormat.writeTo(outputDirPath, filenamePrefix, flowString, overwrite)
   }
 }
 
 object SQLFlow extends Logging {
-
-  val validImageFormatSet = Set("png", "svg")
 
   implicit def DatasetToSQLFlowHolder[T](ds: Dataset[T]): SQLFlowHolder[T] = {
     new SQLFlowHolder[T](ds)
@@ -790,9 +784,6 @@ object SQLFlow extends Logging {
       format: String,
       flowString: String,
       overwrite: Boolean = false): File = {
-    if (!SQLFlow.validImageFormatSet.contains(format.toLowerCase(Locale.ROOT))) {
-      throw new AnalysisException(s"Invalid image format: $format")
-    }
     val outputDir = new File(outputDirPath)
     if (overwrite) {
       FileUtils.deleteDirectory(outputDir)
@@ -825,15 +816,11 @@ object SQLFlow extends Logging {
   def saveAsSQLFlow(
       outputDirPath: String,
       filenamePrefix: String = "sqlflow",
-      format: String = "svg",
+      graphFormat: BaseGraphFormat with GraphFileWriter = GraphVizFormat(),
       contracted: Boolean = false,
       overwrite: Boolean = false): Unit = {
-    val flowString = toSQLFlowString(contracted, graphFormat = GraphVizFormat)
-    if (flowString.nonEmpty) {
-      val dotFile = writeSQLFlow(outputDirPath, filenamePrefix, format, flowString, overwrite)
-      val dstFile = new File(outputDirPath, s"$filenamePrefix.$format").getAbsolutePath
-      GraphVizFormat.tryGenerateImageFile(format, dotFile.getAbsolutePath, dstFile)
-    }
+    val flowString = toSQLFlowString(contracted, graphFormat)
+    graphFormat.writeTo(outputDirPath, filenamePrefix, flowString, overwrite)
   }
 
   // Indicates whether Spark is currently running unit tests
@@ -841,9 +828,9 @@ object SQLFlow extends Logging {
     System.getenv("SPARK_TESTING") != null || System.getProperty("spark.testing") != null
   }
 
-  def debugPrintAsSQLFlow(
+  def printAsSQLFlow(
       contracted: Boolean = false,
-      graphFormat: BaseGraphFormat = GraphVizFormat): Unit = {
+      graphFormat: BaseGraphFormat = GraphVizFormat()): Unit = {
     // scalastyle:off println
     println(toSQLFlowString(contracted, graphFormat))
     // scalastyle:on println

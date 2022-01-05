@@ -17,24 +17,65 @@
 
 package org.apache.spark.api.python
 
-import org.apache.spark.sql.{GraphVizFormat, SQLFlow}
+import java.util.Locale
 
-object SQLFlowApi {
+import org.apache.spark.internal.Logging
+import org.apache.spark.sql.{AdjacencyListFormat, BaseGraphFormat, GraphFileWriter, GraphVizFormat, SQLFlow}
+import org.apache.spark.util.{Utils => SparkUtils}
 
-  def debugPrintAsSQLFlow(contracted: Boolean): Unit = {
-    SQLFlow.debugPrintAsSQLFlow(contracted)
+object SQLFlowApi extends Logging {
+
+  private def parseOptions(options: String): Map[String, String] = {
+    SparkUtils.stringToSeq(options).flatMap { kv =>
+      kv.split("=").toSeq match {
+        case Seq(k, v) => Some((k, v))
+        case s =>
+          logWarning(s"Unknown option format: $s")
+          None
+      }
+    }.toMap
   }
 
-  def toSQLFlowString(contracted: Boolean): String = {
-    SQLFlow.toSQLFlowString(contracted, graphFormat = GraphVizFormat)
+  private def toGraphFormat(fmt: String, options: Map[String, String])
+    : BaseGraphFormat with GraphFileWriter = {
+    fmt.toLowerCase(Locale.ROOT) match {
+      case "graphviz" =>
+        val imgFormat = options.getOrElse("imgFormat", "svg")
+        GraphVizFormat(imgFormat)
+
+      case "adjacency_list" =>
+        val sepString = options.getOrElse("sep", ",")
+        AdjacencyListFormat(sepString)
+
+      case _ =>
+        throw new IllegalStateException(s"Unknown graph format: $fmt")
+    }
+  }
+
+  def debugPrintAsSQLFlow(
+      contracted: Boolean,
+      graphFormat: String = "graphviz",
+      options: String = ""): Unit = {
+    val graphFmt = toGraphFormat(graphFormat, parseOptions(options))
+    SQLFlow.printAsSQLFlow(contracted, graphFmt)
+  }
+
+  def toSQLFlowString(
+      contracted: Boolean,
+      graphFormat: String = "graphviz",
+      options: String = ""): String = {
+    val graphFmt = toGraphFormat(graphFormat, parseOptions(options))
+    SQLFlow.toSQLFlowString(contracted, graphFormat = graphFmt)
   }
 
   def saveAsSQLFlow(
       path: String,
       filenamePrefix: String,
-      format: String,
+      graphFormat: String = "graphviz",
       contracted: Boolean,
-      overwrite: Boolean): Unit = {
-    SQLFlow.saveAsSQLFlow(path, filenamePrefix, format, contracted, overwrite)
+      overwrite: Boolean,
+      options: String = ""): Unit = {
+    val graphFmt = toGraphFormat(graphFormat, parseOptions(options))
+    SQLFlow.saveAsSQLFlow(path, filenamePrefix, graphFmt, contracted, overwrite)
   }
 }
