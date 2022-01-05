@@ -123,7 +123,7 @@ Automatically tracked data lineage is as follows:
 
 ### Adjacency List
 
-Most graph processing libraries (e.g., [Neo4j](https://neo4j.com) and [Python NetworkX](https://networkx.org))
+Most graph processing libraries (e.g., [Python NetworkX](https://networkx.org))
 can load a adjacency list file that includes a source node name of an edge
 and its destination node name in each line. To generate it for exporting data lineage into these libraries,
 a Python user can set a `graph_format='adjacency_list'` in `save_data_lineage`. 
@@ -156,7 +156,7 @@ scala> SQLFlow.saveAsSQLFlow(outputDirPath="/tmp/sqlflow-output", graphFormat=Ad
 
 See a [resources/networkx_example.ipynb](resources/networkx_example.ipynb) example for how to load it into Python NetowrkX.
 
-### Writes Your Custom Graph Format
+### Writes Your Custom Graph Formatter
 
 `SQLFlow` extracts the column-level references of tables/views/plans as a sequence
 of `SQLFlowGraphNode`s and `SQLFlowGraphEdge`s internally.
@@ -199,8 +199,9 @@ List of edges:
 
 ## TODO
 
- * Implements a graph formatter for Apache Atlas ([Issue#3](https://github.com/maropu/spark-sql-flow-plugin/issues/3))
+ * Implements more graph formatters, e.g., [Neo4j](https://neo4j.com), [Apache Atlas](https://atlas.apache.org/#/), and [Mermaid](https://mermaid-js.github.io/mermaid/#/) ([Issue#3](https://github.com/maropu/spark-sql-flow-plugin/issues/3))
  * Tracks data lineage between table/views via `INSERT` queries ([Issue#5](https://github.com/maropu/spark-sql-flow-plugin/issues/5))
+ * Implements a custom `SQLListener` for tracking data lineage automatically, e.g., pushing data lineage into cloud-native GraphDBs like [Neo4j AuraDB](https://neo4j.com/cloud/aura/)
  * Supports global temp views
 
 ## Bug Reports
