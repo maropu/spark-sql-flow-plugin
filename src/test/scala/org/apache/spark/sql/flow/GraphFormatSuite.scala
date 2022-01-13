@@ -37,7 +37,7 @@ class GraphFormatSuite extends QueryTest with SharedSparkSession
 
       testImageFormats.foreach { imageFormat =>
         val outputPath = s"${dirPath.getAbsolutePath}/$imageFormat"
-        df.saveAsSQLFlow(outputPath, graphFormat = GraphVizFormat(imageFormat))
+        df.saveAsSQLFlow(outputPath, graphSink = GraphVizSink(imageFormat))
         val imgFile = new File(s"$outputPath/sqlflow.$imageFormat")
         assert(imgFile.exists())
       }
@@ -52,7 +52,7 @@ class GraphFormatSuite extends QueryTest with SharedSparkSession
 
         testImageFormats.foreach { imageFormat =>
           val outputPath = s"${dirPath.getAbsolutePath}/$imageFormat"
-          SQLFlow.saveAsSQLFlow(outputPath, graphFormat = GraphVizFormat(imageFormat))
+          SQLFlow.saveAsSQLFlow(outputPath, graphSink = GraphVizSink(imageFormat))
           val imgFile = new File(s"$outputPath/sqlflow.$imageFormat")
           assert(imgFile.exists())
         }

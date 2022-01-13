@@ -20,7 +20,7 @@ package org.apache.spark.api.python
 import java.util.Locale
 
 import org.apache.spark.internal.Logging
-import org.apache.spark.sql.flow.{AdjacencyListFormat, BaseGraphFormat, GraphFileWriter, GraphVizFormat, SQLFlow}
+import org.apache.spark.sql.flow._
 import org.apache.spark.util.{Utils => SparkUtils}
 
 object SQLFlowApi extends Logging {
@@ -36,12 +36,11 @@ object SQLFlowApi extends Logging {
     }.toMap
   }
 
-  private def toGraphFormat(fmt: String, options: Map[String, String])
-    : BaseGraphFormat with GraphFileWriter = {
+  private def toGraphFormat(fmt: String, options: Map[String, String]): GraphFileSink = {
     fmt.toLowerCase(Locale.ROOT) match {
       case "graphviz" =>
         val imgFormat = options.getOrElse("imgFormat", "svg")
-        GraphVizFormat(imgFormat)
+        GraphVizSink(imgFormat)
 
       case "adjacency_list" =>
         val sepString = options.getOrElse("sep", ",")
@@ -65,7 +64,8 @@ object SQLFlowApi extends Logging {
       graphFormat: String = "graphviz",
       options: String = ""): String = {
     val graphFmt = toGraphFormat(graphFormat, parseOptions(options))
-    SQLFlow.toSQLFlowString(contracted, graphFormat = graphFmt)
+    val (nodes, edges) = SQLFlow.toSQLFlow(contracted)
+    graphFmt.toGraphString(nodes, edges)
   }
 
   def saveAsSQLFlow(

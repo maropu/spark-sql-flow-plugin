@@ -91,7 +91,7 @@ private[sql] object BlockingLineStream {
 }
 
 object GraphFileWriter {
-  def writeTo(dirPath: String, filename: String, flowString: String, overwrite: Boolean): File = {
+  def writeTo(dirPath: String, filename: String, graphString: String, overwrite: Boolean): File = {
     val outputDir = new File(dirPath)
     if (overwrite) {
       FileUtils.deleteDirectory(outputDir)
@@ -103,29 +103,12 @@ object GraphFileWriter {
         s"output dir path '$dirPath' already exists"
       })
     }
-    stringToFile(new File(outputDir, filename), flowString)
+    stringToFile(new File(outputDir, filename), graphString)
   }
 }
 
-trait GraphFileWriter {
-  def writeTo(dirPath: String, filenamePrefix: String, flowString: String,
-    overwrite: Boolean): File
-}
-
-trait BaseGraphFileWriter extends GraphFileWriter {
-  def fileSuffix: String
-
-  def writeTo(
-      dirPath: String,
-      filenamePrefix: String,
-      flowString: String,
-      overwrite: Boolean): File = {
-    GraphFileWriter.writeTo(
-      dirPath,
-      s"$filenamePrefix.$fileSuffix",
-      flowString,
-      overwrite)
-  }
+trait BaseGraphFormat {
+  def toGraphString(nodes: Seq[SQLFlowGraphNode], edges: Seq[SQLFlowGraphEdge]): String
 }
 
 object GraphVizFormat extends Logging {
@@ -151,10 +134,31 @@ object GraphVizFormat extends Logging {
   }
 }
 
+abstract class GraphFileSink extends BaseGraphSink with BaseGraphFormat {
+  def fileSuffix: String
+
+  override def write(
+      nodes: Seq[SQLFlowGraphNode],
+      edges: Seq[SQLFlowGraphEdge],
+      options: Map[String, String]): Unit = {
+    assert(options.contains("dirPath"), "`dirPath` not specified")
+    assert(options.contains("filenamePrefix"), "`filenamePrefix` not specified")
+    assert(options.contains("overwrite"), "`overwrite` not specified")
+    val dirPath = options("dirPath")
+    val filenamePrefix = options("filenamePrefix")
+    val overwrite = options("overwrite").toBoolean
+    GraphFileWriter.writeTo(
+      dirPath,
+      s"$filenamePrefix.$fileSuffix",
+      toGraphString(nodes, edges),
+      overwrite)
+  }
+}
+
 // TODO: Supports more formats to export data lineage into other systems,
 // e.g., Apache Atlas, neo4j, ...
-case class GraphVizFormat(imgFormat: String = "svg") extends BaseGraphFormat
-  with BaseGraphFileWriter {
+case class GraphVizSink(imgFormat: String = "svg") extends GraphFileSink {
+  override val fileSuffix: String = "dot"
 
   private val cachedNodeColor = "lightblue"
 
@@ -226,17 +230,18 @@ case class GraphVizFormat(imgFormat: String = "svg") extends BaseGraphFormat
       .replaceAll(">", "&gt;")
   }
 
-  override val fileSuffix: String = "dot"
+  override def write(
+      nodes: Seq[SQLFlowGraphNode],
+      edges: Seq[SQLFlowGraphEdge],
+      options: Map[String, String]): Unit = {
+    super.write(nodes, edges, options)
 
-  override def writeTo(
-      dirPath: String,
-      filenamePrefix: String,
-      flowString: String,
-      overwrite: Boolean): File = {
-    val dotFile = super.writeTo(dirPath, filenamePrefix, flowString, overwrite)
+    // Moreover, try to generate an image data from a generated graph file
+    val dirPath = options("dirPath")
+    val filenamePrefix = options("filenamePrefix")
+    val dotFile = new File(dirPath, s"$filenamePrefix.$fileSuffix")
     val dstFile = new File(dirPath, s"$filenamePrefix.$imgFormat").getAbsolutePath
     GraphVizFormat.tryGenerateImageFile(imgFormat, dotFile.getAbsolutePath, dstFile)
-    dotFile
   }
 }
 
@@ -249,8 +254,7 @@ object AdjacencyListFormat extends Logging {
   }
 }
 
-case class AdjacencyListFormat(sep: Char = ',') extends BaseGraphFormat
-  with BaseGraphFileWriter {
+case class AdjacencyListFormat(sep: Char = ',') extends GraphFileSink {
   override val fileSuffix: String = "lst"
 
   override def toGraphString(nodes: Seq[SQLFlowGraphNode], edges: Seq[SQLFlowGraphEdge]): String = {

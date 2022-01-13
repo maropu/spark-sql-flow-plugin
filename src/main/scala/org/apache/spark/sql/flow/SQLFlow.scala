@@ -18,12 +18,9 @@
 
 package org.apache.spark.sql.flow
 
-import scala.collection.mutable
-
-import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
 
-import org.apache.commons.io.FileUtils
+import scala.collection.mutable
 
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql._
@@ -33,7 +30,6 @@ import org.apache.spark.sql.catalyst.catalog.HiveTableRelation
 import org.apache.spark.sql.catalyst.expressions._
 import org.apache.spark.sql.catalyst.plans.{ExistenceJoin, LeftExistence}
 import org.apache.spark.sql.catalyst.plans.logical._
-import org.apache.spark.sql.catalyst.util._
 import org.apache.spark.sql.execution.columnar.InMemoryRelation
 import org.apache.spark.sql.execution.datasources.LogicalRelation
 
@@ -41,23 +37,21 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
 
   private val nextNodeId = new AtomicInteger(0)
 
-  protected def graphFormat: BaseGraphFormat
-
   def collectEdges(
     tempView: String,
     plan: LogicalPlan,
     nodeMap: mutable.Map[String, SQLFlowGraphNode]): Seq[SQLFlowGraphEdge]
 
-  def planToSQLFlow(plan: LogicalPlan): String = {
+  def planToSQLFlow(plan: LogicalPlan): (Seq[SQLFlowGraphNode], Seq[SQLFlowGraphEdge]) = {
     val nodeMap = mutable.Map[String, SQLFlowGraphNode]()
     val topNodeName = s"plan_${Math.abs(plan.semanticHash())}"
     val outputAttrNames = plan.output.map(_.name)
     val topNode = generateTableNode(outputAttrNames, topNodeName, isCached = false )
     val edges = collectEdges(topNodeName, plan, nodeMap)
-    graphFormat.toGraphString(topNode +: nodeMap.values.toSeq, edges)
+    (topNode +: nodeMap.values.toSeq, edges)
   }
 
-  def catalogToSQLFlow(session: SparkSession): String = {
+  def catalogToSQLFlow(session: SparkSession): (Seq[SQLFlowGraphNode], Seq[SQLFlowGraphEdge]) = {
     val nodeMap = mutable.Map[String, SQLFlowGraphNode]()
 
     val catalog = session.sessionState.catalog
@@ -177,7 +171,7 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
       }
     }
 
-    graphFormat.toGraphString(nodeMap.values.toSeq, edges.flatten)
+    (nodeMap.values.toSeq, edges.flatten)
   }
 
   protected def isCached(plan: LogicalPlan): Boolean = {
@@ -229,7 +223,7 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
   }
 }
 
-case class SQLFlow(graphFormat: BaseGraphFormat) extends BaseSQLFlow {
+case class SQLFlow() extends BaseSQLFlow {
 
   override def collectEdges(
       tempView: String,
@@ -495,7 +489,7 @@ case class SQLFlow(graphFormat: BaseGraphFormat) extends BaseSQLFlow {
   }
 }
 
-case class SQLContractedFlow(graphFormat: BaseGraphFormat) extends BaseSQLFlow {
+case class SQLContractedFlow() extends BaseSQLFlow {
 
   override def collectEdges(
       tempView: String,
@@ -746,22 +740,27 @@ case class SQLFlowHolder[T] private[sql](private val ds: Dataset[T]) {
 
   def printAsSQLFlow(
       contracted: Boolean = false,
-      graphFormat: BaseGraphFormat = GraphVizFormat()): Unit = {
+      graphFormat: BaseGraphFormat = GraphVizSink()): Unit = {
     // scalastyle:off println
-    val sqlFlow = if (contracted) SQLContractedFlow(graphFormat) else SQLFlow(graphFormat)
-    println(sqlFlow.planToSQLFlow(ds.queryExecution.optimizedPlan))
+    val sqlFlow = if (contracted) SQLContractedFlow() else SQLFlow()
+    val (nodes, edges) = sqlFlow.planToSQLFlow(ds.queryExecution.optimizedPlan)
+    println(graphFormat.toGraphString(nodes, edges))
     // scalastyle:on println
   }
 
   def saveAsSQLFlow(
       outputDirPath: String,
       filenamePrefix: String = "sqlflow",
-      graphFormat: BaseGraphFormat with GraphFileWriter = GraphVizFormat(),
+      graphSink: BaseGraphSink = GraphVizSink(),
       overwrite: Boolean = false,
       contracted: Boolean = false): Unit = {
-    val sqlFlow = if (contracted) SQLContractedFlow(graphFormat) else SQLFlow(graphFormat)
-    val flowString = sqlFlow.planToSQLFlow(ds.queryExecution.optimizedPlan)
-    graphFormat.writeTo(outputDirPath, filenamePrefix, flowString, overwrite)
+    val sqlFlow = if (contracted) SQLContractedFlow() else SQLFlow()
+    val (nodes, edges) = sqlFlow.planToSQLFlow(ds.queryExecution.optimizedPlan)
+    graphSink.write(nodes, edges, Map(
+      "dirPath" -> outputDirPath,
+      "filenamePrefix" -> filenamePrefix,
+      "overwrite" -> overwrite.toString,
+    ))
   }
 }
 
@@ -771,41 +770,45 @@ object SQLFlow extends Logging {
     new SQLFlowHolder[T](ds)
   }
 
-  private[spark] def toSQLFlowString(
-      contracted: Boolean = false,
-      graphFormat: BaseGraphFormat): String = {
+  private[spark] def toSQLFlow(contracted: Boolean = false)
+    : (Seq[SQLFlowGraphNode], Seq[SQLFlowGraphEdge]) = {
     SparkSession.getActiveSession.map { session =>
       if (contracted) {
-        SQLContractedFlow(graphFormat).catalogToSQLFlow(session)
+        SQLContractedFlow().catalogToSQLFlow(session)
       } else {
-        SQLFlow(graphFormat).catalogToSQLFlow(session)
+        SQLFlow().catalogToSQLFlow(session)
       }
     }.getOrElse {
       logWarning("Active SparkSession not found")
-      ""
+      (Nil, Nil)
     }
   }
 
   def saveAsSQLFlow(
       outputDirPath: String,
       filenamePrefix: String = "sqlflow",
-      graphFormat: BaseGraphFormat with GraphFileWriter = GraphVizFormat(),
+      graphSink: BaseGraphSink = GraphVizSink(),
       contracted: Boolean = false,
       overwrite: Boolean = false): Unit = {
-    val flowString = toSQLFlowString(contracted, graphFormat)
-    graphFormat.writeTo(outputDirPath, filenamePrefix, flowString, overwrite)
+    val (nodes, edges) = toSQLFlow(contracted)
+    graphSink.write(nodes, edges, Map(
+      "dirPath" -> outputDirPath,
+      "filenamePrefix" -> filenamePrefix,
+      "overwrite" -> overwrite.toString,
+    ))
   }
 
   // Indicates whether Spark is currently running unit tests
-  private[sql] lazy val isTesting: Boolean = {
+  private[flow] lazy val isTesting: Boolean = {
     System.getenv("SPARK_TESTING") != null || System.getProperty("spark.testing") != null
   }
 
   def printAsSQLFlow(
       contracted: Boolean = false,
-      graphFormat: BaseGraphFormat = GraphVizFormat()): Unit = {
+      graphFormat: BaseGraphFormat = GraphVizSink()): Unit = {
     // scalastyle:off println
-    println(toSQLFlowString(contracted, graphFormat))
+    val (nodes, edges) = toSQLFlow(contracted)
+    println(graphFormat.toGraphString(nodes, edges))
     // scalastyle:on println
   }
 }

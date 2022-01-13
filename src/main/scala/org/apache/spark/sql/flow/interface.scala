@@ -52,6 +52,7 @@ case class SQLFlowGraphEdge(
   }
 }
 
-abstract class BaseGraphFormat {
-  def toGraphString(nodes: Seq[SQLFlowGraphNode], edges: Seq[SQLFlowGraphEdge]): String
+trait BaseGraphSink {
+  def write(nodes: Seq[SQLFlowGraphNode], edges: Seq[SQLFlowGraphEdge],
+    options: Map[String, String]): Unit
 }
