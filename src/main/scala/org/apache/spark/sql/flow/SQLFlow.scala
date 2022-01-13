@@ -779,26 +779,6 @@ object SQLFlow extends Logging {
     new SQLFlowHolder[T](ds)
   }
 
-  private[sql] def writeSQLFlow(
-      outputDirPath: String,
-      filenamePrefix: String,
-      format: String,
-      flowString: String,
-      overwrite: Boolean = false): File = {
-    val outputDir = new File(outputDirPath)
-    if (overwrite) {
-      FileUtils.deleteDirectory(outputDir)
-    }
-    if (!outputDir.mkdir()) {
-      throw new AnalysisException(if (overwrite) {
-        s"`overwrite` is set to true, but could not remove output dir path '$outputDirPath'"
-      } else {
-        s"output dir path '$outputDirPath' already exists"
-      })
-    }
-    stringToFile(new File(outputDir, s"$filenamePrefix.dot"), flowString)
-  }
-
   private[spark] def toSQLFlowString(
       contracted: Boolean = false,
       graphFormat: BaseGraphFormat): String = {
