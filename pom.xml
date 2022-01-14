@@ -45,6 +45,7 @@
     <spark.binary.version>3.1</spark.binary.version>
     <hadoop.version>2.7.4</hadoop.version>
     <hadoop.binary.version>2.7</hadoop.binary.version>
+    <neo4j.version>4.1.0</neo4j.version>
     <scalatest.version>3.2.3</scalatest.version>
 
     <test.java.home>${java.home}</test.java.home>
@@ -79,6 +80,13 @@
       <artifactId>spark-sql_${scala.binary.version}</artifactId>
       <version>${spark.version}</version>
       <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.neo4j.driver</groupId>
+      <artifactId>neo4j-java-driver</artifactId>
+      <version>${neo4j.version}</version>
+      <scope>compile</scope>
     </dependency>
 
     <dependency>

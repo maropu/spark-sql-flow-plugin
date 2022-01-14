@@ -32,6 +32,7 @@ import org.apache.spark.sql.catalyst.plans.{ExistenceJoin, LeftExistence}
 import org.apache.spark.sql.catalyst.plans.logical._
 import org.apache.spark.sql.execution.columnar.InMemoryRelation
 import org.apache.spark.sql.execution.datasources.LogicalRelation
+import org.apache.spark.sql.flow.sink.{BaseGraphFormat, GraphVizSink}
 
 abstract class BaseSQLFlow extends PredicateHelper with Logging {
 

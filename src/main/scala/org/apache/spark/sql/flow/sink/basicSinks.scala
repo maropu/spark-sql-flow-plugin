@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.spark.sql.flow
+package org.apache.spark.sql.flow.sink
 
 import java.io.File
 import java.util.concurrent.LinkedBlockingQueue
@@ -29,6 +29,7 @@ import org.apache.commons.io.FileUtils
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql._
 import org.apache.spark.sql.catalyst.util._
+import org.apache.spark.sql.flow.{BaseGraphSink, GraphNodeType, SQLFlowGraphEdge, SQLFlowGraphNode}
 
 /**
  * Using ProcessBuilder.lineStream produces a stream, that uses
