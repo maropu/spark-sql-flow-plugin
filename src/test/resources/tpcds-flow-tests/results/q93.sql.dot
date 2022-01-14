@@ -6,26 +6,26 @@ digraph {
   node [shape=plaintext]
 
   
-"Aggregate_112e199" [label=<
+"Aggregate_4ac0679" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_112e199</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
   <tr><td port="0">ss_customer_sk</td></tr>
 <tr><td port="1">sumsales</td></tr>
 </table>>];
      
 
-"Filter_557c159" [label=<
+"Filter_9e0b52f" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_557c159</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter</i></td></tr>
   <tr><td port="0">r_reason_sk</td></tr>
 <tr><td port="1">r_reason_id</td></tr>
 <tr><td port="2">r_reason_desc</td></tr>
 </table>>];
      
 
-"Filter_a98902f" [label=<
+"Filter_c3f256c" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_a98902f</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter</i></td></tr>
   <tr><td port="0">sr_returned_date_sk</td></tr>
 <tr><td port="1">sr_return_time_sk</td></tr>
 <tr><td port="2">sr_item_sk</td></tr>
@@ -49,17 +49,29 @@ digraph {
 </table>>];
      
 
-"GlobalLimit_97c9378" [label=<
+"GlobalLimit_62e8d7c" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>GlobalLimit_97c9378</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>GlobalLimit</i></td></tr>
   <tr><td port="0">ss_customer_sk</td></tr>
 <tr><td port="1">sumsales</td></tr>
 </table>>];
      
 
-"Join_Inner_515cc69" [label=<
+"Join_Inner_680fa64" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_515cc69</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner</i></td></tr>
+  <tr><td port="0">ss_customer_sk</td></tr>
+<tr><td port="1">ss_quantity</td></tr>
+<tr><td port="2">ss_sales_price</td></tr>
+<tr><td port="3">sr_reason_sk</td></tr>
+<tr><td port="4">sr_return_quantity</td></tr>
+<tr><td port="5">r_reason_sk</td></tr>
+</table>>];
+     
+
+"Join_Inner_fc0b61c" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner</i></td></tr>
   <tr><td port="0">ss_item_sk</td></tr>
 <tr><td port="1">ss_customer_sk</td></tr>
 <tr><td port="2">ss_ticket_number</td></tr>
@@ -72,36 +84,32 @@ digraph {
 </table>>];
      
 
-"Join_Inner_551d979" [label=<
+"LocalLimit_f0e4a55" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_551d979</i></td></tr>
-  <tr><td port="0">ss_customer_sk</td></tr>
-<tr><td port="1">ss_quantity</td></tr>
-<tr><td port="2">ss_sales_price</td></tr>
-<tr><td port="3">sr_reason_sk</td></tr>
-<tr><td port="4">sr_return_quantity</td></tr>
-<tr><td port="5">r_reason_sk</td></tr>
-</table>>];
-     
-
-"LocalLimit_18407ad" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>LocalLimit_18407ad</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>LocalLimit</i></td></tr>
   <tr><td port="0">ss_customer_sk</td></tr>
 <tr><td port="1">sumsales</td></tr>
 </table>>];
      
 
-"Project_601262b" [label=<
+"Project_055ffa3" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_601262b</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">ss_customer_sk</td></tr>
+<tr><td port="1">act_sales</td></tr>
+</table>>];
+     
+
+"Project_2ac1a95" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
   <tr><td port="0">r_reason_sk</td></tr>
 </table>>];
      
 
-"Project_7ceb7b2" [label=<
+"Project_7c2b8b9" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_7ceb7b2</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
   <tr><td port="0">ss_customer_sk</td></tr>
 <tr><td port="1">ss_quantity</td></tr>
 <tr><td port="2">ss_sales_price</td></tr>
@@ -110,9 +118,9 @@ digraph {
 </table>>];
      
 
-"Project_b422152" [label=<
+"Project_b71e07b" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_b422152</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
   <tr><td port="0">ss_item_sk</td></tr>
 <tr><td port="1">ss_customer_sk</td></tr>
 <tr><td port="2">ss_ticket_number</td></tr>
@@ -121,17 +129,9 @@ digraph {
 </table>>];
      
 
-"Project_e343944" [label=<
+"Project_ed5385b" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_e343944</i></td></tr>
-  <tr><td port="0">ss_customer_sk</td></tr>
-<tr><td port="1">act_sales</td></tr>
-</table>>];
-     
-
-"Project_fed4e60" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_fed4e60</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
   <tr><td port="0">sr_item_sk</td></tr>
 <tr><td port="1">sr_reason_sk</td></tr>
 <tr><td port="2">sr_ticket_number</td></tr>
@@ -139,9 +139,9 @@ digraph {
 </table>>];
      
 
-"Sort_aefc989" [label=<
+"Sort_e5fe143" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort_aefc989</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort</i></td></tr>
   <tr><td port="0">ss_customer_sk</td></tr>
 <tr><td port="1">sumsales</td></tr>
 </table>>];
@@ -218,72 +218,72 @@ digraph {
 <tr><td port="1">sumsales</td></tr>
 </table>>];
      
-  "Aggregate_112e199":0 -> "Sort_aefc989":0;
-"Aggregate_112e199":1 -> "Sort_aefc989":1;
-"Filter_557c159":0 -> "Project_601262b":0;
-"Filter_a98902f":10 -> "Project_fed4e60":3;
-"Filter_a98902f":2 -> "Project_fed4e60":0;
-"Filter_a98902f":8 -> "Project_fed4e60":1;
-"Filter_a98902f":9 -> "Project_fed4e60":2;
-"GlobalLimit_97c9378":0 -> "v":0;
-"GlobalLimit_97c9378":1 -> "v":1;
-"Join_Inner_515cc69":1 -> "Project_7ceb7b2":0;
-"Join_Inner_515cc69":3 -> "Project_7ceb7b2":1;
-"Join_Inner_515cc69":4 -> "Project_7ceb7b2":2;
-"Join_Inner_515cc69":6 -> "Project_7ceb7b2":3;
-"Join_Inner_515cc69":8 -> "Project_7ceb7b2":4;
-"Join_Inner_551d979":0 -> "Project_e343944":0;
-"Join_Inner_551d979":1 -> "Project_e343944":1;
-"Join_Inner_551d979":2 -> "Project_e343944":1;
-"Join_Inner_551d979":4 -> "Project_e343944":1;
-"LocalLimit_18407ad":0 -> "GlobalLimit_97c9378":0;
-"LocalLimit_18407ad":1 -> "GlobalLimit_97c9378":1;
-"Project_601262b":0 -> "Join_Inner_551d979":5;
-"Project_7ceb7b2":0 -> "Join_Inner_551d979":0;
-"Project_7ceb7b2":1 -> "Join_Inner_551d979":1;
-"Project_7ceb7b2":2 -> "Join_Inner_551d979":2;
-"Project_7ceb7b2":3 -> "Join_Inner_551d979":3;
-"Project_7ceb7b2":4 -> "Join_Inner_551d979":4;
-"Project_b422152":0 -> "Join_Inner_515cc69":0;
-"Project_b422152":1 -> "Join_Inner_515cc69":1;
-"Project_b422152":2 -> "Join_Inner_515cc69":2;
-"Project_b422152":3 -> "Join_Inner_515cc69":3;
-"Project_b422152":4 -> "Join_Inner_515cc69":4;
-"Project_e343944":0 -> "Aggregate_112e199":0;
-"Project_e343944":1 -> "Aggregate_112e199":1;
-"Project_fed4e60":0 -> "Join_Inner_515cc69":5;
-"Project_fed4e60":1 -> "Join_Inner_515cc69":6;
-"Project_fed4e60":2 -> "Join_Inner_515cc69":7;
-"Project_fed4e60":3 -> "Join_Inner_515cc69":8;
-"Sort_aefc989":0 -> "LocalLimit_18407ad":0;
-"Sort_aefc989":1 -> "LocalLimit_18407ad":1;
-"default.reason":0 -> "Filter_557c159":0;
-"default.reason":1 -> "Filter_557c159":1;
-"default.reason":2 -> "Filter_557c159":2;
-"default.store_returns":0 -> "Filter_a98902f":0;
-"default.store_returns":1 -> "Filter_a98902f":1;
-"default.store_returns":10 -> "Filter_a98902f":10;
-"default.store_returns":11 -> "Filter_a98902f":11;
-"default.store_returns":12 -> "Filter_a98902f":12;
-"default.store_returns":13 -> "Filter_a98902f":13;
-"default.store_returns":14 -> "Filter_a98902f":14;
-"default.store_returns":15 -> "Filter_a98902f":15;
-"default.store_returns":16 -> "Filter_a98902f":16;
-"default.store_returns":17 -> "Filter_a98902f":17;
-"default.store_returns":18 -> "Filter_a98902f":18;
-"default.store_returns":19 -> "Filter_a98902f":19;
-"default.store_returns":2 -> "Filter_a98902f":2;
-"default.store_returns":3 -> "Filter_a98902f":3;
-"default.store_returns":4 -> "Filter_a98902f":4;
-"default.store_returns":5 -> "Filter_a98902f":5;
-"default.store_returns":6 -> "Filter_a98902f":6;
-"default.store_returns":7 -> "Filter_a98902f":7;
-"default.store_returns":8 -> "Filter_a98902f":8;
-"default.store_returns":9 -> "Filter_a98902f":9;
-"default.store_sales":10 -> "Project_b422152":3;
-"default.store_sales":13 -> "Project_b422152":4;
-"default.store_sales":2 -> "Project_b422152":0;
-"default.store_sales":3 -> "Project_b422152":1;
-"default.store_sales":9 -> "Project_b422152":2;
+  "Aggregate_4ac0679":0 -> "Sort_e5fe143":0;
+"Aggregate_4ac0679":1 -> "Sort_e5fe143":1;
+"Filter_9e0b52f":0 -> "Project_2ac1a95":0;
+"Filter_c3f256c":10 -> "Project_ed5385b":3;
+"Filter_c3f256c":2 -> "Project_ed5385b":0;
+"Filter_c3f256c":8 -> "Project_ed5385b":1;
+"Filter_c3f256c":9 -> "Project_ed5385b":2;
+"GlobalLimit_62e8d7c":0 -> "v":0;
+"GlobalLimit_62e8d7c":1 -> "v":1;
+"Join_Inner_680fa64":0 -> "Project_055ffa3":0;
+"Join_Inner_680fa64":1 -> "Project_055ffa3":1;
+"Join_Inner_680fa64":2 -> "Project_055ffa3":1;
+"Join_Inner_680fa64":4 -> "Project_055ffa3":1;
+"Join_Inner_fc0b61c":1 -> "Project_7c2b8b9":0;
+"Join_Inner_fc0b61c":3 -> "Project_7c2b8b9":1;
+"Join_Inner_fc0b61c":4 -> "Project_7c2b8b9":2;
+"Join_Inner_fc0b61c":6 -> "Project_7c2b8b9":3;
+"Join_Inner_fc0b61c":8 -> "Project_7c2b8b9":4;
+"LocalLimit_f0e4a55":0 -> "GlobalLimit_62e8d7c":0;
+"LocalLimit_f0e4a55":1 -> "GlobalLimit_62e8d7c":1;
+"Project_055ffa3":0 -> "Aggregate_4ac0679":0;
+"Project_055ffa3":1 -> "Aggregate_4ac0679":1;
+"Project_2ac1a95":0 -> "Join_Inner_680fa64":5;
+"Project_7c2b8b9":0 -> "Join_Inner_680fa64":0;
+"Project_7c2b8b9":1 -> "Join_Inner_680fa64":1;
+"Project_7c2b8b9":2 -> "Join_Inner_680fa64":2;
+"Project_7c2b8b9":3 -> "Join_Inner_680fa64":3;
+"Project_7c2b8b9":4 -> "Join_Inner_680fa64":4;
+"Project_b71e07b":0 -> "Join_Inner_fc0b61c":0;
+"Project_b71e07b":1 -> "Join_Inner_fc0b61c":1;
+"Project_b71e07b":2 -> "Join_Inner_fc0b61c":2;
+"Project_b71e07b":3 -> "Join_Inner_fc0b61c":3;
+"Project_b71e07b":4 -> "Join_Inner_fc0b61c":4;
+"Project_ed5385b":0 -> "Join_Inner_fc0b61c":5;
+"Project_ed5385b":1 -> "Join_Inner_fc0b61c":6;
+"Project_ed5385b":2 -> "Join_Inner_fc0b61c":7;
+"Project_ed5385b":3 -> "Join_Inner_fc0b61c":8;
+"Sort_e5fe143":0 -> "LocalLimit_f0e4a55":0;
+"Sort_e5fe143":1 -> "LocalLimit_f0e4a55":1;
+"default.reason":0 -> "Filter_9e0b52f":0;
+"default.reason":1 -> "Filter_9e0b52f":1;
+"default.reason":2 -> "Filter_9e0b52f":2;
+"default.store_returns":0 -> "Filter_c3f256c":0;
+"default.store_returns":1 -> "Filter_c3f256c":1;
+"default.store_returns":10 -> "Filter_c3f256c":10;
+"default.store_returns":11 -> "Filter_c3f256c":11;
+"default.store_returns":12 -> "Filter_c3f256c":12;
+"default.store_returns":13 -> "Filter_c3f256c":13;
+"default.store_returns":14 -> "Filter_c3f256c":14;
+"default.store_returns":15 -> "Filter_c3f256c":15;
+"default.store_returns":16 -> "Filter_c3f256c":16;
+"default.store_returns":17 -> "Filter_c3f256c":17;
+"default.store_returns":18 -> "Filter_c3f256c":18;
+"default.store_returns":19 -> "Filter_c3f256c":19;
+"default.store_returns":2 -> "Filter_c3f256c":2;
+"default.store_returns":3 -> "Filter_c3f256c":3;
+"default.store_returns":4 -> "Filter_c3f256c":4;
+"default.store_returns":5 -> "Filter_c3f256c":5;
+"default.store_returns":6 -> "Filter_c3f256c":6;
+"default.store_returns":7 -> "Filter_c3f256c":7;
+"default.store_returns":8 -> "Filter_c3f256c":8;
+"default.store_returns":9 -> "Filter_c3f256c":9;
+"default.store_sales":10 -> "Project_b71e07b":3;
+"default.store_sales":13 -> "Project_b71e07b":4;
+"default.store_sales":2 -> "Project_b71e07b":0;
+"default.store_sales":3 -> "Project_b71e07b":1;
+"default.store_sales":9 -> "Project_b71e07b":2;
 }
        

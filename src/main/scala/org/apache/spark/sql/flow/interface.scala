@@ -23,8 +23,10 @@ object GraphNodeType extends Enumeration {
 }
 
 case class SQLFlowGraphNode(
+  uniqueId: String,
   ident: String,
-  attributes: Seq[String],
+  attributeNames: Seq[String],
+  schema: String,
   tpe: GraphNodeType.Value,
   isCached: Boolean) {
 
@@ -34,21 +36,21 @@ case class SQLFlowGraphNode(
   }
 
   override def toString: String = {
-    s"""name=`$ident`(${attributes.map(a => s"`$a`").mkString(",")}), """ +
+    s"""name=`$ident`(${attributeNames.map(a => s"`$a`").mkString(",")}), """ +
       s"""type=${prettyTypeName(tpe)}, cached=$isCached"""
   }
 }
 
 case class SQLFlowGraphEdge(
-  from: String,
+  fromId: String,
   fromIdx: Option[Int],
-  to: String,
+  toId: String,
   toIdx: Option[Int]) {
 
   override def toString: String = {
     val fromIdxOpt = fromIdx.map(i => s"(idx=$i)").getOrElse("")
     val toIdxOpt = toIdx.map(i => s"(idx=$i)").getOrElse("")
-    s"""from=`$from`$fromIdxOpt, to=`$to`$toIdxOpt"""
+    s"""from=`$fromId`$fromIdxOpt, to=`$toId`$toIdxOpt"""
   }
 }
 

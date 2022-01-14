@@ -6,18 +6,118 @@ digraph {
   node [shape=plaintext]
 
   
-"Aggregate_0f081b2" [label=<
+"Aggregate_3bc7944" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_0f081b2</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+<tr><td port="2">grouping(course)</td></tr>
+<tr><td port="3">grouping(year)</td></tr>
+</table>>];
+     
+
+"Aggregate_3ddb0a1" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+<tr><td port="2">grouping_id(course, year)</td></tr>
+<tr><td port="3">aggOrder</td></tr>
+<tr><td port="4">aggOrder</td></tr>
+</table>>];
+     
+
+"Aggregate_40a291a" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">sum</td></tr>
+</table>>];
+     
+
+"Aggregate_4fb1f43" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
   <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
 <tr><td port="2">sum(earnings)</td></tr>
 </table>>];
      
 
-"Aggregate_1923f08" [label=<
+"Aggregate_57fb184" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_1923f08</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+</table>>];
+     
+
+"Aggregate_77b04f4" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+<tr><td port="2">sum(earnings)</td></tr>
+</table>>];
+     
+
+"Aggregate_97860c2" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+<tr><td port="2">sum(earnings)</td></tr>
+</table>>];
+     
+
+"Aggregate_9aaa7f1" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
+  <tr><td port="0">a</td></tr>
+<tr><td port="1">b</td></tr>
+<tr><td port="2">sum(b)</td></tr>
+</table>>];
+     
+
+"Aggregate_a01f42f" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+<tr><td port="2">aggOrder</td></tr>
+</table>>];
+     
+
+"Aggregate_a539ae7" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">sum</td></tr>
+<tr><td port="2">grouping_id(course, earnings)</td></tr>
+</table>>];
+     
+
+"Aggregate_b71d5c5" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
+  <tr><td port="0">(a + b)</td></tr>
+<tr><td port="1">k</td></tr>
+<tr><td port="2">sum((a - b))</td></tr>
+</table>>];
+     
+
+"Aggregate_b8c4e73" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
+  <tr><td port="0">k1</td></tr>
+<tr><td port="1">k2</td></tr>
+<tr><td port="2">sum((a - b))</td></tr>
+</table>>];
+     
+
+"Aggregate_be98f23" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
   <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
 <tr><td port="2">grouping(course)</td></tr>
@@ -26,271 +126,81 @@ digraph {
 </table>>];
      
 
-"Aggregate_200864a" [label=<
+"Aggregate_c143694" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_200864a</i></td></tr>
-  <tr><td port="0">k1</td></tr>
-<tr><td port="1">k2</td></tr>
-<tr><td port="2">sum((a - b))</td></tr>
-</table>>];
-     
-
-"Aggregate_3f4ed06" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_3f4ed06</i></td></tr>
-  <tr><td port="0">k</td></tr>
-<tr><td port="1">b</td></tr>
-<tr><td port="2">sum((a - b))</td></tr>
-</table>>];
-     
-
-"Aggregate_46295bf" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_46295bf</i></td></tr>
-  <tr><td port="0">(a + b)</td></tr>
-<tr><td port="1">b</td></tr>
-<tr><td port="2">sum((a - b))</td></tr>
-</table>>];
-     
-
-"Aggregate_5d2d59f" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_5d2d59f</i></td></tr>
-  <tr><td port="0">a</td></tr>
-<tr><td port="1">b</td></tr>
-<tr><td port="2">sum(b)</td></tr>
-</table>>];
-     
-
-"Aggregate_6caa70f" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_6caa70f</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-<tr><td port="2">grouping(course)</td></tr>
-<tr><td port="3">grouping(year)</td></tr>
-</table>>];
-     
-
-"Aggregate_72c2016" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_72c2016</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-<tr><td port="2">aggOrder</td></tr>
-</table>>];
-     
-
-"Aggregate_78bed8c" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_78bed8c</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-<tr><td port="2">sum(earnings)</td></tr>
-</table>>];
-     
-
-"Aggregate_8824aed" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_8824aed</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-<tr><td port="2">grouping_id(course, year)</td></tr>
-<tr><td port="3">aggOrder</td></tr>
-<tr><td port="4">aggOrder</td></tr>
-</table>>];
-     
-
-"Aggregate_8ba4583" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_8ba4583</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-<tr><td port="2">sum(earnings)</td></tr>
-</table>>];
-     
-
-"Aggregate_9327b1d" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_9327b1d</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-<tr><td port="2">sum(earnings)</td></tr>
-</table>>];
-     
-
-"Aggregate_9de479d" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_9de479d</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">sum</td></tr>
-</table>>];
-     
-
-"Aggregate_c486b44" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_c486b44</i></td></tr>
-  <tr><td port="0">(a + b)</td></tr>
-<tr><td port="1">k</td></tr>
-<tr><td port="2">sum((a - b))</td></tr>
-</table>>];
-     
-
-"Aggregate_c49f7a2" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_c49f7a2</i></td></tr>
-  <tr><td port="0">(a + b)</td></tr>
-<tr><td port="1">b</td></tr>
-<tr><td port="2">sum((a - b))</td></tr>
-</table>>];
-     
-
-"Aggregate_dc8347c" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_dc8347c</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-<tr><td port="2">sum(earnings)</td></tr>
-</table>>];
-     
-
-"Aggregate_e2590fb" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_e2590fb</i></td></tr>
-  <tr><td port="0">a</td></tr>
-<tr><td port="1">b</td></tr>
-<tr><td port="2">sum(b)</td></tr>
-</table>>];
-     
-
-"Aggregate_edf6cbb" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_edf6cbb</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">sum</td></tr>
-<tr><td port="2">grouping_id(course, earnings)</td></tr>
-</table>>];
-     
-
-"Aggregate_f3e76cd" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_f3e76cd</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-</table>>];
-     
-
-"Aggregate_f4b7797" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_f4b7797</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
   <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
 <tr><td port="2">grouping__id</td></tr>
 </table>>];
      
 
-"Expand_1c81b52" [label=<
+"Aggregate_c1e7a44" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_1c81b52</i></td></tr>
-  <tr><td port="0">b</td></tr>
-<tr><td port="1">a</td></tr>
-<tr><td port="2">b</td></tr>
-<tr><td port="3">spark_grouping_id</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+<tr><td port="2">sum(earnings)</td></tr>
 </table>>];
      
 
-"Expand_2ac56dc" [label=<
+"Aggregate_c9cb2c4" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_2ac56dc</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
+  <tr><td port="0">(a + b)</td></tr>
+<tr><td port="1">b</td></tr>
+<tr><td port="2">sum((a - b))</td></tr>
+</table>>];
+     
+
+"Aggregate_c9fb228" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
-<tr><td port="2">k</td></tr>
-<tr><td port="3">b</td></tr>
-<tr><td port="4">spark_grouping_id</td></tr>
+<tr><td port="2">sum(b)</td></tr>
 </table>>];
      
 
-"Expand_3395e60" [label=<
+"Aggregate_d1f08c4" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_3395e60</i></td></tr>
-  <tr><td port="0">earnings</td></tr>
-<tr><td port="1">course</td></tr>
-<tr><td port="2">year</td></tr>
-<tr><td port="3">spark_grouping_id</td></tr>
-</table>>];
-     
-
-"Expand_3dcf8e5" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_3dcf8e5</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
   <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
-<tr><td port="2">spark_grouping_id</td></tr>
+<tr><td port="2">sum(earnings)</td></tr>
 </table>>];
      
 
-"Expand_40a0f68" [label=<
+"Aggregate_ed7938b" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_40a0f68</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-<tr><td port="2">spark_grouping_id</td></tr>
-</table>>];
-     
-
-"Expand_41481b7" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_41481b7</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-<tr><td port="2">spark_grouping_id</td></tr>
-</table>>];
-     
-
-"Expand_4756ed2" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_4756ed2</i></td></tr>
-  <tr><td port="0">a</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
+  <tr><td port="0">k</td></tr>
 <tr><td port="1">b</td></tr>
-<tr><td port="2">k1</td></tr>
-<tr><td port="3">k2</td></tr>
-<tr><td port="4">spark_grouping_id</td></tr>
+<tr><td port="2">sum((a - b))</td></tr>
 </table>>];
      
 
-"Expand_55d3702" [label=<
+"Aggregate_eeea591" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_55d3702</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
+  <tr><td port="0">(a + b)</td></tr>
+<tr><td port="1">b</td></tr>
+<tr><td port="2">sum((a - b))</td></tr>
+</table>>];
+     
+
+"Expand_11898d8" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand</i></td></tr>
   <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
 <tr><td port="2">spark_grouping_id</td></tr>
 </table>>];
      
 
-"Expand_5cb6902" [label=<
+"Expand_16d3c51" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_5cb6902</i></td></tr>
-  <tr><td port="0">a</td></tr>
-<tr><td port="1">b</td></tr>
-<tr><td port="2">(a#7454 + b#7455)</td></tr>
-<tr><td port="3">b</td></tr>
-<tr><td port="4">spark_grouping_id</td></tr>
-</table>>];
-     
-
-"Expand_629049b" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_629049b</i></td></tr>
-  <tr><td port="0">b</td></tr>
-<tr><td port="1">a</td></tr>
-<tr><td port="2">b</td></tr>
-<tr><td port="3">spark_grouping_id</td></tr>
-</table>>];
-     
-
-"Expand_808858e" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_808858e</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand</i></td></tr>
   <tr><td port="0">earnings</td></tr>
 <tr><td port="1">course</td></tr>
 <tr><td port="2">earnings</td></tr>
@@ -298,48 +208,47 @@ digraph {
 </table>>];
      
 
-"Expand_9cfc82e" [label=<
+"Expand_2053a60" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_9cfc82e</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand</i></td></tr>
+  <tr><td port="0">b</td></tr>
+<tr><td port="1">a</td></tr>
+<tr><td port="2">b</td></tr>
+<tr><td port="3">spark_grouping_id</td></tr>
+</table>>];
+     
+
+"Expand_28444e4" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand</i></td></tr>
+  <tr><td port="0">earnings</td></tr>
+<tr><td port="1">course</td></tr>
+<tr><td port="2">year</td></tr>
+<tr><td port="3">spark_grouping_id</td></tr>
+</table>>];
+     
+
+"Expand_2927014" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand</i></td></tr>
   <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
 <tr><td port="2">spark_grouping_id</td></tr>
 </table>>];
      
 
-"Expand_a006ccd" [label=<
+"Expand_2ea7391" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_a006ccd</i></td></tr>
-  <tr><td port="0">earnings</td></tr>
-<tr><td port="1">course</td></tr>
-<tr><td port="2">year</td></tr>
-<tr><td port="3">spark_grouping_id</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+<tr><td port="2">spark_grouping_id</td></tr>
 </table>>];
      
 
-"Expand_a36e7dd" [label=<
+"Expand_4518bac" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_a36e7dd</i></td></tr>
-  <tr><td port="0">earnings</td></tr>
-<tr><td port="1">course</td></tr>
-<tr><td port="2">year</td></tr>
-<tr><td port="3">spark_grouping_id</td></tr>
-</table>>];
-     
-
-"Expand_a80299f" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_a80299f</i></td></tr>
-  <tr><td port="0">earnings</td></tr>
-<tr><td port="1">course</td></tr>
-<tr><td port="2">year</td></tr>
-<tr><td port="3">spark_grouping_id</td></tr>
-</table>>];
-     
-
-"Expand_ba3c98c" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_ba3c98c</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
 <tr><td port="2">(a#7592 + b#7593)</td></tr>
@@ -348,28 +257,18 @@ digraph {
 </table>>];
      
 
-"Expand_c0f0c9b" [label=<
+"Expand_7ad5c6b" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_c0f0c9b</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand</i></td></tr>
   <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
 <tr><td port="2">spark_grouping_id</td></tr>
 </table>>];
      
 
-"Expand_caa57ef" [label=<
+"Expand_8b4843f" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_caa57ef</i></td></tr>
-  <tr><td port="0">earnings</td></tr>
-<tr><td port="1">course</td></tr>
-<tr><td port="2">earnings</td></tr>
-<tr><td port="3">spark_grouping_id</td></tr>
-</table>>];
-     
-
-"Expand_d823814" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_d823814</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand</i></td></tr>
   <tr><td port="0">earnings</td></tr>
 <tr><td port="1">course</td></tr>
 <tr><td port="2">year</td></tr>
@@ -377,9 +276,19 @@ digraph {
 </table>>];
      
 
-"Expand_eca3845" [label=<
+"Expand_8c6f511" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand_eca3845</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand</i></td></tr>
+  <tr><td port="0">earnings</td></tr>
+<tr><td port="1">course</td></tr>
+<tr><td port="2">year</td></tr>
+<tr><td port="3">spark_grouping_id</td></tr>
+</table>>];
+     
+
+"Expand_a2d669c" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
 <tr><td port="2">(a#7504 + b#7505)</td></tr>
@@ -388,18 +297,151 @@ digraph {
 </table>>];
      
 
-"Filter_46f715a" [label=<
+"Expand_ab25451" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_46f715a</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand</i></td></tr>
+  <tr><td port="0">earnings</td></tr>
+<tr><td port="1">course</td></tr>
+<tr><td port="2">year</td></tr>
+<tr><td port="3">spark_grouping_id</td></tr>
+</table>>];
+     
+
+"Expand_c2dc500" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand</i></td></tr>
   <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
 <tr><td port="2">spark_grouping_id</td></tr>
 </table>>];
      
 
-"Project_0301923" [label=<
+"Expand_c48956a" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_0301923</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand</i></td></tr>
+  <tr><td port="0">earnings</td></tr>
+<tr><td port="1">course</td></tr>
+<tr><td port="2">earnings</td></tr>
+<tr><td port="3">spark_grouping_id</td></tr>
+</table>>];
+     
+
+"Expand_cbfc589" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand</i></td></tr>
+  <tr><td port="0">earnings</td></tr>
+<tr><td port="1">course</td></tr>
+<tr><td port="2">year</td></tr>
+<tr><td port="3">spark_grouping_id</td></tr>
+</table>>];
+     
+
+"Expand_d2382b6" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand</i></td></tr>
+  <tr><td port="0">b</td></tr>
+<tr><td port="1">a</td></tr>
+<tr><td port="2">b</td></tr>
+<tr><td port="3">spark_grouping_id</td></tr>
+</table>>];
+     
+
+"Expand_d2914b4" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand</i></td></tr>
+  <tr><td port="0">a</td></tr>
+<tr><td port="1">b</td></tr>
+<tr><td port="2">(a#7454 + b#7455)</td></tr>
+<tr><td port="3">b</td></tr>
+<tr><td port="4">spark_grouping_id</td></tr>
+</table>>];
+     
+
+"Expand_dbe8dcf" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+<tr><td port="2">spark_grouping_id</td></tr>
+</table>>];
+     
+
+"Expand_f1d5240" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand</i></td></tr>
+  <tr><td port="0">a</td></tr>
+<tr><td port="1">b</td></tr>
+<tr><td port="2">k1</td></tr>
+<tr><td port="3">k2</td></tr>
+<tr><td port="4">spark_grouping_id</td></tr>
+</table>>];
+     
+
+"Expand_fd0f107" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Expand</i></td></tr>
+  <tr><td port="0">a</td></tr>
+<tr><td port="1">b</td></tr>
+<tr><td port="2">k</td></tr>
+<tr><td port="3">b</td></tr>
+<tr><td port="4">spark_grouping_id</td></tr>
+</table>>];
+     
+
+"Filter_17b6867" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+<tr><td port="2">spark_grouping_id</td></tr>
+</table>>];
+     
+
+"Project_07f76b4" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+</table>>];
+     
+
+"Project_17e7393" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">earnings</td></tr>
+<tr><td port="1">course</td></tr>
+<tr><td port="2">year</td></tr>
+</table>>];
+     
+
+"Project_21b2b61" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">earnings</td></tr>
+<tr><td port="1">course</td></tr>
+<tr><td port="2">earnings</td></tr>
+</table>>];
+     
+
+"Project_249da13" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+</table>>];
+     
+
+"Project_266531a" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">earnings</td></tr>
+<tr><td port="1">year</td></tr>
+</table>>];
+     
+
+"Project_34b8b4b" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
 <tr><td port="2">k1</td></tr>
@@ -407,35 +449,70 @@ digraph {
 </table>>];
      
 
-"Project_05e1c5f" [label=<
+"Project_375e3d2" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_05e1c5f</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
   <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
 </table>>];
      
 
-"Project_24515a5" [label=<
+"Project_387715b" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_24515a5</i></td></tr>
-  <tr><td port="0">b</td></tr>
-<tr><td port="1">a</td></tr>
-<tr><td port="2">b</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">earnings</td></tr>
+<tr><td port="1">course</td></tr>
+<tr><td port="2">earnings</td></tr>
 </table>>];
      
 
-"Project_25f782d" [label=<
+"Project_3ada4c5" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_25f782d</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+</table>>];
+     
+
+"Project_4e566a5" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
   <tr><td port="0">earnings</td></tr>
 <tr><td port="1">course</td></tr>
 <tr><td port="2">year</td></tr>
 </table>>];
      
 
-"Project_33806c4" [label=<
+"Project_55b0059" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_33806c4</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">b</td></tr>
+<tr><td port="1">a</td></tr>
+<tr><td port="2">b</td></tr>
+</table>>];
+     
+
+"Project_5e86fe9" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">a</td></tr>
+<tr><td port="1">b</td></tr>
+<tr><td port="2">k</td></tr>
+<tr><td port="3">b</td></tr>
+</table>>];
+     
+
+"Project_606fcb8" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+</table>>];
+     
+
+"Project_62206b3" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
 <tr><td port="2">(a#7454 + b#7455)</td></tr>
@@ -443,44 +520,44 @@ digraph {
 </table>>];
      
 
-"Project_3959e31" [label=<
+"Project_6d3f3f6" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_3959e31</i></td></tr>
-  <tr><td port="0">b</td></tr>
-<tr><td port="1">a</td></tr>
-<tr><td port="2">b</td></tr>
-</table>>];
-     
-
-"Project_46db309" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_46db309</i></td></tr>
-  <tr><td port="0">earnings</td></tr>
-<tr><td port="1">course</td></tr>
-<tr><td port="2">earnings</td></tr>
-</table>>];
-     
-
-"Project_50ea0bb" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_50ea0bb</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-</table>>];
-     
-
-"Project_53b033f" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_53b033f</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
 <tr><td port="2">k</td></tr>
 </table>>];
      
 
-"Project_6b7fc76" [label=<
+"Project_872e287" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_6b7fc76</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+</table>>];
+     
+
+"Project_a547cf9" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">b</td></tr>
+<tr><td port="1">a</td></tr>
+<tr><td port="2">b</td></tr>
+</table>>];
+     
+
+"Project_bdbf595" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+<tr><td port="2">grouping_id(course, year)</td></tr>
+</table>>];
+     
+
+"Project_c0375dd" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
 <tr><td port="2">(a#7592 + b#7593)</td></tr>
@@ -488,146 +565,42 @@ digraph {
 </table>>];
      
 
-"Project_6e445c3" [label=<
+"Project_cf45335" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_6e445c3</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
   <tr><td port="0">earnings</td></tr>
 <tr><td port="1">course</td></tr>
 <tr><td port="2">year</td></tr>
 </table>>];
      
 
-"Project_8577469" [label=<
+"Project_d140603" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_8577469</i></td></tr>
-  <tr><td port="0">earnings</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
 </table>>];
      
 
-"Project_8940acb" [label=<
+"Project_f0a29d4" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_8940acb</i></td></tr>
-  <tr><td port="0">a</td></tr>
-<tr><td port="1">b</td></tr>
-<tr><td port="2">k</td></tr>
-<tr><td port="3">b</td></tr>
-</table>>];
-     
-
-"Project_9b06017" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_9b06017</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
   <tr><td port="0">earnings</td></tr>
 <tr><td port="1">course</td></tr>
 </table>>];
      
 
-"Project_a6ab9e7" [label=<
+"Sort_3791135" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_a6ab9e7</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-</table>>];
-     
-
-"Project_a780b11" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_a780b11</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-<tr><td port="2">grouping_id(course, year)</td></tr>
-</table>>];
-     
-
-"Project_b08f767" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_b08f767</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-</table>>];
-     
-
-"Project_b229b0a" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_b229b0a</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-</table>>];
-     
-
-"Project_b9c089f" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_b9c089f</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-</table>>];
-     
-
-"Project_cd8710f" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_cd8710f</i></td></tr>
-  <tr><td port="0">earnings</td></tr>
-<tr><td port="1">course</td></tr>
-<tr><td port="2">year</td></tr>
-</table>>];
-     
-
-"Project_e23dc1e" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_e23dc1e</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-</table>>];
-     
-
-"Project_ff753e1" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_ff753e1</i></td></tr>
-  <tr><td port="0">earnings</td></tr>
-<tr><td port="1">course</td></tr>
-<tr><td port="2">earnings</td></tr>
-</table>>];
-     
-
-"Sort_511c1b5" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort_511c1b5</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">sum</td></tr>
-<tr><td port="2">grouping_id(course, earnings)</td></tr>
-</table>>];
-     
-
-"Sort_67adbc7" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort_67adbc7</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-<tr><td port="2">aggOrder</td></tr>
-</table>>];
-     
-
-"Sort_87bb167" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort_87bb167</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-<tr><td port="2">sum(earnings)</td></tr>
-</table>>];
-     
-
-"Sort_9877d45" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort_9877d45</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort</i></td></tr>
   <tr><td port="0">course</td></tr>
 <tr><td port="1">sum</td></tr>
 </table>>];
      
 
-"Sort_9ef6a57" [label=<
+"Sort_678f349" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort_9ef6a57</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort</i></td></tr>
   <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
 <tr><td port="2">grouping_id(course, year)</td></tr>
@@ -636,18 +609,62 @@ digraph {
 </table>>];
      
 
-"Sort_b94ce8c" [label=<
+"Sort_6c58b4a" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort_b94ce8c</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">sum</td></tr>
+<tr><td port="2">grouping_id(course, earnings)</td></tr>
+</table>>];
+     
+
+"Sort_7e4575d" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort</i></td></tr>
   <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
 <tr><td port="2">sum(earnings)</td></tr>
 </table>>];
      
 
-"Sort_d8000d9" [label=<
+"Sort_851550c" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort_d8000d9</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+<tr><td port="2">aggOrder</td></tr>
+</table>>];
+     
+
+"Sort_9304e28" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+<tr><td port="2">grouping__id</td></tr>
+</table>>];
+     
+
+"Sort_a775e32" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+<tr><td port="2">sum(earnings)</td></tr>
+</table>>];
+     
+
+"Sort_ba8c7f7" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort</i></td></tr>
+  <tr><td port="0">course</td></tr>
+<tr><td port="1">year</td></tr>
+</table>>];
+     
+
+"Sort_f1aff26" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort</i></td></tr>
   <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
 <tr><td port="2">grouping(course)</td></tr>
@@ -655,26 +672,9 @@ digraph {
 </table>>];
      
 
-"Sort_f37d699" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort_f37d699</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-</table>>];
-     
-
-"Sort_f6dbd0d" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort_f6dbd0d</i></td></tr>
-  <tr><td port="0">course</td></tr>
-<tr><td port="1">year</td></tr>
-<tr><td port="2">grouping__id</td></tr>
-</table>>];
-     
-
-"courseSales_4afd820" [color="black" label=<
+"courseSales_a24e00b" [color="black" label=<
 <table>
-  <tr><td bgcolor="black" port="nodeName"><i><font color="white">courseSales_4afd820</font></i></td></tr>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">courseSales_a24e00b</font></i></td></tr>
   <tr><td port="0">course</td></tr>
 <tr><td port="1">year</td></tr>
 <tr><td port="2">earnings</td></tr>
@@ -870,9 +870,9 @@ digraph {
 </table>>];
      
 
-"testData_8b2847f" [color="black" label=<
+"testData_15b13d9" [color="black" label=<
 <table>
-  <tr><td bgcolor="black" port="nodeName"><i><font color="white">testData_8b2847f</font></i></td></tr>
+  <tr><td bgcolor="black" port="nodeName"><i><font color="white">testData_15b13d9</font></i></td></tr>
   <tr><td port="0">a</td></tr>
 <tr><td port="1">b</td></tr>
 </table>>];
@@ -885,290 +885,290 @@ digraph {
 <tr><td port="1">b</td></tr>
 </table>>];
      
-  "Aggregate_0f081b2":0 -> "t8":0;
-"Aggregate_0f081b2":1 -> "t8":1;
-"Aggregate_0f081b2":2 -> "t8":2;
-"Aggregate_1923f08":0 -> "t12":0;
-"Aggregate_1923f08":1 -> "t12":1;
-"Aggregate_1923f08":2 -> "t12":2;
-"Aggregate_1923f08":3 -> "t12":3;
-"Aggregate_1923f08":4 -> "t12":4;
-"Aggregate_200864a":0 -> "t18":0;
-"Aggregate_200864a":1 -> "t18":1;
-"Aggregate_200864a":2 -> "t18":2;
-"Aggregate_3f4ed06":0 -> "t19":0;
-"Aggregate_3f4ed06":1 -> "t19":1;
-"Aggregate_3f4ed06":2 -> "t19":2;
-"Aggregate_46295bf":0 -> "t3":0;
-"Aggregate_46295bf":1 -> "t3":1;
-"Aggregate_46295bf":2 -> "t3":2;
-"Aggregate_5d2d59f":0 -> "t2":0;
-"Aggregate_5d2d59f":1 -> "t2":1;
-"Aggregate_5d2d59f":2 -> "t2":2;
-"Aggregate_6caa70f":0 -> "Sort_d8000d9":0;
-"Aggregate_6caa70f":1 -> "Sort_d8000d9":1;
-"Aggregate_6caa70f":2 -> "Sort_d8000d9":2;
-"Aggregate_6caa70f":3 -> "Sort_d8000d9":3;
-"Aggregate_72c2016":0 -> "Sort_67adbc7":0;
-"Aggregate_72c2016":1 -> "Sort_67adbc7":1;
-"Aggregate_72c2016":2 -> "Sort_67adbc7":2;
-"Aggregate_78bed8c":0 -> "t7":0;
-"Aggregate_78bed8c":1 -> "t7":1;
-"Aggregate_78bed8c":2 -> "t7":2;
-"Aggregate_8824aed":0 -> "Sort_9ef6a57":0;
-"Aggregate_8824aed":1 -> "Sort_9ef6a57":1;
-"Aggregate_8824aed":2 -> "Sort_9ef6a57":2;
-"Aggregate_8824aed":3 -> "Sort_9ef6a57":3;
-"Aggregate_8824aed":4 -> "Sort_9ef6a57":4;
-"Aggregate_8ba4583":0 -> "t9":0;
-"Aggregate_8ba4583":1 -> "t9":1;
-"Aggregate_8ba4583":2 -> "t9":2;
-"Aggregate_9327b1d":0 -> "Sort_87bb167":0;
-"Aggregate_9327b1d":1 -> "Sort_87bb167":1;
-"Aggregate_9327b1d":2 -> "Sort_87bb167":2;
-"Aggregate_9de479d":0 -> "Sort_9877d45":0;
-"Aggregate_9de479d":1 -> "Sort_9877d45":1;
-"Aggregate_c486b44":0 -> "t20":0;
-"Aggregate_c486b44":1 -> "t20":1;
-"Aggregate_c486b44":2 -> "t20":2;
-"Aggregate_c49f7a2":0 -> "t1":0;
-"Aggregate_c49f7a2":1 -> "t1":1;
-"Aggregate_c49f7a2":2 -> "t1":2;
-"Aggregate_dc8347c":0 -> "Sort_b94ce8c":0;
-"Aggregate_dc8347c":1 -> "Sort_b94ce8c":1;
-"Aggregate_dc8347c":2 -> "Sort_b94ce8c":2;
-"Aggregate_e2590fb":0 -> "t4":0;
-"Aggregate_e2590fb":1 -> "t4":1;
-"Aggregate_e2590fb":2 -> "t4":2;
-"Aggregate_edf6cbb":0 -> "Sort_511c1b5":0;
-"Aggregate_edf6cbb":1 -> "Sort_511c1b5":1;
-"Aggregate_edf6cbb":2 -> "Sort_511c1b5":2;
-"Aggregate_f3e76cd":0 -> "Sort_f37d699":0;
-"Aggregate_f3e76cd":1 -> "Sort_f37d699":1;
-"Aggregate_f4b7797":0 -> "Sort_f6dbd0d":0;
-"Aggregate_f4b7797":1 -> "Sort_f6dbd0d":1;
-"Aggregate_f4b7797":2 -> "Sort_f6dbd0d":2;
-"Expand_1c81b52":0 -> "Aggregate_e2590fb":2;
-"Expand_1c81b52":1 -> "Aggregate_e2590fb":0;
-"Expand_1c81b52":2 -> "Aggregate_e2590fb":1;
-"Expand_2ac56dc":0 -> "Aggregate_3f4ed06":2;
-"Expand_2ac56dc":1 -> "Aggregate_3f4ed06":2;
-"Expand_2ac56dc":2 -> "Aggregate_3f4ed06":0;
-"Expand_2ac56dc":3 -> "Aggregate_3f4ed06":1;
-"Expand_3395e60":0 -> "Aggregate_dc8347c":2;
-"Expand_3395e60":1 -> "Aggregate_dc8347c":0;
-"Expand_3395e60":2 -> "Aggregate_dc8347c":1;
-"Expand_3dcf8e5":0 -> "Aggregate_1923f08":0;
-"Expand_3dcf8e5":1 -> "Aggregate_1923f08":1;
-"Expand_3dcf8e5":2 -> "Aggregate_1923f08":2;
-"Expand_3dcf8e5":2 -> "Aggregate_1923f08":3;
-"Expand_3dcf8e5":2 -> "Aggregate_1923f08":4;
-"Expand_40a0f68":0 -> "Aggregate_f4b7797":0;
-"Expand_40a0f68":1 -> "Aggregate_f4b7797":1;
-"Expand_40a0f68":2 -> "Aggregate_f4b7797":2;
-"Expand_41481b7":0 -> "Aggregate_8824aed":0;
-"Expand_41481b7":1 -> "Aggregate_8824aed":1;
-"Expand_41481b7":2 -> "Aggregate_8824aed":2;
-"Expand_41481b7":2 -> "Aggregate_8824aed":3;
-"Expand_41481b7":2 -> "Aggregate_8824aed":4;
-"Expand_4756ed2":0 -> "Aggregate_200864a":2;
-"Expand_4756ed2":1 -> "Aggregate_200864a":2;
-"Expand_4756ed2":2 -> "Aggregate_200864a":0;
-"Expand_4756ed2":3 -> "Aggregate_200864a":1;
-"Expand_55d3702":0 -> "Aggregate_6caa70f":0;
-"Expand_55d3702":1 -> "Aggregate_6caa70f":1;
-"Expand_55d3702":2 -> "Aggregate_6caa70f":2;
-"Expand_55d3702":2 -> "Aggregate_6caa70f":3;
-"Expand_5cb6902":0 -> "Aggregate_c49f7a2":2;
-"Expand_5cb6902":1 -> "Aggregate_c49f7a2":2;
-"Expand_5cb6902":2 -> "Aggregate_c49f7a2":0;
-"Expand_5cb6902":3 -> "Aggregate_c49f7a2":1;
-"Expand_629049b":0 -> "Aggregate_5d2d59f":2;
-"Expand_629049b":1 -> "Aggregate_5d2d59f":0;
-"Expand_629049b":2 -> "Aggregate_5d2d59f":1;
-"Expand_808858e":0 -> "Aggregate_edf6cbb":1;
-"Expand_808858e":1 -> "Aggregate_edf6cbb":0;
-"Expand_808858e":3 -> "Aggregate_edf6cbb":2;
-"Expand_9cfc82e":0 -> "Aggregate_72c2016":0;
-"Expand_9cfc82e":1 -> "Aggregate_72c2016":1;
-"Expand_9cfc82e":2 -> "Aggregate_72c2016":2;
-"Expand_a006ccd":0 -> "Aggregate_9327b1d":2;
-"Expand_a006ccd":1 -> "Aggregate_9327b1d":0;
-"Expand_a006ccd":2 -> "Aggregate_9327b1d":1;
-"Expand_a36e7dd":0 -> "Aggregate_0f081b2":2;
-"Expand_a36e7dd":1 -> "Aggregate_0f081b2":0;
-"Expand_a36e7dd":2 -> "Aggregate_0f081b2":1;
-"Expand_a80299f":0 -> "Aggregate_78bed8c":2;
-"Expand_a80299f":1 -> "Aggregate_78bed8c":0;
-"Expand_a80299f":2 -> "Aggregate_78bed8c":1;
-"Expand_ba3c98c":0 -> "Aggregate_46295bf":2;
-"Expand_ba3c98c":1 -> "Aggregate_46295bf":2;
-"Expand_ba3c98c":2 -> "Aggregate_46295bf":0;
-"Expand_ba3c98c":3 -> "Aggregate_46295bf":1;
-"Expand_c0f0c9b":0 -> "Filter_46f715a":0;
-"Expand_c0f0c9b":1 -> "Filter_46f715a":1;
-"Expand_c0f0c9b":2 -> "Filter_46f715a":2;
-"Expand_caa57ef":0 -> "Aggregate_9de479d":1;
-"Expand_caa57ef":1 -> "Aggregate_9de479d":0;
-"Expand_d823814":0 -> "Aggregate_8ba4583":2;
-"Expand_d823814":1 -> "Aggregate_8ba4583":0;
-"Expand_d823814":2 -> "Aggregate_8ba4583":1;
-"Expand_eca3845":0 -> "Aggregate_c486b44":2;
-"Expand_eca3845":1 -> "Aggregate_c486b44":2;
-"Expand_eca3845":2 -> "Aggregate_c486b44":0;
-"Expand_eca3845":3 -> "Aggregate_c486b44":1;
-"Filter_46f715a":0 -> "Aggregate_f3e76cd":0;
-"Filter_46f715a":1 -> "Aggregate_f3e76cd":1;
-"Project_0301923":0 -> "Expand_4756ed2":0;
-"Project_0301923":1 -> "Expand_4756ed2":1;
-"Project_0301923":2 -> "Expand_4756ed2":2;
-"Project_0301923":3 -> "Expand_4756ed2":3;
-"Project_05e1c5f":0 -> "Expand_c0f0c9b":0;
-"Project_05e1c5f":1 -> "Expand_c0f0c9b":1;
-"Project_24515a5":1 -> "Expand_1c81b52":1;
-"Project_24515a5":2 -> "Expand_1c81b52":0;
-"Project_24515a5":2 -> "Expand_1c81b52":2;
-"Project_25f782d":0 -> "Expand_a006ccd":0;
-"Project_25f782d":1 -> "Expand_a006ccd":1;
-"Project_25f782d":2 -> "Expand_a006ccd":2;
-"Project_33806c4":0 -> "Expand_5cb6902":0;
-"Project_33806c4":2 -> "Expand_5cb6902":2;
-"Project_33806c4":3 -> "Expand_5cb6902":1;
-"Project_33806c4":3 -> "Expand_5cb6902":3;
-"Project_3959e31":1 -> "Expand_629049b":1;
-"Project_3959e31":2 -> "Expand_629049b":0;
-"Project_3959e31":2 -> "Expand_629049b":2;
-"Project_46db309":1 -> "Expand_808858e":1;
-"Project_46db309":2 -> "Expand_808858e":0;
-"Project_46db309":2 -> "Expand_808858e":2;
-"Project_50ea0bb":0 -> "t17":0;
-"Project_50ea0bb":1 -> "t17":1;
-"Project_53b033f":0 -> "Expand_eca3845":0;
-"Project_53b033f":1 -> "Expand_eca3845":1;
-"Project_53b033f":2 -> "Expand_eca3845":3;
-"Project_6b7fc76":0 -> "Expand_ba3c98c":0;
-"Project_6b7fc76":2 -> "Expand_ba3c98c":2;
-"Project_6b7fc76":3 -> "Expand_ba3c98c":1;
-"Project_6b7fc76":3 -> "Expand_ba3c98c":3;
-"Project_6e445c3":0 -> "Expand_a80299f":0;
-"Project_6e445c3":1 -> "Expand_a80299f":1;
-"Project_6e445c3":2 -> "Expand_a80299f":2;
-"Project_8577469":0 -> "Expand_d823814":0;
-"Project_8577469":1 -> "Expand_d823814":2;
-"Project_8940acb":0 -> "Expand_2ac56dc":0;
-"Project_8940acb":2 -> "Expand_2ac56dc":2;
-"Project_8940acb":3 -> "Expand_2ac56dc":1;
-"Project_8940acb":3 -> "Expand_2ac56dc":3;
-"Project_9b06017":0 -> "Expand_a36e7dd":0;
-"Project_9b06017":1 -> "Expand_a36e7dd":1;
-"Project_a6ab9e7":0 -> "Expand_9cfc82e":0;
-"Project_a6ab9e7":1 -> "Expand_9cfc82e":1;
-"Project_a780b11":0 -> "t16":0;
-"Project_a780b11":1 -> "t16":1;
-"Project_a780b11":2 -> "t16":2;
-"Project_b08f767":0 -> "Expand_40a0f68":0;
-"Project_b08f767":1 -> "Expand_40a0f68":1;
-"Project_b229b0a":0 -> "Expand_41481b7":0;
-"Project_b229b0a":1 -> "Expand_41481b7":1;
-"Project_b9c089f":0 -> "Expand_3dcf8e5":0;
-"Project_b9c089f":1 -> "Expand_3dcf8e5":1;
-"Project_cd8710f":0 -> "Expand_3395e60":0;
-"Project_cd8710f":1 -> "Expand_3395e60":1;
-"Project_cd8710f":2 -> "Expand_3395e60":2;
-"Project_e23dc1e":0 -> "Expand_55d3702":0;
-"Project_e23dc1e":1 -> "Expand_55d3702":1;
-"Project_ff753e1":1 -> "Expand_caa57ef":1;
-"Project_ff753e1":2 -> "Expand_caa57ef":0;
-"Project_ff753e1":2 -> "Expand_caa57ef":2;
-"Sort_511c1b5":0 -> "t11":0;
-"Sort_511c1b5":1 -> "t11":1;
-"Sort_511c1b5":2 -> "t11":2;
-"Sort_67adbc7":0 -> "Project_50ea0bb":0;
-"Sort_67adbc7":1 -> "Project_50ea0bb":1;
-"Sort_87bb167":0 -> "t6":0;
-"Sort_87bb167":1 -> "t6":1;
-"Sort_87bb167":2 -> "t6":2;
-"Sort_9877d45":0 -> "t10":0;
-"Sort_9877d45":1 -> "t10":1;
-"Sort_9ef6a57":0 -> "Project_a780b11":0;
-"Sort_9ef6a57":1 -> "Project_a780b11":1;
-"Sort_9ef6a57":2 -> "Project_a780b11":2;
-"Sort_b94ce8c":0 -> "t5":0;
-"Sort_b94ce8c":1 -> "t5":1;
-"Sort_b94ce8c":2 -> "t5":2;
-"Sort_d8000d9":0 -> "t15":0;
-"Sort_d8000d9":1 -> "t15":1;
-"Sort_d8000d9":2 -> "t15":2;
-"Sort_d8000d9":3 -> "t15":3;
-"Sort_f37d699":0 -> "t14":0;
-"Sort_f37d699":1 -> "t14":1;
-"Sort_f6dbd0d":0 -> "t13":0;
-"Sort_f6dbd0d":1 -> "t13":1;
-"Sort_f6dbd0d":2 -> "t13":2;
-"courseSales_4afd820":0 -> "coursesales":0;
-"courseSales_4afd820":1 -> "coursesales":1;
-"courseSales_4afd820":2 -> "coursesales":2;
-"coursesales":0 -> "Project_05e1c5f":0;
-"coursesales":0 -> "Project_25f782d":1;
-"coursesales":0 -> "Project_46db309":1;
-"coursesales":0 -> "Project_6e445c3":1;
-"coursesales":0 -> "Project_9b06017":1;
-"coursesales":0 -> "Project_a6ab9e7":0;
-"coursesales":0 -> "Project_b08f767":0;
-"coursesales":0 -> "Project_b229b0a":0;
-"coursesales":0 -> "Project_b9c089f":0;
-"coursesales":0 -> "Project_cd8710f":1;
-"coursesales":0 -> "Project_e23dc1e":0;
-"coursesales":0 -> "Project_ff753e1":1;
-"coursesales":1 -> "Project_05e1c5f":1;
-"coursesales":1 -> "Project_25f782d":2;
-"coursesales":1 -> "Project_6e445c3":2;
-"coursesales":1 -> "Project_8577469":1;
-"coursesales":1 -> "Project_a6ab9e7":1;
-"coursesales":1 -> "Project_b08f767":1;
-"coursesales":1 -> "Project_b229b0a":1;
-"coursesales":1 -> "Project_b9c089f":1;
-"coursesales":1 -> "Project_cd8710f":2;
-"coursesales":1 -> "Project_e23dc1e":1;
-"coursesales":2 -> "Project_25f782d":0;
-"coursesales":2 -> "Project_46db309":0;
-"coursesales":2 -> "Project_46db309":2;
-"coursesales":2 -> "Project_6e445c3":0;
-"coursesales":2 -> "Project_8577469":0;
-"coursesales":2 -> "Project_9b06017":0;
-"coursesales":2 -> "Project_cd8710f":0;
-"coursesales":2 -> "Project_ff753e1":0;
-"coursesales":2 -> "Project_ff753e1":2;
-"testData_8b2847f":0 -> "testdata":0;
-"testData_8b2847f":1 -> "testdata":1;
-"testdata":0 -> "Project_0301923":0;
-"testdata":0 -> "Project_0301923":2;
-"testdata":0 -> "Project_24515a5":1;
-"testdata":0 -> "Project_33806c4":0;
-"testdata":0 -> "Project_33806c4":2;
-"testdata":0 -> "Project_3959e31":1;
-"testdata":0 -> "Project_53b033f":0;
-"testdata":0 -> "Project_6b7fc76":0;
-"testdata":0 -> "Project_6b7fc76":2;
-"testdata":0 -> "Project_8940acb":0;
-"testdata":0 -> "Project_8940acb":2;
-"testdata":1 -> "Project_0301923":1;
-"testdata":1 -> "Project_0301923":2;
-"testdata":1 -> "Project_0301923":3;
-"testdata":1 -> "Project_24515a5":0;
-"testdata":1 -> "Project_24515a5":2;
-"testdata":1 -> "Project_33806c4":1;
-"testdata":1 -> "Project_33806c4":2;
-"testdata":1 -> "Project_33806c4":3;
-"testdata":1 -> "Project_3959e31":0;
-"testdata":1 -> "Project_3959e31":2;
-"testdata":1 -> "Project_53b033f":1;
-"testdata":1 -> "Project_53b033f":2;
-"testdata":1 -> "Project_6b7fc76":1;
-"testdata":1 -> "Project_6b7fc76":2;
-"testdata":1 -> "Project_6b7fc76":3;
-"testdata":1 -> "Project_8940acb":1;
-"testdata":1 -> "Project_8940acb":2;
-"testdata":1 -> "Project_8940acb":3;
+  "Aggregate_3bc7944":0 -> "Sort_f1aff26":0;
+"Aggregate_3bc7944":1 -> "Sort_f1aff26":1;
+"Aggregate_3bc7944":2 -> "Sort_f1aff26":2;
+"Aggregate_3bc7944":3 -> "Sort_f1aff26":3;
+"Aggregate_3ddb0a1":0 -> "Sort_678f349":0;
+"Aggregate_3ddb0a1":1 -> "Sort_678f349":1;
+"Aggregate_3ddb0a1":2 -> "Sort_678f349":2;
+"Aggregate_3ddb0a1":3 -> "Sort_678f349":3;
+"Aggregate_3ddb0a1":4 -> "Sort_678f349":4;
+"Aggregate_40a291a":0 -> "Sort_3791135":0;
+"Aggregate_40a291a":1 -> "Sort_3791135":1;
+"Aggregate_4fb1f43":0 -> "t8":0;
+"Aggregate_4fb1f43":1 -> "t8":1;
+"Aggregate_4fb1f43":2 -> "t8":2;
+"Aggregate_57fb184":0 -> "Sort_ba8c7f7":0;
+"Aggregate_57fb184":1 -> "Sort_ba8c7f7":1;
+"Aggregate_77b04f4":0 -> "t7":0;
+"Aggregate_77b04f4":1 -> "t7":1;
+"Aggregate_77b04f4":2 -> "t7":2;
+"Aggregate_97860c2":0 -> "Sort_7e4575d":0;
+"Aggregate_97860c2":1 -> "Sort_7e4575d":1;
+"Aggregate_97860c2":2 -> "Sort_7e4575d":2;
+"Aggregate_9aaa7f1":0 -> "t2":0;
+"Aggregate_9aaa7f1":1 -> "t2":1;
+"Aggregate_9aaa7f1":2 -> "t2":2;
+"Aggregate_a01f42f":0 -> "Sort_851550c":0;
+"Aggregate_a01f42f":1 -> "Sort_851550c":1;
+"Aggregate_a01f42f":2 -> "Sort_851550c":2;
+"Aggregate_a539ae7":0 -> "Sort_6c58b4a":0;
+"Aggregate_a539ae7":1 -> "Sort_6c58b4a":1;
+"Aggregate_a539ae7":2 -> "Sort_6c58b4a":2;
+"Aggregate_b71d5c5":0 -> "t20":0;
+"Aggregate_b71d5c5":1 -> "t20":1;
+"Aggregate_b71d5c5":2 -> "t20":2;
+"Aggregate_b8c4e73":0 -> "t18":0;
+"Aggregate_b8c4e73":1 -> "t18":1;
+"Aggregate_b8c4e73":2 -> "t18":2;
+"Aggregate_be98f23":0 -> "t12":0;
+"Aggregate_be98f23":1 -> "t12":1;
+"Aggregate_be98f23":2 -> "t12":2;
+"Aggregate_be98f23":3 -> "t12":3;
+"Aggregate_be98f23":4 -> "t12":4;
+"Aggregate_c143694":0 -> "Sort_9304e28":0;
+"Aggregate_c143694":1 -> "Sort_9304e28":1;
+"Aggregate_c143694":2 -> "Sort_9304e28":2;
+"Aggregate_c1e7a44":0 -> "Sort_a775e32":0;
+"Aggregate_c1e7a44":1 -> "Sort_a775e32":1;
+"Aggregate_c1e7a44":2 -> "Sort_a775e32":2;
+"Aggregate_c9cb2c4":0 -> "t1":0;
+"Aggregate_c9cb2c4":1 -> "t1":1;
+"Aggregate_c9cb2c4":2 -> "t1":2;
+"Aggregate_c9fb228":0 -> "t4":0;
+"Aggregate_c9fb228":1 -> "t4":1;
+"Aggregate_c9fb228":2 -> "t4":2;
+"Aggregate_d1f08c4":0 -> "t9":0;
+"Aggregate_d1f08c4":1 -> "t9":1;
+"Aggregate_d1f08c4":2 -> "t9":2;
+"Aggregate_ed7938b":0 -> "t19":0;
+"Aggregate_ed7938b":1 -> "t19":1;
+"Aggregate_ed7938b":2 -> "t19":2;
+"Aggregate_eeea591":0 -> "t3":0;
+"Aggregate_eeea591":1 -> "t3":1;
+"Aggregate_eeea591":2 -> "t3":2;
+"Expand_11898d8":0 -> "Filter_17b6867":0;
+"Expand_11898d8":1 -> "Filter_17b6867":1;
+"Expand_11898d8":2 -> "Filter_17b6867":2;
+"Expand_16d3c51":0 -> "Aggregate_40a291a":1;
+"Expand_16d3c51":1 -> "Aggregate_40a291a":0;
+"Expand_2053a60":0 -> "Aggregate_c9fb228":2;
+"Expand_2053a60":1 -> "Aggregate_c9fb228":0;
+"Expand_2053a60":2 -> "Aggregate_c9fb228":1;
+"Expand_28444e4":0 -> "Aggregate_d1f08c4":2;
+"Expand_28444e4":1 -> "Aggregate_d1f08c4":0;
+"Expand_28444e4":2 -> "Aggregate_d1f08c4":1;
+"Expand_2927014":0 -> "Aggregate_3bc7944":0;
+"Expand_2927014":1 -> "Aggregate_3bc7944":1;
+"Expand_2927014":2 -> "Aggregate_3bc7944":2;
+"Expand_2927014":2 -> "Aggregate_3bc7944":3;
+"Expand_2ea7391":0 -> "Aggregate_a01f42f":0;
+"Expand_2ea7391":1 -> "Aggregate_a01f42f":1;
+"Expand_2ea7391":2 -> "Aggregate_a01f42f":2;
+"Expand_4518bac":0 -> "Aggregate_eeea591":2;
+"Expand_4518bac":1 -> "Aggregate_eeea591":2;
+"Expand_4518bac":2 -> "Aggregate_eeea591":0;
+"Expand_4518bac":3 -> "Aggregate_eeea591":1;
+"Expand_7ad5c6b":0 -> "Aggregate_c143694":0;
+"Expand_7ad5c6b":1 -> "Aggregate_c143694":1;
+"Expand_7ad5c6b":2 -> "Aggregate_c143694":2;
+"Expand_8b4843f":0 -> "Aggregate_4fb1f43":2;
+"Expand_8b4843f":1 -> "Aggregate_4fb1f43":0;
+"Expand_8b4843f":2 -> "Aggregate_4fb1f43":1;
+"Expand_8c6f511":0 -> "Aggregate_c1e7a44":2;
+"Expand_8c6f511":1 -> "Aggregate_c1e7a44":0;
+"Expand_8c6f511":2 -> "Aggregate_c1e7a44":1;
+"Expand_a2d669c":0 -> "Aggregate_b71d5c5":2;
+"Expand_a2d669c":1 -> "Aggregate_b71d5c5":2;
+"Expand_a2d669c":2 -> "Aggregate_b71d5c5":0;
+"Expand_a2d669c":3 -> "Aggregate_b71d5c5":1;
+"Expand_ab25451":0 -> "Aggregate_77b04f4":2;
+"Expand_ab25451":1 -> "Aggregate_77b04f4":0;
+"Expand_ab25451":2 -> "Aggregate_77b04f4":1;
+"Expand_c2dc500":0 -> "Aggregate_3ddb0a1":0;
+"Expand_c2dc500":1 -> "Aggregate_3ddb0a1":1;
+"Expand_c2dc500":2 -> "Aggregate_3ddb0a1":2;
+"Expand_c2dc500":2 -> "Aggregate_3ddb0a1":3;
+"Expand_c2dc500":2 -> "Aggregate_3ddb0a1":4;
+"Expand_c48956a":0 -> "Aggregate_a539ae7":1;
+"Expand_c48956a":1 -> "Aggregate_a539ae7":0;
+"Expand_c48956a":3 -> "Aggregate_a539ae7":2;
+"Expand_cbfc589":0 -> "Aggregate_97860c2":2;
+"Expand_cbfc589":1 -> "Aggregate_97860c2":0;
+"Expand_cbfc589":2 -> "Aggregate_97860c2":1;
+"Expand_d2382b6":0 -> "Aggregate_9aaa7f1":2;
+"Expand_d2382b6":1 -> "Aggregate_9aaa7f1":0;
+"Expand_d2382b6":2 -> "Aggregate_9aaa7f1":1;
+"Expand_d2914b4":0 -> "Aggregate_c9cb2c4":2;
+"Expand_d2914b4":1 -> "Aggregate_c9cb2c4":2;
+"Expand_d2914b4":2 -> "Aggregate_c9cb2c4":0;
+"Expand_d2914b4":3 -> "Aggregate_c9cb2c4":1;
+"Expand_dbe8dcf":0 -> "Aggregate_be98f23":0;
+"Expand_dbe8dcf":1 -> "Aggregate_be98f23":1;
+"Expand_dbe8dcf":2 -> "Aggregate_be98f23":2;
+"Expand_dbe8dcf":2 -> "Aggregate_be98f23":3;
+"Expand_dbe8dcf":2 -> "Aggregate_be98f23":4;
+"Expand_f1d5240":0 -> "Aggregate_b8c4e73":2;
+"Expand_f1d5240":1 -> "Aggregate_b8c4e73":2;
+"Expand_f1d5240":2 -> "Aggregate_b8c4e73":0;
+"Expand_f1d5240":3 -> "Aggregate_b8c4e73":1;
+"Expand_fd0f107":0 -> "Aggregate_ed7938b":2;
+"Expand_fd0f107":1 -> "Aggregate_ed7938b":2;
+"Expand_fd0f107":2 -> "Aggregate_ed7938b":0;
+"Expand_fd0f107":3 -> "Aggregate_ed7938b":1;
+"Filter_17b6867":0 -> "Aggregate_57fb184":0;
+"Filter_17b6867":1 -> "Aggregate_57fb184":1;
+"Project_07f76b4":0 -> "Expand_dbe8dcf":0;
+"Project_07f76b4":1 -> "Expand_dbe8dcf":1;
+"Project_17e7393":0 -> "Expand_cbfc589":0;
+"Project_17e7393":1 -> "Expand_cbfc589":1;
+"Project_17e7393":2 -> "Expand_cbfc589":2;
+"Project_21b2b61":1 -> "Expand_c48956a":1;
+"Project_21b2b61":2 -> "Expand_c48956a":0;
+"Project_21b2b61":2 -> "Expand_c48956a":2;
+"Project_249da13":0 -> "Expand_c2dc500":0;
+"Project_249da13":1 -> "Expand_c2dc500":1;
+"Project_266531a":0 -> "Expand_28444e4":0;
+"Project_266531a":1 -> "Expand_28444e4":2;
+"Project_34b8b4b":0 -> "Expand_f1d5240":0;
+"Project_34b8b4b":1 -> "Expand_f1d5240":1;
+"Project_34b8b4b":2 -> "Expand_f1d5240":2;
+"Project_34b8b4b":3 -> "Expand_f1d5240":3;
+"Project_375e3d2":0 -> "Expand_7ad5c6b":0;
+"Project_375e3d2":1 -> "Expand_7ad5c6b":1;
+"Project_387715b":1 -> "Expand_16d3c51":1;
+"Project_387715b":2 -> "Expand_16d3c51":0;
+"Project_387715b":2 -> "Expand_16d3c51":2;
+"Project_3ada4c5":0 -> "Expand_11898d8":0;
+"Project_3ada4c5":1 -> "Expand_11898d8":1;
+"Project_4e566a5":0 -> "Expand_ab25451":0;
+"Project_4e566a5":1 -> "Expand_ab25451":1;
+"Project_4e566a5":2 -> "Expand_ab25451":2;
+"Project_55b0059":1 -> "Expand_d2382b6":1;
+"Project_55b0059":2 -> "Expand_d2382b6":0;
+"Project_55b0059":2 -> "Expand_d2382b6":2;
+"Project_5e86fe9":0 -> "Expand_fd0f107":0;
+"Project_5e86fe9":2 -> "Expand_fd0f107":2;
+"Project_5e86fe9":3 -> "Expand_fd0f107":1;
+"Project_5e86fe9":3 -> "Expand_fd0f107":3;
+"Project_606fcb8":0 -> "t17":0;
+"Project_606fcb8":1 -> "t17":1;
+"Project_62206b3":0 -> "Expand_d2914b4":0;
+"Project_62206b3":2 -> "Expand_d2914b4":2;
+"Project_62206b3":3 -> "Expand_d2914b4":1;
+"Project_62206b3":3 -> "Expand_d2914b4":3;
+"Project_6d3f3f6":0 -> "Expand_a2d669c":0;
+"Project_6d3f3f6":1 -> "Expand_a2d669c":1;
+"Project_6d3f3f6":2 -> "Expand_a2d669c":3;
+"Project_872e287":0 -> "Expand_2927014":0;
+"Project_872e287":1 -> "Expand_2927014":1;
+"Project_a547cf9":1 -> "Expand_2053a60":1;
+"Project_a547cf9":2 -> "Expand_2053a60":0;
+"Project_a547cf9":2 -> "Expand_2053a60":2;
+"Project_bdbf595":0 -> "t16":0;
+"Project_bdbf595":1 -> "t16":1;
+"Project_bdbf595":2 -> "t16":2;
+"Project_c0375dd":0 -> "Expand_4518bac":0;
+"Project_c0375dd":2 -> "Expand_4518bac":2;
+"Project_c0375dd":3 -> "Expand_4518bac":1;
+"Project_c0375dd":3 -> "Expand_4518bac":3;
+"Project_cf45335":0 -> "Expand_8c6f511":0;
+"Project_cf45335":1 -> "Expand_8c6f511":1;
+"Project_cf45335":2 -> "Expand_8c6f511":2;
+"Project_d140603":0 -> "Expand_2ea7391":0;
+"Project_d140603":1 -> "Expand_2ea7391":1;
+"Project_f0a29d4":0 -> "Expand_8b4843f":0;
+"Project_f0a29d4":1 -> "Expand_8b4843f":1;
+"Sort_3791135":0 -> "t10":0;
+"Sort_3791135":1 -> "t10":1;
+"Sort_678f349":0 -> "Project_bdbf595":0;
+"Sort_678f349":1 -> "Project_bdbf595":1;
+"Sort_678f349":2 -> "Project_bdbf595":2;
+"Sort_6c58b4a":0 -> "t11":0;
+"Sort_6c58b4a":1 -> "t11":1;
+"Sort_6c58b4a":2 -> "t11":2;
+"Sort_7e4575d":0 -> "t5":0;
+"Sort_7e4575d":1 -> "t5":1;
+"Sort_7e4575d":2 -> "t5":2;
+"Sort_851550c":0 -> "Project_606fcb8":0;
+"Sort_851550c":1 -> "Project_606fcb8":1;
+"Sort_9304e28":0 -> "t13":0;
+"Sort_9304e28":1 -> "t13":1;
+"Sort_9304e28":2 -> "t13":2;
+"Sort_a775e32":0 -> "t6":0;
+"Sort_a775e32":1 -> "t6":1;
+"Sort_a775e32":2 -> "t6":2;
+"Sort_ba8c7f7":0 -> "t14":0;
+"Sort_ba8c7f7":1 -> "t14":1;
+"Sort_f1aff26":0 -> "t15":0;
+"Sort_f1aff26":1 -> "t15":1;
+"Sort_f1aff26":2 -> "t15":2;
+"Sort_f1aff26":3 -> "t15":3;
+"courseSales_a24e00b":0 -> "coursesales":0;
+"courseSales_a24e00b":1 -> "coursesales":1;
+"courseSales_a24e00b":2 -> "coursesales":2;
+"coursesales":0 -> "Project_07f76b4":0;
+"coursesales":0 -> "Project_17e7393":1;
+"coursesales":0 -> "Project_21b2b61":1;
+"coursesales":0 -> "Project_249da13":0;
+"coursesales":0 -> "Project_375e3d2":0;
+"coursesales":0 -> "Project_387715b":1;
+"coursesales":0 -> "Project_3ada4c5":0;
+"coursesales":0 -> "Project_4e566a5":1;
+"coursesales":0 -> "Project_872e287":0;
+"coursesales":0 -> "Project_cf45335":1;
+"coursesales":0 -> "Project_d140603":0;
+"coursesales":0 -> "Project_f0a29d4":1;
+"coursesales":1 -> "Project_07f76b4":1;
+"coursesales":1 -> "Project_17e7393":2;
+"coursesales":1 -> "Project_249da13":1;
+"coursesales":1 -> "Project_266531a":1;
+"coursesales":1 -> "Project_375e3d2":1;
+"coursesales":1 -> "Project_3ada4c5":1;
+"coursesales":1 -> "Project_4e566a5":2;
+"coursesales":1 -> "Project_872e287":1;
+"coursesales":1 -> "Project_cf45335":2;
+"coursesales":1 -> "Project_d140603":1;
+"coursesales":2 -> "Project_17e7393":0;
+"coursesales":2 -> "Project_21b2b61":0;
+"coursesales":2 -> "Project_21b2b61":2;
+"coursesales":2 -> "Project_266531a":0;
+"coursesales":2 -> "Project_387715b":0;
+"coursesales":2 -> "Project_387715b":2;
+"coursesales":2 -> "Project_4e566a5":0;
+"coursesales":2 -> "Project_cf45335":0;
+"coursesales":2 -> "Project_f0a29d4":0;
+"testData_15b13d9":0 -> "testdata":0;
+"testData_15b13d9":1 -> "testdata":1;
+"testdata":0 -> "Project_34b8b4b":0;
+"testdata":0 -> "Project_34b8b4b":2;
+"testdata":0 -> "Project_55b0059":1;
+"testdata":0 -> "Project_5e86fe9":0;
+"testdata":0 -> "Project_5e86fe9":2;
+"testdata":0 -> "Project_62206b3":0;
+"testdata":0 -> "Project_62206b3":2;
+"testdata":0 -> "Project_6d3f3f6":0;
+"testdata":0 -> "Project_a547cf9":1;
+"testdata":0 -> "Project_c0375dd":0;
+"testdata":0 -> "Project_c0375dd":2;
+"testdata":1 -> "Project_34b8b4b":1;
+"testdata":1 -> "Project_34b8b4b":2;
+"testdata":1 -> "Project_34b8b4b":3;
+"testdata":1 -> "Project_55b0059":0;
+"testdata":1 -> "Project_55b0059":2;
+"testdata":1 -> "Project_5e86fe9":1;
+"testdata":1 -> "Project_5e86fe9":2;
+"testdata":1 -> "Project_5e86fe9":3;
+"testdata":1 -> "Project_62206b3":1;
+"testdata":1 -> "Project_62206b3":2;
+"testdata":1 -> "Project_62206b3":3;
+"testdata":1 -> "Project_6d3f3f6":1;
+"testdata":1 -> "Project_6d3f3f6":2;
+"testdata":1 -> "Project_a547cf9":0;
+"testdata":1 -> "Project_a547cf9":2;
+"testdata":1 -> "Project_c0375dd":1;
+"testdata":1 -> "Project_c0375dd":2;
+"testdata":1 -> "Project_c0375dd":3;
 }
        

@@ -85,7 +85,7 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
   }
 
   private def genAttrList(n: SQLFlowGraphNode, w: String = ""): String = {
-    n.attributes.map(a => s"""$w$a$w""").mkString(",")
+    n.attributeNames.map(a => s"""$w$a$w""").mkString(",")
   }
 
   private def genProps(n: SQLFlowGraphNode): String = {
@@ -109,8 +109,8 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
     edges.foreach { e =>
       tx.run(
         s"""
-           |MATCH (src:${nodeLabelMap(e.from)}), (dst:${nodeLabelMap(e.to)})
-           |WHERE src.uid = "${e.from}" AND dst.uid = "${e.to}"
+           |MATCH (src:${nodeLabelMap(e.fromId)}), (dst:${nodeLabelMap(e.toId)})
+           |WHERE src.uid = "${e.fromId}" AND dst.uid = "${e.toId}"
            |MERGE (src)-[t:transformInto]->(dst)
            |RETURN type(t)
          """.stripMargin)

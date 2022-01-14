@@ -47,7 +47,8 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     val nodeMap = mutable.Map[String, SQLFlowGraphNode]()
     val topNodeName = s"plan_${Math.abs(plan.semanticHash())}"
     val outputAttrNames = plan.output.map(_.name)
-    val topNode = generateTableNode(outputAttrNames, topNodeName, isCached = false )
+    val schema = plan.schema.toDDL
+    val topNode = generateTableNode(outputAttrNames, topNodeName, topNodeName, schema)
     val edges = collectEdges(topNodeName, plan, nodeMap)
     (topNode +: nodeMap.values.toSeq, edges)
   }
@@ -80,7 +81,9 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     // Generate node labels for views if necessary
     (tempViews ++ views).foreach { case (viewName, analyzed) =>
       val outputAttrNames = analyzed.output.map(_.name)
-      nodeMap(viewName) = generateTableNode(outputAttrNames, viewName, isCached(analyzed))
+      val schema = analyzed.schema.toDDL
+      val node = generateTableNode(outputAttrNames, viewName, viewName, schema, isCached(analyzed))
+      nodeMap(viewName) = node
     }
 
     val subplanToTempViewMap = tempViews.map { case (viewName, analyzed) =>
@@ -204,39 +207,52 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
   }
 
   protected def getNodeName(p: LogicalPlan) = p match {
-    case ViewNode(name, _) => name
-    case TempViewNode(name, _) => name
-    case LogicalRelation(_, _, Some(table), false) => table.qualifiedName
-    case HiveTableRelation(table, _, _, _, _) => table.qualifiedName
-    case j: Join => getNodeNameWithId(s"${p.nodeName}_${joinTypeName(j.joinType)}")
-    case _ => getNodeNameWithId(p.nodeName)
+    case ViewNode(name, _) =>
+      (name, name)
+    case TempViewNode(name, _) =>
+      (name, name)
+    case LogicalRelation(_, _, Some(table), false) =>
+      (table.qualifiedName, table.qualifiedName)
+    case HiveTableRelation(table, _, _, _, _) =>
+      (table.qualifiedName, table.qualifiedName)
+    case j: Join =>
+      val nodeName = s"${p.nodeName}_${joinTypeName(j.joinType)}"
+      (nodeName, getNodeNameWithId(nodeName))
+    case _ =>
+      (p.nodeName, getNodeNameWithId(p.nodeName))
   }
 
   protected def generateTableNode(
       outputAttrNames: Seq[String],
+      uniqId: String,
       nodeName: String,
+      schema: String,
       isCached: Boolean = false): SQLFlowGraphNode = {
-    SQLFlowGraphNode(nodeName, outputAttrNames, GraphNodeType.TableNode, isCached)
+    SQLFlowGraphNode(uniqId, nodeName, outputAttrNames, schema, GraphNodeType.TableNode, isCached)
   }
 
   protected def generatePlanNode(
       outputAttrNames: Seq[String],
+      uniqId: String,
       nodeName: String,
+      schema: String,
       isCached: Boolean = false): SQLFlowGraphNode = {
-    SQLFlowGraphNode(nodeName, outputAttrNames, GraphNodeType.PlanNode, isCached)
+    SQLFlowGraphNode(uniqId, nodeName, outputAttrNames, schema, GraphNodeType.PlanNode, isCached)
   }
 
   protected def generateGraphNode(
       p: LogicalPlan,
+      uniqId: String,
       nodeName: String,
       isCached: Boolean): SQLFlowGraphNode = {
     val outputAttrNames = p.output.map(_.name)
+    val schema = p.schema.toDDL
     p match {
       case _: View | _: ViewNode | _: TempViewNode | _: LocalRelation | _: LogicalRelation |
            _: InMemoryRelation | _: HiveTableRelation =>
-        generateTableNode(outputAttrNames, nodeName, isCached)
+        generateTableNode(outputAttrNames, uniqId, nodeName, schema, isCached)
       case _ =>
-        generatePlanNode(outputAttrNames, nodeName, isCached)
+        generatePlanNode(outputAttrNames, uniqId, nodeName, schema, isCached)
     }
   }
 }
@@ -469,10 +485,10 @@ case class SQLFlow() extends BaseSQLFlow {
       plan: LogicalPlan,
       nodeMap: mutable.Map[String, SQLFlowGraphNode],
       cached: Boolean = false): String = {
-    val nodeName = getNodeName(plan)
+    val (nodeName, uniqId) = getNodeName(plan)
     // Generate a node label for a plan if necessary
-    nodeMap.getOrElseUpdate(nodeName, generateGraphNode(plan, nodeName, cached))
-    nodeName
+    nodeMap.getOrElseUpdate(uniqId, generateGraphNode(plan, uniqId, nodeName, cached))
+    uniqId
   }
 
   private def traversePlanRecursively(
@@ -694,9 +710,9 @@ case class SQLContractedFlow() extends BaseSQLFlow {
       Map[ExprId, Set[ExprId]]) = {
     // Collect input nodes
     val inputNodes = plan.collectLeaves().map { p =>
-      val nodeName = getNodeName(p)
-      nodeMap.getOrElseUpdate(nodeName, generateGraphNode(p, nodeName, isCached(p)))
-      (nodeName, p.output)
+      val (nodeName, uniqId) = getNodeName(p)
+      nodeMap.getOrElseUpdate(uniqId, generateGraphNode(p, uniqId, nodeName, isCached(p)))
+      (uniqId, p.output)
     }.groupBy(_._1).map { case (_, v) =>
       v.head
     }
