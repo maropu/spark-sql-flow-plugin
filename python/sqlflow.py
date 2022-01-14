@@ -120,10 +120,11 @@ def auto_tracking_with(name):  # type: ignore
     return _auto_tracking
 
 
-def save_data_lineage(output_dir_path: str, filename_prefix: str = "sqlflow", graph_format: str = "graphviz",
-                      contracted: bool = False, overwrite: bool = False, options: str = '') -> None:
+def save_data_lineage(output_dir_path: str, filename_prefix: str = "sqlflow", graph_sink: str = "graphviz",
+                      contracted: bool = False, overwrite: bool = False) -> None:
     try:
         jvm = SparkSession.builder.getOrCreate().sparkContext._active_spark_context._jvm  # type: ignore
-        jvm.SQLFlowApi.saveAsSQLFlow(output_dir_path, filename_prefix, graph_format, contracted, overwrite, options)
+        options = f'outputDirPath={output_dir_path},filenamePrefix={filename_prefix},overwrite={overwrite}'
+        jvm.SQLFlowApi.saveAsSQLFlow(graph_sink, contracted, options)
     except:
         _logger.warning(f'Failed to save data lineage in {output_dir_path}')

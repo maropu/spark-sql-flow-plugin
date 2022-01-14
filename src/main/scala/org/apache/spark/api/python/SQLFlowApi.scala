@@ -70,13 +70,11 @@ object SQLFlowApi extends Logging {
   }
 
   def saveAsSQLFlow(
-      path: String,
-      filenamePrefix: String,
       graphFormat: String = "graphviz",
       contracted: Boolean,
-      overwrite: Boolean,
       options: String = ""): Unit = {
-    val graphFmt = toGraphFormat(graphFormat, parseOptions(options))
-    SQLFlow.saveAsSQLFlow(path, filenamePrefix, graphFmt, contracted, overwrite)
+    val parsedOptions = parseOptions(options)
+    val graphFmt = toGraphFormat(graphFormat, parsedOptions)
+    SQLFlow.saveAsSQLFlow(parsedOptions, contracted, graphFmt)
   }
 }
