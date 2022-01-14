@@ -62,11 +62,8 @@ class GraphSinkSuite extends QueryTest with SharedSparkSession
   }
 
   private def checkAdjListFormatString(actual: String, expected: String): Unit = {
-    def normalize(s: String) = {
-      s.replaceAll("_\\d+", "_x").trim
-    }
-    assert(normalize(actual) == normalize(expected),
-      s"`$actual` didn't match an expected string `$expected`")
+    val edgePattern = """[a-zA-Z0-9_]+:[a-zA-Z0-9_]+"""
+    super.checkOutputString(edgePattern)(actual, expected)
   }
 
   test("adjacency list format") {
@@ -88,14 +85,14 @@ class GraphSinkSuite extends QueryTest with SharedSparkSession
         }
         checkAdjListFormatString(flowString,
           """
-            |Project_3:Aggregate_4
-            |t2:Filter_2
-            |Filter_2:Project_3
-            |Aggregate_4:t3
-            |Aggregate_1:default.t1
-            |default.t1:Project_5
-            |t_0:Aggregate_1
-            |Project_5:t2
+            |t_8ab1007:Aggregate_b428a70
+            |Aggregate_b428a70:default.t1
+            |Filter_8f6c734:Project_f8bdc51
+            |Project_f8bdc51:Aggregate_227c6c5
+            |Aggregate_227c6c5:t3
+            |default.t1:Project_41d45bc
+            |Project_41d45bc:t2
+            |t2:Filter_8f6c734
           """.stripMargin)
 
        val contractedFlowString = getOutputAsString {

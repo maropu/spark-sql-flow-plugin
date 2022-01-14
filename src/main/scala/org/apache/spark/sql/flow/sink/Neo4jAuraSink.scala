@@ -76,7 +76,7 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
 
 
   private def normalizeIdent(i: String): String = {
-    i.replaceAll("_[0-9]+$", "")
+    i.replaceAll("_[a-z0-9]{7}$", "")
   }
 
   private def genLabel(n: SQLFlowGraphNode): String = n.tpe match {
