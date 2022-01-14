@@ -61,6 +61,14 @@ class GraphSinkSuite extends QueryTest with SharedSparkSession
     }
   }
 
+  private def checkAdjListFormatString(actual: String, expected: String): Unit = {
+    def normalize(s: String) = {
+      s.replaceAll("_\\d+", "_x").trim
+    }
+    assert(normalize(actual) == normalize(expected),
+      s"`$actual` didn't match an expected string `$expected`")
+  }
+
   test("adjacency list format") {
     withView("t1") {
       withTempView("t2", "t3") {
@@ -78,7 +86,7 @@ class GraphSinkSuite extends QueryTest with SharedSparkSession
         val flowString = getOutputAsString {
           SQLFlow.printAsSQLFlow(graphFormat = AdjacencyListFormat(sep = ':'))
         }
-        checkOutputString(flowString,
+        checkAdjListFormatString(flowString,
           """
             |Project_3:Aggregate_4
             |t2:Filter_2
@@ -94,7 +102,7 @@ class GraphSinkSuite extends QueryTest with SharedSparkSession
           SQLFlow.printAsSQLFlow(
             contracted = true, graphFormat = AdjacencyListFormat(sep = ":"))
         }
-        checkOutputString(contractedFlowString,
+        checkAdjListFormatString(contractedFlowString,
           """
             |t_0:default.t1
             |t2:t3

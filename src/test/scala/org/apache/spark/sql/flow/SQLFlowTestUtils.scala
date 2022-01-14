@@ -26,8 +26,15 @@ trait SQLFlowTestUtils {
   }
 
   protected def checkOutputString(actual: String, expected: String): Unit = {
-    def normalize(s: String) = s.replaceAll("_\\d+", "_x").replaceAll(" ", "").replaceAll("\n", "")
-    assert(normalize(actual) == normalize(expected),
+    def normalize(s: String) = {
+      s.replaceAll("_\\d+", "_x")
+    }
+    def extractEdges(s: String): Set[String] = {
+      val re = """"[a-zA-Z_]+":\d -> "[a-zA-Z_]+":\d""".r
+      re.findAllIn(normalize(s)).toList.toSet
+    }
+    val expectedEdges = extractEdges(expected)
+    assert(expectedEdges.nonEmpty && extractEdges(actual) == expectedEdges,
       s"`$actual` didn't match an expected string `$expected`")
   }
 }
