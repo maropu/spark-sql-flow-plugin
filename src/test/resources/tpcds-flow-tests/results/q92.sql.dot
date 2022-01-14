@@ -6,24 +6,104 @@ digraph {
   node [shape=plaintext]
 
   
-"Aggregate_0980db4" [label=<
+"Aggregate_8728a13" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_0980db4</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
+  <tr><td port="0">Excess Discount Amount </td></tr>
+</table>>];
+     
+
+"Aggregate_febb717" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
   <tr><td port="0">(1.3 * avg(ws_ext_discount_amt))</td></tr>
 <tr><td port="1">ws_item_sk</td></tr>
 </table>>];
      
 
-"Aggregate_2fe210a" [label=<
+"Filter_1039325" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_2fe210a</i></td></tr>
-  <tr><td port="0">Excess Discount Amount </td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter</i></td></tr>
+  <tr><td port="0">ws_sold_date_sk</td></tr>
+<tr><td port="1">ws_sold_time_sk</td></tr>
+<tr><td port="2">ws_ship_date_sk</td></tr>
+<tr><td port="3">ws_item_sk</td></tr>
+<tr><td port="4">ws_bill_customer_sk</td></tr>
+<tr><td port="5">ws_bill_cdemo_sk</td></tr>
+<tr><td port="6">ws_bill_hdemo_sk</td></tr>
+<tr><td port="7">ws_bill_addr_sk</td></tr>
+<tr><td port="8">ws_ship_customer_sk</td></tr>
+<tr><td port="9">ws_ship_cdemo_sk</td></tr>
+<tr><td port="10">ws_ship_hdemo_sk</td></tr>
+<tr><td port="11">ws_ship_addr_sk</td></tr>
+<tr><td port="12">ws_web_page_sk</td></tr>
+<tr><td port="13">ws_web_site_sk</td></tr>
+<tr><td port="14">ws_ship_mode_sk</td></tr>
+<tr><td port="15">ws_warehouse_sk</td></tr>
+<tr><td port="16">ws_promo_sk</td></tr>
+<tr><td port="17">ws_order_number</td></tr>
+<tr><td port="18">ws_quantity</td></tr>
+<tr><td port="19">ws_wholesale_cost</td></tr>
+<tr><td port="20">ws_list_price</td></tr>
+<tr><td port="21">ws_sales_price</td></tr>
+<tr><td port="22">ws_ext_discount_amt</td></tr>
+<tr><td port="23">ws_ext_sales_price</td></tr>
+<tr><td port="24">ws_ext_wholesale_cost</td></tr>
+<tr><td port="25">ws_ext_list_price</td></tr>
+<tr><td port="26">ws_ext_tax</td></tr>
+<tr><td port="27">ws_coupon_amt</td></tr>
+<tr><td port="28">ws_ext_ship_cost</td></tr>
+<tr><td port="29">ws_net_paid</td></tr>
+<tr><td port="30">ws_net_paid_inc_tax</td></tr>
+<tr><td port="31">ws_net_paid_inc_ship</td></tr>
+<tr><td port="32">ws_net_paid_inc_ship_tax</td></tr>
+<tr><td port="33">ws_net_profit</td></tr>
 </table>>];
      
 
-"Filter_0952d4d" [label=<
+"Filter_7537cca" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_0952d4d</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter</i></td></tr>
+  <tr><td port="0">ws_sold_date_sk</td></tr>
+<tr><td port="1">ws_sold_time_sk</td></tr>
+<tr><td port="2">ws_ship_date_sk</td></tr>
+<tr><td port="3">ws_item_sk</td></tr>
+<tr><td port="4">ws_bill_customer_sk</td></tr>
+<tr><td port="5">ws_bill_cdemo_sk</td></tr>
+<tr><td port="6">ws_bill_hdemo_sk</td></tr>
+<tr><td port="7">ws_bill_addr_sk</td></tr>
+<tr><td port="8">ws_ship_customer_sk</td></tr>
+<tr><td port="9">ws_ship_cdemo_sk</td></tr>
+<tr><td port="10">ws_ship_hdemo_sk</td></tr>
+<tr><td port="11">ws_ship_addr_sk</td></tr>
+<tr><td port="12">ws_web_page_sk</td></tr>
+<tr><td port="13">ws_web_site_sk</td></tr>
+<tr><td port="14">ws_ship_mode_sk</td></tr>
+<tr><td port="15">ws_warehouse_sk</td></tr>
+<tr><td port="16">ws_promo_sk</td></tr>
+<tr><td port="17">ws_order_number</td></tr>
+<tr><td port="18">ws_quantity</td></tr>
+<tr><td port="19">ws_wholesale_cost</td></tr>
+<tr><td port="20">ws_list_price</td></tr>
+<tr><td port="21">ws_sales_price</td></tr>
+<tr><td port="22">ws_ext_discount_amt</td></tr>
+<tr><td port="23">ws_ext_sales_price</td></tr>
+<tr><td port="24">ws_ext_wholesale_cost</td></tr>
+<tr><td port="25">ws_ext_list_price</td></tr>
+<tr><td port="26">ws_ext_tax</td></tr>
+<tr><td port="27">ws_coupon_amt</td></tr>
+<tr><td port="28">ws_ext_ship_cost</td></tr>
+<tr><td port="29">ws_net_paid</td></tr>
+<tr><td port="30">ws_net_paid_inc_tax</td></tr>
+<tr><td port="31">ws_net_paid_inc_ship</td></tr>
+<tr><td port="32">ws_net_paid_inc_ship_tax</td></tr>
+<tr><td port="33">ws_net_profit</td></tr>
+</table>>];
+     
+
+"Filter_7d0c11e" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter</i></td></tr>
   <tr><td port="0">d_date_sk</td></tr>
 <tr><td port="1">d_date_id</td></tr>
 <tr><td port="2">d_date</td></tr>
@@ -55,97 +135,51 @@ digraph {
 </table>>];
      
 
-"Filter_5031065" [label=<
+"Filter_b2ba327" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_5031065</i></td></tr>
-  <tr><td port="0">ws_sold_date_sk</td></tr>
-<tr><td port="1">ws_sold_time_sk</td></tr>
-<tr><td port="2">ws_ship_date_sk</td></tr>
-<tr><td port="3">ws_item_sk</td></tr>
-<tr><td port="4">ws_bill_customer_sk</td></tr>
-<tr><td port="5">ws_bill_cdemo_sk</td></tr>
-<tr><td port="6">ws_bill_hdemo_sk</td></tr>
-<tr><td port="7">ws_bill_addr_sk</td></tr>
-<tr><td port="8">ws_ship_customer_sk</td></tr>
-<tr><td port="9">ws_ship_cdemo_sk</td></tr>
-<tr><td port="10">ws_ship_hdemo_sk</td></tr>
-<tr><td port="11">ws_ship_addr_sk</td></tr>
-<tr><td port="12">ws_web_page_sk</td></tr>
-<tr><td port="13">ws_web_site_sk</td></tr>
-<tr><td port="14">ws_ship_mode_sk</td></tr>
-<tr><td port="15">ws_warehouse_sk</td></tr>
-<tr><td port="16">ws_promo_sk</td></tr>
-<tr><td port="17">ws_order_number</td></tr>
-<tr><td port="18">ws_quantity</td></tr>
-<tr><td port="19">ws_wholesale_cost</td></tr>
-<tr><td port="20">ws_list_price</td></tr>
-<tr><td port="21">ws_sales_price</td></tr>
-<tr><td port="22">ws_ext_discount_amt</td></tr>
-<tr><td port="23">ws_ext_sales_price</td></tr>
-<tr><td port="24">ws_ext_wholesale_cost</td></tr>
-<tr><td port="25">ws_ext_list_price</td></tr>
-<tr><td port="26">ws_ext_tax</td></tr>
-<tr><td port="27">ws_coupon_amt</td></tr>
-<tr><td port="28">ws_ext_ship_cost</td></tr>
-<tr><td port="29">ws_net_paid</td></tr>
-<tr><td port="30">ws_net_paid_inc_tax</td></tr>
-<tr><td port="31">ws_net_paid_inc_ship</td></tr>
-<tr><td port="32">ws_net_paid_inc_ship_tax</td></tr>
-<tr><td port="33">ws_net_profit</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter</i></td></tr>
+  <tr><td port="0">d_date_sk</td></tr>
+<tr><td port="1">d_date_id</td></tr>
+<tr><td port="2">d_date</td></tr>
+<tr><td port="3">d_month_seq</td></tr>
+<tr><td port="4">d_week_seq</td></tr>
+<tr><td port="5">d_quarter_seq</td></tr>
+<tr><td port="6">d_year</td></tr>
+<tr><td port="7">d_dow</td></tr>
+<tr><td port="8">d_moy</td></tr>
+<tr><td port="9">d_dom</td></tr>
+<tr><td port="10">d_qoy</td></tr>
+<tr><td port="11">d_fy_year</td></tr>
+<tr><td port="12">d_fy_quarter_seq</td></tr>
+<tr><td port="13">d_fy_week_seq</td></tr>
+<tr><td port="14">d_day_name</td></tr>
+<tr><td port="15">d_quarter_name</td></tr>
+<tr><td port="16">d_holiday</td></tr>
+<tr><td port="17">d_weekend</td></tr>
+<tr><td port="18">d_following_holiday</td></tr>
+<tr><td port="19">d_first_dom</td></tr>
+<tr><td port="20">d_last_dom</td></tr>
+<tr><td port="21">d_same_day_ly</td></tr>
+<tr><td port="22">d_same_day_lq</td></tr>
+<tr><td port="23">d_current_day</td></tr>
+<tr><td port="24">d_current_week</td></tr>
+<tr><td port="25">d_current_month</td></tr>
+<tr><td port="26">d_current_quarter</td></tr>
+<tr><td port="27">d_current_year</td></tr>
 </table>>];
      
 
-"Filter_7c27d01" [label=<
+"Filter_c128e02" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_7c27d01</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter</i></td></tr>
   <tr><td port="0">(1.3 * avg(ws_ext_discount_amt))</td></tr>
 <tr><td port="1">ws_item_sk</td></tr>
 </table>>];
      
 
-"Filter_abb7958" [label=<
+"Filter_dc71dac" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_abb7958</i></td></tr>
-  <tr><td port="0">ws_sold_date_sk</td></tr>
-<tr><td port="1">ws_sold_time_sk</td></tr>
-<tr><td port="2">ws_ship_date_sk</td></tr>
-<tr><td port="3">ws_item_sk</td></tr>
-<tr><td port="4">ws_bill_customer_sk</td></tr>
-<tr><td port="5">ws_bill_cdemo_sk</td></tr>
-<tr><td port="6">ws_bill_hdemo_sk</td></tr>
-<tr><td port="7">ws_bill_addr_sk</td></tr>
-<tr><td port="8">ws_ship_customer_sk</td></tr>
-<tr><td port="9">ws_ship_cdemo_sk</td></tr>
-<tr><td port="10">ws_ship_hdemo_sk</td></tr>
-<tr><td port="11">ws_ship_addr_sk</td></tr>
-<tr><td port="12">ws_web_page_sk</td></tr>
-<tr><td port="13">ws_web_site_sk</td></tr>
-<tr><td port="14">ws_ship_mode_sk</td></tr>
-<tr><td port="15">ws_warehouse_sk</td></tr>
-<tr><td port="16">ws_promo_sk</td></tr>
-<tr><td port="17">ws_order_number</td></tr>
-<tr><td port="18">ws_quantity</td></tr>
-<tr><td port="19">ws_wholesale_cost</td></tr>
-<tr><td port="20">ws_list_price</td></tr>
-<tr><td port="21">ws_sales_price</td></tr>
-<tr><td port="22">ws_ext_discount_amt</td></tr>
-<tr><td port="23">ws_ext_sales_price</td></tr>
-<tr><td port="24">ws_ext_wholesale_cost</td></tr>
-<tr><td port="25">ws_ext_list_price</td></tr>
-<tr><td port="26">ws_ext_tax</td></tr>
-<tr><td port="27">ws_coupon_amt</td></tr>
-<tr><td port="28">ws_ext_ship_cost</td></tr>
-<tr><td port="29">ws_net_paid</td></tr>
-<tr><td port="30">ws_net_paid_inc_tax</td></tr>
-<tr><td port="31">ws_net_paid_inc_ship</td></tr>
-<tr><td port="32">ws_net_paid_inc_ship_tax</td></tr>
-<tr><td port="33">ws_net_profit</td></tr>
-</table>>];
-     
-
-"Filter_c0983ce" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_c0983ce</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter</i></td></tr>
   <tr><td port="0">i_item_sk</td></tr>
 <tr><td port="1">i_item_id</td></tr>
 <tr><td port="2">i_rec_start_date</td></tr>
@@ -171,63 +205,9 @@ digraph {
 </table>>];
      
 
-"Filter_f5fc217" [label=<
+"Join_Inner_2136862" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_f5fc217</i></td></tr>
-  <tr><td port="0">d_date_sk</td></tr>
-<tr><td port="1">d_date_id</td></tr>
-<tr><td port="2">d_date</td></tr>
-<tr><td port="3">d_month_seq</td></tr>
-<tr><td port="4">d_week_seq</td></tr>
-<tr><td port="5">d_quarter_seq</td></tr>
-<tr><td port="6">d_year</td></tr>
-<tr><td port="7">d_dow</td></tr>
-<tr><td port="8">d_moy</td></tr>
-<tr><td port="9">d_dom</td></tr>
-<tr><td port="10">d_qoy</td></tr>
-<tr><td port="11">d_fy_year</td></tr>
-<tr><td port="12">d_fy_quarter_seq</td></tr>
-<tr><td port="13">d_fy_week_seq</td></tr>
-<tr><td port="14">d_day_name</td></tr>
-<tr><td port="15">d_quarter_name</td></tr>
-<tr><td port="16">d_holiday</td></tr>
-<tr><td port="17">d_weekend</td></tr>
-<tr><td port="18">d_following_holiday</td></tr>
-<tr><td port="19">d_first_dom</td></tr>
-<tr><td port="20">d_last_dom</td></tr>
-<tr><td port="21">d_same_day_ly</td></tr>
-<tr><td port="22">d_same_day_lq</td></tr>
-<tr><td port="23">d_current_day</td></tr>
-<tr><td port="24">d_current_week</td></tr>
-<tr><td port="25">d_current_month</td></tr>
-<tr><td port="26">d_current_quarter</td></tr>
-<tr><td port="27">d_current_year</td></tr>
-</table>>];
-     
-
-"Join_Inner_136f915" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_136f915</i></td></tr>
-  <tr><td port="0">ws_sold_date_sk</td></tr>
-<tr><td port="1">ws_item_sk</td></tr>
-<tr><td port="2">ws_ext_discount_amt</td></tr>
-<tr><td port="3">i_item_sk</td></tr>
-</table>>];
-     
-
-"Join_Inner_165e96f" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_165e96f</i></td></tr>
-  <tr><td port="0">ws_sold_date_sk</td></tr>
-<tr><td port="1">ws_item_sk</td></tr>
-<tr><td port="2">ws_ext_discount_amt</td></tr>
-<tr><td port="3">d_date_sk</td></tr>
-</table>>];
-     
-
-"Join_Inner_1d367b6" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_1d367b6</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner</i></td></tr>
   <tr><td port="0">ws_sold_date_sk</td></tr>
 <tr><td port="1">ws_ext_discount_amt</td></tr>
 <tr><td port="2">i_item_sk</td></tr>
@@ -236,83 +216,103 @@ digraph {
 </table>>];
      
 
-"Join_Inner_cface8d" [label=<
+"Join_Inner_749216e" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_cface8d</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner</i></td></tr>
+  <tr><td port="0">ws_sold_date_sk</td></tr>
+<tr><td port="1">ws_item_sk</td></tr>
+<tr><td port="2">ws_ext_discount_amt</td></tr>
+<tr><td port="3">i_item_sk</td></tr>
+</table>>];
+     
+
+"Join_Inner_a230828" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner</i></td></tr>
   <tr><td port="0">ws_sold_date_sk</td></tr>
 <tr><td port="1">ws_ext_discount_amt</td></tr>
 <tr><td port="2">d_date_sk</td></tr>
 </table>>];
      
 
-"Project_17210ad" [label=<
+"Join_Inner_cc12417" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_17210ad</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner</i></td></tr>
+  <tr><td port="0">ws_sold_date_sk</td></tr>
+<tr><td port="1">ws_item_sk</td></tr>
+<tr><td port="2">ws_ext_discount_amt</td></tr>
+<tr><td port="3">d_date_sk</td></tr>
+</table>>];
+     
+
+"Project_1310edb" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">i_item_sk</td></tr>
+</table>>];
+     
+
+"Project_2bd394e" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">ws_ext_discount_amt</td></tr>
+</table>>];
+     
+
+"Project_9353581" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">ws_sold_date_sk</td></tr>
+<tr><td port="1">ws_ext_discount_amt</td></tr>
+</table>>];
+     
+
+"Project_96b1c82" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
   <tr><td port="0">ws_sold_date_sk</td></tr>
 <tr><td port="1">ws_item_sk</td></tr>
 <tr><td port="2">ws_ext_discount_amt</td></tr>
 </table>>];
      
 
-"Project_45f28e0" [label=<
+"Project_b4b3928" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_45f28e0</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">d_date_sk</td></tr>
+</table>>];
+     
+
+"Project_d661bbb" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">ws_sold_date_sk</td></tr>
+<tr><td port="1">ws_item_sk</td></tr>
+<tr><td port="2">ws_ext_discount_amt</td></tr>
+</table>>];
+     
+
+"Project_d7af2e7" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
   <tr><td port="0">ws_sold_date_sk</td></tr>
 <tr><td port="1">ws_ext_discount_amt</td></tr>
 <tr><td port="2">i_item_sk</td></tr>
 </table>>];
      
 
-"Project_5b8e9f4" [label=<
+"Project_ebf2fe1" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_5b8e9f4</i></td></tr>
-  <tr><td port="0">ws_ext_discount_amt</td></tr>
-</table>>];
-     
-
-"Project_6ae1e89" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_6ae1e89</i></td></tr>
-  <tr><td port="0">ws_sold_date_sk</td></tr>
-<tr><td port="1">ws_ext_discount_amt</td></tr>
-</table>>];
-     
-
-"Project_94603ce" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_94603ce</i></td></tr>
-  <tr><td port="0">d_date_sk</td></tr>
-</table>>];
-     
-
-"Project_ca95260" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_ca95260</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
   <tr><td port="0">ws_item_sk</td></tr>
 <tr><td port="1">ws_ext_discount_amt</td></tr>
 </table>>];
      
 
-"Project_def6154" [label=<
+"Project_ff28e4e" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_def6154</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
   <tr><td port="0">d_date_sk</td></tr>
-</table>>];
-     
-
-"Project_efe5a6f" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_efe5a6f</i></td></tr>
-  <tr><td port="0">i_item_sk</td></tr>
-</table>>];
-     
-
-"Project_f523bd7" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_f523bd7</i></td></tr>
-  <tr><td port="0">ws_sold_date_sk</td></tr>
-<tr><td port="1">ws_item_sk</td></tr>
-<tr><td port="2">ws_ext_discount_amt</td></tr>
 </table>>];
      
 
@@ -424,190 +424,190 @@ digraph {
   <tr><td port="0">Excess Discount Amount </td></tr>
 </table>>];
      
-  "Aggregate_0980db4":0 -> "Filter_7c27d01":0;
-"Aggregate_0980db4":1 -> "Filter_7c27d01":1;
-"Aggregate_2fe210a":0 -> "v":0;
-"Filter_0952d4d":0 -> "Project_def6154":0;
-"Filter_5031065":0 -> "Project_17210ad":0;
-"Filter_5031065":22 -> "Project_17210ad":2;
-"Filter_5031065":3 -> "Project_17210ad":1;
-"Filter_7c27d01":0 -> "Join_Inner_1d367b6":3;
-"Filter_7c27d01":1 -> "Join_Inner_1d367b6":4;
-"Filter_abb7958":0 -> "Project_f523bd7":0;
-"Filter_abb7958":22 -> "Project_f523bd7":2;
-"Filter_abb7958":3 -> "Project_f523bd7":1;
-"Filter_c0983ce":0 -> "Project_efe5a6f":0;
-"Filter_f5fc217":0 -> "Project_94603ce":0;
-"Join_Inner_136f915":0 -> "Project_45f28e0":0;
-"Join_Inner_136f915":2 -> "Project_45f28e0":1;
-"Join_Inner_136f915":3 -> "Project_45f28e0":2;
-"Join_Inner_165e96f":1 -> "Project_ca95260":0;
-"Join_Inner_165e96f":2 -> "Project_ca95260":1;
-"Join_Inner_1d367b6":0 -> "Project_6ae1e89":0;
-"Join_Inner_1d367b6":1 -> "Project_6ae1e89":1;
-"Join_Inner_cface8d":1 -> "Project_5b8e9f4":0;
-"Project_17210ad":0 -> "Join_Inner_136f915":0;
-"Project_17210ad":1 -> "Join_Inner_136f915":1;
-"Project_17210ad":2 -> "Join_Inner_136f915":2;
-"Project_45f28e0":0 -> "Join_Inner_1d367b6":0;
-"Project_45f28e0":1 -> "Join_Inner_1d367b6":1;
-"Project_45f28e0":2 -> "Join_Inner_1d367b6":2;
-"Project_5b8e9f4":0 -> "Aggregate_2fe210a":0;
-"Project_6ae1e89":0 -> "Join_Inner_cface8d":0;
-"Project_6ae1e89":1 -> "Join_Inner_cface8d":1;
-"Project_94603ce":0 -> "Join_Inner_cface8d":2;
-"Project_ca95260":0 -> "Aggregate_0980db4":1;
-"Project_ca95260":1 -> "Aggregate_0980db4":0;
-"Project_def6154":0 -> "Join_Inner_165e96f":3;
-"Project_efe5a6f":0 -> "Join_Inner_136f915":3;
-"Project_f523bd7":0 -> "Join_Inner_165e96f":0;
-"Project_f523bd7":1 -> "Join_Inner_165e96f":1;
-"Project_f523bd7":2 -> "Join_Inner_165e96f":2;
-"default.date_dim":0 -> "Filter_0952d4d":0;
-"default.date_dim":0 -> "Filter_f5fc217":0;
-"default.date_dim":1 -> "Filter_0952d4d":1;
-"default.date_dim":1 -> "Filter_f5fc217":1;
-"default.date_dim":10 -> "Filter_0952d4d":10;
-"default.date_dim":10 -> "Filter_f5fc217":10;
-"default.date_dim":11 -> "Filter_0952d4d":11;
-"default.date_dim":11 -> "Filter_f5fc217":11;
-"default.date_dim":12 -> "Filter_0952d4d":12;
-"default.date_dim":12 -> "Filter_f5fc217":12;
-"default.date_dim":13 -> "Filter_0952d4d":13;
-"default.date_dim":13 -> "Filter_f5fc217":13;
-"default.date_dim":14 -> "Filter_0952d4d":14;
-"default.date_dim":14 -> "Filter_f5fc217":14;
-"default.date_dim":15 -> "Filter_0952d4d":15;
-"default.date_dim":15 -> "Filter_f5fc217":15;
-"default.date_dim":16 -> "Filter_0952d4d":16;
-"default.date_dim":16 -> "Filter_f5fc217":16;
-"default.date_dim":17 -> "Filter_0952d4d":17;
-"default.date_dim":17 -> "Filter_f5fc217":17;
-"default.date_dim":18 -> "Filter_0952d4d":18;
-"default.date_dim":18 -> "Filter_f5fc217":18;
-"default.date_dim":19 -> "Filter_0952d4d":19;
-"default.date_dim":19 -> "Filter_f5fc217":19;
-"default.date_dim":2 -> "Filter_0952d4d":2;
-"default.date_dim":2 -> "Filter_f5fc217":2;
-"default.date_dim":20 -> "Filter_0952d4d":20;
-"default.date_dim":20 -> "Filter_f5fc217":20;
-"default.date_dim":21 -> "Filter_0952d4d":21;
-"default.date_dim":21 -> "Filter_f5fc217":21;
-"default.date_dim":22 -> "Filter_0952d4d":22;
-"default.date_dim":22 -> "Filter_f5fc217":22;
-"default.date_dim":23 -> "Filter_0952d4d":23;
-"default.date_dim":23 -> "Filter_f5fc217":23;
-"default.date_dim":24 -> "Filter_0952d4d":24;
-"default.date_dim":24 -> "Filter_f5fc217":24;
-"default.date_dim":25 -> "Filter_0952d4d":25;
-"default.date_dim":25 -> "Filter_f5fc217":25;
-"default.date_dim":26 -> "Filter_0952d4d":26;
-"default.date_dim":26 -> "Filter_f5fc217":26;
-"default.date_dim":27 -> "Filter_0952d4d":27;
-"default.date_dim":27 -> "Filter_f5fc217":27;
-"default.date_dim":3 -> "Filter_0952d4d":3;
-"default.date_dim":3 -> "Filter_f5fc217":3;
-"default.date_dim":4 -> "Filter_0952d4d":4;
-"default.date_dim":4 -> "Filter_f5fc217":4;
-"default.date_dim":5 -> "Filter_0952d4d":5;
-"default.date_dim":5 -> "Filter_f5fc217":5;
-"default.date_dim":6 -> "Filter_0952d4d":6;
-"default.date_dim":6 -> "Filter_f5fc217":6;
-"default.date_dim":7 -> "Filter_0952d4d":7;
-"default.date_dim":7 -> "Filter_f5fc217":7;
-"default.date_dim":8 -> "Filter_0952d4d":8;
-"default.date_dim":8 -> "Filter_f5fc217":8;
-"default.date_dim":9 -> "Filter_0952d4d":9;
-"default.date_dim":9 -> "Filter_f5fc217":9;
-"default.item":0 -> "Filter_c0983ce":0;
-"default.item":1 -> "Filter_c0983ce":1;
-"default.item":10 -> "Filter_c0983ce":10;
-"default.item":11 -> "Filter_c0983ce":11;
-"default.item":12 -> "Filter_c0983ce":12;
-"default.item":13 -> "Filter_c0983ce":13;
-"default.item":14 -> "Filter_c0983ce":14;
-"default.item":15 -> "Filter_c0983ce":15;
-"default.item":16 -> "Filter_c0983ce":16;
-"default.item":17 -> "Filter_c0983ce":17;
-"default.item":18 -> "Filter_c0983ce":18;
-"default.item":19 -> "Filter_c0983ce":19;
-"default.item":2 -> "Filter_c0983ce":2;
-"default.item":20 -> "Filter_c0983ce":20;
-"default.item":21 -> "Filter_c0983ce":21;
-"default.item":3 -> "Filter_c0983ce":3;
-"default.item":4 -> "Filter_c0983ce":4;
-"default.item":5 -> "Filter_c0983ce":5;
-"default.item":6 -> "Filter_c0983ce":6;
-"default.item":7 -> "Filter_c0983ce":7;
-"default.item":8 -> "Filter_c0983ce":8;
-"default.item":9 -> "Filter_c0983ce":9;
-"default.web_sales":0 -> "Filter_5031065":0;
-"default.web_sales":0 -> "Filter_abb7958":0;
-"default.web_sales":1 -> "Filter_5031065":1;
-"default.web_sales":1 -> "Filter_abb7958":1;
-"default.web_sales":10 -> "Filter_5031065":10;
-"default.web_sales":10 -> "Filter_abb7958":10;
-"default.web_sales":11 -> "Filter_5031065":11;
-"default.web_sales":11 -> "Filter_abb7958":11;
-"default.web_sales":12 -> "Filter_5031065":12;
-"default.web_sales":12 -> "Filter_abb7958":12;
-"default.web_sales":13 -> "Filter_5031065":13;
-"default.web_sales":13 -> "Filter_abb7958":13;
-"default.web_sales":14 -> "Filter_5031065":14;
-"default.web_sales":14 -> "Filter_abb7958":14;
-"default.web_sales":15 -> "Filter_5031065":15;
-"default.web_sales":15 -> "Filter_abb7958":15;
-"default.web_sales":16 -> "Filter_5031065":16;
-"default.web_sales":16 -> "Filter_abb7958":16;
-"default.web_sales":17 -> "Filter_5031065":17;
-"default.web_sales":17 -> "Filter_abb7958":17;
-"default.web_sales":18 -> "Filter_5031065":18;
-"default.web_sales":18 -> "Filter_abb7958":18;
-"default.web_sales":19 -> "Filter_5031065":19;
-"default.web_sales":19 -> "Filter_abb7958":19;
-"default.web_sales":2 -> "Filter_5031065":2;
-"default.web_sales":2 -> "Filter_abb7958":2;
-"default.web_sales":20 -> "Filter_5031065":20;
-"default.web_sales":20 -> "Filter_abb7958":20;
-"default.web_sales":21 -> "Filter_5031065":21;
-"default.web_sales":21 -> "Filter_abb7958":21;
-"default.web_sales":22 -> "Filter_5031065":22;
-"default.web_sales":22 -> "Filter_abb7958":22;
-"default.web_sales":23 -> "Filter_5031065":23;
-"default.web_sales":23 -> "Filter_abb7958":23;
-"default.web_sales":24 -> "Filter_5031065":24;
-"default.web_sales":24 -> "Filter_abb7958":24;
-"default.web_sales":25 -> "Filter_5031065":25;
-"default.web_sales":25 -> "Filter_abb7958":25;
-"default.web_sales":26 -> "Filter_5031065":26;
-"default.web_sales":26 -> "Filter_abb7958":26;
-"default.web_sales":27 -> "Filter_5031065":27;
-"default.web_sales":27 -> "Filter_abb7958":27;
-"default.web_sales":28 -> "Filter_5031065":28;
-"default.web_sales":28 -> "Filter_abb7958":28;
-"default.web_sales":29 -> "Filter_5031065":29;
-"default.web_sales":29 -> "Filter_abb7958":29;
-"default.web_sales":3 -> "Filter_5031065":3;
-"default.web_sales":3 -> "Filter_abb7958":3;
-"default.web_sales":30 -> "Filter_5031065":30;
-"default.web_sales":30 -> "Filter_abb7958":30;
-"default.web_sales":31 -> "Filter_5031065":31;
-"default.web_sales":31 -> "Filter_abb7958":31;
-"default.web_sales":32 -> "Filter_5031065":32;
-"default.web_sales":32 -> "Filter_abb7958":32;
-"default.web_sales":33 -> "Filter_5031065":33;
-"default.web_sales":33 -> "Filter_abb7958":33;
-"default.web_sales":4 -> "Filter_5031065":4;
-"default.web_sales":4 -> "Filter_abb7958":4;
-"default.web_sales":5 -> "Filter_5031065":5;
-"default.web_sales":5 -> "Filter_abb7958":5;
-"default.web_sales":6 -> "Filter_5031065":6;
-"default.web_sales":6 -> "Filter_abb7958":6;
-"default.web_sales":7 -> "Filter_5031065":7;
-"default.web_sales":7 -> "Filter_abb7958":7;
-"default.web_sales":8 -> "Filter_5031065":8;
-"default.web_sales":8 -> "Filter_abb7958":8;
-"default.web_sales":9 -> "Filter_5031065":9;
-"default.web_sales":9 -> "Filter_abb7958":9;
+  "Aggregate_8728a13":0 -> "v":0;
+"Aggregate_febb717":0 -> "Filter_c128e02":0;
+"Aggregate_febb717":1 -> "Filter_c128e02":1;
+"Filter_1039325":0 -> "Project_d661bbb":0;
+"Filter_1039325":22 -> "Project_d661bbb":2;
+"Filter_1039325":3 -> "Project_d661bbb":1;
+"Filter_7537cca":0 -> "Project_96b1c82":0;
+"Filter_7537cca":22 -> "Project_96b1c82":2;
+"Filter_7537cca":3 -> "Project_96b1c82":1;
+"Filter_7d0c11e":0 -> "Project_b4b3928":0;
+"Filter_b2ba327":0 -> "Project_ff28e4e":0;
+"Filter_c128e02":0 -> "Join_Inner_2136862":3;
+"Filter_c128e02":1 -> "Join_Inner_2136862":4;
+"Filter_dc71dac":0 -> "Project_1310edb":0;
+"Join_Inner_2136862":0 -> "Project_9353581":0;
+"Join_Inner_2136862":1 -> "Project_9353581":1;
+"Join_Inner_749216e":0 -> "Project_d7af2e7":0;
+"Join_Inner_749216e":2 -> "Project_d7af2e7":1;
+"Join_Inner_749216e":3 -> "Project_d7af2e7":2;
+"Join_Inner_a230828":1 -> "Project_2bd394e":0;
+"Join_Inner_cc12417":1 -> "Project_ebf2fe1":0;
+"Join_Inner_cc12417":2 -> "Project_ebf2fe1":1;
+"Project_1310edb":0 -> "Join_Inner_749216e":3;
+"Project_2bd394e":0 -> "Aggregate_8728a13":0;
+"Project_9353581":0 -> "Join_Inner_a230828":0;
+"Project_9353581":1 -> "Join_Inner_a230828":1;
+"Project_96b1c82":0 -> "Join_Inner_cc12417":0;
+"Project_96b1c82":1 -> "Join_Inner_cc12417":1;
+"Project_96b1c82":2 -> "Join_Inner_cc12417":2;
+"Project_b4b3928":0 -> "Join_Inner_cc12417":3;
+"Project_d661bbb":0 -> "Join_Inner_749216e":0;
+"Project_d661bbb":1 -> "Join_Inner_749216e":1;
+"Project_d661bbb":2 -> "Join_Inner_749216e":2;
+"Project_d7af2e7":0 -> "Join_Inner_2136862":0;
+"Project_d7af2e7":1 -> "Join_Inner_2136862":1;
+"Project_d7af2e7":2 -> "Join_Inner_2136862":2;
+"Project_ebf2fe1":0 -> "Aggregate_febb717":1;
+"Project_ebf2fe1":1 -> "Aggregate_febb717":0;
+"Project_ff28e4e":0 -> "Join_Inner_a230828":2;
+"default.date_dim":0 -> "Filter_7d0c11e":0;
+"default.date_dim":0 -> "Filter_b2ba327":0;
+"default.date_dim":1 -> "Filter_7d0c11e":1;
+"default.date_dim":1 -> "Filter_b2ba327":1;
+"default.date_dim":10 -> "Filter_7d0c11e":10;
+"default.date_dim":10 -> "Filter_b2ba327":10;
+"default.date_dim":11 -> "Filter_7d0c11e":11;
+"default.date_dim":11 -> "Filter_b2ba327":11;
+"default.date_dim":12 -> "Filter_7d0c11e":12;
+"default.date_dim":12 -> "Filter_b2ba327":12;
+"default.date_dim":13 -> "Filter_7d0c11e":13;
+"default.date_dim":13 -> "Filter_b2ba327":13;
+"default.date_dim":14 -> "Filter_7d0c11e":14;
+"default.date_dim":14 -> "Filter_b2ba327":14;
+"default.date_dim":15 -> "Filter_7d0c11e":15;
+"default.date_dim":15 -> "Filter_b2ba327":15;
+"default.date_dim":16 -> "Filter_7d0c11e":16;
+"default.date_dim":16 -> "Filter_b2ba327":16;
+"default.date_dim":17 -> "Filter_7d0c11e":17;
+"default.date_dim":17 -> "Filter_b2ba327":17;
+"default.date_dim":18 -> "Filter_7d0c11e":18;
+"default.date_dim":18 -> "Filter_b2ba327":18;
+"default.date_dim":19 -> "Filter_7d0c11e":19;
+"default.date_dim":19 -> "Filter_b2ba327":19;
+"default.date_dim":2 -> "Filter_7d0c11e":2;
+"default.date_dim":2 -> "Filter_b2ba327":2;
+"default.date_dim":20 -> "Filter_7d0c11e":20;
+"default.date_dim":20 -> "Filter_b2ba327":20;
+"default.date_dim":21 -> "Filter_7d0c11e":21;
+"default.date_dim":21 -> "Filter_b2ba327":21;
+"default.date_dim":22 -> "Filter_7d0c11e":22;
+"default.date_dim":22 -> "Filter_b2ba327":22;
+"default.date_dim":23 -> "Filter_7d0c11e":23;
+"default.date_dim":23 -> "Filter_b2ba327":23;
+"default.date_dim":24 -> "Filter_7d0c11e":24;
+"default.date_dim":24 -> "Filter_b2ba327":24;
+"default.date_dim":25 -> "Filter_7d0c11e":25;
+"default.date_dim":25 -> "Filter_b2ba327":25;
+"default.date_dim":26 -> "Filter_7d0c11e":26;
+"default.date_dim":26 -> "Filter_b2ba327":26;
+"default.date_dim":27 -> "Filter_7d0c11e":27;
+"default.date_dim":27 -> "Filter_b2ba327":27;
+"default.date_dim":3 -> "Filter_7d0c11e":3;
+"default.date_dim":3 -> "Filter_b2ba327":3;
+"default.date_dim":4 -> "Filter_7d0c11e":4;
+"default.date_dim":4 -> "Filter_b2ba327":4;
+"default.date_dim":5 -> "Filter_7d0c11e":5;
+"default.date_dim":5 -> "Filter_b2ba327":5;
+"default.date_dim":6 -> "Filter_7d0c11e":6;
+"default.date_dim":6 -> "Filter_b2ba327":6;
+"default.date_dim":7 -> "Filter_7d0c11e":7;
+"default.date_dim":7 -> "Filter_b2ba327":7;
+"default.date_dim":8 -> "Filter_7d0c11e":8;
+"default.date_dim":8 -> "Filter_b2ba327":8;
+"default.date_dim":9 -> "Filter_7d0c11e":9;
+"default.date_dim":9 -> "Filter_b2ba327":9;
+"default.item":0 -> "Filter_dc71dac":0;
+"default.item":1 -> "Filter_dc71dac":1;
+"default.item":10 -> "Filter_dc71dac":10;
+"default.item":11 -> "Filter_dc71dac":11;
+"default.item":12 -> "Filter_dc71dac":12;
+"default.item":13 -> "Filter_dc71dac":13;
+"default.item":14 -> "Filter_dc71dac":14;
+"default.item":15 -> "Filter_dc71dac":15;
+"default.item":16 -> "Filter_dc71dac":16;
+"default.item":17 -> "Filter_dc71dac":17;
+"default.item":18 -> "Filter_dc71dac":18;
+"default.item":19 -> "Filter_dc71dac":19;
+"default.item":2 -> "Filter_dc71dac":2;
+"default.item":20 -> "Filter_dc71dac":20;
+"default.item":21 -> "Filter_dc71dac":21;
+"default.item":3 -> "Filter_dc71dac":3;
+"default.item":4 -> "Filter_dc71dac":4;
+"default.item":5 -> "Filter_dc71dac":5;
+"default.item":6 -> "Filter_dc71dac":6;
+"default.item":7 -> "Filter_dc71dac":7;
+"default.item":8 -> "Filter_dc71dac":8;
+"default.item":9 -> "Filter_dc71dac":9;
+"default.web_sales":0 -> "Filter_1039325":0;
+"default.web_sales":0 -> "Filter_7537cca":0;
+"default.web_sales":1 -> "Filter_1039325":1;
+"default.web_sales":1 -> "Filter_7537cca":1;
+"default.web_sales":10 -> "Filter_1039325":10;
+"default.web_sales":10 -> "Filter_7537cca":10;
+"default.web_sales":11 -> "Filter_1039325":11;
+"default.web_sales":11 -> "Filter_7537cca":11;
+"default.web_sales":12 -> "Filter_1039325":12;
+"default.web_sales":12 -> "Filter_7537cca":12;
+"default.web_sales":13 -> "Filter_1039325":13;
+"default.web_sales":13 -> "Filter_7537cca":13;
+"default.web_sales":14 -> "Filter_1039325":14;
+"default.web_sales":14 -> "Filter_7537cca":14;
+"default.web_sales":15 -> "Filter_1039325":15;
+"default.web_sales":15 -> "Filter_7537cca":15;
+"default.web_sales":16 -> "Filter_1039325":16;
+"default.web_sales":16 -> "Filter_7537cca":16;
+"default.web_sales":17 -> "Filter_1039325":17;
+"default.web_sales":17 -> "Filter_7537cca":17;
+"default.web_sales":18 -> "Filter_1039325":18;
+"default.web_sales":18 -> "Filter_7537cca":18;
+"default.web_sales":19 -> "Filter_1039325":19;
+"default.web_sales":19 -> "Filter_7537cca":19;
+"default.web_sales":2 -> "Filter_1039325":2;
+"default.web_sales":2 -> "Filter_7537cca":2;
+"default.web_sales":20 -> "Filter_1039325":20;
+"default.web_sales":20 -> "Filter_7537cca":20;
+"default.web_sales":21 -> "Filter_1039325":21;
+"default.web_sales":21 -> "Filter_7537cca":21;
+"default.web_sales":22 -> "Filter_1039325":22;
+"default.web_sales":22 -> "Filter_7537cca":22;
+"default.web_sales":23 -> "Filter_1039325":23;
+"default.web_sales":23 -> "Filter_7537cca":23;
+"default.web_sales":24 -> "Filter_1039325":24;
+"default.web_sales":24 -> "Filter_7537cca":24;
+"default.web_sales":25 -> "Filter_1039325":25;
+"default.web_sales":25 -> "Filter_7537cca":25;
+"default.web_sales":26 -> "Filter_1039325":26;
+"default.web_sales":26 -> "Filter_7537cca":26;
+"default.web_sales":27 -> "Filter_1039325":27;
+"default.web_sales":27 -> "Filter_7537cca":27;
+"default.web_sales":28 -> "Filter_1039325":28;
+"default.web_sales":28 -> "Filter_7537cca":28;
+"default.web_sales":29 -> "Filter_1039325":29;
+"default.web_sales":29 -> "Filter_7537cca":29;
+"default.web_sales":3 -> "Filter_1039325":3;
+"default.web_sales":3 -> "Filter_7537cca":3;
+"default.web_sales":30 -> "Filter_1039325":30;
+"default.web_sales":30 -> "Filter_7537cca":30;
+"default.web_sales":31 -> "Filter_1039325":31;
+"default.web_sales":31 -> "Filter_7537cca":31;
+"default.web_sales":32 -> "Filter_1039325":32;
+"default.web_sales":32 -> "Filter_7537cca":32;
+"default.web_sales":33 -> "Filter_1039325":33;
+"default.web_sales":33 -> "Filter_7537cca":33;
+"default.web_sales":4 -> "Filter_1039325":4;
+"default.web_sales":4 -> "Filter_7537cca":4;
+"default.web_sales":5 -> "Filter_1039325":5;
+"default.web_sales":5 -> "Filter_7537cca":5;
+"default.web_sales":6 -> "Filter_1039325":6;
+"default.web_sales":6 -> "Filter_7537cca":6;
+"default.web_sales":7 -> "Filter_1039325":7;
+"default.web_sales":7 -> "Filter_7537cca":7;
+"default.web_sales":8 -> "Filter_1039325":8;
+"default.web_sales":8 -> "Filter_7537cca":8;
+"default.web_sales":9 -> "Filter_1039325":9;
+"default.web_sales":9 -> "Filter_7537cca":9;
 }
        

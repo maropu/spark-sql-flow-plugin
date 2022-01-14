@@ -190,17 +190,17 @@ case class GraphVizSink(imgFormat: String = "svg") extends GraphFileSink {
 
   private def generateEdgeString(edge: SQLFlowGraphEdge): String = {
     val toIdxStr = (i: Option[Int]) => i.map(_.toString).getOrElse("nodeName")
-    s""""${edge.from}":${toIdxStr(edge.fromIdx)} -> "${edge.to}":${toIdxStr(edge.toIdx)};"""
+    s""""${edge.fromId}":${toIdxStr(edge.fromIdx)} -> "${edge.toId}":${toIdxStr(edge.toIdx)};"""
   }
 
   private def generateTableNodeString(node: SQLFlowGraphNode): String = {
     val nodeColor = if (node.isCached) cachedNodeColor else "black"
-    val outputAttrs = node.attributes.zipWithIndex.map { case (attr, i) =>
+    val outputAttrs = node.attributeNames.zipWithIndex.map { case (attr, i) =>
       s"""<tr><td port="$i">${normalizeForHtml(attr)}</td></tr>"""
     }
     // scalastyle:off line.size.limit
     s"""
-       |"${node.ident}" [color="$nodeColor" label=<
+       |"${node.uniqueId}" [color="$nodeColor" label=<
        |<table>
        |  <tr><td bgcolor="$nodeColor" port="nodeName"><i><font color="white">${node.ident}</font></i></td></tr>
        |  ${outputAttrs.mkString("\n")}
@@ -211,12 +211,12 @@ case class GraphVizSink(imgFormat: String = "svg") extends GraphFileSink {
 
   private def generatePlanNodeString(node: SQLFlowGraphNode): String = {
     val nodeColor = if (node.isCached) cachedNodeColor else "lightgray"
-    val outputAttrs = node.attributes.zipWithIndex.map { case (attr, i) =>
+    val outputAttrs = node.attributeNames.zipWithIndex.map { case (attr, i) =>
       s"""<tr><td port="$i">${normalizeForHtml(attr)}</td></tr>"""
     }
     // scalastyle:off line.size.limit
     s"""
-       |"${node.ident}" [label=<
+       |"${node.uniqueId}" [label=<
        |<table color="$nodeColor" border="1" cellborder="0" cellspacing="0">
        |  <tr><td bgcolor="$nodeColor" port="nodeName"><i>${node.ident}</i></td></tr>
        |  ${outputAttrs.mkString("\n")}
@@ -259,7 +259,7 @@ case class AdjacencyListFormat(sep: Char = ',') extends GraphFileSink {
   override val fileSuffix: String = "lst"
 
   override def toGraphString(nodes: Seq[SQLFlowGraphNode], edges: Seq[SQLFlowGraphEdge]): String = {
-    val edgeListSet = edges.map { e => (e.from, e.to) }.toSet
+    val edgeListSet = edges.map { e => (e.fromId, e.toId) }.toSet
     edgeListSet.map { case (from, to) =>
       s"$from$sep$to"
     }.mkString("\n")

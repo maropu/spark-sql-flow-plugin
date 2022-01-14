@@ -6,27 +6,18 @@ digraph {
   node [shape=plaintext]
 
   
-"Aggregate_46cc5de" [label=<
+"Aggregate_79837eb" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_46cc5de</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
   <tr><td port="0">item</td></tr>
 <tr><td port="1">return_ratio</td></tr>
 <tr><td port="2">currency_ratio</td></tr>
 </table>>];
      
 
-"Aggregate_9b2ec62" [label=<
+"Aggregate_a161f3e" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_9b2ec62</i></td></tr>
-  <tr><td port="0">item</td></tr>
-<tr><td port="1">return_ratio</td></tr>
-<tr><td port="2">currency_ratio</td></tr>
-</table>>];
-     
-
-"Aggregate_d2747e2" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_d2747e2</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
   <tr><td port="0">channel</td></tr>
 <tr><td port="1">item</td></tr>
 <tr><td port="2">return_ratio</td></tr>
@@ -35,18 +26,56 @@ digraph {
 </table>>];
      
 
-"Aggregate_d425d77" [label=<
+"Aggregate_c52f9e7" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_d425d77</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
   <tr><td port="0">item</td></tr>
 <tr><td port="1">return_ratio</td></tr>
 <tr><td port="2">currency_ratio</td></tr>
 </table>>];
      
 
-"Filter_295b61c" [label=<
+"Aggregate_d8bf964" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_295b61c</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
+  <tr><td port="0">item</td></tr>
+<tr><td port="1">return_ratio</td></tr>
+<tr><td port="2">currency_ratio</td></tr>
+</table>>];
+     
+
+"Filter_0c73ae3" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter</i></td></tr>
+  <tr><td port="0">ss_sold_date_sk</td></tr>
+<tr><td port="1">ss_sold_time_sk</td></tr>
+<tr><td port="2">ss_item_sk</td></tr>
+<tr><td port="3">ss_customer_sk</td></tr>
+<tr><td port="4">ss_cdemo_sk</td></tr>
+<tr><td port="5">ss_hdemo_sk</td></tr>
+<tr><td port="6">ss_addr_sk</td></tr>
+<tr><td port="7">ss_store_sk</td></tr>
+<tr><td port="8">ss_promo_sk</td></tr>
+<tr><td port="9">ss_ticket_number</td></tr>
+<tr><td port="10">ss_quantity</td></tr>
+<tr><td port="11">ss_wholesale_cost</td></tr>
+<tr><td port="12">ss_list_price</td></tr>
+<tr><td port="13">ss_sales_price</td></tr>
+<tr><td port="14">ss_ext_discount_amt</td></tr>
+<tr><td port="15">ss_ext_sales_price</td></tr>
+<tr><td port="16">ss_ext_wholesale_cost</td></tr>
+<tr><td port="17">ss_ext_list_price</td></tr>
+<tr><td port="18">ss_ext_tax</td></tr>
+<tr><td port="19">ss_coupon_amt</td></tr>
+<tr><td port="20">ss_net_paid</td></tr>
+<tr><td port="21">ss_net_paid_inc_tax</td></tr>
+<tr><td port="22">ss_net_profit</td></tr>
+</table>>];
+     
+
+"Filter_15dc546" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter</i></td></tr>
   <tr><td port="0">item</td></tr>
 <tr><td port="1">return_ratio</td></tr>
 <tr><td port="2">currency_ratio</td></tr>
@@ -55,9 +84,9 @@ digraph {
 </table>>];
      
 
-"Filter_373b733" [label=<
+"Filter_23b8527" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_373b733</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter</i></td></tr>
   <tr><td port="0">d_date_sk</td></tr>
 <tr><td port="1">d_date_id</td></tr>
 <tr><td port="2">d_date</td></tr>
@@ -89,9 +118,43 @@ digraph {
 </table>>];
      
 
-"Filter_52383db" [label=<
+"Filter_2d192f1" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_52383db</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter</i></td></tr>
+  <tr><td port="0">d_date_sk</td></tr>
+<tr><td port="1">d_date_id</td></tr>
+<tr><td port="2">d_date</td></tr>
+<tr><td port="3">d_month_seq</td></tr>
+<tr><td port="4">d_week_seq</td></tr>
+<tr><td port="5">d_quarter_seq</td></tr>
+<tr><td port="6">d_year</td></tr>
+<tr><td port="7">d_dow</td></tr>
+<tr><td port="8">d_moy</td></tr>
+<tr><td port="9">d_dom</td></tr>
+<tr><td port="10">d_qoy</td></tr>
+<tr><td port="11">d_fy_year</td></tr>
+<tr><td port="12">d_fy_quarter_seq</td></tr>
+<tr><td port="13">d_fy_week_seq</td></tr>
+<tr><td port="14">d_day_name</td></tr>
+<tr><td port="15">d_quarter_name</td></tr>
+<tr><td port="16">d_holiday</td></tr>
+<tr><td port="17">d_weekend</td></tr>
+<tr><td port="18">d_following_holiday</td></tr>
+<tr><td port="19">d_first_dom</td></tr>
+<tr><td port="20">d_last_dom</td></tr>
+<tr><td port="21">d_same_day_ly</td></tr>
+<tr><td port="22">d_same_day_lq</td></tr>
+<tr><td port="23">d_current_day</td></tr>
+<tr><td port="24">d_current_week</td></tr>
+<tr><td port="25">d_current_month</td></tr>
+<tr><td port="26">d_current_quarter</td></tr>
+<tr><td port="27">d_current_year</td></tr>
+</table>>];
+     
+
+"Filter_2fdf10d" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter</i></td></tr>
   <tr><td port="0">item</td></tr>
 <tr><td port="1">return_ratio</td></tr>
 <tr><td port="2">currency_ratio</td></tr>
@@ -100,68 +163,39 @@ digraph {
 </table>>];
      
 
-"Filter_5bff9d3" [label=<
+"Filter_35916f3" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_5bff9d3</i></td></tr>
-  <tr><td port="0">cr_returned_date_sk</td></tr>
-<tr><td port="1">cr_returned_time_sk</td></tr>
-<tr><td port="2">cr_item_sk</td></tr>
-<tr><td port="3">cr_refunded_customer_sk</td></tr>
-<tr><td port="4">cr_refunded_cdemo_sk</td></tr>
-<tr><td port="5">cr_refunded_hdemo_sk</td></tr>
-<tr><td port="6">cr_refunded_addr_sk</td></tr>
-<tr><td port="7">cr_returning_customer_sk</td></tr>
-<tr><td port="8">cr_returning_cdemo_sk</td></tr>
-<tr><td port="9">cr_returning_hdemo_sk</td></tr>
-<tr><td port="10">cr_returning_addr_sk</td></tr>
-<tr><td port="11">cr_call_center_sk</td></tr>
-<tr><td port="12">cr_catalog_page_sk</td></tr>
-<tr><td port="13">cr_ship_mode_sk</td></tr>
-<tr><td port="14">cr_warehouse_sk</td></tr>
-<tr><td port="15">cr_reason_sk</td></tr>
-<tr><td port="16">cr_order_number</td></tr>
-<tr><td port="17">cr_return_quantity</td></tr>
-<tr><td port="18">cr_return_amount</td></tr>
-<tr><td port="19">cr_return_tax</td></tr>
-<tr><td port="20">cr_return_amt_inc_tax</td></tr>
-<tr><td port="21">cr_fee</td></tr>
-<tr><td port="22">cr_return_ship_cost</td></tr>
-<tr><td port="23">cr_refunded_cash</td></tr>
-<tr><td port="24">cr_reversed_charge</td></tr>
-<tr><td port="25">cr_store_credit</td></tr>
-<tr><td port="26">cr_net_loss</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter</i></td></tr>
+  <tr><td port="0">wr_returned_date_sk</td></tr>
+<tr><td port="1">wr_returned_time_sk</td></tr>
+<tr><td port="2">wr_item_sk</td></tr>
+<tr><td port="3">wr_refunded_customer_sk</td></tr>
+<tr><td port="4">wr_refunded_cdemo_sk</td></tr>
+<tr><td port="5">wr_refunded_hdemo_sk</td></tr>
+<tr><td port="6">wr_refunded_addr_sk</td></tr>
+<tr><td port="7">wr_returning_customer_sk</td></tr>
+<tr><td port="8">wr_returning_cdemo_sk</td></tr>
+<tr><td port="9">wr_returning_hdemo_sk</td></tr>
+<tr><td port="10">wr_returning_addr_sk</td></tr>
+<tr><td port="11">wr_web_page_sk</td></tr>
+<tr><td port="12">wr_reason_sk</td></tr>
+<tr><td port="13">wr_order_number</td></tr>
+<tr><td port="14">wr_return_quantity</td></tr>
+<tr><td port="15">wr_return_amt</td></tr>
+<tr><td port="16">wr_return_tax</td></tr>
+<tr><td port="17">wr_return_amt_inc_tax</td></tr>
+<tr><td port="18">wr_fee</td></tr>
+<tr><td port="19">wr_return_ship_cost</td></tr>
+<tr><td port="20">wr_refunded_cash</td></tr>
+<tr><td port="21">wr_reversed_charge</td></tr>
+<tr><td port="22">wr_account_credit</td></tr>
+<tr><td port="23">wr_net_loss</td></tr>
 </table>>];
      
 
-"Filter_5fdf59a" [label=<
+"Filter_3e8372b" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_5fdf59a</i></td></tr>
-  <tr><td port="0">sr_returned_date_sk</td></tr>
-<tr><td port="1">sr_return_time_sk</td></tr>
-<tr><td port="2">sr_item_sk</td></tr>
-<tr><td port="3">sr_customer_sk</td></tr>
-<tr><td port="4">sr_cdemo_sk</td></tr>
-<tr><td port="5">sr_hdemo_sk</td></tr>
-<tr><td port="6">sr_addr_sk</td></tr>
-<tr><td port="7">sr_store_sk</td></tr>
-<tr><td port="8">sr_reason_sk</td></tr>
-<tr><td port="9">sr_ticket_number</td></tr>
-<tr><td port="10">sr_return_quantity</td></tr>
-<tr><td port="11">sr_return_amt</td></tr>
-<tr><td port="12">sr_return_tax</td></tr>
-<tr><td port="13">sr_return_amt_inc_tax</td></tr>
-<tr><td port="14">sr_fee</td></tr>
-<tr><td port="15">sr_return_ship_cost</td></tr>
-<tr><td port="16">sr_refunded_cash</td></tr>
-<tr><td port="17">sr_reversed_charge</td></tr>
-<tr><td port="18">sr_store_credit</td></tr>
-<tr><td port="19">sr_net_loss</td></tr>
-</table>>];
-     
-
-"Filter_7ecfdf4" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_7ecfdf4</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter</i></td></tr>
   <tr><td port="0">ws_sold_date_sk</td></tr>
 <tr><td port="1">ws_sold_time_sk</td></tr>
 <tr><td port="2">ws_ship_date_sk</td></tr>
@@ -199,38 +233,9 @@ digraph {
 </table>>];
      
 
-"Filter_9389a45" [label=<
+"Filter_7512abf" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_9389a45</i></td></tr>
-  <tr><td port="0">ss_sold_date_sk</td></tr>
-<tr><td port="1">ss_sold_time_sk</td></tr>
-<tr><td port="2">ss_item_sk</td></tr>
-<tr><td port="3">ss_customer_sk</td></tr>
-<tr><td port="4">ss_cdemo_sk</td></tr>
-<tr><td port="5">ss_hdemo_sk</td></tr>
-<tr><td port="6">ss_addr_sk</td></tr>
-<tr><td port="7">ss_store_sk</td></tr>
-<tr><td port="8">ss_promo_sk</td></tr>
-<tr><td port="9">ss_ticket_number</td></tr>
-<tr><td port="10">ss_quantity</td></tr>
-<tr><td port="11">ss_wholesale_cost</td></tr>
-<tr><td port="12">ss_list_price</td></tr>
-<tr><td port="13">ss_sales_price</td></tr>
-<tr><td port="14">ss_ext_discount_amt</td></tr>
-<tr><td port="15">ss_ext_sales_price</td></tr>
-<tr><td port="16">ss_ext_wholesale_cost</td></tr>
-<tr><td port="17">ss_ext_list_price</td></tr>
-<tr><td port="18">ss_ext_tax</td></tr>
-<tr><td port="19">ss_coupon_amt</td></tr>
-<tr><td port="20">ss_net_paid</td></tr>
-<tr><td port="21">ss_net_paid_inc_tax</td></tr>
-<tr><td port="22">ss_net_profit</td></tr>
-</table>>];
-     
-
-"Filter_9e6be0a" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_9e6be0a</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter</i></td></tr>
   <tr><td port="0">cs_sold_date_sk</td></tr>
 <tr><td port="1">cs_sold_time_sk</td></tr>
 <tr><td port="2">cs_ship_date_sk</td></tr>
@@ -268,77 +273,9 @@ digraph {
 </table>>];
      
 
-"Filter_9fdf22c" [label=<
+"Filter_c2b74aa" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_9fdf22c</i></td></tr>
-  <tr><td port="0">d_date_sk</td></tr>
-<tr><td port="1">d_date_id</td></tr>
-<tr><td port="2">d_date</td></tr>
-<tr><td port="3">d_month_seq</td></tr>
-<tr><td port="4">d_week_seq</td></tr>
-<tr><td port="5">d_quarter_seq</td></tr>
-<tr><td port="6">d_year</td></tr>
-<tr><td port="7">d_dow</td></tr>
-<tr><td port="8">d_moy</td></tr>
-<tr><td port="9">d_dom</td></tr>
-<tr><td port="10">d_qoy</td></tr>
-<tr><td port="11">d_fy_year</td></tr>
-<tr><td port="12">d_fy_quarter_seq</td></tr>
-<tr><td port="13">d_fy_week_seq</td></tr>
-<tr><td port="14">d_day_name</td></tr>
-<tr><td port="15">d_quarter_name</td></tr>
-<tr><td port="16">d_holiday</td></tr>
-<tr><td port="17">d_weekend</td></tr>
-<tr><td port="18">d_following_holiday</td></tr>
-<tr><td port="19">d_first_dom</td></tr>
-<tr><td port="20">d_last_dom</td></tr>
-<tr><td port="21">d_same_day_ly</td></tr>
-<tr><td port="22">d_same_day_lq</td></tr>
-<tr><td port="23">d_current_day</td></tr>
-<tr><td port="24">d_current_week</td></tr>
-<tr><td port="25">d_current_month</td></tr>
-<tr><td port="26">d_current_quarter</td></tr>
-<tr><td port="27">d_current_year</td></tr>
-</table>>];
-     
-
-"Filter_b531941" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_b531941</i></td></tr>
-  <tr><td port="0">d_date_sk</td></tr>
-<tr><td port="1">d_date_id</td></tr>
-<tr><td port="2">d_date</td></tr>
-<tr><td port="3">d_month_seq</td></tr>
-<tr><td port="4">d_week_seq</td></tr>
-<tr><td port="5">d_quarter_seq</td></tr>
-<tr><td port="6">d_year</td></tr>
-<tr><td port="7">d_dow</td></tr>
-<tr><td port="8">d_moy</td></tr>
-<tr><td port="9">d_dom</td></tr>
-<tr><td port="10">d_qoy</td></tr>
-<tr><td port="11">d_fy_year</td></tr>
-<tr><td port="12">d_fy_quarter_seq</td></tr>
-<tr><td port="13">d_fy_week_seq</td></tr>
-<tr><td port="14">d_day_name</td></tr>
-<tr><td port="15">d_quarter_name</td></tr>
-<tr><td port="16">d_holiday</td></tr>
-<tr><td port="17">d_weekend</td></tr>
-<tr><td port="18">d_following_holiday</td></tr>
-<tr><td port="19">d_first_dom</td></tr>
-<tr><td port="20">d_last_dom</td></tr>
-<tr><td port="21">d_same_day_ly</td></tr>
-<tr><td port="22">d_same_day_lq</td></tr>
-<tr><td port="23">d_current_day</td></tr>
-<tr><td port="24">d_current_week</td></tr>
-<tr><td port="25">d_current_month</td></tr>
-<tr><td port="26">d_current_quarter</td></tr>
-<tr><td port="27">d_current_year</td></tr>
-</table>>];
-     
-
-"Filter_c015cc7" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_c015cc7</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter</i></td></tr>
   <tr><td port="0">item</td></tr>
 <tr><td port="1">return_ratio</td></tr>
 <tr><td port="2">currency_ratio</td></tr>
@@ -347,39 +284,102 @@ digraph {
 </table>>];
      
 
-"Filter_cd6ca68" [label=<
+"Filter_d61c565" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter_cd6ca68</i></td></tr>
-  <tr><td port="0">wr_returned_date_sk</td></tr>
-<tr><td port="1">wr_returned_time_sk</td></tr>
-<tr><td port="2">wr_item_sk</td></tr>
-<tr><td port="3">wr_refunded_customer_sk</td></tr>
-<tr><td port="4">wr_refunded_cdemo_sk</td></tr>
-<tr><td port="5">wr_refunded_hdemo_sk</td></tr>
-<tr><td port="6">wr_refunded_addr_sk</td></tr>
-<tr><td port="7">wr_returning_customer_sk</td></tr>
-<tr><td port="8">wr_returning_cdemo_sk</td></tr>
-<tr><td port="9">wr_returning_hdemo_sk</td></tr>
-<tr><td port="10">wr_returning_addr_sk</td></tr>
-<tr><td port="11">wr_web_page_sk</td></tr>
-<tr><td port="12">wr_reason_sk</td></tr>
-<tr><td port="13">wr_order_number</td></tr>
-<tr><td port="14">wr_return_quantity</td></tr>
-<tr><td port="15">wr_return_amt</td></tr>
-<tr><td port="16">wr_return_tax</td></tr>
-<tr><td port="17">wr_return_amt_inc_tax</td></tr>
-<tr><td port="18">wr_fee</td></tr>
-<tr><td port="19">wr_return_ship_cost</td></tr>
-<tr><td port="20">wr_refunded_cash</td></tr>
-<tr><td port="21">wr_reversed_charge</td></tr>
-<tr><td port="22">wr_account_credit</td></tr>
-<tr><td port="23">wr_net_loss</td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter</i></td></tr>
+  <tr><td port="0">d_date_sk</td></tr>
+<tr><td port="1">d_date_id</td></tr>
+<tr><td port="2">d_date</td></tr>
+<tr><td port="3">d_month_seq</td></tr>
+<tr><td port="4">d_week_seq</td></tr>
+<tr><td port="5">d_quarter_seq</td></tr>
+<tr><td port="6">d_year</td></tr>
+<tr><td port="7">d_dow</td></tr>
+<tr><td port="8">d_moy</td></tr>
+<tr><td port="9">d_dom</td></tr>
+<tr><td port="10">d_qoy</td></tr>
+<tr><td port="11">d_fy_year</td></tr>
+<tr><td port="12">d_fy_quarter_seq</td></tr>
+<tr><td port="13">d_fy_week_seq</td></tr>
+<tr><td port="14">d_day_name</td></tr>
+<tr><td port="15">d_quarter_name</td></tr>
+<tr><td port="16">d_holiday</td></tr>
+<tr><td port="17">d_weekend</td></tr>
+<tr><td port="18">d_following_holiday</td></tr>
+<tr><td port="19">d_first_dom</td></tr>
+<tr><td port="20">d_last_dom</td></tr>
+<tr><td port="21">d_same_day_ly</td></tr>
+<tr><td port="22">d_same_day_lq</td></tr>
+<tr><td port="23">d_current_day</td></tr>
+<tr><td port="24">d_current_week</td></tr>
+<tr><td port="25">d_current_month</td></tr>
+<tr><td port="26">d_current_quarter</td></tr>
+<tr><td port="27">d_current_year</td></tr>
 </table>>];
      
 
-"GlobalLimit_bf3c157" [label=<
+"Filter_f847b2c" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>GlobalLimit_bf3c157</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter</i></td></tr>
+  <tr><td port="0">sr_returned_date_sk</td></tr>
+<tr><td port="1">sr_return_time_sk</td></tr>
+<tr><td port="2">sr_item_sk</td></tr>
+<tr><td port="3">sr_customer_sk</td></tr>
+<tr><td port="4">sr_cdemo_sk</td></tr>
+<tr><td port="5">sr_hdemo_sk</td></tr>
+<tr><td port="6">sr_addr_sk</td></tr>
+<tr><td port="7">sr_store_sk</td></tr>
+<tr><td port="8">sr_reason_sk</td></tr>
+<tr><td port="9">sr_ticket_number</td></tr>
+<tr><td port="10">sr_return_quantity</td></tr>
+<tr><td port="11">sr_return_amt</td></tr>
+<tr><td port="12">sr_return_tax</td></tr>
+<tr><td port="13">sr_return_amt_inc_tax</td></tr>
+<tr><td port="14">sr_fee</td></tr>
+<tr><td port="15">sr_return_ship_cost</td></tr>
+<tr><td port="16">sr_refunded_cash</td></tr>
+<tr><td port="17">sr_reversed_charge</td></tr>
+<tr><td port="18">sr_store_credit</td></tr>
+<tr><td port="19">sr_net_loss</td></tr>
+</table>>];
+     
+
+"Filter_fdd9c91" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Filter</i></td></tr>
+  <tr><td port="0">cr_returned_date_sk</td></tr>
+<tr><td port="1">cr_returned_time_sk</td></tr>
+<tr><td port="2">cr_item_sk</td></tr>
+<tr><td port="3">cr_refunded_customer_sk</td></tr>
+<tr><td port="4">cr_refunded_cdemo_sk</td></tr>
+<tr><td port="5">cr_refunded_hdemo_sk</td></tr>
+<tr><td port="6">cr_refunded_addr_sk</td></tr>
+<tr><td port="7">cr_returning_customer_sk</td></tr>
+<tr><td port="8">cr_returning_cdemo_sk</td></tr>
+<tr><td port="9">cr_returning_hdemo_sk</td></tr>
+<tr><td port="10">cr_returning_addr_sk</td></tr>
+<tr><td port="11">cr_call_center_sk</td></tr>
+<tr><td port="12">cr_catalog_page_sk</td></tr>
+<tr><td port="13">cr_ship_mode_sk</td></tr>
+<tr><td port="14">cr_warehouse_sk</td></tr>
+<tr><td port="15">cr_reason_sk</td></tr>
+<tr><td port="16">cr_order_number</td></tr>
+<tr><td port="17">cr_return_quantity</td></tr>
+<tr><td port="18">cr_return_amount</td></tr>
+<tr><td port="19">cr_return_tax</td></tr>
+<tr><td port="20">cr_return_amt_inc_tax</td></tr>
+<tr><td port="21">cr_fee</td></tr>
+<tr><td port="22">cr_return_ship_cost</td></tr>
+<tr><td port="23">cr_refunded_cash</td></tr>
+<tr><td port="24">cr_reversed_charge</td></tr>
+<tr><td port="25">cr_store_credit</td></tr>
+<tr><td port="26">cr_net_loss</td></tr>
+</table>>];
+     
+
+"GlobalLimit_20fa783" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>GlobalLimit</i></td></tr>
   <tr><td port="0">channel</td></tr>
 <tr><td port="1">item</td></tr>
 <tr><td port="2">return_ratio</td></tr>
@@ -388,78 +388,9 @@ digraph {
 </table>>];
      
 
-"Join_Inner_46ac879" [label=<
+"Join_Inner_5c344bf" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_46ac879</i></td></tr>
-  <tr><td port="0">ws_sold_date_sk</td></tr>
-<tr><td port="1">ws_item_sk</td></tr>
-<tr><td port="2">ws_order_number</td></tr>
-<tr><td port="3">ws_quantity</td></tr>
-<tr><td port="4">ws_net_paid</td></tr>
-<tr><td port="5">wr_item_sk</td></tr>
-<tr><td port="6">wr_order_number</td></tr>
-<tr><td port="7">wr_return_quantity</td></tr>
-<tr><td port="8">wr_return_amt</td></tr>
-</table>>];
-     
-
-"Join_Inner_9b80331" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_9b80331</i></td></tr>
-  <tr><td port="0">ss_sold_date_sk</td></tr>
-<tr><td port="1">ss_item_sk</td></tr>
-<tr><td port="2">ss_quantity</td></tr>
-<tr><td port="3">ss_net_paid</td></tr>
-<tr><td port="4">sr_return_quantity</td></tr>
-<tr><td port="5">sr_return_amt</td></tr>
-<tr><td port="6">d_date_sk</td></tr>
-</table>>];
-     
-
-"Join_Inner_a9c8df0" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_a9c8df0</i></td></tr>
-  <tr><td port="0">ss_sold_date_sk</td></tr>
-<tr><td port="1">ss_item_sk</td></tr>
-<tr><td port="2">ss_ticket_number</td></tr>
-<tr><td port="3">ss_quantity</td></tr>
-<tr><td port="4">ss_net_paid</td></tr>
-<tr><td port="5">sr_item_sk</td></tr>
-<tr><td port="6">sr_ticket_number</td></tr>
-<tr><td port="7">sr_return_quantity</td></tr>
-<tr><td port="8">sr_return_amt</td></tr>
-</table>>];
-     
-
-"Join_Inner_b0101ee" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_b0101ee</i></td></tr>
-  <tr><td port="0">ws_sold_date_sk</td></tr>
-<tr><td port="1">ws_item_sk</td></tr>
-<tr><td port="2">ws_quantity</td></tr>
-<tr><td port="3">ws_net_paid</td></tr>
-<tr><td port="4">wr_return_quantity</td></tr>
-<tr><td port="5">wr_return_amt</td></tr>
-<tr><td port="6">d_date_sk</td></tr>
-</table>>];
-     
-
-"Join_Inner_d308908" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_d308908</i></td></tr>
-  <tr><td port="0">cs_sold_date_sk</td></tr>
-<tr><td port="1">cs_item_sk</td></tr>
-<tr><td port="2">cs_quantity</td></tr>
-<tr><td port="3">cs_net_paid</td></tr>
-<tr><td port="4">cr_return_quantity</td></tr>
-<tr><td port="5">cr_return_amount</td></tr>
-<tr><td port="6">d_date_sk</td></tr>
-</table>>];
-     
-
-"Join_Inner_f9170ab" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_f9170ab</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner</i></td></tr>
   <tr><td port="0">cs_sold_date_sk</td></tr>
 <tr><td port="1">cs_item_sk</td></tr>
 <tr><td port="2">cs_order_number</td></tr>
@@ -472,9 +403,78 @@ digraph {
 </table>>];
      
 
-"LocalLimit_a287ae3" [label=<
+"Join_Inner_62be44e" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>LocalLimit_a287ae3</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner</i></td></tr>
+  <tr><td port="0">ss_sold_date_sk</td></tr>
+<tr><td port="1">ss_item_sk</td></tr>
+<tr><td port="2">ss_ticket_number</td></tr>
+<tr><td port="3">ss_quantity</td></tr>
+<tr><td port="4">ss_net_paid</td></tr>
+<tr><td port="5">sr_item_sk</td></tr>
+<tr><td port="6">sr_ticket_number</td></tr>
+<tr><td port="7">sr_return_quantity</td></tr>
+<tr><td port="8">sr_return_amt</td></tr>
+</table>>];
+     
+
+"Join_Inner_6e1265c" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner</i></td></tr>
+  <tr><td port="0">cs_sold_date_sk</td></tr>
+<tr><td port="1">cs_item_sk</td></tr>
+<tr><td port="2">cs_quantity</td></tr>
+<tr><td port="3">cs_net_paid</td></tr>
+<tr><td port="4">cr_return_quantity</td></tr>
+<tr><td port="5">cr_return_amount</td></tr>
+<tr><td port="6">d_date_sk</td></tr>
+</table>>];
+     
+
+"Join_Inner_8e392d0" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner</i></td></tr>
+  <tr><td port="0">ws_sold_date_sk</td></tr>
+<tr><td port="1">ws_item_sk</td></tr>
+<tr><td port="2">ws_order_number</td></tr>
+<tr><td port="3">ws_quantity</td></tr>
+<tr><td port="4">ws_net_paid</td></tr>
+<tr><td port="5">wr_item_sk</td></tr>
+<tr><td port="6">wr_order_number</td></tr>
+<tr><td port="7">wr_return_quantity</td></tr>
+<tr><td port="8">wr_return_amt</td></tr>
+</table>>];
+     
+
+"Join_Inner_b9068da" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner</i></td></tr>
+  <tr><td port="0">ws_sold_date_sk</td></tr>
+<tr><td port="1">ws_item_sk</td></tr>
+<tr><td port="2">ws_quantity</td></tr>
+<tr><td port="3">ws_net_paid</td></tr>
+<tr><td port="4">wr_return_quantity</td></tr>
+<tr><td port="5">wr_return_amt</td></tr>
+<tr><td port="6">d_date_sk</td></tr>
+</table>>];
+     
+
+"Join_Inner_f9d03f5" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner</i></td></tr>
+  <tr><td port="0">ss_sold_date_sk</td></tr>
+<tr><td port="1">ss_item_sk</td></tr>
+<tr><td port="2">ss_quantity</td></tr>
+<tr><td port="3">ss_net_paid</td></tr>
+<tr><td port="4">sr_return_quantity</td></tr>
+<tr><td port="5">sr_return_amt</td></tr>
+<tr><td port="6">d_date_sk</td></tr>
+</table>>];
+     
+
+"LocalLimit_e01e8a5" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>LocalLimit</i></td></tr>
   <tr><td port="0">channel</td></tr>
 <tr><td port="1">item</td></tr>
 <tr><td port="2">return_ratio</td></tr>
@@ -483,20 +483,9 @@ digraph {
 </table>>];
      
 
-"Project_04236d2" [label=<
+"Project_1ccae06" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_04236d2</i></td></tr>
-  <tr><td port="0">ws_item_sk</td></tr>
-<tr><td port="1">ws_quantity</td></tr>
-<tr><td port="2">ws_net_paid</td></tr>
-<tr><td port="3">wr_return_quantity</td></tr>
-<tr><td port="4">wr_return_amt</td></tr>
-</table>>];
-     
-
-"Project_19b3380" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_19b3380</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
   <tr><td port="0">cs_sold_date_sk</td></tr>
 <tr><td port="1">cs_item_sk</td></tr>
 <tr><td port="2">cs_quantity</td></tr>
@@ -506,131 +495,9 @@ digraph {
 </table>>];
      
 
-"Project_1d137df" [label=<
+"Project_1e59131" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_1d137df</i></td></tr>
-  <tr><td port="0">ss_item_sk</td></tr>
-<tr><td port="1">ss_quantity</td></tr>
-<tr><td port="2">ss_net_paid</td></tr>
-<tr><td port="3">sr_return_quantity</td></tr>
-<tr><td port="4">sr_return_amt</td></tr>
-</table>>];
-     
-
-"Project_3cea112" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_3cea112</i></td></tr>
-  <tr><td port="0">d_date_sk</td></tr>
-</table>>];
-     
-
-"Project_450a1c9" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_450a1c9</i></td></tr>
-  <tr><td port="0">sr_item_sk</td></tr>
-<tr><td port="1">sr_ticket_number</td></tr>
-<tr><td port="2">sr_return_quantity</td></tr>
-<tr><td port="3">sr_return_amt</td></tr>
-</table>>];
-     
-
-"Project_6e835a9" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_6e835a9</i></td></tr>
-  <tr><td port="0">cs_item_sk</td></tr>
-<tr><td port="1">cs_quantity</td></tr>
-<tr><td port="2">cs_net_paid</td></tr>
-<tr><td port="3">cr_return_quantity</td></tr>
-<tr><td port="4">cr_return_amount</td></tr>
-</table>>];
-     
-
-"Project_7f066c9" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_7f066c9</i></td></tr>
-  <tr><td port="0">ws_sold_date_sk</td></tr>
-<tr><td port="1">ws_item_sk</td></tr>
-<tr><td port="2">ws_order_number</td></tr>
-<tr><td port="3">ws_quantity</td></tr>
-<tr><td port="4">ws_net_paid</td></tr>
-</table>>];
-     
-
-"Project_880bea2" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_880bea2</i></td></tr>
-  <tr><td port="0">cs_sold_date_sk</td></tr>
-<tr><td port="1">cs_item_sk</td></tr>
-<tr><td port="2">cs_order_number</td></tr>
-<tr><td port="3">cs_quantity</td></tr>
-<tr><td port="4">cs_net_paid</td></tr>
-</table>>];
-     
-
-"Project_8e066e3" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_8e066e3</i></td></tr>
-  <tr><td port="0">ss_sold_date_sk</td></tr>
-<tr><td port="1">ss_item_sk</td></tr>
-<tr><td port="2">ss_ticket_number</td></tr>
-<tr><td port="3">ss_quantity</td></tr>
-<tr><td port="4">ss_net_paid</td></tr>
-</table>>];
-     
-
-"Project_9239ab8" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_9239ab8</i></td></tr>
-  <tr><td port="0">channel</td></tr>
-<tr><td port="1">item</td></tr>
-<tr><td port="2">return_ratio</td></tr>
-<tr><td port="3">return_rank</td></tr>
-<tr><td port="4">currency_rank</td></tr>
-</table>>];
-     
-
-"Project_9818d97" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_9818d97</i></td></tr>
-  <tr><td port="0">wr_item_sk</td></tr>
-<tr><td port="1">wr_order_number</td></tr>
-<tr><td port="2">wr_return_quantity</td></tr>
-<tr><td port="3">wr_return_amt</td></tr>
-</table>>];
-     
-
-"Project_ab1778d" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_ab1778d</i></td></tr>
-  <tr><td port="0">cr_item_sk</td></tr>
-<tr><td port="1">cr_order_number</td></tr>
-<tr><td port="2">cr_return_quantity</td></tr>
-<tr><td port="3">cr_return_amount</td></tr>
-</table>>];
-     
-
-"Project_b4f2421" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_b4f2421</i></td></tr>
-  <tr><td port="0">ss_sold_date_sk</td></tr>
-<tr><td port="1">ss_item_sk</td></tr>
-<tr><td port="2">ss_quantity</td></tr>
-<tr><td port="3">ss_net_paid</td></tr>
-<tr><td port="4">sr_return_quantity</td></tr>
-<tr><td port="5">sr_return_amt</td></tr>
-</table>>];
-     
-
-"Project_b79c9b0" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_b79c9b0</i></td></tr>
-  <tr><td port="0">d_date_sk</td></tr>
-</table>>];
-     
-
-"Project_cbefc7d" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_cbefc7d</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
   <tr><td port="0">ws_sold_date_sk</td></tr>
 <tr><td port="1">ws_item_sk</td></tr>
 <tr><td port="2">ws_quantity</td></tr>
@@ -640,9 +507,31 @@ digraph {
 </table>>];
      
 
-"Project_d26a3c6" [label=<
+"Project_3ddcd08" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_d26a3c6</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">ws_item_sk</td></tr>
+<tr><td port="1">ws_quantity</td></tr>
+<tr><td port="2">ws_net_paid</td></tr>
+<tr><td port="3">wr_return_quantity</td></tr>
+<tr><td port="4">wr_return_amt</td></tr>
+</table>>];
+     
+
+"Project_40cee7f" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">ws_sold_date_sk</td></tr>
+<tr><td port="1">ws_item_sk</td></tr>
+<tr><td port="2">ws_order_number</td></tr>
+<tr><td port="3">ws_quantity</td></tr>
+<tr><td port="4">ws_net_paid</td></tr>
+</table>>];
+     
+
+"Project_42e7516" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
   <tr><td port="0">channel</td></tr>
 <tr><td port="1">item</td></tr>
 <tr><td port="2">return_ratio</td></tr>
@@ -651,9 +540,9 @@ digraph {
 </table>>];
      
 
-"Project_e68f6f1" [label=<
+"Project_44bd3ae" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_e68f6f1</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
   <tr><td port="0">channel</td></tr>
 <tr><td port="1">item</td></tr>
 <tr><td port="2">return_ratio</td></tr>
@@ -662,16 +551,127 @@ digraph {
 </table>>];
      
 
-"Project_ee32c48" [label=<
+"Project_5b24818" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Project_ee32c48</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">channel</td></tr>
+<tr><td port="1">item</td></tr>
+<tr><td port="2">return_ratio</td></tr>
+<tr><td port="3">return_rank</td></tr>
+<tr><td port="4">currency_rank</td></tr>
+</table>>];
+     
+
+"Project_72d0a1e" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
   <tr><td port="0">d_date_sk</td></tr>
 </table>>];
      
 
-"Sort_eae4e66" [label=<
+"Project_83fd392" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort_eae4e66</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">d_date_sk</td></tr>
+</table>>];
+     
+
+"Project_87f7f1b" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">sr_item_sk</td></tr>
+<tr><td port="1">sr_ticket_number</td></tr>
+<tr><td port="2">sr_return_quantity</td></tr>
+<tr><td port="3">sr_return_amt</td></tr>
+</table>>];
+     
+
+"Project_8d0d5f6" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">ss_sold_date_sk</td></tr>
+<tr><td port="1">ss_item_sk</td></tr>
+<tr><td port="2">ss_ticket_number</td></tr>
+<tr><td port="3">ss_quantity</td></tr>
+<tr><td port="4">ss_net_paid</td></tr>
+</table>>];
+     
+
+"Project_8de6e0d" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">d_date_sk</td></tr>
+</table>>];
+     
+
+"Project_97a4d55" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">ss_item_sk</td></tr>
+<tr><td port="1">ss_quantity</td></tr>
+<tr><td port="2">ss_net_paid</td></tr>
+<tr><td port="3">sr_return_quantity</td></tr>
+<tr><td port="4">sr_return_amt</td></tr>
+</table>>];
+     
+
+"Project_b1c9820" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">wr_item_sk</td></tr>
+<tr><td port="1">wr_order_number</td></tr>
+<tr><td port="2">wr_return_quantity</td></tr>
+<tr><td port="3">wr_return_amt</td></tr>
+</table>>];
+     
+
+"Project_e102e42" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">ss_sold_date_sk</td></tr>
+<tr><td port="1">ss_item_sk</td></tr>
+<tr><td port="2">ss_quantity</td></tr>
+<tr><td port="3">ss_net_paid</td></tr>
+<tr><td port="4">sr_return_quantity</td></tr>
+<tr><td port="5">sr_return_amt</td></tr>
+</table>>];
+     
+
+"Project_e1ae226" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">cr_item_sk</td></tr>
+<tr><td port="1">cr_order_number</td></tr>
+<tr><td port="2">cr_return_quantity</td></tr>
+<tr><td port="3">cr_return_amount</td></tr>
+</table>>];
+     
+
+"Project_e3276bf" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">cs_sold_date_sk</td></tr>
+<tr><td port="1">cs_item_sk</td></tr>
+<tr><td port="2">cs_order_number</td></tr>
+<tr><td port="3">cs_quantity</td></tr>
+<tr><td port="4">cs_net_paid</td></tr>
+</table>>];
+     
+
+"Project_e488268" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+  <tr><td port="0">cs_item_sk</td></tr>
+<tr><td port="1">cs_quantity</td></tr>
+<tr><td port="2">cs_net_paid</td></tr>
+<tr><td port="3">cr_return_quantity</td></tr>
+<tr><td port="4">cr_return_amount</td></tr>
+</table>>];
+     
+
+"Sort_95e7809" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Sort</i></td></tr>
   <tr><td port="0">channel</td></tr>
 <tr><td port="1">item</td></tr>
 <tr><td port="2">return_ratio</td></tr>
@@ -680,9 +680,9 @@ digraph {
 </table>>];
      
 
-"Union_c928003" [label=<
+"Union_eb63397" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Union_c928003</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Union</i></td></tr>
   <tr><td port="0">channel</td></tr>
 <tr><td port="1">item</td></tr>
 <tr><td port="2">return_ratio</td></tr>
@@ -691,9 +691,9 @@ digraph {
 </table>>];
      
 
-"Window_0af146f" [label=<
+"Window_748d131" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Window_0af146f</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Window</i></td></tr>
   <tr><td port="0">item</td></tr>
 <tr><td port="1">return_ratio</td></tr>
 <tr><td port="2">currency_ratio</td></tr>
@@ -701,9 +701,9 @@ digraph {
 </table>>];
      
 
-"Window_56ac2ab" [label=<
+"Window_89bacdf" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Window_56ac2ab</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Window</i></td></tr>
   <tr><td port="0">item</td></tr>
 <tr><td port="1">return_ratio</td></tr>
 <tr><td port="2">currency_ratio</td></tr>
@@ -711,19 +711,9 @@ digraph {
 </table>>];
      
 
-"Window_938e7f2" [label=<
+"Window_8ab8874" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Window_938e7f2</i></td></tr>
-  <tr><td port="0">item</td></tr>
-<tr><td port="1">return_ratio</td></tr>
-<tr><td port="2">currency_ratio</td></tr>
-<tr><td port="3">return_rank</td></tr>
-</table>>];
-     
-
-"Window_a698352" [label=<
-<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Window_a698352</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Window</i></td></tr>
   <tr><td port="0">item</td></tr>
 <tr><td port="1">return_ratio</td></tr>
 <tr><td port="2">currency_ratio</td></tr>
@@ -732,9 +722,9 @@ digraph {
 </table>>];
      
 
-"Window_d47e03a" [label=<
+"Window_bd6afb0" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Window_d47e03a</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Window</i></td></tr>
   <tr><td port="0">item</td></tr>
 <tr><td port="1">return_ratio</td></tr>
 <tr><td port="2">currency_ratio</td></tr>
@@ -743,9 +733,19 @@ digraph {
 </table>>];
      
 
-"Window_f5c331d" [label=<
+"Window_c07a13a" [label=<
 <table color="lightgray" border="1" cellborder="0" cellspacing="0">
-  <tr><td bgcolor="lightgray" port="nodeName"><i>Window_f5c331d</i></td></tr>
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Window</i></td></tr>
+  <tr><td port="0">item</td></tr>
+<tr><td port="1">return_ratio</td></tr>
+<tr><td port="2">currency_ratio</td></tr>
+<tr><td port="3">return_rank</td></tr>
+</table>>];
+     
+
+"Window_cfe1a22" [label=<
+<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+  <tr><td bgcolor="lightgray" port="nodeName"><i>Window</i></td></tr>
   <tr><td port="0">item</td></tr>
 <tr><td port="1">return_ratio</td></tr>
 <tr><td port="2">currency_ratio</td></tr>
@@ -996,465 +996,465 @@ digraph {
 <tr><td port="4">currency_rank</td></tr>
 </table>>];
      
-  "Aggregate_46cc5de":0 -> "Window_938e7f2":0;
-"Aggregate_46cc5de":1 -> "Window_938e7f2":1;
-"Aggregate_46cc5de":2 -> "Window_938e7f2":2;
-"Aggregate_9b2ec62":0 -> "Window_56ac2ab":0;
-"Aggregate_9b2ec62":1 -> "Window_56ac2ab":1;
-"Aggregate_9b2ec62":2 -> "Window_56ac2ab":2;
-"Aggregate_d2747e2":0 -> "Sort_eae4e66":0;
-"Aggregate_d2747e2":1 -> "Sort_eae4e66":1;
-"Aggregate_d2747e2":2 -> "Sort_eae4e66":2;
-"Aggregate_d2747e2":3 -> "Sort_eae4e66":3;
-"Aggregate_d2747e2":4 -> "Sort_eae4e66":4;
-"Aggregate_d425d77":0 -> "Window_0af146f":0;
-"Aggregate_d425d77":1 -> "Window_0af146f":1;
-"Aggregate_d425d77":2 -> "Window_0af146f":2;
-"Filter_295b61c":0 -> "Project_d26a3c6":1;
-"Filter_295b61c":1 -> "Project_d26a3c6":2;
-"Filter_295b61c":3 -> "Project_d26a3c6":3;
-"Filter_295b61c":4 -> "Project_d26a3c6":4;
-"Filter_373b733":0 -> "Project_b79c9b0":0;
-"Filter_52383db":0 -> "Project_9239ab8":1;
-"Filter_52383db":1 -> "Project_9239ab8":2;
-"Filter_52383db":3 -> "Project_9239ab8":3;
-"Filter_52383db":4 -> "Project_9239ab8":4;
-"Filter_5bff9d3":16 -> "Project_ab1778d":1;
-"Filter_5bff9d3":17 -> "Project_ab1778d":2;
-"Filter_5bff9d3":18 -> "Project_ab1778d":3;
-"Filter_5bff9d3":2 -> "Project_ab1778d":0;
-"Filter_5fdf59a":10 -> "Project_450a1c9":2;
-"Filter_5fdf59a":11 -> "Project_450a1c9":3;
-"Filter_5fdf59a":2 -> "Project_450a1c9":0;
-"Filter_5fdf59a":9 -> "Project_450a1c9":1;
-"Filter_7ecfdf4":0 -> "Project_7f066c9":0;
-"Filter_7ecfdf4":17 -> "Project_7f066c9":2;
-"Filter_7ecfdf4":18 -> "Project_7f066c9":3;
-"Filter_7ecfdf4":29 -> "Project_7f066c9":4;
-"Filter_7ecfdf4":3 -> "Project_7f066c9":1;
-"Filter_9389a45":0 -> "Project_8e066e3":0;
-"Filter_9389a45":10 -> "Project_8e066e3":3;
-"Filter_9389a45":2 -> "Project_8e066e3":1;
-"Filter_9389a45":20 -> "Project_8e066e3":4;
-"Filter_9389a45":9 -> "Project_8e066e3":2;
-"Filter_9e6be0a":0 -> "Project_880bea2":0;
-"Filter_9e6be0a":15 -> "Project_880bea2":1;
-"Filter_9e6be0a":17 -> "Project_880bea2":2;
-"Filter_9e6be0a":18 -> "Project_880bea2":3;
-"Filter_9e6be0a":29 -> "Project_880bea2":4;
-"Filter_9fdf22c":0 -> "Project_3cea112":0;
-"Filter_b531941":0 -> "Project_ee32c48":0;
-"Filter_c015cc7":0 -> "Project_e68f6f1":1;
-"Filter_c015cc7":1 -> "Project_e68f6f1":2;
-"Filter_c015cc7":3 -> "Project_e68f6f1":3;
-"Filter_c015cc7":4 -> "Project_e68f6f1":4;
-"Filter_cd6ca68":13 -> "Project_9818d97":1;
-"Filter_cd6ca68":14 -> "Project_9818d97":2;
-"Filter_cd6ca68":15 -> "Project_9818d97":3;
-"Filter_cd6ca68":2 -> "Project_9818d97":0;
-"GlobalLimit_bf3c157":0 -> "v":0;
-"GlobalLimit_bf3c157":1 -> "v":1;
-"GlobalLimit_bf3c157":2 -> "v":2;
-"GlobalLimit_bf3c157":3 -> "v":3;
-"GlobalLimit_bf3c157":4 -> "v":4;
-"Join_Inner_46ac879":0 -> "Project_cbefc7d":0;
-"Join_Inner_46ac879":1 -> "Project_cbefc7d":1;
-"Join_Inner_46ac879":3 -> "Project_cbefc7d":2;
-"Join_Inner_46ac879":4 -> "Project_cbefc7d":3;
-"Join_Inner_46ac879":7 -> "Project_cbefc7d":4;
-"Join_Inner_46ac879":8 -> "Project_cbefc7d":5;
-"Join_Inner_9b80331":1 -> "Project_1d137df":0;
-"Join_Inner_9b80331":2 -> "Project_1d137df":1;
-"Join_Inner_9b80331":3 -> "Project_1d137df":2;
-"Join_Inner_9b80331":4 -> "Project_1d137df":3;
-"Join_Inner_9b80331":5 -> "Project_1d137df":4;
-"Join_Inner_a9c8df0":0 -> "Project_b4f2421":0;
-"Join_Inner_a9c8df0":1 -> "Project_b4f2421":1;
-"Join_Inner_a9c8df0":3 -> "Project_b4f2421":2;
-"Join_Inner_a9c8df0":4 -> "Project_b4f2421":3;
-"Join_Inner_a9c8df0":7 -> "Project_b4f2421":4;
-"Join_Inner_a9c8df0":8 -> "Project_b4f2421":5;
-"Join_Inner_b0101ee":1 -> "Project_04236d2":0;
-"Join_Inner_b0101ee":2 -> "Project_04236d2":1;
-"Join_Inner_b0101ee":3 -> "Project_04236d2":2;
-"Join_Inner_b0101ee":4 -> "Project_04236d2":3;
-"Join_Inner_b0101ee":5 -> "Project_04236d2":4;
-"Join_Inner_d308908":1 -> "Project_6e835a9":0;
-"Join_Inner_d308908":2 -> "Project_6e835a9":1;
-"Join_Inner_d308908":3 -> "Project_6e835a9":2;
-"Join_Inner_d308908":4 -> "Project_6e835a9":3;
-"Join_Inner_d308908":5 -> "Project_6e835a9":4;
-"Join_Inner_f9170ab":0 -> "Project_19b3380":0;
-"Join_Inner_f9170ab":1 -> "Project_19b3380":1;
-"Join_Inner_f9170ab":3 -> "Project_19b3380":2;
-"Join_Inner_f9170ab":4 -> "Project_19b3380":3;
-"Join_Inner_f9170ab":7 -> "Project_19b3380":4;
-"Join_Inner_f9170ab":8 -> "Project_19b3380":5;
-"LocalLimit_a287ae3":0 -> "GlobalLimit_bf3c157":0;
-"LocalLimit_a287ae3":1 -> "GlobalLimit_bf3c157":1;
-"LocalLimit_a287ae3":2 -> "GlobalLimit_bf3c157":2;
-"LocalLimit_a287ae3":3 -> "GlobalLimit_bf3c157":3;
-"LocalLimit_a287ae3":4 -> "GlobalLimit_bf3c157":4;
-"Project_04236d2":0 -> "Aggregate_9b2ec62":0;
-"Project_04236d2":1 -> "Aggregate_9b2ec62":1;
-"Project_04236d2":2 -> "Aggregate_9b2ec62":2;
-"Project_04236d2":3 -> "Aggregate_9b2ec62":1;
-"Project_04236d2":4 -> "Aggregate_9b2ec62":2;
-"Project_19b3380":0 -> "Join_Inner_d308908":0;
-"Project_19b3380":1 -> "Join_Inner_d308908":1;
-"Project_19b3380":2 -> "Join_Inner_d308908":2;
-"Project_19b3380":3 -> "Join_Inner_d308908":3;
-"Project_19b3380":4 -> "Join_Inner_d308908":4;
-"Project_19b3380":5 -> "Join_Inner_d308908":5;
-"Project_1d137df":0 -> "Aggregate_d425d77":0;
-"Project_1d137df":1 -> "Aggregate_d425d77":1;
-"Project_1d137df":2 -> "Aggregate_d425d77":2;
-"Project_1d137df":3 -> "Aggregate_d425d77":1;
-"Project_1d137df":4 -> "Aggregate_d425d77":2;
-"Project_3cea112":0 -> "Join_Inner_b0101ee":6;
-"Project_450a1c9":0 -> "Join_Inner_a9c8df0":5;
-"Project_450a1c9":1 -> "Join_Inner_a9c8df0":6;
-"Project_450a1c9":2 -> "Join_Inner_a9c8df0":7;
-"Project_450a1c9":3 -> "Join_Inner_a9c8df0":8;
-"Project_6e835a9":0 -> "Aggregate_46cc5de":0;
-"Project_6e835a9":1 -> "Aggregate_46cc5de":1;
-"Project_6e835a9":2 -> "Aggregate_46cc5de":2;
-"Project_6e835a9":3 -> "Aggregate_46cc5de":1;
-"Project_6e835a9":4 -> "Aggregate_46cc5de":2;
-"Project_7f066c9":0 -> "Join_Inner_46ac879":0;
-"Project_7f066c9":1 -> "Join_Inner_46ac879":1;
-"Project_7f066c9":2 -> "Join_Inner_46ac879":2;
-"Project_7f066c9":3 -> "Join_Inner_46ac879":3;
-"Project_7f066c9":4 -> "Join_Inner_46ac879":4;
-"Project_880bea2":0 -> "Join_Inner_f9170ab":0;
-"Project_880bea2":1 -> "Join_Inner_f9170ab":1;
-"Project_880bea2":2 -> "Join_Inner_f9170ab":2;
-"Project_880bea2":3 -> "Join_Inner_f9170ab":3;
-"Project_880bea2":4 -> "Join_Inner_f9170ab":4;
-"Project_8e066e3":0 -> "Join_Inner_a9c8df0":0;
-"Project_8e066e3":1 -> "Join_Inner_a9c8df0":1;
-"Project_8e066e3":2 -> "Join_Inner_a9c8df0":2;
-"Project_8e066e3":3 -> "Join_Inner_a9c8df0":3;
-"Project_8e066e3":4 -> "Join_Inner_a9c8df0":4;
-"Project_9239ab8":0 -> "Union_c928003":0;
-"Project_9239ab8":1 -> "Union_c928003":1;
-"Project_9239ab8":2 -> "Union_c928003":2;
-"Project_9239ab8":3 -> "Union_c928003":3;
-"Project_9239ab8":4 -> "Union_c928003":4;
-"Project_9818d97":0 -> "Join_Inner_46ac879":5;
-"Project_9818d97":1 -> "Join_Inner_46ac879":6;
-"Project_9818d97":2 -> "Join_Inner_46ac879":7;
-"Project_9818d97":3 -> "Join_Inner_46ac879":8;
-"Project_ab1778d":0 -> "Join_Inner_f9170ab":5;
-"Project_ab1778d":1 -> "Join_Inner_f9170ab":6;
-"Project_ab1778d":2 -> "Join_Inner_f9170ab":7;
-"Project_ab1778d":3 -> "Join_Inner_f9170ab":8;
-"Project_b4f2421":0 -> "Join_Inner_9b80331":0;
-"Project_b4f2421":1 -> "Join_Inner_9b80331":1;
-"Project_b4f2421":2 -> "Join_Inner_9b80331":2;
-"Project_b4f2421":3 -> "Join_Inner_9b80331":3;
-"Project_b4f2421":4 -> "Join_Inner_9b80331":4;
-"Project_b4f2421":5 -> "Join_Inner_9b80331":5;
-"Project_b79c9b0":0 -> "Join_Inner_d308908":6;
-"Project_cbefc7d":0 -> "Join_Inner_b0101ee":0;
-"Project_cbefc7d":1 -> "Join_Inner_b0101ee":1;
-"Project_cbefc7d":2 -> "Join_Inner_b0101ee":2;
-"Project_cbefc7d":3 -> "Join_Inner_b0101ee":3;
-"Project_cbefc7d":4 -> "Join_Inner_b0101ee":4;
-"Project_cbefc7d":5 -> "Join_Inner_b0101ee":5;
-"Project_d26a3c6":0 -> "Union_c928003":0;
-"Project_d26a3c6":1 -> "Union_c928003":1;
-"Project_d26a3c6":2 -> "Union_c928003":2;
-"Project_d26a3c6":3 -> "Union_c928003":3;
-"Project_d26a3c6":4 -> "Union_c928003":4;
-"Project_e68f6f1":0 -> "Union_c928003":0;
-"Project_e68f6f1":1 -> "Union_c928003":1;
-"Project_e68f6f1":2 -> "Union_c928003":2;
-"Project_e68f6f1":3 -> "Union_c928003":3;
-"Project_e68f6f1":4 -> "Union_c928003":4;
-"Project_ee32c48":0 -> "Join_Inner_9b80331":6;
-"Sort_eae4e66":0 -> "LocalLimit_a287ae3":0;
-"Sort_eae4e66":1 -> "LocalLimit_a287ae3":1;
-"Sort_eae4e66":2 -> "LocalLimit_a287ae3":2;
-"Sort_eae4e66":3 -> "LocalLimit_a287ae3":3;
-"Sort_eae4e66":4 -> "LocalLimit_a287ae3":4;
-"Union_c928003":0 -> "Aggregate_d2747e2":0;
-"Union_c928003":1 -> "Aggregate_d2747e2":1;
-"Union_c928003":2 -> "Aggregate_d2747e2":2;
-"Union_c928003":3 -> "Aggregate_d2747e2":3;
-"Union_c928003":4 -> "Aggregate_d2747e2":4;
-"Window_0af146f":0 -> "Window_a698352":0;
-"Window_0af146f":1 -> "Window_a698352":1;
-"Window_0af146f":2 -> "Window_a698352":2;
-"Window_0af146f":3 -> "Window_a698352":3;
-"Window_56ac2ab":0 -> "Window_d47e03a":0;
-"Window_56ac2ab":1 -> "Window_d47e03a":1;
-"Window_56ac2ab":2 -> "Window_d47e03a":2;
-"Window_56ac2ab":3 -> "Window_d47e03a":3;
-"Window_938e7f2":0 -> "Window_f5c331d":0;
-"Window_938e7f2":1 -> "Window_f5c331d":1;
-"Window_938e7f2":2 -> "Window_f5c331d":2;
-"Window_938e7f2":3 -> "Window_f5c331d":3;
-"Window_a698352":0 -> "Filter_c015cc7":0;
-"Window_a698352":1 -> "Filter_c015cc7":1;
-"Window_a698352":2 -> "Filter_c015cc7":2;
-"Window_a698352":3 -> "Filter_c015cc7":3;
-"Window_a698352":4 -> "Filter_c015cc7":4;
-"Window_d47e03a":0 -> "Filter_52383db":0;
-"Window_d47e03a":1 -> "Filter_52383db":1;
-"Window_d47e03a":2 -> "Filter_52383db":2;
-"Window_d47e03a":3 -> "Filter_52383db":3;
-"Window_d47e03a":4 -> "Filter_52383db":4;
-"Window_f5c331d":0 -> "Filter_295b61c":0;
-"Window_f5c331d":1 -> "Filter_295b61c":1;
-"Window_f5c331d":2 -> "Filter_295b61c":2;
-"Window_f5c331d":3 -> "Filter_295b61c":3;
-"Window_f5c331d":4 -> "Filter_295b61c":4;
-"default.catalog_returns":0 -> "Filter_5bff9d3":0;
-"default.catalog_returns":1 -> "Filter_5bff9d3":1;
-"default.catalog_returns":10 -> "Filter_5bff9d3":10;
-"default.catalog_returns":11 -> "Filter_5bff9d3":11;
-"default.catalog_returns":12 -> "Filter_5bff9d3":12;
-"default.catalog_returns":13 -> "Filter_5bff9d3":13;
-"default.catalog_returns":14 -> "Filter_5bff9d3":14;
-"default.catalog_returns":15 -> "Filter_5bff9d3":15;
-"default.catalog_returns":16 -> "Filter_5bff9d3":16;
-"default.catalog_returns":17 -> "Filter_5bff9d3":17;
-"default.catalog_returns":18 -> "Filter_5bff9d3":18;
-"default.catalog_returns":19 -> "Filter_5bff9d3":19;
-"default.catalog_returns":2 -> "Filter_5bff9d3":2;
-"default.catalog_returns":20 -> "Filter_5bff9d3":20;
-"default.catalog_returns":21 -> "Filter_5bff9d3":21;
-"default.catalog_returns":22 -> "Filter_5bff9d3":22;
-"default.catalog_returns":23 -> "Filter_5bff9d3":23;
-"default.catalog_returns":24 -> "Filter_5bff9d3":24;
-"default.catalog_returns":25 -> "Filter_5bff9d3":25;
-"default.catalog_returns":26 -> "Filter_5bff9d3":26;
-"default.catalog_returns":3 -> "Filter_5bff9d3":3;
-"default.catalog_returns":4 -> "Filter_5bff9d3":4;
-"default.catalog_returns":5 -> "Filter_5bff9d3":5;
-"default.catalog_returns":6 -> "Filter_5bff9d3":6;
-"default.catalog_returns":7 -> "Filter_5bff9d3":7;
-"default.catalog_returns":8 -> "Filter_5bff9d3":8;
-"default.catalog_returns":9 -> "Filter_5bff9d3":9;
-"default.catalog_sales":0 -> "Filter_9e6be0a":0;
-"default.catalog_sales":1 -> "Filter_9e6be0a":1;
-"default.catalog_sales":10 -> "Filter_9e6be0a":10;
-"default.catalog_sales":11 -> "Filter_9e6be0a":11;
-"default.catalog_sales":12 -> "Filter_9e6be0a":12;
-"default.catalog_sales":13 -> "Filter_9e6be0a":13;
-"default.catalog_sales":14 -> "Filter_9e6be0a":14;
-"default.catalog_sales":15 -> "Filter_9e6be0a":15;
-"default.catalog_sales":16 -> "Filter_9e6be0a":16;
-"default.catalog_sales":17 -> "Filter_9e6be0a":17;
-"default.catalog_sales":18 -> "Filter_9e6be0a":18;
-"default.catalog_sales":19 -> "Filter_9e6be0a":19;
-"default.catalog_sales":2 -> "Filter_9e6be0a":2;
-"default.catalog_sales":20 -> "Filter_9e6be0a":20;
-"default.catalog_sales":21 -> "Filter_9e6be0a":21;
-"default.catalog_sales":22 -> "Filter_9e6be0a":22;
-"default.catalog_sales":23 -> "Filter_9e6be0a":23;
-"default.catalog_sales":24 -> "Filter_9e6be0a":24;
-"default.catalog_sales":25 -> "Filter_9e6be0a":25;
-"default.catalog_sales":26 -> "Filter_9e6be0a":26;
-"default.catalog_sales":27 -> "Filter_9e6be0a":27;
-"default.catalog_sales":28 -> "Filter_9e6be0a":28;
-"default.catalog_sales":29 -> "Filter_9e6be0a":29;
-"default.catalog_sales":3 -> "Filter_9e6be0a":3;
-"default.catalog_sales":30 -> "Filter_9e6be0a":30;
-"default.catalog_sales":31 -> "Filter_9e6be0a":31;
-"default.catalog_sales":32 -> "Filter_9e6be0a":32;
-"default.catalog_sales":33 -> "Filter_9e6be0a":33;
-"default.catalog_sales":4 -> "Filter_9e6be0a":4;
-"default.catalog_sales":5 -> "Filter_9e6be0a":5;
-"default.catalog_sales":6 -> "Filter_9e6be0a":6;
-"default.catalog_sales":7 -> "Filter_9e6be0a":7;
-"default.catalog_sales":8 -> "Filter_9e6be0a":8;
-"default.catalog_sales":9 -> "Filter_9e6be0a":9;
-"default.date_dim":0 -> "Filter_373b733":0;
-"default.date_dim":0 -> "Filter_9fdf22c":0;
-"default.date_dim":0 -> "Filter_b531941":0;
-"default.date_dim":1 -> "Filter_373b733":1;
-"default.date_dim":1 -> "Filter_9fdf22c":1;
-"default.date_dim":1 -> "Filter_b531941":1;
-"default.date_dim":10 -> "Filter_373b733":10;
-"default.date_dim":10 -> "Filter_9fdf22c":10;
-"default.date_dim":10 -> "Filter_b531941":10;
-"default.date_dim":11 -> "Filter_373b733":11;
-"default.date_dim":11 -> "Filter_9fdf22c":11;
-"default.date_dim":11 -> "Filter_b531941":11;
-"default.date_dim":12 -> "Filter_373b733":12;
-"default.date_dim":12 -> "Filter_9fdf22c":12;
-"default.date_dim":12 -> "Filter_b531941":12;
-"default.date_dim":13 -> "Filter_373b733":13;
-"default.date_dim":13 -> "Filter_9fdf22c":13;
-"default.date_dim":13 -> "Filter_b531941":13;
-"default.date_dim":14 -> "Filter_373b733":14;
-"default.date_dim":14 -> "Filter_9fdf22c":14;
-"default.date_dim":14 -> "Filter_b531941":14;
-"default.date_dim":15 -> "Filter_373b733":15;
-"default.date_dim":15 -> "Filter_9fdf22c":15;
-"default.date_dim":15 -> "Filter_b531941":15;
-"default.date_dim":16 -> "Filter_373b733":16;
-"default.date_dim":16 -> "Filter_9fdf22c":16;
-"default.date_dim":16 -> "Filter_b531941":16;
-"default.date_dim":17 -> "Filter_373b733":17;
-"default.date_dim":17 -> "Filter_9fdf22c":17;
-"default.date_dim":17 -> "Filter_b531941":17;
-"default.date_dim":18 -> "Filter_373b733":18;
-"default.date_dim":18 -> "Filter_9fdf22c":18;
-"default.date_dim":18 -> "Filter_b531941":18;
-"default.date_dim":19 -> "Filter_373b733":19;
-"default.date_dim":19 -> "Filter_9fdf22c":19;
-"default.date_dim":19 -> "Filter_b531941":19;
-"default.date_dim":2 -> "Filter_373b733":2;
-"default.date_dim":2 -> "Filter_9fdf22c":2;
-"default.date_dim":2 -> "Filter_b531941":2;
-"default.date_dim":20 -> "Filter_373b733":20;
-"default.date_dim":20 -> "Filter_9fdf22c":20;
-"default.date_dim":20 -> "Filter_b531941":20;
-"default.date_dim":21 -> "Filter_373b733":21;
-"default.date_dim":21 -> "Filter_9fdf22c":21;
-"default.date_dim":21 -> "Filter_b531941":21;
-"default.date_dim":22 -> "Filter_373b733":22;
-"default.date_dim":22 -> "Filter_9fdf22c":22;
-"default.date_dim":22 -> "Filter_b531941":22;
-"default.date_dim":23 -> "Filter_373b733":23;
-"default.date_dim":23 -> "Filter_9fdf22c":23;
-"default.date_dim":23 -> "Filter_b531941":23;
-"default.date_dim":24 -> "Filter_373b733":24;
-"default.date_dim":24 -> "Filter_9fdf22c":24;
-"default.date_dim":24 -> "Filter_b531941":24;
-"default.date_dim":25 -> "Filter_373b733":25;
-"default.date_dim":25 -> "Filter_9fdf22c":25;
-"default.date_dim":25 -> "Filter_b531941":25;
-"default.date_dim":26 -> "Filter_373b733":26;
-"default.date_dim":26 -> "Filter_9fdf22c":26;
-"default.date_dim":26 -> "Filter_b531941":26;
-"default.date_dim":27 -> "Filter_373b733":27;
-"default.date_dim":27 -> "Filter_9fdf22c":27;
-"default.date_dim":27 -> "Filter_b531941":27;
-"default.date_dim":3 -> "Filter_373b733":3;
-"default.date_dim":3 -> "Filter_9fdf22c":3;
-"default.date_dim":3 -> "Filter_b531941":3;
-"default.date_dim":4 -> "Filter_373b733":4;
-"default.date_dim":4 -> "Filter_9fdf22c":4;
-"default.date_dim":4 -> "Filter_b531941":4;
-"default.date_dim":5 -> "Filter_373b733":5;
-"default.date_dim":5 -> "Filter_9fdf22c":5;
-"default.date_dim":5 -> "Filter_b531941":5;
-"default.date_dim":6 -> "Filter_373b733":6;
-"default.date_dim":6 -> "Filter_9fdf22c":6;
-"default.date_dim":6 -> "Filter_b531941":6;
-"default.date_dim":7 -> "Filter_373b733":7;
-"default.date_dim":7 -> "Filter_9fdf22c":7;
-"default.date_dim":7 -> "Filter_b531941":7;
-"default.date_dim":8 -> "Filter_373b733":8;
-"default.date_dim":8 -> "Filter_9fdf22c":8;
-"default.date_dim":8 -> "Filter_b531941":8;
-"default.date_dim":9 -> "Filter_373b733":9;
-"default.date_dim":9 -> "Filter_9fdf22c":9;
-"default.date_dim":9 -> "Filter_b531941":9;
-"default.store_returns":0 -> "Filter_5fdf59a":0;
-"default.store_returns":1 -> "Filter_5fdf59a":1;
-"default.store_returns":10 -> "Filter_5fdf59a":10;
-"default.store_returns":11 -> "Filter_5fdf59a":11;
-"default.store_returns":12 -> "Filter_5fdf59a":12;
-"default.store_returns":13 -> "Filter_5fdf59a":13;
-"default.store_returns":14 -> "Filter_5fdf59a":14;
-"default.store_returns":15 -> "Filter_5fdf59a":15;
-"default.store_returns":16 -> "Filter_5fdf59a":16;
-"default.store_returns":17 -> "Filter_5fdf59a":17;
-"default.store_returns":18 -> "Filter_5fdf59a":18;
-"default.store_returns":19 -> "Filter_5fdf59a":19;
-"default.store_returns":2 -> "Filter_5fdf59a":2;
-"default.store_returns":3 -> "Filter_5fdf59a":3;
-"default.store_returns":4 -> "Filter_5fdf59a":4;
-"default.store_returns":5 -> "Filter_5fdf59a":5;
-"default.store_returns":6 -> "Filter_5fdf59a":6;
-"default.store_returns":7 -> "Filter_5fdf59a":7;
-"default.store_returns":8 -> "Filter_5fdf59a":8;
-"default.store_returns":9 -> "Filter_5fdf59a":9;
-"default.store_sales":0 -> "Filter_9389a45":0;
-"default.store_sales":1 -> "Filter_9389a45":1;
-"default.store_sales":10 -> "Filter_9389a45":10;
-"default.store_sales":11 -> "Filter_9389a45":11;
-"default.store_sales":12 -> "Filter_9389a45":12;
-"default.store_sales":13 -> "Filter_9389a45":13;
-"default.store_sales":14 -> "Filter_9389a45":14;
-"default.store_sales":15 -> "Filter_9389a45":15;
-"default.store_sales":16 -> "Filter_9389a45":16;
-"default.store_sales":17 -> "Filter_9389a45":17;
-"default.store_sales":18 -> "Filter_9389a45":18;
-"default.store_sales":19 -> "Filter_9389a45":19;
-"default.store_sales":2 -> "Filter_9389a45":2;
-"default.store_sales":20 -> "Filter_9389a45":20;
-"default.store_sales":21 -> "Filter_9389a45":21;
-"default.store_sales":22 -> "Filter_9389a45":22;
-"default.store_sales":3 -> "Filter_9389a45":3;
-"default.store_sales":4 -> "Filter_9389a45":4;
-"default.store_sales":5 -> "Filter_9389a45":5;
-"default.store_sales":6 -> "Filter_9389a45":6;
-"default.store_sales":7 -> "Filter_9389a45":7;
-"default.store_sales":8 -> "Filter_9389a45":8;
-"default.store_sales":9 -> "Filter_9389a45":9;
-"default.web_returns":0 -> "Filter_cd6ca68":0;
-"default.web_returns":1 -> "Filter_cd6ca68":1;
-"default.web_returns":10 -> "Filter_cd6ca68":10;
-"default.web_returns":11 -> "Filter_cd6ca68":11;
-"default.web_returns":12 -> "Filter_cd6ca68":12;
-"default.web_returns":13 -> "Filter_cd6ca68":13;
-"default.web_returns":14 -> "Filter_cd6ca68":14;
-"default.web_returns":15 -> "Filter_cd6ca68":15;
-"default.web_returns":16 -> "Filter_cd6ca68":16;
-"default.web_returns":17 -> "Filter_cd6ca68":17;
-"default.web_returns":18 -> "Filter_cd6ca68":18;
-"default.web_returns":19 -> "Filter_cd6ca68":19;
-"default.web_returns":2 -> "Filter_cd6ca68":2;
-"default.web_returns":20 -> "Filter_cd6ca68":20;
-"default.web_returns":21 -> "Filter_cd6ca68":21;
-"default.web_returns":22 -> "Filter_cd6ca68":22;
-"default.web_returns":23 -> "Filter_cd6ca68":23;
-"default.web_returns":3 -> "Filter_cd6ca68":3;
-"default.web_returns":4 -> "Filter_cd6ca68":4;
-"default.web_returns":5 -> "Filter_cd6ca68":5;
-"default.web_returns":6 -> "Filter_cd6ca68":6;
-"default.web_returns":7 -> "Filter_cd6ca68":7;
-"default.web_returns":8 -> "Filter_cd6ca68":8;
-"default.web_returns":9 -> "Filter_cd6ca68":9;
-"default.web_sales":0 -> "Filter_7ecfdf4":0;
-"default.web_sales":1 -> "Filter_7ecfdf4":1;
-"default.web_sales":10 -> "Filter_7ecfdf4":10;
-"default.web_sales":11 -> "Filter_7ecfdf4":11;
-"default.web_sales":12 -> "Filter_7ecfdf4":12;
-"default.web_sales":13 -> "Filter_7ecfdf4":13;
-"default.web_sales":14 -> "Filter_7ecfdf4":14;
-"default.web_sales":15 -> "Filter_7ecfdf4":15;
-"default.web_sales":16 -> "Filter_7ecfdf4":16;
-"default.web_sales":17 -> "Filter_7ecfdf4":17;
-"default.web_sales":18 -> "Filter_7ecfdf4":18;
-"default.web_sales":19 -> "Filter_7ecfdf4":19;
-"default.web_sales":2 -> "Filter_7ecfdf4":2;
-"default.web_sales":20 -> "Filter_7ecfdf4":20;
-"default.web_sales":21 -> "Filter_7ecfdf4":21;
-"default.web_sales":22 -> "Filter_7ecfdf4":22;
-"default.web_sales":23 -> "Filter_7ecfdf4":23;
-"default.web_sales":24 -> "Filter_7ecfdf4":24;
-"default.web_sales":25 -> "Filter_7ecfdf4":25;
-"default.web_sales":26 -> "Filter_7ecfdf4":26;
-"default.web_sales":27 -> "Filter_7ecfdf4":27;
-"default.web_sales":28 -> "Filter_7ecfdf4":28;
-"default.web_sales":29 -> "Filter_7ecfdf4":29;
-"default.web_sales":3 -> "Filter_7ecfdf4":3;
-"default.web_sales":30 -> "Filter_7ecfdf4":30;
-"default.web_sales":31 -> "Filter_7ecfdf4":31;
-"default.web_sales":32 -> "Filter_7ecfdf4":32;
-"default.web_sales":33 -> "Filter_7ecfdf4":33;
-"default.web_sales":4 -> "Filter_7ecfdf4":4;
-"default.web_sales":5 -> "Filter_7ecfdf4":5;
-"default.web_sales":6 -> "Filter_7ecfdf4":6;
-"default.web_sales":7 -> "Filter_7ecfdf4":7;
-"default.web_sales":8 -> "Filter_7ecfdf4":8;
-"default.web_sales":9 -> "Filter_7ecfdf4":9;
+  "Aggregate_79837eb":0 -> "Window_89bacdf":0;
+"Aggregate_79837eb":1 -> "Window_89bacdf":1;
+"Aggregate_79837eb":2 -> "Window_89bacdf":2;
+"Aggregate_a161f3e":0 -> "Sort_95e7809":0;
+"Aggregate_a161f3e":1 -> "Sort_95e7809":1;
+"Aggregate_a161f3e":2 -> "Sort_95e7809":2;
+"Aggregate_a161f3e":3 -> "Sort_95e7809":3;
+"Aggregate_a161f3e":4 -> "Sort_95e7809":4;
+"Aggregate_c52f9e7":0 -> "Window_748d131":0;
+"Aggregate_c52f9e7":1 -> "Window_748d131":1;
+"Aggregate_c52f9e7":2 -> "Window_748d131":2;
+"Aggregate_d8bf964":0 -> "Window_c07a13a":0;
+"Aggregate_d8bf964":1 -> "Window_c07a13a":1;
+"Aggregate_d8bf964":2 -> "Window_c07a13a":2;
+"Filter_0c73ae3":0 -> "Project_8d0d5f6":0;
+"Filter_0c73ae3":10 -> "Project_8d0d5f6":3;
+"Filter_0c73ae3":2 -> "Project_8d0d5f6":1;
+"Filter_0c73ae3":20 -> "Project_8d0d5f6":4;
+"Filter_0c73ae3":9 -> "Project_8d0d5f6":2;
+"Filter_15dc546":0 -> "Project_42e7516":1;
+"Filter_15dc546":1 -> "Project_42e7516":2;
+"Filter_15dc546":3 -> "Project_42e7516":3;
+"Filter_15dc546":4 -> "Project_42e7516":4;
+"Filter_23b8527":0 -> "Project_83fd392":0;
+"Filter_2d192f1":0 -> "Project_72d0a1e":0;
+"Filter_2fdf10d":0 -> "Project_44bd3ae":1;
+"Filter_2fdf10d":1 -> "Project_44bd3ae":2;
+"Filter_2fdf10d":3 -> "Project_44bd3ae":3;
+"Filter_2fdf10d":4 -> "Project_44bd3ae":4;
+"Filter_35916f3":13 -> "Project_b1c9820":1;
+"Filter_35916f3":14 -> "Project_b1c9820":2;
+"Filter_35916f3":15 -> "Project_b1c9820":3;
+"Filter_35916f3":2 -> "Project_b1c9820":0;
+"Filter_3e8372b":0 -> "Project_40cee7f":0;
+"Filter_3e8372b":17 -> "Project_40cee7f":2;
+"Filter_3e8372b":18 -> "Project_40cee7f":3;
+"Filter_3e8372b":29 -> "Project_40cee7f":4;
+"Filter_3e8372b":3 -> "Project_40cee7f":1;
+"Filter_7512abf":0 -> "Project_e3276bf":0;
+"Filter_7512abf":15 -> "Project_e3276bf":1;
+"Filter_7512abf":17 -> "Project_e3276bf":2;
+"Filter_7512abf":18 -> "Project_e3276bf":3;
+"Filter_7512abf":29 -> "Project_e3276bf":4;
+"Filter_c2b74aa":0 -> "Project_5b24818":1;
+"Filter_c2b74aa":1 -> "Project_5b24818":2;
+"Filter_c2b74aa":3 -> "Project_5b24818":3;
+"Filter_c2b74aa":4 -> "Project_5b24818":4;
+"Filter_d61c565":0 -> "Project_8de6e0d":0;
+"Filter_f847b2c":10 -> "Project_87f7f1b":2;
+"Filter_f847b2c":11 -> "Project_87f7f1b":3;
+"Filter_f847b2c":2 -> "Project_87f7f1b":0;
+"Filter_f847b2c":9 -> "Project_87f7f1b":1;
+"Filter_fdd9c91":16 -> "Project_e1ae226":1;
+"Filter_fdd9c91":17 -> "Project_e1ae226":2;
+"Filter_fdd9c91":18 -> "Project_e1ae226":3;
+"Filter_fdd9c91":2 -> "Project_e1ae226":0;
+"GlobalLimit_20fa783":0 -> "v":0;
+"GlobalLimit_20fa783":1 -> "v":1;
+"GlobalLimit_20fa783":2 -> "v":2;
+"GlobalLimit_20fa783":3 -> "v":3;
+"GlobalLimit_20fa783":4 -> "v":4;
+"Join_Inner_5c344bf":0 -> "Project_1ccae06":0;
+"Join_Inner_5c344bf":1 -> "Project_1ccae06":1;
+"Join_Inner_5c344bf":3 -> "Project_1ccae06":2;
+"Join_Inner_5c344bf":4 -> "Project_1ccae06":3;
+"Join_Inner_5c344bf":7 -> "Project_1ccae06":4;
+"Join_Inner_5c344bf":8 -> "Project_1ccae06":5;
+"Join_Inner_62be44e":0 -> "Project_e102e42":0;
+"Join_Inner_62be44e":1 -> "Project_e102e42":1;
+"Join_Inner_62be44e":3 -> "Project_e102e42":2;
+"Join_Inner_62be44e":4 -> "Project_e102e42":3;
+"Join_Inner_62be44e":7 -> "Project_e102e42":4;
+"Join_Inner_62be44e":8 -> "Project_e102e42":5;
+"Join_Inner_6e1265c":1 -> "Project_e488268":0;
+"Join_Inner_6e1265c":2 -> "Project_e488268":1;
+"Join_Inner_6e1265c":3 -> "Project_e488268":2;
+"Join_Inner_6e1265c":4 -> "Project_e488268":3;
+"Join_Inner_6e1265c":5 -> "Project_e488268":4;
+"Join_Inner_8e392d0":0 -> "Project_1e59131":0;
+"Join_Inner_8e392d0":1 -> "Project_1e59131":1;
+"Join_Inner_8e392d0":3 -> "Project_1e59131":2;
+"Join_Inner_8e392d0":4 -> "Project_1e59131":3;
+"Join_Inner_8e392d0":7 -> "Project_1e59131":4;
+"Join_Inner_8e392d0":8 -> "Project_1e59131":5;
+"Join_Inner_b9068da":1 -> "Project_3ddcd08":0;
+"Join_Inner_b9068da":2 -> "Project_3ddcd08":1;
+"Join_Inner_b9068da":3 -> "Project_3ddcd08":2;
+"Join_Inner_b9068da":4 -> "Project_3ddcd08":3;
+"Join_Inner_b9068da":5 -> "Project_3ddcd08":4;
+"Join_Inner_f9d03f5":1 -> "Project_97a4d55":0;
+"Join_Inner_f9d03f5":2 -> "Project_97a4d55":1;
+"Join_Inner_f9d03f5":3 -> "Project_97a4d55":2;
+"Join_Inner_f9d03f5":4 -> "Project_97a4d55":3;
+"Join_Inner_f9d03f5":5 -> "Project_97a4d55":4;
+"LocalLimit_e01e8a5":0 -> "GlobalLimit_20fa783":0;
+"LocalLimit_e01e8a5":1 -> "GlobalLimit_20fa783":1;
+"LocalLimit_e01e8a5":2 -> "GlobalLimit_20fa783":2;
+"LocalLimit_e01e8a5":3 -> "GlobalLimit_20fa783":3;
+"LocalLimit_e01e8a5":4 -> "GlobalLimit_20fa783":4;
+"Project_1ccae06":0 -> "Join_Inner_6e1265c":0;
+"Project_1ccae06":1 -> "Join_Inner_6e1265c":1;
+"Project_1ccae06":2 -> "Join_Inner_6e1265c":2;
+"Project_1ccae06":3 -> "Join_Inner_6e1265c":3;
+"Project_1ccae06":4 -> "Join_Inner_6e1265c":4;
+"Project_1ccae06":5 -> "Join_Inner_6e1265c":5;
+"Project_1e59131":0 -> "Join_Inner_b9068da":0;
+"Project_1e59131":1 -> "Join_Inner_b9068da":1;
+"Project_1e59131":2 -> "Join_Inner_b9068da":2;
+"Project_1e59131":3 -> "Join_Inner_b9068da":3;
+"Project_1e59131":4 -> "Join_Inner_b9068da":4;
+"Project_1e59131":5 -> "Join_Inner_b9068da":5;
+"Project_3ddcd08":0 -> "Aggregate_c52f9e7":0;
+"Project_3ddcd08":1 -> "Aggregate_c52f9e7":1;
+"Project_3ddcd08":2 -> "Aggregate_c52f9e7":2;
+"Project_3ddcd08":3 -> "Aggregate_c52f9e7":1;
+"Project_3ddcd08":4 -> "Aggregate_c52f9e7":2;
+"Project_40cee7f":0 -> "Join_Inner_8e392d0":0;
+"Project_40cee7f":1 -> "Join_Inner_8e392d0":1;
+"Project_40cee7f":2 -> "Join_Inner_8e392d0":2;
+"Project_40cee7f":3 -> "Join_Inner_8e392d0":3;
+"Project_40cee7f":4 -> "Join_Inner_8e392d0":4;
+"Project_42e7516":0 -> "Union_eb63397":0;
+"Project_42e7516":1 -> "Union_eb63397":1;
+"Project_42e7516":2 -> "Union_eb63397":2;
+"Project_42e7516":3 -> "Union_eb63397":3;
+"Project_42e7516":4 -> "Union_eb63397":4;
+"Project_44bd3ae":0 -> "Union_eb63397":0;
+"Project_44bd3ae":1 -> "Union_eb63397":1;
+"Project_44bd3ae":2 -> "Union_eb63397":2;
+"Project_44bd3ae":3 -> "Union_eb63397":3;
+"Project_44bd3ae":4 -> "Union_eb63397":4;
+"Project_5b24818":0 -> "Union_eb63397":0;
+"Project_5b24818":1 -> "Union_eb63397":1;
+"Project_5b24818":2 -> "Union_eb63397":2;
+"Project_5b24818":3 -> "Union_eb63397":3;
+"Project_5b24818":4 -> "Union_eb63397":4;
+"Project_72d0a1e":0 -> "Join_Inner_f9d03f5":6;
+"Project_83fd392":0 -> "Join_Inner_b9068da":6;
+"Project_87f7f1b":0 -> "Join_Inner_62be44e":5;
+"Project_87f7f1b":1 -> "Join_Inner_62be44e":6;
+"Project_87f7f1b":2 -> "Join_Inner_62be44e":7;
+"Project_87f7f1b":3 -> "Join_Inner_62be44e":8;
+"Project_8d0d5f6":0 -> "Join_Inner_62be44e":0;
+"Project_8d0d5f6":1 -> "Join_Inner_62be44e":1;
+"Project_8d0d5f6":2 -> "Join_Inner_62be44e":2;
+"Project_8d0d5f6":3 -> "Join_Inner_62be44e":3;
+"Project_8d0d5f6":4 -> "Join_Inner_62be44e":4;
+"Project_8de6e0d":0 -> "Join_Inner_6e1265c":6;
+"Project_97a4d55":0 -> "Aggregate_d8bf964":0;
+"Project_97a4d55":1 -> "Aggregate_d8bf964":1;
+"Project_97a4d55":2 -> "Aggregate_d8bf964":2;
+"Project_97a4d55":3 -> "Aggregate_d8bf964":1;
+"Project_97a4d55":4 -> "Aggregate_d8bf964":2;
+"Project_b1c9820":0 -> "Join_Inner_8e392d0":5;
+"Project_b1c9820":1 -> "Join_Inner_8e392d0":6;
+"Project_b1c9820":2 -> "Join_Inner_8e392d0":7;
+"Project_b1c9820":3 -> "Join_Inner_8e392d0":8;
+"Project_e102e42":0 -> "Join_Inner_f9d03f5":0;
+"Project_e102e42":1 -> "Join_Inner_f9d03f5":1;
+"Project_e102e42":2 -> "Join_Inner_f9d03f5":2;
+"Project_e102e42":3 -> "Join_Inner_f9d03f5":3;
+"Project_e102e42":4 -> "Join_Inner_f9d03f5":4;
+"Project_e102e42":5 -> "Join_Inner_f9d03f5":5;
+"Project_e1ae226":0 -> "Join_Inner_5c344bf":5;
+"Project_e1ae226":1 -> "Join_Inner_5c344bf":6;
+"Project_e1ae226":2 -> "Join_Inner_5c344bf":7;
+"Project_e1ae226":3 -> "Join_Inner_5c344bf":8;
+"Project_e3276bf":0 -> "Join_Inner_5c344bf":0;
+"Project_e3276bf":1 -> "Join_Inner_5c344bf":1;
+"Project_e3276bf":2 -> "Join_Inner_5c344bf":2;
+"Project_e3276bf":3 -> "Join_Inner_5c344bf":3;
+"Project_e3276bf":4 -> "Join_Inner_5c344bf":4;
+"Project_e488268":0 -> "Aggregate_79837eb":0;
+"Project_e488268":1 -> "Aggregate_79837eb":1;
+"Project_e488268":2 -> "Aggregate_79837eb":2;
+"Project_e488268":3 -> "Aggregate_79837eb":1;
+"Project_e488268":4 -> "Aggregate_79837eb":2;
+"Sort_95e7809":0 -> "LocalLimit_e01e8a5":0;
+"Sort_95e7809":1 -> "LocalLimit_e01e8a5":1;
+"Sort_95e7809":2 -> "LocalLimit_e01e8a5":2;
+"Sort_95e7809":3 -> "LocalLimit_e01e8a5":3;
+"Sort_95e7809":4 -> "LocalLimit_e01e8a5":4;
+"Union_eb63397":0 -> "Aggregate_a161f3e":0;
+"Union_eb63397":1 -> "Aggregate_a161f3e":1;
+"Union_eb63397":2 -> "Aggregate_a161f3e":2;
+"Union_eb63397":3 -> "Aggregate_a161f3e":3;
+"Union_eb63397":4 -> "Aggregate_a161f3e":4;
+"Window_748d131":0 -> "Window_8ab8874":0;
+"Window_748d131":1 -> "Window_8ab8874":1;
+"Window_748d131":2 -> "Window_8ab8874":2;
+"Window_748d131":3 -> "Window_8ab8874":3;
+"Window_89bacdf":0 -> "Window_bd6afb0":0;
+"Window_89bacdf":1 -> "Window_bd6afb0":1;
+"Window_89bacdf":2 -> "Window_bd6afb0":2;
+"Window_89bacdf":3 -> "Window_bd6afb0":3;
+"Window_8ab8874":0 -> "Filter_2fdf10d":0;
+"Window_8ab8874":1 -> "Filter_2fdf10d":1;
+"Window_8ab8874":2 -> "Filter_2fdf10d":2;
+"Window_8ab8874":3 -> "Filter_2fdf10d":3;
+"Window_8ab8874":4 -> "Filter_2fdf10d":4;
+"Window_bd6afb0":0 -> "Filter_c2b74aa":0;
+"Window_bd6afb0":1 -> "Filter_c2b74aa":1;
+"Window_bd6afb0":2 -> "Filter_c2b74aa":2;
+"Window_bd6afb0":3 -> "Filter_c2b74aa":3;
+"Window_bd6afb0":4 -> "Filter_c2b74aa":4;
+"Window_c07a13a":0 -> "Window_cfe1a22":0;
+"Window_c07a13a":1 -> "Window_cfe1a22":1;
+"Window_c07a13a":2 -> "Window_cfe1a22":2;
+"Window_c07a13a":3 -> "Window_cfe1a22":3;
+"Window_cfe1a22":0 -> "Filter_15dc546":0;
+"Window_cfe1a22":1 -> "Filter_15dc546":1;
+"Window_cfe1a22":2 -> "Filter_15dc546":2;
+"Window_cfe1a22":3 -> "Filter_15dc546":3;
+"Window_cfe1a22":4 -> "Filter_15dc546":4;
+"default.catalog_returns":0 -> "Filter_fdd9c91":0;
+"default.catalog_returns":1 -> "Filter_fdd9c91":1;
+"default.catalog_returns":10 -> "Filter_fdd9c91":10;
+"default.catalog_returns":11 -> "Filter_fdd9c91":11;
+"default.catalog_returns":12 -> "Filter_fdd9c91":12;
+"default.catalog_returns":13 -> "Filter_fdd9c91":13;
+"default.catalog_returns":14 -> "Filter_fdd9c91":14;
+"default.catalog_returns":15 -> "Filter_fdd9c91":15;
+"default.catalog_returns":16 -> "Filter_fdd9c91":16;
+"default.catalog_returns":17 -> "Filter_fdd9c91":17;
+"default.catalog_returns":18 -> "Filter_fdd9c91":18;
+"default.catalog_returns":19 -> "Filter_fdd9c91":19;
+"default.catalog_returns":2 -> "Filter_fdd9c91":2;
+"default.catalog_returns":20 -> "Filter_fdd9c91":20;
+"default.catalog_returns":21 -> "Filter_fdd9c91":21;
+"default.catalog_returns":22 -> "Filter_fdd9c91":22;
+"default.catalog_returns":23 -> "Filter_fdd9c91":23;
+"default.catalog_returns":24 -> "Filter_fdd9c91":24;
+"default.catalog_returns":25 -> "Filter_fdd9c91":25;
+"default.catalog_returns":26 -> "Filter_fdd9c91":26;
+"default.catalog_returns":3 -> "Filter_fdd9c91":3;
+"default.catalog_returns":4 -> "Filter_fdd9c91":4;
+"default.catalog_returns":5 -> "Filter_fdd9c91":5;
+"default.catalog_returns":6 -> "Filter_fdd9c91":6;
+"default.catalog_returns":7 -> "Filter_fdd9c91":7;
+"default.catalog_returns":8 -> "Filter_fdd9c91":8;
+"default.catalog_returns":9 -> "Filter_fdd9c91":9;
+"default.catalog_sales":0 -> "Filter_7512abf":0;
+"default.catalog_sales":1 -> "Filter_7512abf":1;
+"default.catalog_sales":10 -> "Filter_7512abf":10;
+"default.catalog_sales":11 -> "Filter_7512abf":11;
+"default.catalog_sales":12 -> "Filter_7512abf":12;
+"default.catalog_sales":13 -> "Filter_7512abf":13;
+"default.catalog_sales":14 -> "Filter_7512abf":14;
+"default.catalog_sales":15 -> "Filter_7512abf":15;
+"default.catalog_sales":16 -> "Filter_7512abf":16;
+"default.catalog_sales":17 -> "Filter_7512abf":17;
+"default.catalog_sales":18 -> "Filter_7512abf":18;
+"default.catalog_sales":19 -> "Filter_7512abf":19;
+"default.catalog_sales":2 -> "Filter_7512abf":2;
+"default.catalog_sales":20 -> "Filter_7512abf":20;
+"default.catalog_sales":21 -> "Filter_7512abf":21;
+"default.catalog_sales":22 -> "Filter_7512abf":22;
+"default.catalog_sales":23 -> "Filter_7512abf":23;
+"default.catalog_sales":24 -> "Filter_7512abf":24;
+"default.catalog_sales":25 -> "Filter_7512abf":25;
+"default.catalog_sales":26 -> "Filter_7512abf":26;
+"default.catalog_sales":27 -> "Filter_7512abf":27;
+"default.catalog_sales":28 -> "Filter_7512abf":28;
+"default.catalog_sales":29 -> "Filter_7512abf":29;
+"default.catalog_sales":3 -> "Filter_7512abf":3;
+"default.catalog_sales":30 -> "Filter_7512abf":30;
+"default.catalog_sales":31 -> "Filter_7512abf":31;
+"default.catalog_sales":32 -> "Filter_7512abf":32;
+"default.catalog_sales":33 -> "Filter_7512abf":33;
+"default.catalog_sales":4 -> "Filter_7512abf":4;
+"default.catalog_sales":5 -> "Filter_7512abf":5;
+"default.catalog_sales":6 -> "Filter_7512abf":6;
+"default.catalog_sales":7 -> "Filter_7512abf":7;
+"default.catalog_sales":8 -> "Filter_7512abf":8;
+"default.catalog_sales":9 -> "Filter_7512abf":9;
+"default.date_dim":0 -> "Filter_23b8527":0;
+"default.date_dim":0 -> "Filter_2d192f1":0;
+"default.date_dim":0 -> "Filter_d61c565":0;
+"default.date_dim":1 -> "Filter_23b8527":1;
+"default.date_dim":1 -> "Filter_2d192f1":1;
+"default.date_dim":1 -> "Filter_d61c565":1;
+"default.date_dim":10 -> "Filter_23b8527":10;
+"default.date_dim":10 -> "Filter_2d192f1":10;
+"default.date_dim":10 -> "Filter_d61c565":10;
+"default.date_dim":11 -> "Filter_23b8527":11;
+"default.date_dim":11 -> "Filter_2d192f1":11;
+"default.date_dim":11 -> "Filter_d61c565":11;
+"default.date_dim":12 -> "Filter_23b8527":12;
+"default.date_dim":12 -> "Filter_2d192f1":12;
+"default.date_dim":12 -> "Filter_d61c565":12;
+"default.date_dim":13 -> "Filter_23b8527":13;
+"default.date_dim":13 -> "Filter_2d192f1":13;
+"default.date_dim":13 -> "Filter_d61c565":13;
+"default.date_dim":14 -> "Filter_23b8527":14;
+"default.date_dim":14 -> "Filter_2d192f1":14;
+"default.date_dim":14 -> "Filter_d61c565":14;
+"default.date_dim":15 -> "Filter_23b8527":15;
+"default.date_dim":15 -> "Filter_2d192f1":15;
+"default.date_dim":15 -> "Filter_d61c565":15;
+"default.date_dim":16 -> "Filter_23b8527":16;
+"default.date_dim":16 -> "Filter_2d192f1":16;
+"default.date_dim":16 -> "Filter_d61c565":16;
+"default.date_dim":17 -> "Filter_23b8527":17;
+"default.date_dim":17 -> "Filter_2d192f1":17;
+"default.date_dim":17 -> "Filter_d61c565":17;
+"default.date_dim":18 -> "Filter_23b8527":18;
+"default.date_dim":18 -> "Filter_2d192f1":18;
+"default.date_dim":18 -> "Filter_d61c565":18;
+"default.date_dim":19 -> "Filter_23b8527":19;
+"default.date_dim":19 -> "Filter_2d192f1":19;
+"default.date_dim":19 -> "Filter_d61c565":19;
+"default.date_dim":2 -> "Filter_23b8527":2;
+"default.date_dim":2 -> "Filter_2d192f1":2;
+"default.date_dim":2 -> "Filter_d61c565":2;
+"default.date_dim":20 -> "Filter_23b8527":20;
+"default.date_dim":20 -> "Filter_2d192f1":20;
+"default.date_dim":20 -> "Filter_d61c565":20;
+"default.date_dim":21 -> "Filter_23b8527":21;
+"default.date_dim":21 -> "Filter_2d192f1":21;
+"default.date_dim":21 -> "Filter_d61c565":21;
+"default.date_dim":22 -> "Filter_23b8527":22;
+"default.date_dim":22 -> "Filter_2d192f1":22;
+"default.date_dim":22 -> "Filter_d61c565":22;
+"default.date_dim":23 -> "Filter_23b8527":23;
+"default.date_dim":23 -> "Filter_2d192f1":23;
+"default.date_dim":23 -> "Filter_d61c565":23;
+"default.date_dim":24 -> "Filter_23b8527":24;
+"default.date_dim":24 -> "Filter_2d192f1":24;
+"default.date_dim":24 -> "Filter_d61c565":24;
+"default.date_dim":25 -> "Filter_23b8527":25;
+"default.date_dim":25 -> "Filter_2d192f1":25;
+"default.date_dim":25 -> "Filter_d61c565":25;
+"default.date_dim":26 -> "Filter_23b8527":26;
+"default.date_dim":26 -> "Filter_2d192f1":26;
+"default.date_dim":26 -> "Filter_d61c565":26;
+"default.date_dim":27 -> "Filter_23b8527":27;
+"default.date_dim":27 -> "Filter_2d192f1":27;
+"default.date_dim":27 -> "Filter_d61c565":27;
+"default.date_dim":3 -> "Filter_23b8527":3;
+"default.date_dim":3 -> "Filter_2d192f1":3;
+"default.date_dim":3 -> "Filter_d61c565":3;
+"default.date_dim":4 -> "Filter_23b8527":4;
+"default.date_dim":4 -> "Filter_2d192f1":4;
+"default.date_dim":4 -> "Filter_d61c565":4;
+"default.date_dim":5 -> "Filter_23b8527":5;
+"default.date_dim":5 -> "Filter_2d192f1":5;
+"default.date_dim":5 -> "Filter_d61c565":5;
+"default.date_dim":6 -> "Filter_23b8527":6;
+"default.date_dim":6 -> "Filter_2d192f1":6;
+"default.date_dim":6 -> "Filter_d61c565":6;
+"default.date_dim":7 -> "Filter_23b8527":7;
+"default.date_dim":7 -> "Filter_2d192f1":7;
+"default.date_dim":7 -> "Filter_d61c565":7;
+"default.date_dim":8 -> "Filter_23b8527":8;
+"default.date_dim":8 -> "Filter_2d192f1":8;
+"default.date_dim":8 -> "Filter_d61c565":8;
+"default.date_dim":9 -> "Filter_23b8527":9;
+"default.date_dim":9 -> "Filter_2d192f1":9;
+"default.date_dim":9 -> "Filter_d61c565":9;
+"default.store_returns":0 -> "Filter_f847b2c":0;
+"default.store_returns":1 -> "Filter_f847b2c":1;
+"default.store_returns":10 -> "Filter_f847b2c":10;
+"default.store_returns":11 -> "Filter_f847b2c":11;
+"default.store_returns":12 -> "Filter_f847b2c":12;
+"default.store_returns":13 -> "Filter_f847b2c":13;
+"default.store_returns":14 -> "Filter_f847b2c":14;
+"default.store_returns":15 -> "Filter_f847b2c":15;
+"default.store_returns":16 -> "Filter_f847b2c":16;
+"default.store_returns":17 -> "Filter_f847b2c":17;
+"default.store_returns":18 -> "Filter_f847b2c":18;
+"default.store_returns":19 -> "Filter_f847b2c":19;
+"default.store_returns":2 -> "Filter_f847b2c":2;
+"default.store_returns":3 -> "Filter_f847b2c":3;
+"default.store_returns":4 -> "Filter_f847b2c":4;
+"default.store_returns":5 -> "Filter_f847b2c":5;
+"default.store_returns":6 -> "Filter_f847b2c":6;
+"default.store_returns":7 -> "Filter_f847b2c":7;
+"default.store_returns":8 -> "Filter_f847b2c":8;
+"default.store_returns":9 -> "Filter_f847b2c":9;
+"default.store_sales":0 -> "Filter_0c73ae3":0;
+"default.store_sales":1 -> "Filter_0c73ae3":1;
+"default.store_sales":10 -> "Filter_0c73ae3":10;
+"default.store_sales":11 -> "Filter_0c73ae3":11;
+"default.store_sales":12 -> "Filter_0c73ae3":12;
+"default.store_sales":13 -> "Filter_0c73ae3":13;
+"default.store_sales":14 -> "Filter_0c73ae3":14;
+"default.store_sales":15 -> "Filter_0c73ae3":15;
+"default.store_sales":16 -> "Filter_0c73ae3":16;
+"default.store_sales":17 -> "Filter_0c73ae3":17;
+"default.store_sales":18 -> "Filter_0c73ae3":18;
+"default.store_sales":19 -> "Filter_0c73ae3":19;
+"default.store_sales":2 -> "Filter_0c73ae3":2;
+"default.store_sales":20 -> "Filter_0c73ae3":20;
+"default.store_sales":21 -> "Filter_0c73ae3":21;
+"default.store_sales":22 -> "Filter_0c73ae3":22;
+"default.store_sales":3 -> "Filter_0c73ae3":3;
+"default.store_sales":4 -> "Filter_0c73ae3":4;
+"default.store_sales":5 -> "Filter_0c73ae3":5;
+"default.store_sales":6 -> "Filter_0c73ae3":6;
+"default.store_sales":7 -> "Filter_0c73ae3":7;
+"default.store_sales":8 -> "Filter_0c73ae3":8;
+"default.store_sales":9 -> "Filter_0c73ae3":9;
+"default.web_returns":0 -> "Filter_35916f3":0;
+"default.web_returns":1 -> "Filter_35916f3":1;
+"default.web_returns":10 -> "Filter_35916f3":10;
+"default.web_returns":11 -> "Filter_35916f3":11;
+"default.web_returns":12 -> "Filter_35916f3":12;
+"default.web_returns":13 -> "Filter_35916f3":13;
+"default.web_returns":14 -> "Filter_35916f3":14;
+"default.web_returns":15 -> "Filter_35916f3":15;
+"default.web_returns":16 -> "Filter_35916f3":16;
+"default.web_returns":17 -> "Filter_35916f3":17;
+"default.web_returns":18 -> "Filter_35916f3":18;
+"default.web_returns":19 -> "Filter_35916f3":19;
+"default.web_returns":2 -> "Filter_35916f3":2;
+"default.web_returns":20 -> "Filter_35916f3":20;
+"default.web_returns":21 -> "Filter_35916f3":21;
+"default.web_returns":22 -> "Filter_35916f3":22;
+"default.web_returns":23 -> "Filter_35916f3":23;
+"default.web_returns":3 -> "Filter_35916f3":3;
+"default.web_returns":4 -> "Filter_35916f3":4;
+"default.web_returns":5 -> "Filter_35916f3":5;
+"default.web_returns":6 -> "Filter_35916f3":6;
+"default.web_returns":7 -> "Filter_35916f3":7;
+"default.web_returns":8 -> "Filter_35916f3":8;
+"default.web_returns":9 -> "Filter_35916f3":9;
+"default.web_sales":0 -> "Filter_3e8372b":0;
+"default.web_sales":1 -> "Filter_3e8372b":1;
+"default.web_sales":10 -> "Filter_3e8372b":10;
+"default.web_sales":11 -> "Filter_3e8372b":11;
+"default.web_sales":12 -> "Filter_3e8372b":12;
+"default.web_sales":13 -> "Filter_3e8372b":13;
+"default.web_sales":14 -> "Filter_3e8372b":14;
+"default.web_sales":15 -> "Filter_3e8372b":15;
+"default.web_sales":16 -> "Filter_3e8372b":16;
+"default.web_sales":17 -> "Filter_3e8372b":17;
+"default.web_sales":18 -> "Filter_3e8372b":18;
+"default.web_sales":19 -> "Filter_3e8372b":19;
+"default.web_sales":2 -> "Filter_3e8372b":2;
+"default.web_sales":20 -> "Filter_3e8372b":20;
+"default.web_sales":21 -> "Filter_3e8372b":21;
+"default.web_sales":22 -> "Filter_3e8372b":22;
+"default.web_sales":23 -> "Filter_3e8372b":23;
+"default.web_sales":24 -> "Filter_3e8372b":24;
+"default.web_sales":25 -> "Filter_3e8372b":25;
+"default.web_sales":26 -> "Filter_3e8372b":26;
+"default.web_sales":27 -> "Filter_3e8372b":27;
+"default.web_sales":28 -> "Filter_3e8372b":28;
+"default.web_sales":29 -> "Filter_3e8372b":29;
+"default.web_sales":3 -> "Filter_3e8372b":3;
+"default.web_sales":30 -> "Filter_3e8372b":30;
+"default.web_sales":31 -> "Filter_3e8372b":31;
+"default.web_sales":32 -> "Filter_3e8372b":32;
+"default.web_sales":33 -> "Filter_3e8372b":33;
+"default.web_sales":4 -> "Filter_3e8372b":4;
+"default.web_sales":5 -> "Filter_3e8372b":5;
+"default.web_sales":6 -> "Filter_3e8372b":6;
+"default.web_sales":7 -> "Filter_3e8372b":7;
+"default.web_sales":8 -> "Filter_3e8372b":8;
+"default.web_sales":9 -> "Filter_3e8372b":9;
 }
        

@@ -56,7 +56,7 @@ class Neo4jAuraSinkSuite extends SparkFunSuite
   test("neo4j write/read") {
     val sink = Neo4jAuraSink(uri, user, passwd)
     val nodes = Seq("nodeA", "nodeB", "nodeC").map { ident =>
-      SQLFlowGraphNode(ident, Seq("c"), GraphNodeType.TableNode, false)
+      SQLFlowGraphNode(ident, ident, Seq("c"), "c INT", GraphNodeType.TableNode, false)
     }
     val edges = Seq(
       SQLFlowGraphEdge("nodeA", None, "nodeB", None),
@@ -77,7 +77,8 @@ class Neo4jAuraSinkSuite extends SparkFunSuite
 
   test("Database should be empty") {
     val sink = Neo4jAuraSink(uri, user, passwd)
-    val nodes = SQLFlowGraphNode("nodeA", Seq("c"), GraphNodeType.TableNode, false) :: Nil
+    val nodeType = GraphNodeType.TableNode
+    val nodes = SQLFlowGraphNode("nodeA", "nodeA", Seq("c"), "c INT", nodeType, false) :: Nil
     sink.write(nodes, Nil, Map.empty)
 
     val errMsg = intercept[SparkException] {
