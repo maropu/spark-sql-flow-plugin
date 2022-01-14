@@ -32,7 +32,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession
     super.checkOutputString(edgePattern)(actual, expected)
   }
 
-  test("df.debugPrintAsSQLFlow") {
+  test("df.printAsSQLFlow") {
     withTempView("t1", "t2") {
       sql("CREATE OR REPLACE TEMPORARY VIEW t1 AS SELECT k, v v1 FROM VALUES (1, 2) t(k, v)")
       sql("CREATE OR REPLACE TEMPORARY VIEW t2 AS SELECT k, v v2 FROM VALUES (1, 3) t(k, v)")
@@ -166,7 +166,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession
     }
   }
 
-  test("df.debugPrintAsSQLFlow - custom graph format") {
+  test("df.printAsSQLFlow - custom graph format") {
     withTempView("t1", "t2") {
       sql("CREATE OR REPLACE TEMPORARY VIEW t1 AS SELECT k, v v1 FROM VALUES (1, 2) t(k, v)")
       sql("CREATE OR REPLACE TEMPORARY VIEW t2 AS SELECT k, v v2 FROM VALUES (1, 3) t(k, v)")
@@ -183,7 +183,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession
     }
   }
 
-  test("SQLFlow.debugPrintAsSQLFlow") {
+  test("SQLFlow.printAsSQLFlow") {
     withTempView("t") {
       sql("""
           |CREATE OR REPLACE TEMPORARY VIEW t AS
@@ -279,7 +279,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession
       import org.apache.spark.sql.flow.SQLFlow._
       val df = sql("SELECT k, sum(v) FROM VALUES (1, 2), (3, 4) t(k, v) GROUP BY k")
 
-      df.saveAsSQLFlow(s"${dirPath.getAbsolutePath}/d")
+      df.saveAsSQLFlow(Map("outputDirPath" -> s"${dirPath.getAbsolutePath}/d"))
       val flowString = fileToString(new File(s"${dirPath.getAbsolutePath}/d/sqlflow.dot"))
       checkOutputString(flowString,
         """
@@ -325,7 +325,7 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession
             |  SELECT k, sum(v) FROM VALUES (1, 2), (3, 4) t(k, v) GROUP BY k
           """.stripMargin)
 
-        SQLFlow.saveAsSQLFlow(s"${dirPath.getAbsolutePath}/d")
+        SQLFlow.saveAsSQLFlow(Map("outputDirPath" -> s"${dirPath.getAbsolutePath}/d"))
         val flowString = fileToString(new File(s"${dirPath.getAbsolutePath}/d/sqlflow.dot"))
         checkOutputString(flowString,
           """
@@ -373,22 +373,25 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession
         assert(outputDir.mkdir())
 
         val errMsg1 = intercept[AnalysisException] {
-          spark.table("t").saveAsSQLFlow(outputDir.getAbsolutePath)
+          spark.table("t").saveAsSQLFlow(Map("outputDirPath" -> outputDir.getAbsolutePath))
         }.getMessage
         assert(errMsg1.contains(" already exists"))
 
         spark.range(1).groupBy("id").count()
-          .saveAsSQLFlow(outputDir.getAbsolutePath, overwrite = true)
+          .saveAsSQLFlow(Map("outputDirPath" -> outputDir.getAbsolutePath, "overwrite" -> "true"))
         val dotFile = new File(outputDir, "sqlflow.dot")
         assert(dotFile.exists())
         assert(dotFile.delete())
 
         val errMsg2 = intercept[AnalysisException] {
-          SQLFlow.saveAsSQLFlow(outputDir.getAbsolutePath)
+          SQLFlow.saveAsSQLFlow(Map("outputDirPath" -> outputDir.getAbsolutePath))
         }.getMessage
         assert(errMsg2.contains(" already exists"))
 
-        SQLFlow.saveAsSQLFlow(outputDir.getAbsolutePath, overwrite = true)
+        SQLFlow.saveAsSQLFlow(Map(
+          "outputDirPath" -> outputDir.getAbsolutePath,
+          "overwrite" -> "true"
+        ))
         assert(dotFile.exists())
       }
     }

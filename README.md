@@ -44,7 +44,7 @@ Using Python version 3.6.8 (default, Dec 29 2018 19:04:46)
 
 # Generates a Graphviz dot file to represent reference relationships between views
 >>> from sqlflow import save_data_lineage
->>> save_data_lineage(output_path="/tmp/sqlflow-output")
+>>> save_data_lineage(output_dir_path="/tmp/sqlflow-output")
 
 $ ls /tmp/sqlflow-output
 sqlflow.dot     sqlflow.svg
@@ -61,7 +61,7 @@ If `contracted` is set to `true` in `save_data_lineage`, it generates the compac
 of a data lineage diagram that omits plan nodes as follows:
 
 ```
->>> save_data_lineage(output_path="/tmp/sqlflow-output", contracted = true)
+>>> save_data_lineage(output_dir_path="/tmp/sqlflow-output", contracted = true)
 ```
 
 <img src="resources/graphviz_3.svg" width="450px">
@@ -83,7 +83,7 @@ scala> sql("CREATE TEMPORARY VIEW TestView1 AS SELECT key, SUM(value) s FROM Tes
 scala> sql("CACHE TABLE TestView1")
 scala> sql("CREATE TEMPORARY VIEW TestView2 AS SELECT t.key, t.value, v.s FROM TestTable t, TestView1 v WHERE t.key = v.key")
 scala> import org.apache.spark.sql.flow.SQLFlow
-scala> SQLFlow.saveAsSQLFlow(outputDirPath="/tmp/sqlflow-output")
+scala> SQLFlow.saveAsSQLFlow(Map("outputDirPath" -> "/tmp/sqlflow-output"))
 ```
 
 ## Automatic Tracking with Python '@auto_tracking' Decorator
@@ -126,14 +126,14 @@ Automatically tracked data lineage is as follows:
 Most graph processing libraries (e.g., [Python NetworkX](https://networkx.org))
 can load a adjacency list file that includes a source node name of an edge
 and its destination node name in each line. To generate it for exporting data lineage into these libraries,
-a Python user can set a `graph_format='adjacency_list'` in `save_data_lineage`. 
+a Python user can set a `graph_sink='adjacency_list'` in `save_data_lineage`.
 Note that the output file only contains coarse-grained reference relationships between tables/views/plans
 because it is difficult to represent column-level references in an adjacency list.
 
 ```
-# NOTE: Valid `graph_format` value is `graphviz` or `adjacency_list` (`graphviz` by default)
+# NOTE: Valid `graph_sink` value is `graphviz` or `adjacency_list` (`graphviz` by default)
 >>> from sqlflow import save_data_lineage
->>> save_data_lineage(output_dir_path='/tmp/sqlflow-output', graph_format='adjacency_list', contracted=False, options='sep=,')
+>>> save_data_lineage(output_dir_path='/tmp/sqlflow-output', graph_sink='adjacency_list', contracted=False, options='sep=,')
 
 $ cat /tmp/sqlflow-output/sqlflow.lst
 default.testtable,Aggregate_4
@@ -151,7 +151,7 @@ in `SQLFlow.saveAsSQLFlow` as follows:
 
 ```
 scala> import org.apache.spark.sql.flow.{SQLFlow, AdjacencyListFormat}
-scala> SQLFlow.saveAsSQLFlow(outputDirPath="/tmp/sqlflow-output", graphFormat=AdjacencyListFormat(sep = ","))
+scala> SQLFlow.saveAsSQLFlow(Map("outputDirPath" -> "/tmp/sqlflow-output"), graphSink=AdjacencyListFormat(sep = ","))
 ```
 
 See a [resources/networkx_example.ipynb](resources/networkx_example.ipynb) example for how to load it into Python NetowrkX.
@@ -208,4 +208,3 @@ List of edges:
 
 If you hit some bugs and have requests, please leave some comments on [Issues](https://github.com/maropu/spark-sql-flow-plugin/issues)
 or Twitter ([@maropu](http://twitter.com/#!/maropu)).
-

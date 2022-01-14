@@ -783,18 +783,12 @@ case class SQLFlowHolder[T] private[sql](private val ds: Dataset[T]) {
   }
 
   def saveAsSQLFlow(
-      outputDirPath: String,
-      filenamePrefix: String = "sqlflow",
-      graphSink: BaseGraphSink = GraphVizSink(),
-      overwrite: Boolean = false,
-      contracted: Boolean = false): Unit = {
+      options: Map[String, String] = Map.empty[String, String],
+      contracted: Boolean = false,
+      graphSink: BaseGraphSink = GraphVizSink()): Unit = {
     val sqlFlow = if (contracted) SQLContractedFlow() else SQLFlow()
     val (nodes, edges) = sqlFlow.planToSQLFlow(ds.queryExecution.optimizedPlan)
-    graphSink.write(nodes, edges, Map(
-      "dirPath" -> outputDirPath,
-      "filenamePrefix" -> filenamePrefix,
-      "overwrite" -> overwrite.toString,
-    ))
+    graphSink.write(nodes, edges, options)
   }
 }
 
@@ -819,17 +813,11 @@ object SQLFlow extends Logging {
   }
 
   def saveAsSQLFlow(
-      outputDirPath: String,
-      filenamePrefix: String = "sqlflow",
-      graphSink: BaseGraphSink = GraphVizSink(),
+      options: Map[String, String] = Map.empty[String, String],
       contracted: Boolean = false,
-      overwrite: Boolean = false): Unit = {
+      graphSink: BaseGraphSink = GraphVizSink()): Unit = {
     val (nodes, edges) = toSQLFlow(contracted)
-    graphSink.write(nodes, edges, Map(
-      "dirPath" -> outputDirPath,
-      "filenamePrefix" -> filenamePrefix,
-      "overwrite" -> overwrite.toString,
-    ))
+    graphSink.write(nodes, edges, options)
   }
 
   // Indicates whether Spark is currently running unit tests

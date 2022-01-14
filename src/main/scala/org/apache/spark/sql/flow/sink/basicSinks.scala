@@ -142,12 +142,11 @@ abstract class GraphFileSink extends BaseGraphSink with BaseGraphFormat {
       nodes: Seq[SQLFlowGraphNode],
       edges: Seq[SQLFlowGraphEdge],
       options: Map[String, String]): Unit = {
-    assert(options.contains("dirPath"), "`dirPath` not specified")
-    assert(options.contains("filenamePrefix"), "`filenamePrefix` not specified")
-    assert(options.contains("overwrite"), "`overwrite` not specified")
-    val dirPath = options("dirPath")
-    val filenamePrefix = options("filenamePrefix")
-    val overwrite = options("overwrite").toBoolean
+    val dirPath = options.getOrElse("outputDirPath", {
+      throw new AnalysisException("`outputDirPath` not specified")
+    })
+    val filenamePrefix = options.getOrElse("filenamePrefix", "sqlflow")
+    val overwrite = options.getOrElse("overwrite", "false").toBoolean
     GraphFileWriter.writeTo(
       dirPath,
       s"$filenamePrefix.$fileSuffix",
@@ -238,8 +237,8 @@ case class GraphVizSink(imgFormat: String = "svg") extends GraphFileSink {
     super.write(nodes, edges, options)
 
     // Moreover, try to generate an image data from a generated graph file
-    val dirPath = options("dirPath")
-    val filenamePrefix = options("filenamePrefix")
+    val dirPath = options("outputDirPath")
+    val filenamePrefix = options.getOrElse("filenamePrefix", "sqlflow")
     val dotFile = new File(dirPath, s"$filenamePrefix.$fileSuffix")
     val dstFile = new File(dirPath, s"$filenamePrefix.$imgFormat").getAbsolutePath
     GraphVizFormat.tryGenerateImageFile(imgFormat, dotFile.getAbsolutePath, dstFile)

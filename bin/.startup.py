@@ -17,4 +17,4 @@
 # limitations under the License.
 #
 
-from auto_tracking import *
+from sqlflow import *
