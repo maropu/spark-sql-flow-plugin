@@ -17,6 +17,7 @@
 
 package org.apache.spark.sql.flow
 
+
 trait SQLFlowTestUtils {
 
   protected def getOutputAsString(f: => Unit): String = {
@@ -25,16 +26,18 @@ trait SQLFlowTestUtils {
     output.toString
   }
 
-  protected def checkOutputString(actual: String, expected: String): Unit = {
-    def normalize(s: String) = {
-      s.replaceAll("_\\d+", "_x")
-    }
-    def extractEdges(s: String): Set[String] = {
-      val re = """"[a-zA-Z_]+":\d -> "[a-zA-Z_]+":\d""".r
-      re.findAllIn(normalize(s)).toList.toSet
-    }
-    val expectedEdges = extractEdges(expected)
-    assert(expectedEdges.nonEmpty && extractEdges(actual) == expectedEdges,
+  private def normalize(s: String): String = {
+    s.replaceAll("_[a-z0-9]{7}", "_x")
+      .replaceAll("_\\d+", "_x")
+  }
+
+  private def extractEdgesFrom(s: String, edgeRegex: String): Set[String] = {
+    edgeRegex.r.findAllIn(normalize(s)).toList.toSet
+  }
+
+  protected def checkOutputString(edgeRegex: String)(actual: String, expected: String): Unit = {
+    val expectedEdges = extractEdgesFrom(expected, edgeRegex)
+    assert(expectedEdges.nonEmpty && extractEdgesFrom(actual, edgeRegex) == expectedEdges,
       s"`$actual` didn't match an expected string `$expected`")
   }
 }

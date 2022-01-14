@@ -27,6 +27,11 @@ import org.apache.spark.sql.test.{SharedSparkSession, SQLTestUtils}
 class SQLFlowSuite extends QueryTest with SharedSparkSession
   with SQLTestUtils with SQLFlowTestUtils {
 
+  private def checkOutputString(actual: String, expected: String): Unit = {
+    val edgePattern = """".+":.+ -> ".+":.+"""
+    super.checkOutputString(edgePattern)(actual, expected)
+  }
+
   test("df.debugPrintAsSQLFlow") {
     withTempView("t1", "t2") {
       sql("CREATE OR REPLACE TEMPORARY VIEW t1 AS SELECT k, v v1 FROM VALUES (1, 2) t(k, v)")

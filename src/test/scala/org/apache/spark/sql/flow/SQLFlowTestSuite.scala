@@ -28,7 +28,7 @@ import org.apache.spark.sql.internal.SQLConf
 import org.apache.spark.sql.test.SharedSparkSession
 import org.apache.spark.util.Utils
 
-class SQLFlowTestSuite extends QueryTest with SharedSparkSession {
+class SQLFlowTestSuite extends QueryTest with SharedSparkSession with SQLFlowTestUtils {
 
   private val regenerateGoldenFiles: Boolean = System.getenv("SPARK_GENERATE_GOLDEN_FILES") == "1"
 
@@ -142,10 +142,9 @@ class SQLFlowTestSuite extends QueryTest with SharedSparkSession {
     }
 
     def checkSQLFlowString(goldenFile: String, flowString: String): Unit = {
-      // Read back the golden file.
-      def normalize(s: String) = s.replaceAll("_\\d+", "_x").replaceAll("#\\d+", "#x")
       val expectedOutput = fileToString(new File(goldenFile)).replaceAll(fileHeader, "")
-      assert(normalize(expectedOutput) === normalize(flowString))
+      val edgePattern = """".+":.+ -> ".+":.+"""
+      super.checkOutputString(edgePattern)(flowString, expectedOutput)
     }
 
     withClue(s"${testCase.name}${System.lineSeparator()}") {

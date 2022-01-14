@@ -18,9 +18,11 @@
 
 package org.apache.spark.sql.flow
 
-import java.util.concurrent.atomic.AtomicInteger
+import java.security.MessageDigest
 
 import scala.collection.mutable
+
+import org.apache.commons.lang3.RandomStringUtils
 
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql._
@@ -28,15 +30,13 @@ import org.apache.spark.sql.catalyst.AliasIdentifier
 import org.apache.spark.sql.catalyst.analysis.NoSuchTableException
 import org.apache.spark.sql.catalyst.catalog.HiveTableRelation
 import org.apache.spark.sql.catalyst.expressions._
-import org.apache.spark.sql.catalyst.plans.{ExistenceJoin, LeftExistence}
+import org.apache.spark.sql.catalyst.plans.{ExistenceJoin, JoinType, LeftExistence}
 import org.apache.spark.sql.catalyst.plans.logical._
 import org.apache.spark.sql.execution.columnar.InMemoryRelation
 import org.apache.spark.sql.execution.datasources.LogicalRelation
 import org.apache.spark.sql.flow.sink.{BaseGraphFormat, GraphVizSink}
 
 abstract class BaseSQLFlow extends PredicateHelper with Logging {
-
-  private val nextNodeId = new AtomicInteger(0)
 
   def collectEdges(
     tempView: String,
@@ -182,8 +182,25 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     session.sharedState.cacheManager.lookupCachedData(plan).isDefined
   }
 
+  private def nodeUniqueId(): String = {
+    val md = MessageDigest.getInstance("SHA-256")
+    val seed = RandomStringUtils.random(128, true, true)
+    md.update(seed.getBytes)
+    val bytes = md.digest()
+    val sb = new mutable.StringBuilder()
+    bytes.foreach { b =>
+      sb.append("%02x".format(b & 0xff))
+    }
+    sb.toString.substring(0, 7)
+  }
+
   protected def getNodeNameWithId(name: String): String = {
-    s"${name}_${nextNodeId.getAndIncrement()}"
+    s"${name}_${nodeUniqueId()}"
+  }
+
+  private def joinTypeName(jt: JoinType): String = jt match {
+    case ExistenceJoin(_) => "ExistenceJoin"
+    case _ => jt.toString
   }
 
   protected def getNodeName(p: LogicalPlan) = p match {
@@ -191,7 +208,7 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     case TempViewNode(name, _) => name
     case LogicalRelation(_, _, Some(table), false) => table.qualifiedName
     case HiveTableRelation(table, _, _, _, _) => table.qualifiedName
-    case j: Join => getNodeNameWithId(s"${p.nodeName}_${j.joinType}")
+    case j: Join => getNodeNameWithId(s"${p.nodeName}_${joinTypeName(j.joinType)}")
     case _ => getNodeNameWithId(p.nodeName)
   }
 
