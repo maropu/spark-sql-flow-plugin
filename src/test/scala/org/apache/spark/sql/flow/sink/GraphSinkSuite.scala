@@ -15,15 +15,16 @@
  * limitations under the License.
  */
 
-package org.apache.spark.sql.flow
+package org.apache.spark.sql.flow.sink
 
 import java.io.File
 
 import org.apache.spark.TestUtils
 import org.apache.spark.sql.QueryTest
+import org.apache.spark.sql.flow._
 import org.apache.spark.sql.test.{SharedSparkSession, SQLTestUtils}
 
-class GraphFormatSuite extends QueryTest with SharedSparkSession
+class GraphSinkSuite extends QueryTest with SharedSparkSession
   with SQLTestUtils with SQLFlowTestUtils {
 
   test("graphviz image data generation") {

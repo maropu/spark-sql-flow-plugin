@@ -21,6 +21,7 @@ import java.util.Locale
 
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql.flow._
+import org.apache.spark.sql.flow.sink.{AdjacencyListFormat, GraphFileSink, GraphVizSink}
 import org.apache.spark.util.{Utils => SparkUtils}
 
 object SQLFlowApi extends Logging {
