@@ -74,23 +74,18 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
     s"${this.getClass.getSimpleName}(uri=$uri, user=$user)"
   }
 
-
-  private def normalizeIdent(i: String): String = {
-    i.replaceAll("_[a-z0-9]{7}$", "")
-  }
-
   private def genLabel(n: SQLFlowGraphNode): String = n.tpe match {
     case GraphNodeType.TableNode => "Table"
     case GraphNodeType.PlanNode => "Plan"
   }
 
-  private def genAttrList(n: SQLFlowGraphNode, w: String = ""): String = {
+  private def genAttributeNames(n: SQLFlowGraphNode, w: String = ""): String = {
     n.attributeNames.map(a => s"""$w$a$w""").mkString(",")
   }
 
   private def genProps(n: SQLFlowGraphNode): String = {
-    s"""name: "${normalizeIdent(n.ident)}", uid: "${n.ident}", """ +
-      s"""attributes: [${genAttrList(n, "\"")}]"""
+    s"""name: "${n.ident}", uid: "${n.uniqueId}", """ +
+      s"""attributeNames: [${genAttributeNames(n, "\"")}], schema: "${n.schema}""""
   }
 
   private def tryToCreateNodes(tx: Transaction, nodes: Seq[SQLFlowGraphNode]): Unit = {
@@ -104,7 +99,7 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
       nodes: Seq[SQLFlowGraphNode],
       edges: Seq[SQLFlowGraphEdge]): Unit = {
     val nodeLabelMap = nodes.map { n =>
-      (n.ident, genLabel(n))
+      (n.uniqueId, genLabel(n))
     }.toMap
     edges.foreach { e =>
       tx.run(
