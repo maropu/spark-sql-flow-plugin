@@ -25,7 +25,7 @@ import org.neo4j.driver._
 import org.apache.spark.SparkException
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql.AnalysisException
-import org.apache.spark.sql.flow.{BaseGraphSink, GraphNodeType, SQLFlowGraphEdge, SQLFlowGraphNode}
+import org.apache.spark.sql.flow.{BaseGraphBatchSink, BaseGraphStreamSink, GraphNodeType, SQLFlowGraphEdge, SQLFlowGraphNode}
 
 trait Neo4jAura {
   def uri: String
@@ -68,7 +68,7 @@ trait Neo4jAura {
 }
 
 case class Neo4jAuraSink(uri: String, user: String, passwd: String)
-  extends BaseGraphSink with Neo4jAura with Logging {
+  extends BaseGraphBatchSink with BaseGraphStreamSink with  Neo4jAura with Logging {
 
   override def toString: String = {
     s"${this.getClass.getSimpleName}(uri=$uri, user=$user)"
@@ -88,7 +88,32 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
       s"""attributeNames: [${genAttributeNames(n, "\"")}], schema: "${n.schema}""""
   }
 
-  private def tryToCreateNodes(tx: Transaction, nodes: Seq[SQLFlowGraphNode]): Unit = {
+  private def tryToCreateConstraints(s: Session): Unit = try {
+    withTx(s) { tx =>
+      tx.run(
+        s"""
+           |CREATE CONSTRAINT unique_node_constraint IF NOT EXISTS
+           |FOR (n:Table)
+           |REQUIRE n.uid IS UNIQUE
+         """.stripMargin)
+    }
+  } catch {
+    case NonFatal(_) =>
+  }
+
+  private def tryToCreateNodes(s: Session, nodes: Seq[SQLFlowGraphNode]): Unit = {
+    nodes.foreach { n =>
+      try {
+        withTx(s) { tx =>
+          createNodes(tx, n :: Nil)
+        }
+      } catch {
+        case NonFatal(_) =>
+      }
+    }
+  }
+
+  private def createNodes(tx: Transaction, nodes: Seq[SQLFlowGraphNode]): Unit = {
     nodes.foreach { n =>
       tx.run(s"""CREATE (:${genLabel(n)} { ${genProps(n)} })""")
     }
@@ -127,7 +152,22 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
         }
       }
       withTx(s) { tx =>
-        tryToCreateNodes(tx, nodes)
+        createNodes(tx, nodes)
+        createEdges(tx, nodes, edges)
+      }
+    }
+  }
+
+  override def append(
+      nodes: Seq[SQLFlowGraphNode],
+      edges: Seq[SQLFlowGraphEdge],
+      options: Map[String, String]): Unit = {
+    withSession { s =>
+      tryToCreateConstraints(s)
+      val (tableNodes, otherNodes) = nodes.partition(_.tpe == GraphNodeType.TableNode)
+      tryToCreateNodes(s, tableNodes)
+      withTx(s) { tx =>
+        createNodes(tx, otherNodes)
         createEdges(tx, nodes, edges)
       }
     }

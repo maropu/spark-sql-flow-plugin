@@ -29,7 +29,7 @@ import org.apache.commons.io.FileUtils
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql._
 import org.apache.spark.sql.catalyst.util._
-import org.apache.spark.sql.flow.{BaseGraphSink, GraphNodeType, SQLFlowGraphEdge, SQLFlowGraphNode}
+import org.apache.spark.sql.flow.{BaseGraphBatchSink, GraphNodeType, SQLFlowGraphEdge, SQLFlowGraphNode}
 
 /**
  * Using ProcessBuilder.lineStream produces a stream, that uses
@@ -135,7 +135,7 @@ object GraphVizFormat extends Logging {
   }
 }
 
-abstract class GraphFileSink extends BaseGraphSink with BaseGraphFormat {
+abstract class GraphFileBatchSink extends BaseGraphBatchSink with BaseGraphFormat {
   def fileSuffix: String
 
   override def write(
@@ -157,7 +157,7 @@ abstract class GraphFileSink extends BaseGraphSink with BaseGraphFormat {
 
 // TODO: Supports more formats to export data lineage into other systems,
 // e.g., Apache Atlas, neo4j, ...
-case class GraphVizSink(imgFormat: String = "svg") extends GraphFileSink {
+case class GraphVizSink(imgFormat: String = "svg") extends GraphFileBatchSink {
   override val fileSuffix: String = "dot"
 
   private val cachedNodeColor = "lightblue"
@@ -254,7 +254,7 @@ object AdjacencyListFormat extends Logging {
   }
 }
 
-case class AdjacencyListFormat(sep: Char = ',') extends GraphFileSink {
+case class AdjacencyListFormat(sep: Char = ',') extends GraphFileBatchSink {
   override val fileSuffix: String = "lst"
 
   override def toGraphString(nodes: Seq[SQLFlowGraphNode], edges: Seq[SQLFlowGraphEdge]): String = {

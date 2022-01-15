@@ -1,4 +1,3 @@
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -793,7 +792,7 @@ case class SQLFlowHolder[T] private[sql](private val ds: Dataset[T]) {
   def saveAsSQLFlow(
       options: Map[String, String] = Map.empty[String, String],
       contracted: Boolean = false,
-      graphSink: BaseGraphSink = GraphVizSink()): Unit = {
+      graphSink: BaseGraphBatchSink = GraphVizSink()): Unit = {
     val sqlFlow = if (contracted) SQLContractedFlow() else SQLFlow()
     val (nodes, edges) = sqlFlow.planToSQLFlow(ds.queryExecution.optimizedPlan)
     graphSink.write(nodes, edges, options)
@@ -823,7 +822,7 @@ object SQLFlow extends Logging {
   def saveAsSQLFlow(
       options: Map[String, String] = Map.empty[String, String],
       contracted: Boolean = false,
-      graphSink: BaseGraphSink = GraphVizSink()): Unit = {
+      graphSink: BaseGraphBatchSink = GraphVizSink()): Unit = {
     val (nodes, edges) = toSQLFlow(contracted)
     graphSink.write(nodes, edges, options)
   }

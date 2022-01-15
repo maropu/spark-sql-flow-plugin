@@ -21,7 +21,7 @@ import java.util.Locale
 
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql.flow._
-import org.apache.spark.sql.flow.sink.{AdjacencyListFormat, GraphFileSink, GraphVizSink}
+import org.apache.spark.sql.flow.sink.{AdjacencyListFormat, GraphFileBatchSink, GraphVizSink}
 import org.apache.spark.util.{Utils => SparkUtils}
 
 object SQLFlowApi extends Logging {
@@ -37,7 +37,7 @@ object SQLFlowApi extends Logging {
     }.toMap
   }
 
-  private def toGraphFormat(fmt: String, options: Map[String, String]): GraphFileSink = {
+  private def toGraphFormat(fmt: String, options: Map[String, String]): GraphFileBatchSink = {
     fmt.toLowerCase(Locale.ROOT) match {
       case "graphviz" =>
         val imgFormat = options.getOrElse("imgFormat", "svg")
