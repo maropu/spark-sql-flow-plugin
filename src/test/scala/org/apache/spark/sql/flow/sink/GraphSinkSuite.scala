@@ -84,7 +84,7 @@ class GraphSinkSuite extends QueryTest with SharedSparkSession
           .createOrReplaceTempView("t3")
 
         val flowString = getOutputAsString {
-          SQLFlow.printAsSQLFlow(graphFormat = AdjacencyListFormat(sep = ':'))
+          SQLFlow.printAsSQLFlow(graphFormat = AdjacencyListSink(sep = ':'))
         }
         checkAdjListFormatString(flowString,
           """
@@ -100,7 +100,7 @@ class GraphSinkSuite extends QueryTest with SharedSparkSession
 
        val contractedFlowString = getOutputAsString {
           SQLFlow.printAsSQLFlow(
-            contracted = true, graphFormat = AdjacencyListFormat(sep = ":"))
+            contracted = true, graphFormat = AdjacencyListSink(sep = ":"))
         }
         checkAdjListFormatString(contractedFlowString,
           """

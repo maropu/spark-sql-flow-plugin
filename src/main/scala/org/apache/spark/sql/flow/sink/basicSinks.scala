@@ -247,16 +247,16 @@ case class GraphVizSink(imgFormat: String = "svg") extends GraphFileBatchSink {
   }
 }
 
-object AdjacencyListFormat extends Logging {
-  def apply(sep: String): AdjacencyListFormat = {
+object AdjacencyListSink extends Logging {
+  def apply(sep: String): AdjacencyListSink = {
     if (sep.length > 1) {
       logWarning(s"Length of the specified separator string is greater than 1: $sep")
     }
-    AdjacencyListFormat(sep.toCharArray.head)
+    AdjacencyListSink(sep.toCharArray.head)
   }
 }
 
-case class AdjacencyListFormat(sep: Char = ',') extends GraphFileBatchSink {
+case class AdjacencyListSink(sep: Char = ',') extends GraphFileBatchSink {
   override val fileSuffix: String = "lst"
 
   override def toGraphString(nodes: Seq[SQLFlowGraphNode], edges: Seq[SQLFlowGraphEdge]): String = {
