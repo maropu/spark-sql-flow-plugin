@@ -76,7 +76,9 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
 
   private def genLabel(n: SQLFlowGraphNode): String = n.tpe match {
     case GraphNodeType.TableNode => "Table"
+    case GraphNodeType.ViewNode => "View"
     case GraphNodeType.PlanNode => "Plan"
+    case GraphNodeType.QueryNode => "Query"
   }
 
   private def genAttributeNames(n: SQLFlowGraphNode, w: String = ""): String = {
