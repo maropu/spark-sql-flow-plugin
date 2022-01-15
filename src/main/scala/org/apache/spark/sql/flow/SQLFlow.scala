@@ -44,12 +44,12 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
 
   def planToSQLFlow(plan: LogicalPlan): (Seq[SQLFlowGraphNode], Seq[SQLFlowGraphEdge]) = {
     val nodeMap = mutable.Map[String, SQLFlowGraphNode]()
-    val topNodeName = s"plan_${Math.abs(plan.semanticHash())}"
+    val topNodeName = s"query_${Math.abs(plan.semanticHash())}"
     val outputAttrNames = plan.output.map(_.name)
     val schema = plan.schema.toDDL
-    val topNode = generateTableNode(outputAttrNames, topNodeName, topNodeName, schema)
+    val endNode = generateQueryNode(outputAttrNames, topNodeName, topNodeName, schema)
     val edges = collectEdges(topNodeName, plan, nodeMap)
-    (topNode +: nodeMap.values.toSeq, edges)
+    (endNode +: nodeMap.values.toSeq, edges)
   }
 
   def catalogToSQLFlow(session: SparkSession): (Seq[SQLFlowGraphNode], Seq[SQLFlowGraphEdge]) = {
@@ -81,7 +81,7 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     (tempViews ++ views).foreach { case (viewName, analyzed) =>
       val outputAttrNames = analyzed.output.map(_.name)
       val schema = analyzed.schema.toDDL
-      val node = generateTableNode(outputAttrNames, viewName, viewName, schema, isCached(analyzed))
+      val node = generateViewNode(outputAttrNames, viewName, viewName, schema, isCached(analyzed))
       nodeMap(viewName) = node
     }
 
@@ -230,6 +230,15 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     SQLFlowGraphNode(uniqId, nodeName, outputAttrNames, schema, GraphNodeType.TableNode, isCached)
   }
 
+  protected def generateViewNode(
+      outputAttrNames: Seq[String],
+      uniqId: String,
+      nodeName: String,
+      schema: String,
+      isCached: Boolean = false): SQLFlowGraphNode = {
+    SQLFlowGraphNode(uniqId, nodeName, outputAttrNames, schema, GraphNodeType.ViewNode, isCached)
+  }
+
   protected def generatePlanNode(
       outputAttrNames: Seq[String],
       uniqId: String,
@@ -237,6 +246,14 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
       schema: String,
       isCached: Boolean = false): SQLFlowGraphNode = {
     SQLFlowGraphNode(uniqId, nodeName, outputAttrNames, schema, GraphNodeType.PlanNode, isCached)
+  }
+
+  protected def generateQueryNode(
+      outputAttrNames: Seq[String],
+      uniqId: String,
+      nodeName: String,
+      schema: String): SQLFlowGraphNode = {
+    SQLFlowGraphNode(uniqId, nodeName, outputAttrNames, schema, GraphNodeType.QueryNode, false)
   }
 
   protected def generateGraphNode(
@@ -247,9 +264,10 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     val outputAttrNames = p.output.map(_.name)
     val schema = p.schema.toDDL
     p match {
-      case _: View | _: ViewNode | _: TempViewNode | _: LocalRelation | _: LogicalRelation |
-           _: InMemoryRelation | _: HiveTableRelation =>
+      case _: LocalRelation | _: LogicalRelation | _: InMemoryRelation | _: HiveTableRelation =>
         generateTableNode(outputAttrNames, uniqId, nodeName, schema, isCached)
+      case _: View | _: ViewNode | _: TempViewNode =>
+        generateViewNode(outputAttrNames, uniqId, nodeName, schema, isCached)
       case _ =>
         generatePlanNode(outputAttrNames, uniqId, nodeName, schema, isCached)
     }

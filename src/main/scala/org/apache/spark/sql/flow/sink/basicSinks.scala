@@ -182,8 +182,10 @@ case class GraphVizSink(imgFormat: String = "svg") extends GraphFileBatchSink {
 
   private def generateNodeString(node: SQLFlowGraphNode): String = {
     node.tpe match {
-      case GraphNodeType.TableNode => generateTableNodeString(node)
-      case GraphNodeType.PlanNode => generatePlanNodeString(node)
+      case GraphNodeType.TableNode | GraphNodeType.ViewNode | GraphNodeType.QueryNode =>
+        generateTableNodeString(node)
+      case GraphNodeType.PlanNode =>
+        generatePlanNodeString(node)
     }
   }
 

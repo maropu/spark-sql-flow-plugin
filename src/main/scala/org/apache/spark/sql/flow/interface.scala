@@ -18,7 +18,7 @@
 package org.apache.spark.sql.flow
 
 object GraphNodeType extends Enumeration {
-  val TableNode, PlanNode = Value
+  val TableNode, ViewNode, PlanNode, QueryNode = Value
 }
 
 case class SQLFlowGraphNode(
@@ -31,7 +31,9 @@ case class SQLFlowGraphNode(
 
   private def prettyTypeName(tpe: GraphNodeType.Value) = tpe match {
     case GraphNodeType.TableNode => "table"
+    case GraphNodeType.ViewNode => "view"
     case GraphNodeType.PlanNode => "plan"
+    case GraphNodeType.QueryNode => "query"
   }
 
   override def toString: String = {
