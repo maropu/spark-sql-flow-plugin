@@ -1,4 +1,3 @@
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -54,7 +53,12 @@ case class SQLFlowGraphEdge(
   }
 }
 
-trait BaseGraphSink {
+trait BaseGraphBatchSink {
   def write(nodes: Seq[SQLFlowGraphNode], edges: Seq[SQLFlowGraphEdge],
+    options: Map[String, String]): Unit
+}
+
+trait BaseGraphStreamSink {
+  def append(nodes: Seq[SQLFlowGraphNode], edges: Seq[SQLFlowGraphEdge],
     options: Map[String, String]): Unit
 }

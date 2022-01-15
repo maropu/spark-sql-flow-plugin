@@ -53,7 +53,10 @@ class GraphSinkSuite extends QueryTest with SharedSparkSession
 
         testImageFormats.foreach { imageFormat =>
           val outputPath = s"${dirPath.getAbsolutePath}/$imageFormat"
-          SQLFlow.saveAsSQLFlow(Map("outputDirPath" -> outputPath), graphSink = GraphVizSink(imageFormat))
+          SQLFlow.saveAsSQLFlow(
+            Map("outputDirPath" -> outputPath),
+            graphSink = GraphVizSink(imageFormat)
+          )
           val imgFile = new File(s"$outputPath/sqlflow.$imageFormat")
           assert(imgFile.exists())
         }
