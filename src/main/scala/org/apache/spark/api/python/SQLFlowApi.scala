@@ -21,7 +21,7 @@ import java.util.Locale
 
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql.flow._
-import org.apache.spark.sql.flow.sink.{AdjacencyListFormat, GraphFileBatchSink, GraphVizSink}
+import org.apache.spark.sql.flow.sink.{AdjacencyListSink, GraphFileBatchSink, GraphVizSink}
 import org.apache.spark.util.{Utils => SparkUtils}
 
 object SQLFlowApi extends Logging {
@@ -45,7 +45,7 @@ object SQLFlowApi extends Logging {
 
       case "adjacency_list" =>
         val sepString = options.getOrElse("sep", ",")
-        AdjacencyListFormat(sepString)
+        AdjacencyListSink(sepString)
 
       case _ =>
         throw new IllegalStateException(s"Unknown graph format: $fmt")
