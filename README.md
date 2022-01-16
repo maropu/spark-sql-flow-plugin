@@ -205,7 +205,8 @@ List of edges:
 
 ## Audits queries to generate data lineage (Experimental feature)
 
-`SQLFlowListener` below allows you to generate the data lineage of a SQL/DataFrame query every it succeeds:
+`SQLFlowListener` below incrementally appends the column-level references of a SQL/DataFrame query
+into a specified sink every it succeeds:
 
 ```
 scala> import org.apache.spark.sql.flow.sink.Neo4jAuraSink
