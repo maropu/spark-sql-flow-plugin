@@ -20,8 +20,8 @@ package org.apache.spark.sql.flow
 import scala.util.control.NonFatal
 
 import org.apache.spark.internal.Logging
+import org.apache.spark.sql.catalyst.plans.logical.Command
 import org.apache.spark.sql.execution.QueryExecution
-import org.apache.spark.sql.execution.command.RunnableCommand
 import org.apache.spark.sql.util.QueryExecutionListener
 
 case class SQLFlowListener(graphSink: BaseGraphStreamSink, contracted: Boolean = false)
@@ -32,7 +32,8 @@ case class SQLFlowListener(graphSink: BaseGraphStreamSink, contracted: Boolean =
   override def onSuccess(funcName: String, qe: QueryExecution, durationNs: Long): Unit = try {
     val optimized = qe.optimizedPlan
     optimized match {
-      case _: RunnableCommand => // skip
+      case _: Command =>
+        // TODO: Tracks data lineage between table/views via INSERT queries (Issue#5)
       case _ =>
         val sqlFlow = if (contracted) SQLContractedFlow() else SQLFlow()
         val (nodes, edges) = sqlFlow.planToSQLFlow(optimized)
