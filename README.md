@@ -214,13 +214,20 @@ scala> val sink = Neo4jAuraSink("neo4j+s://<your Neo4j database uri>", "<user na
 scala> spark.sqlContext.listenerManager.register(SQLFlowListener(sink))
 ```
 
-## References
+## Similar Technologies
 
  - Datafold, Column-level lineage, https://www.datafold.com/column-level-lineage
  - SQLFlow, Automated SQL data lineage analysis, https://www.gudusoft.com
  - Prophecy, Spark: Column Level Lineage, https://medium.com/prophecy-io/spark-column-level-lineage-478c1fe4701d
  - Collibra/SQLDep, Introducing Collibra Lineage - Automated Data Lineage, https://www.collibra.com/us/en/blog/introducing-collibra-lineage
  - Tokern, Automate data engineering tasks with column-level data lineage, https://tokern.io
+
+## References
+
+ - Hui Miao et al., ProvDB: A System for Lifecycle Management of Collaborative Analysis Workflows, arXiv, arXiv:1610.04963, 2016.
+ - Joseph M. Hellerstein et al, Ground: A Data Context Service, CIDR, 2017.
+ - R. Castro Fernandez et al., Aurum: A Data Discovery System, Proceedings of ICDE, pp.1001-1012, 2018.
+ - Alon Halevy et al., Goods: Organizing Google's Datasets. Proceedings of SIGMOD, pp.795–806, 2016.
 
 ## TODO
 
