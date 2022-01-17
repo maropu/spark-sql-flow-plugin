@@ -86,8 +86,14 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
   }
 
   private def genProps(n: SQLFlowGraphNode): String = {
-    s"""name: "${n.ident}", uid: "${n.uniqueId}", """ +
-      s"""attributeNames: [${genAttributeNames(n, "\"")}], schema: "${n.schema}""""
+    val basicProps = s"""name: "${n.ident}", uid: "${n.uniqueId}", """ +
+      s"""attributeNames: [${genAttributeNames(n, "\"")}], schemaDDL: "${n.schemaDDL}""""
+    if (n.props.nonEmpty) {
+      val nodePropsAsJson = n.props.map { case (k, v) => s"""$k: "$v""""}.mkString(", ")
+      s"$basicProps, $nodePropsAsJson"
+    } else {
+      basicProps
+    }
   }
 
   private def tryToCreateConstraints(s: Session): Unit = try {

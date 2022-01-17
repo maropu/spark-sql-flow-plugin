@@ -17,6 +17,8 @@
 
 package org.apache.spark.sql.flow
 
+import scala.collection.mutable
+
 object GraphNodeType extends Enumeration {
   val TableNode, ViewNode, PlanNode, QueryNode = Value
 }
@@ -25,9 +27,10 @@ case class SQLFlowGraphNode(
   uniqueId: String,
   ident: String,
   attributeNames: Seq[String],
-  schema: String,
+  schemaDDL: String,
   tpe: GraphNodeType.Value,
-  isCached: Boolean) {
+  isCached: Boolean,
+  props: mutable.Map[String, String] = mutable.Map.empty) {
 
   private def prettyTypeName(tpe: GraphNodeType.Value) = tpe match {
     case GraphNodeType.TableNode => "table"

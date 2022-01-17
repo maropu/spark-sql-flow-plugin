@@ -48,81 +48,81 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession
           |  graph [pad="0.5" nodesep="0.5" ranksep="1" fontname="Helvetica" rankdir=LR];
           |  node [shape=plaintext]
           |
-          |"Aggregate_8b27a1a" [label=<
-          |<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-          |  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
-          |  <tr><td port="0">k</td></tr>
-          |<tr><td port="1">sum((v1 + v2))</td></tr>
-          |</table>>];
+          |  "Aggregate_6" [label=<
+          |  <table color="lightgray" border="1" cellborder="0" cellspacing="0">
+          |    <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_6</i></td></tr>
+          |    <tr><td port="0">k</td></tr>
+          |  <tr><td port="1">sum((v1 + v2))</td></tr>
+          |  </table>>];
           |
-          |"Join_Inner_2443249" [label=<
-          |<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-          |  <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner</i></td></tr>
-          |  <tr><td port="0">k</td></tr>
-          |<tr><td port="1">v1</td></tr>
-          |<tr><td port="2">k</td></tr>
-          |<tr><td port="3">v2</td></tr>
-          |</table>>];
+          |  "Join_Inner_4" [label=<
+          |  <table color="lightgray" border="1" cellborder="0" cellspacing="0">
+          |    <tr><td bgcolor="lightgray" port="nodeName"><i>Join_Inner_4</i></td></tr>
+          |    <tr><td port="0">k</td></tr>
+          |  <tr><td port="1">v1</td></tr>
+          |  <tr><td port="2">k</td></tr>
+          |  <tr><td port="3">v2</td></tr>
+          |  </table>>];
           |
-          |"LocalRelation_d7e3c14" [color="black" label=<
-          |<table>
-          |  <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation</font></i></td></tr>
-          |  <tr><td port="0">k</td></tr>
-          |<tr><td port="1">v</td></tr>
-          |</table>>];
+          |  "LocalRelation_0" [color="black" label=<
+          |  <table>
+          |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation_0</font></i></td></tr>
+          |    <tr><td port="0">k</td></tr>
+          |  <tr><td port="1">v</td></tr>
+          |  </table>>];
           |
-          |"LocalRelation_e15d77d" [color="black" label=<
-          |<table>
-          |  <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation</font></i></td></tr>
-          |  <tr><td port="0">k</td></tr>
-          |<tr><td port="1">v</td></tr>
-          |</table>>];
+          |  "LocalRelation_2" [color="black" label=<
+          |  <table>
+          |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation_2</font></i></td></tr>
+          |    <tr><td port="0">k</td></tr>
+          |  <tr><td port="1">v</td></tr>
+          |  </table>>];
           |
-          |"Project_25d88a6" [label=<
-          |<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-          |  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
-          |  <tr><td port="0">k</td></tr>
-          |<tr><td port="1">v2</td></tr>
-          |</table>>];
+          |  "Project_1" [label=<
+          |  <table color="lightgray" border="1" cellborder="0" cellspacing="0">
+          |    <tr><td bgcolor="lightgray" port="nodeName"><i>Project_1</i></td></tr>
+          |    <tr><td port="0">k</td></tr>
+          |  <tr><td port="1">v1</td></tr>
+          |  </table>>];
           |
-          |"Project_48ac962" [label=<
-          |<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-          |  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
-          |  <tr><td port="0">k</td></tr>
-          |<tr><td port="1">v1</td></tr>
-          |</table>>];
+          |  "Project_3" [label=<
+          |  <table color="lightgray" border="1" cellborder="0" cellspacing="0">
+          |    <tr><td bgcolor="lightgray" port="nodeName"><i>Project_3</i></td></tr>
+          |    <tr><td port="0">k</td></tr>
+          |  <tr><td port="1">v2</td></tr>
+          |  </table>>];
           |
-          |"Project_6525f15" [label=<
-          |<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-          |  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
-          |  <tr><td port="0">k</td></tr>
-          |<tr><td port="1">v1</td></tr>
-          |<tr><td port="2">v2</td></tr>
-          |</table>>];
+          |  "Project_5" [label=<
+          |  <table color="lightgray" border="1" cellborder="0" cellspacing="0">
+          |    <tr><td bgcolor="lightgray" port="nodeName"><i>Project_5</i></td></tr>
+          |    <tr><td port="0">k</td></tr>
+          |  <tr><td port="1">v1</td></tr>
+          |  <tr><td port="2">v2</td></tr>
+          |  </table>>];
           |
-          |"query_503252289" [color="black" label=<
-          |<table>
-          |  <tr><td bgcolor="black" port="nodeName"><i><font color="white">query_503252289</font></i></td></tr>
-          |  <tr><td port="0">k</td></tr>
-          |<tr><td port="1">sum((v1 + v2))</td></tr>
-          |</table>>];
+          |  "query_ab932k2" [color="black" label=<
+          |  <table>
+          |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">query_ab932k2</font></i></td></tr>
+          |    <tr><td port="0">k</td></tr>
+          |  <tr><td port="1">sum((v1 + v2))</td></tr>
+          |  </table>>];
           |
-          |"Aggregate_8b27a1a":0 -> "query_503252289":0;
-          |"Aggregate_8b27a1a":1 -> "query_503252289":1;
-          |"Join_Inner_2443249":0 -> "Project_6525f15":0;
-          |"Join_Inner_2443249":1 -> "Project_6525f15":1;
-          |"Join_Inner_2443249":3 -> "Project_6525f15":2;
-          |"LocalRelation_d7e3c14":0 -> "Project_25d88a6":0;
-          |"LocalRelation_d7e3c14":1 -> "Project_25d88a6":1;
-          |"LocalRelation_e15d77d":0 -> "Project_48ac962":0;
-          |"LocalRelation_e15d77d":1 -> "Project_48ac962":1;
-          |"Project_25d88a6":0 -> "Join_Inner_2443249":2;
-          |"Project_25d88a6":1 -> "Join_Inner_2443249":3;
-          |"Project_48ac962":0 -> "Join_Inner_2443249":0;
-          |"Project_48ac962":1 -> "Join_Inner_2443249":1;
-          |"Project_6525f15":0 -> "Aggregate_8b27a1a":0;
-          |"Project_6525f15":1 -> "Aggregate_8b27a1a":1;
-          |"Project_6525f15":2 -> "Aggregate_8b27a1a":1;
+          |  "Aggregate_6":0 -> "query_ab932k2":0;
+          |  "Aggregate_6":1 -> "query_ab932k2":1;
+          |  "Join_Inner_4":0 -> "Project_5":0;
+          |  "Join_Inner_4":1 -> "Project_5":1;
+          |  "Join_Inner_4":3 -> "Project_5":2;
+          |  "LocalRelation_0":0 -> "Project_1":0;
+          |  "LocalRelation_0":1 -> "Project_1":1;
+          |  "LocalRelation_2":0 -> "Project_3":0;
+          |  "LocalRelation_2":1 -> "Project_3":1;
+          |  "Project_1":0 -> "Join_Inner_4":0;
+          |  "Project_1":1 -> "Join_Inner_4":1;
+          |  "Project_3":0 -> "Join_Inner_4":2;
+          |  "Project_3":1 -> "Join_Inner_4":3;
+          |  "Project_5":0 -> "Aggregate_6":0;
+          |  "Project_5":1 -> "Aggregate_6":1;
+          |  "Project_5":2 -> "Aggregate_6":1;
           |}
         """.stripMargin)
 
@@ -133,34 +133,34 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession
       checkOutputString(contractedFlowString,
         """
           |digraph {
-          |  graph [pad="0.5" nodesep="0.5" ranksep="1" fontname="Helvetica" rankdir=LR];
-          |  node [shape=plaintext]
+          |   graph [pad="0.5" nodesep="0.5" ranksep="1" fontname="Helvetica" rankdir=LR];
+          |   node [shape=plaintext]
           |
-          |"LocalRelation_8526208" [color="black" label=<
-          |<table>
-          |  <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation</font></i></td></tr>
-          |  <tr><td port="0">k</td></tr>
-          |<tr><td port="1">v</td></tr>
-          |</table>>];
+          |  "LocalRelation_0" [color="black" label=<
+          |  <table>
+          |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation_0</font></i></td></tr>
+          |    <tr><td port="0">k</td></tr>
+          |  <tr><td port="1">v</td></tr>
+          |  </table>>];
           |
-          |"LocalRelation_e2a75c9" [color="black" label=<
-          |<table>
-          |  <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation</font></i></td></tr>
-          |  <tr><td port="0">k</td></tr>
-          |<tr><td port="1">v</td></tr>
-          |</table>>];
+          |  "LocalRelation_1" [color="black" label=<
+          |  <table>
+          |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation_1</font></i></td></tr>
+          |    <tr><td port="0">k</td></tr>
+          |  <tr><td port="1">v</td></tr>
+          |  </table>>];
           |
-          |"query_503252289" [color="black" label=<
-          |<table>
-          |  <tr><td bgcolor="black" port="nodeName"><i><font color="white">query_503252289</font></i></td></tr>
-          |  <tr><td port="0">k</td></tr>
-          |<tr><td port="1">sum((v1 + v2))</td></tr>
-          |</table>>];
+          |  "query_ab932k2" [color="black" label=<
+          |  <table>
+          |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">query_ab932k2</font></i></td></tr>
+          |    <tr><td port="0">k</td></tr>
+          |  <tr><td port="1">sum((v1 + v2))</td></tr>
+          |  </table>>];
           |
-          |"LocalRelation_8526208":0 -> "query_503252289":0;
-          |"LocalRelation_8526208":1 -> "query_503252289":1;
-          |"LocalRelation_e2a75c9":0 -> "query_503252289":0;
-          |"LocalRelation_e2a75c9":1 -> "query_503252289":1;
+          |  "LocalRelation_0":0 -> "query_ab932k2":0;
+          |  "LocalRelation_0":1 -> "query_ab932k2":1;
+          |  "LocalRelation_1":0 -> "query_ab932k2":0;
+          |  "LocalRelation_1":1 -> "query_ab932k2":1;
           |}
         """.stripMargin)
     }
@@ -287,31 +287,31 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession
           |  graph [pad="0.5" nodesep="0.5" ranksep="1" fontname="Helvetica" rankdir=LR];
           |  node [shape=plaintext]
           |
-          |"Aggregate_8aa0406" [label=<
-          |<table color="lightgray" border="1" cellborder="0" cellspacing="0">
-          |  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
-          |  <tr><td port="0">k</td></tr>
-          |<tr><td port="1">sum(v)</td></tr>
-          |</table>>];
+          |  "Aggregate_1" [label=<
+          |  <table color="lightgray" border="1" cellborder="0" cellspacing="0">
+          |    <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate_1</i></td></tr>
+          |    <tr><td port="0">k</td></tr>
+          |  <tr><td port="1">sum(v)</td></tr>
+          |  </table>>];
           |
-          |"LocalRelation_29641cd" [color="black" label=<
-          |<table>
-          |  <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation</font></i></td></tr>
-          |  <tr><td port="0">k</td></tr>
-          |<tr><td port="1">v</td></tr>
-          |</table>>];
+          |  "LocalRelation_0" [color="black" label=<
+          |  <table>
+          |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">LocalRelation_0</font></i></td></tr>
+          |    <tr><td port="0">k</td></tr>
+          |  <tr><td port="1">v</td></tr>
+          |  </table>>];
           |
-          |"query_1507249519" [color="black" label=<
-          |<table>
-          |  <tr><td bgcolor="black" port="nodeName"><i><font color="white">query_1507249519</font></i></td></tr>
-          |  <tr><td port="0">k</td></tr>
-          |<tr><td port="1">sum(v)</td></tr>
-          |</table>>];
+          |  "query_kfjk23d" [color="black" label=<
+          |  <table>
+          |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">query_kfjk23d</font></i></td></tr>
+          |    <tr><td port="0">k</td></tr>
+          |  <tr><td port="1">sum(v)</td></tr>
+          |  </table>>];
           |
-          |"Aggregate_8aa0406":0 -> "query_1507249519":0;
-          |"Aggregate_8aa0406":1 -> "query_1507249519":1;
-          |"LocalRelation_29641cd":0 -> "Aggregate_8aa0406":0;
-          |"LocalRelation_29641cd":1 -> "Aggregate_8aa0406":1;
+          |  "Aggregate_1":0 -> "query_kfjk23d":0;
+          |  "Aggregate_1":1 -> "query_kfjk23d":1;
+          |  "LocalRelation_0":0 -> "Aggregate_1":0;
+          |  "LocalRelation_0":1 -> "Aggregate_1":1;
           |}
         """.stripMargin)
     }

@@ -18,6 +18,9 @@
 package org.apache.spark.sql.flow
 
 import java.security.MessageDigest
+import java.sql.Timestamp
+import java.time.format.DateTimeFormatter
+import java.util.TimeZone
 
 import scala.collection.mutable
 
@@ -42,14 +45,16 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     plan: LogicalPlan,
     nodeMap: mutable.Map[String, SQLFlowGraphNode]): Seq[SQLFlowGraphEdge]
 
-  def planToSQLFlow(plan: LogicalPlan): (Seq[SQLFlowGraphNode], Seq[SQLFlowGraphEdge]) = {
+  def planToSQLFlow(plan: LogicalPlan, flowName: Option[String] = None)
+    : (Seq[SQLFlowGraphNode], Seq[SQLFlowGraphEdge]) = {
     val nodeMap = mutable.Map[String, SQLFlowGraphNode]()
-    val topNodeName = s"query_${Math.abs(plan.semanticHash())}"
+    val dstUniqId = s"query_${nodeUniqueId()}"
+    val dstNodeName = flowName.getOrElse(s"query_${Math.abs(plan.semanticHash())}")
     val outputAttrNames = plan.output.map(_.name)
     val schema = plan.schema.toDDL
-    val endNode = generateQueryNode(outputAttrNames, topNodeName, topNodeName, schema)
-    val edges = collectEdges(topNodeName, plan, nodeMap)
-    (endNode +: nodeMap.values.toSeq, edges)
+    val dstNode = generateQueryNode(outputAttrNames, dstUniqId, dstNodeName, schema)
+    val edges = collectEdges(dstUniqId, plan, nodeMap)
+    (dstNode +: nodeMap.values.toSeq, edges)
   }
 
   def catalogToSQLFlow(session: SparkSession): (Seq[SQLFlowGraphNode], Seq[SQLFlowGraphEdge]) = {
@@ -225,35 +230,92 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
       outputAttrNames: Seq[String],
       uniqId: String,
       nodeName: String,
-      schema: String,
+      schemaDDL: String,
       isCached: Boolean = false): SQLFlowGraphNode = {
-    SQLFlowGraphNode(uniqId, nodeName, outputAttrNames, schema, GraphNodeType.TableNode, isCached)
+    SQLFlowGraphNode(
+      uniqId,
+      nodeName,
+      outputAttrNames,
+      schemaDDL,
+      GraphNodeType.TableNode,
+      isCached)
   }
 
   protected def generateViewNode(
       outputAttrNames: Seq[String],
       uniqId: String,
       nodeName: String,
-      schema: String,
+      schemaDDL: String,
       isCached: Boolean = false): SQLFlowGraphNode = {
-    SQLFlowGraphNode(uniqId, nodeName, outputAttrNames, schema, GraphNodeType.ViewNode, isCached)
+    SQLFlowGraphNode(
+      uniqId,
+      nodeName,
+      outputAttrNames,
+      schemaDDL,
+      GraphNodeType.ViewNode,
+      isCached)
   }
 
   protected def generatePlanNode(
       outputAttrNames: Seq[String],
       uniqId: String,
       nodeName: String,
-      schema: String,
+      schemaDDL: String,
       isCached: Boolean = false): SQLFlowGraphNode = {
-    SQLFlowGraphNode(uniqId, nodeName, outputAttrNames, schema, GraphNodeType.PlanNode, isCached)
+    SQLFlowGraphNode(
+      uniqId,
+      nodeName,
+      outputAttrNames,
+      schemaDDL,
+      GraphNodeType.PlanNode,
+      isCached)
   }
 
   protected def generateQueryNode(
       outputAttrNames: Seq[String],
       uniqId: String,
       nodeName: String,
-      schema: String): SQLFlowGraphNode = {
-    SQLFlowGraphNode(uniqId, nodeName, outputAttrNames, schema, GraphNodeType.QueryNode, false)
+      schemaDDL: String): SQLFlowGraphNode = {
+    SQLFlowGraphNode(
+      uniqId,
+      nodeName,
+      outputAttrNames,
+      schemaDDL,
+      GraphNodeType.QueryNode,
+      false)
+  }
+
+  private def toUTC(t: Long): String = {
+    val zoneId = TimeZone.getTimeZone( "UTC" ).toZoneId
+    new Timestamp(t).toLocalDateTime.atZone(zoneId).format(DateTimeFormatter.ISO_INSTANT)
+  }
+
+  private def getCreateTime(p: LogicalPlan): Option[String] = p match {
+    case r: LogicalRelation if r.catalogTable.isDefined =>
+      Some(toUTC(r.catalogTable.get.createTime))
+    case r: HiveTableRelation =>
+      Some(toUTC(r.tableMeta.createTime))
+    case _ =>
+      None
+  }
+
+  private def getStatsFromLeafPlan(p: LogicalPlan): Seq[(String, String)] = p match {
+    case _: LogicalRelation | _: HiveTableRelation =>
+      val stats = mutable.ArrayBuffer[(String, String)]()
+      val planStats = p.asInstanceOf[LeafNode].computeStats()
+      stats += "sizeInBytes" -> s"${planStats.sizeInBytes}"
+      planStats.rowCount.foreach { cnt =>
+        stats += "rowCount" -> s"$cnt"
+      }
+      stats.toSeq
+    case _ =>
+      Nil
+  }
+
+  private def setPlanPropsIn(node: SQLFlowGraphNode, p: LogicalPlan): Unit = {
+    getCreateTime(p).foreach { t => node.props += "createTime" -> t }
+    getStatsFromLeafPlan(p).foreach { kv => node.props += kv }
+    node.props ++= Map("semanticHash" -> s"${p.semanticHash}")
   }
 
   protected def generateGraphNode(
@@ -262,15 +324,17 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
       nodeName: String,
       isCached: Boolean): SQLFlowGraphNode = {
     val outputAttrNames = p.output.map(_.name)
-    val schema = p.schema.toDDL
-    p match {
+    val schemaDDL = p.schema.toDDL
+    val graphNode = p match {
       case _: LocalRelation | _: LogicalRelation | _: InMemoryRelation | _: HiveTableRelation =>
-        generateTableNode(outputAttrNames, uniqId, nodeName, schema, isCached)
+        generateTableNode(outputAttrNames, uniqId, nodeName, schemaDDL, isCached)
       case _: View | _: ViewNode | _: TempViewNode =>
-        generateViewNode(outputAttrNames, uniqId, nodeName, schema, isCached)
+        generateViewNode(outputAttrNames, uniqId, nodeName, schemaDDL, isCached)
       case _ =>
-        generatePlanNode(outputAttrNames, uniqId, nodeName, schema, isCached)
+        generatePlanNode(outputAttrNames, uniqId, nodeName, schemaDDL, isCached)
     }
+    setPlanPropsIn(graphNode, p)
+    graphNode
   }
 }
 

@@ -28,7 +28,7 @@ trait SQLFlowTestUtils {
 
   private def normalize(s: String): String = {
     s.replaceAll("_[a-z0-9]{7}", "_x")
-      .replaceAll("_\\d+", "_x")
+      .replaceAll("_[0-9]{1,2}", "_x")
   }
 
   private def extractEdgesFrom(s: String, edgeRegex: String): Set[String] = {
