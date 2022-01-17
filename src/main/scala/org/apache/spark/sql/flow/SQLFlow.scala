@@ -48,7 +48,7 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
   def planToSQLFlow(plan: LogicalPlan, flowName: Option[String] = None)
     : (Seq[SQLFlowGraphNode], Seq[SQLFlowGraphEdge]) = {
     val nodeMap = mutable.Map[String, SQLFlowGraphNode]()
-    val dstUniqId = s"query_${nodeUniqueId()}"
+    val dstUniqId = s"query_${SQLFlow.nodeUniqueId()}"
     val dstNodeName = flowName.getOrElse(s"query_${Math.abs(plan.semanticHash())}")
     val outputAttrNames = plan.output.map(_.name)
     val schema = plan.schema.toDDL
@@ -189,20 +189,8 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
     session.sharedState.cacheManager.lookupCachedData(plan).isDefined
   }
 
-  private def nodeUniqueId(): String = {
-    val md = MessageDigest.getInstance("SHA-256")
-    val seed = RandomStringUtils.random(128, true, true)
-    md.update(seed.getBytes)
-    val bytes = md.digest()
-    val sb = new mutable.StringBuilder()
-    bytes.foreach { b =>
-      sb.append("%02x".format(b & 0xff))
-    }
-    sb.toString.substring(0, 7)
-  }
-
   protected def getNodeNameWithId(name: String): String = {
-    s"${name}_${nodeUniqueId()}"
+    s"${name}_${SQLFlow.nodeUniqueId()}"
   }
 
   private def joinTypeName(jt: JoinType): String = jt match {
@@ -315,7 +303,7 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
   private def setPlanPropsIn(node: SQLFlowGraphNode, p: LogicalPlan): Unit = {
     getCreateTime(p).foreach { t => node.props += "createTime" -> t }
     getStatsFromLeafPlan(p).foreach { kv => node.props += kv }
-    node.props ++= Map("semanticHash" -> s"${p.semanticHash}")
+    node.props ++= Map("semanticHash" -> SQLFlow.semanticHash(p))
   }
 
   protected def generateGraphNode(
@@ -891,6 +879,28 @@ object SQLFlow extends Logging {
       logWarning("Active SparkSession not found")
       (Nil, Nil)
     }
+  }
+
+  private def computeDigest(seed: String): String = {
+    val md = MessageDigest.getInstance("SHA-256")
+    md.update(seed.getBytes)
+    val bytes = md.digest()
+    val sb = new mutable.StringBuilder()
+    bytes.foreach { b =>
+      sb.append("%02x".format(b & 0xff))
+    }
+    sb.toString
+  }
+
+  private[flow] def nodeUniqueId(): String = {
+    val seed = RandomStringUtils.random(128, true, true)
+    computeDigest(seed).substring(0, 7)
+  }
+
+  // TODO: Revisit this; we need to return same hash values
+  // between different JVM instances.
+  private [flow] def semanticHash(p: LogicalPlan): String = {
+    computeDigest(p.canonicalized.toString).substring(0, 7)
   }
 
   def saveAsSQLFlow(
