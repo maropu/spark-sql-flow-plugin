@@ -149,9 +149,11 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
         case _ => s"""uid = "${n.uniqueId}""""
       })
     }.toMap
-    edges.foreach { e =>
-      val (fromLabel, fromPred) = nodeMap(e.fromId)
-      val (toLabel, toPred) = nodeMap(e.toId)
+
+    val compactEdges = edges.map { e => (e.fromId, e.toId) }.distinct
+    compactEdges.foreach { case (fromId, toId) =>
+      val (fromLabel, fromPred) = nodeMap(fromId)
+      val (toLabel, toPred) = nodeMap(toId)
       tx.run(
         s"""
            |MATCH (src:$fromLabel), (dst:$toLabel)
