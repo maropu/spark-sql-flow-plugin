@@ -100,9 +100,21 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
     withTx(s) { tx =>
       tx.run(
         s"""
-           |CREATE CONSTRAINT unique_node_constraint IF NOT EXISTS
+           |CREATE CONSTRAINT unique_table_node_constraint IF NOT EXISTS
            |FOR (n:Table)
            |REQUIRE n.uid IS UNIQUE
+         """.stripMargin)
+      tx.run(
+        s"""
+           |CREATE CONSTRAINT unique_view_node_constraint IF NOT EXISTS
+           |FOR (n:View)
+           |REQUIRE n.uid IS UNIQUE
+         """.stripMargin)
+      tx.run(
+        s"""
+           |CREATE CONSTRAINT unique_plan_node_constraint IF NOT EXISTS
+           |FOR (n:Plan)
+           |REQUIRE n.semanticHash IS UNIQUE
          """.stripMargin)
     }
   } catch {
@@ -131,14 +143,19 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
       tx: Transaction,
       nodes: Seq[SQLFlowGraphNode],
       edges: Seq[SQLFlowGraphEdge]): Unit = {
-    val nodeLabelMap = nodes.map { n =>
-      (n.uniqueId, genLabel(n))
+    val nodeMap = nodes.map { n =>
+      n.uniqueId -> (genLabel(n), n.tpe match {
+        case GraphNodeType.PlanNode => s"""semanticHash = "${n.props("semanticHash")}""""
+        case _ => s"""uid = "${n.uniqueId}""""
+      })
     }.toMap
     edges.foreach { e =>
+      val (fromLabel, fromPred) = nodeMap(e.fromId)
+      val (toLabel, toPred) = nodeMap(e.toId)
       tx.run(
         s"""
-           |MATCH (src:${nodeLabelMap(e.fromId)}), (dst:${nodeLabelMap(e.toId)})
-           |WHERE src.uid = "${e.fromId}" AND dst.uid = "${e.toId}"
+           |MATCH (src:$fromLabel), (dst:$toLabel)
+           |WHERE src.$fromPred AND dst.$toPred
            |MERGE (src)-[t:transformInto]->(dst)
            |RETURN type(t)
          """.stripMargin)
@@ -172,10 +189,8 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
       options: Map[String, String]): Unit = {
     withSession { s =>
       tryToCreateConstraints(s)
-      val (tableNodes, otherNodes) = nodes.partition(_.tpe == GraphNodeType.TableNode)
-      tryToCreateNodes(s, tableNodes)
+      tryToCreateNodes(s, nodes)
       withTx(s) { tx =>
-        createNodes(tx, otherNodes)
         createEdges(tx, nodes, edges)
       }
     }
