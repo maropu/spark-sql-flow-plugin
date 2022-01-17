@@ -100,15 +100,15 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession
           |  <tr><td port="2">v2</td></tr>
           |  </table>>];
           |
-          |  "query_1111919741" [color="black" label=<
+          |  "query_ab932k2" [color="black" label=<
           |  <table>
-          |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">query_1111919741</font></i></td></tr>
+          |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">query_ab932k2</font></i></td></tr>
           |    <tr><td port="0">k</td></tr>
           |  <tr><td port="1">sum((v1 + v2))</td></tr>
           |  </table>>];
           |
-          |  "Aggregate_6":0 -> "query_1111919741":0;
-          |  "Aggregate_6":1 -> "query_1111919741":1;
+          |  "Aggregate_6":0 -> "query_ab932k2":0;
+          |  "Aggregate_6":1 -> "query_ab932k2":1;
           |  "Join_Inner_4":0 -> "Project_5":0;
           |  "Join_Inner_4":1 -> "Project_5":1;
           |  "Join_Inner_4":3 -> "Project_5":2;
@@ -150,17 +150,17 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession
           |  <tr><td port="1">v</td></tr>
           |  </table>>];
           |
-          |  "query_1111919741" [color="black" label=<
+          |  "query_ab932k2" [color="black" label=<
           |  <table>
-          |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">query_1111919741</font></i></td></tr>
+          |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">query_ab932k2</font></i></td></tr>
           |    <tr><td port="0">k</td></tr>
           |  <tr><td port="1">sum((v1 + v2))</td></tr>
           |  </table>>];
           |
-          |  "LocalRelation_0":0 -> "query_1111919741":0;
-          |  "LocalRelation_0":1 -> "query_1111919741":1;
-          |  "LocalRelation_1":0 -> "query_1111919741":0;
-          |  "LocalRelation_1":1 -> "query_1111919741":1;
+          |  "LocalRelation_0":0 -> "query_ab932k2":0;
+          |  "LocalRelation_0":1 -> "query_ab932k2":1;
+          |  "LocalRelation_1":0 -> "query_ab932k2":0;
+          |  "LocalRelation_1":1 -> "query_ab932k2":1;
           |}
         """.stripMargin)
     }
@@ -301,15 +301,15 @@ class SQLFlowSuite extends QueryTest with SharedSparkSession
           |  <tr><td port="1">v</td></tr>
           |  </table>>];
           |
-          |  "query_133579176" [color="black" label=<
+          |  "query_kfjk23d" [color="black" label=<
           |  <table>
-          |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">query_133579176</font></i></td></tr>
+          |    <tr><td bgcolor="black" port="nodeName"><i><font color="white">query_kfjk23d</font></i></td></tr>
           |    <tr><td port="0">k</td></tr>
           |  <tr><td port="1">sum(v)</td></tr>
           |  </table>>];
           |
-          |  "Aggregate_1":0 -> "query_133579176":0;
-          |  "Aggregate_1":1 -> "query_133579176":1;
+          |  "Aggregate_1":0 -> "query_kfjk23d":0;
+          |  "Aggregate_1":1 -> "query_kfjk23d":1;
           |  "LocalRelation_0":0 -> "Aggregate_1":0;
           |  "LocalRelation_0":1 -> "Aggregate_1":1;
           |}

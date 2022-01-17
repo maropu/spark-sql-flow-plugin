@@ -17,6 +17,8 @@
 
 package org.apache.spark.sql.flow
 
+import java.time.Instant
+
 import scala.util.control.NonFatal
 
 import org.apache.spark.internal.Logging
@@ -29,6 +31,17 @@ case class SQLFlowListener(graphSink: BaseGraphStreamSink, contracted: Boolean =
 
   override def onFailure(funcName: String, qe: QueryExecution, exception: Exception): Unit = {}
 
+  private def setPropsInDstNode(
+      nodes: Seq[SQLFlowGraphNode],
+      dstNodeName: String,
+      props: Map[String, String]): Unit = {
+    nodes.find(_.ident == dstNodeName).map { dstNode =>
+      dstNode.props ++= props
+    }.getOrElse {
+      logWarning(s"Query output node '$dstNodeName' not found in data lineage")
+    }
+  }
+
   override def onSuccess(funcName: String, qe: QueryExecution, durationNs: Long): Unit = try {
     val optimized = qe.optimizedPlan
     optimized match {
@@ -36,8 +49,13 @@ case class SQLFlowListener(graphSink: BaseGraphStreamSink, contracted: Boolean =
         // TODO: Tracks data lineage between table/views via INSERT queries (Issue#5)
       case _ =>
         val sqlFlow = if (contracted) SQLContractedFlow() else SQLFlow()
-        val (nodes, edges) = sqlFlow.planToSQLFlow(optimized)
-        graphSink.append(nodes, edges, Map.empty[String, String])
+        val dstNodeName = s"query_${Math.abs(qe.hashCode)}"
+        val (nodes, edges) = sqlFlow.planToSQLFlow(optimized, Some(dstNodeName))
+        setPropsInDstNode(nodes, dstNodeName, Map(
+          "durationMs" -> s"${durationNs / (1000 * 1000)}",
+          "timestamp" -> s"${Instant.now()}"
+        ))
+        graphSink.append(nodes, edges, Map.empty)
     }
   } catch {
     case NonFatal(e) =>
