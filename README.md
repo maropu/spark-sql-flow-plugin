@@ -214,6 +214,15 @@ scala> val sink = Neo4jAuraSink("neo4j+s://<your Neo4j database uri>", "<user na
 scala> spark.sqlContext.listenerManager.register(SQLFlowListener(sink))
 ```
 
+To load the listener when launching a Spark cluster, you can use Spark configurations:
+
+```
+./bin/spark-shell --conf spark.sql.queryExecutionListeners=org.apache.spark.sql.flow.Neo4jAuraSQLFlowListener \
+  --conf spark.sql.flow.Neo4jAuraSink.uri=neo4j+s://<your Neo4j database uri> \
+  --conf spark.sql.flow.Neo4jAuraSink.user=<user name> \
+  --conf spark.sql.flow.Neo4jAuraSink.password=<password>
+```
+
 ## Similar Technologies
 
  - Datafold, Column-level lineage, https://www.datafold.com/column-level-lineage

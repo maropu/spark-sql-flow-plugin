@@ -21,13 +21,16 @@ import java.time.Instant
 
 import scala.util.control.NonFatal
 
+import org.apache.spark.{SparkConf, SparkException}
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql.catalyst.plans.logical.Command
 import org.apache.spark.sql.execution.QueryExecution
+import org.apache.spark.sql.flow.sink.Neo4jAuraSink
 import org.apache.spark.sql.util.QueryExecutionListener
 
-case class SQLFlowListener(graphSink: BaseGraphStreamSink, contracted: Boolean = false)
-  extends QueryExecutionListener with Logging {
+abstract class BaseSQLFlowListener extends QueryExecutionListener with Logging {
+  def graphSink: BaseGraphStreamSink
+  def contracted: Boolean
 
   override def onFailure(funcName: String, qe: QueryExecution, exception: Exception): Unit = {}
 
@@ -61,4 +64,27 @@ case class SQLFlowListener(graphSink: BaseGraphStreamSink, contracted: Boolean =
     case NonFatal(e) =>
       logWarning(s"Failed to append data lineage because: ${e.getMessage}")
   }
+}
+
+case class SQLFlowListener(graphSink: BaseGraphStreamSink, contracted: Boolean = false)
+  extends BaseSQLFlowListener
+
+case class Neo4jAuraSQLFlowListener(conf: SparkConf) extends BaseSQLFlowListener {
+  private val configPrefix = s"spark.sql.flow.${classOf[Neo4jAuraSink].getSimpleName}"
+  override val graphSink: BaseGraphStreamSink = {
+    def getConf(key: String) = {
+      if (!conf.contains(key)) {
+        throw new SparkException(s"To load ${this.getClass.getSimpleName}, " +
+          s"`$key` needs to be specified")
+      } else {
+        conf.get(key)
+      }
+    }
+    val uri = getConf(s"$configPrefix.uri")
+    val user = getConf(s"$configPrefix.user")
+    val password = getConf(s"$configPrefix.password")
+    Neo4jAuraSink(uri, user, password)
+  }
+  override val contracted: Boolean =
+    conf.getBoolean(s"$configPrefix.contracted", false)
 }
