@@ -155,8 +155,6 @@ abstract class GraphFileBatchSink extends BaseGraphBatchSink with BaseGraphForma
   }
 }
 
-// TODO: Supports more formats to export data lineage into other systems,
-// e.g., Apache Atlas, neo4j, ...
 case class GraphVizSink(imgFormat: String = "svg") extends GraphFileBatchSink {
   override val fileSuffix: String = "dot"
 
