@@ -17,8 +17,22 @@
 
 package org.apache.spark.sql.flow
 
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.util.QueryExecutionListener
 
 trait SQLFlowTestUtils {
+
+  protected def withListener(listener: QueryExecutionListener)(f: => Unit): Unit = {
+    val spark = SparkSession.getActiveSession.getOrElse {
+      throw new IllegalStateException("Active SparkSession not found")
+    }
+    try {
+      spark.listenerManager.register(listener)
+      f
+    } finally {
+      spark.listenerManager.unregister(listener)
+    }
+  }
 
   protected def getOutputAsString(f: => Unit): String = {
     val output = new java.io.ByteArrayOutputStream()

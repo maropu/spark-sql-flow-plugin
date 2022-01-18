@@ -20,9 +20,10 @@ package org.apache.spark.sql.flow.sink
 import java.io.File
 
 import org.apache.spark.TestUtils
-import org.apache.spark.sql.QueryTest
+import org.apache.spark.sql.{QueryTest, Row}
+import org.apache.spark.sql.catalyst.util._
 import org.apache.spark.sql.flow._
-import org.apache.spark.sql.test.{SharedSparkSession, SQLTestUtils}
+import org.apache.spark.sql.test.{SQLTestUtils, SharedSparkSession}
 
 class GraphSinkSuite extends QueryTest with SharedSparkSession
   with SQLTestUtils with SQLFlowTestUtils {
@@ -60,6 +61,110 @@ class GraphSinkSuite extends QueryTest with SharedSparkSession
           val imgFile = new File(s"$outputPath/sqlflow.$imageFormat")
           assert(imgFile.exists())
         }
+      }
+    }
+  }
+
+  private def checkGraphVizFormatString(actual: String, expected: String): Unit = {
+    val edgePattern = """".+":.+ -> ".+":.+"""
+    super.checkOutputString(edgePattern)(actual, expected)
+  }
+
+  test("graphviz format - stream") {
+    withTempDir { tmpDir =>
+      val rootDirPath = tmpDir.getAbsolutePath
+      withListener(SQLFlowListener(GraphVizSink(), options = Map("outputDirPath" -> rootDirPath))) {
+        val df1 = spark.range(1).selectExpr("id as k", "id as v")
+        checkAnswer(df1, Row(0, 0) :: Nil)
+        spark.sparkContext.listenerBus.waitUntilEmpty()
+        assert(new File(rootDirPath).list().length === 1)
+
+        val df2 = spark.range(1)
+          .selectExpr("id as k", "id as v")
+          .groupBy("k")
+          .count()
+        checkAnswer(df2, Row(0, 1) :: Nil)
+        spark.sparkContext.listenerBus.waitUntilEmpty()
+        assert(new File(rootDirPath).list().length === 2)
+
+        val Seq(outputDirPath1, outputDirPath2) = new File(rootDirPath).list().sorted.toSeq
+        val outputPath1 = new File(new File(rootDirPath, outputDirPath1), "sqlflow.dot")
+        assert(outputPath1.exists())
+        val flowString1 = fileToString(outputPath1)
+        checkGraphVizFormatString(flowString1,
+          s"""
+             |digraph {
+             |  graph [pad="0.5" nodesep="0.5" ranksep="1" fontname="Helvetica" rankdir=LR];
+             |  node [shape=plaintext]
+             |
+             |"Project_e2b137e" [label=<
+             |<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+             |  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+             |  <tr><td port="0">k</td></tr>
+             |<tr><td port="1">v</td></tr>
+             |</table>>];
+             |
+             |"Range_7018cf1" [label=<
+             |<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+             |  <tr><td bgcolor="lightgray" port="nodeName"><i>Range</i></td></tr>
+             |  <tr><td port="0">id</td></tr>
+             |</table>>];
+             |
+             |"query_7b0731c" [color="black" label=<
+             |<table>
+             |  <tr><td bgcolor="black" port="nodeName"><i><font color="white">query_404581623</font></i></td></tr>
+             |  <tr><td port="0">k</td></tr>
+             |<tr><td port="1">v</td></tr>
+             |</table>>];
+             |
+             |"Project_e2b137e":0 -> "query_7b0731c":0;
+             |"Project_e2b137e":1 -> "query_7b0731c":1;
+             |"Range_7018cf1":0 -> "Project_e2b137e":0;
+             |"Range_7018cf1":0 -> "Project_e2b137e":1;
+             |}
+           """.stripMargin)
+
+        val outputPath2 = new File(new File(rootDirPath, outputDirPath2), "sqlflow.dot")
+        assert(outputPath2.exists())
+        val flowString2 = fileToString(outputPath2)
+        checkGraphVizFormatString(flowString2,
+          s"""
+             |digraph {
+             |  graph [pad="0.5" nodesep="0.5" ranksep="1" fontname="Helvetica" rankdir=LR];
+             |  node [shape=plaintext]
+             |
+             |"Aggregate_09b069b" [label=<
+             |<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+             |  <tr><td bgcolor="lightgray" port="nodeName"><i>Aggregate</i></td></tr>
+             |  <tr><td port="0">k</td></tr>
+             |<tr><td port="1">count</td></tr>
+             |</table>>];
+             |
+             |"Project_8f8c331" [label=<
+             |<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+             |  <tr><td bgcolor="lightgray" port="nodeName"><i>Project</i></td></tr>
+             |  <tr><td port="0">k</td></tr>
+             |</table>>];
+             |
+             |"Range_b1033f6" [label=<
+             |<table color="lightgray" border="1" cellborder="0" cellspacing="0">
+             |  <tr><td bgcolor="lightgray" port="nodeName"><i>Range</i></td></tr>
+             |  <tr><td port="0">id</td></tr>
+             |</table>>];
+             |
+             |"query_a88630b" [color="black" label=<
+             |<table>
+             |  <tr><td bgcolor="black" port="nodeName"><i><font color="white">query_1122462682</font></i></td></tr>
+             |  <tr><td port="0">k</td></tr>
+             |<tr><td port="1">count</td></tr>
+             |</table>>];
+             |
+             |"Aggregate_09b069b":0 -> "query_a88630b":0;
+             |"Aggregate_09b069b":1 -> "query_a88630b":1;
+             |"Project_8f8c331":0 -> "Aggregate_09b069b":0;
+             |"Range_b1033f6":0 -> "Project_8f8c331":0;
+             |}
+           """.stripMargin)
       }
     }
   }
