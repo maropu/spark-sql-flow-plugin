@@ -6,16 +6,12 @@ on:
       - spark-3.1
 
 jobs:
-  build:
+  tests:
     runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.ref }}
-      cancel-in-progress: true
     strategy:
       fail-fast: false
       matrix:
         java: [1.8, 11]
-        # python: [3.7, 3.8, 3.9, 3.10]
         python: [3.6, 3.7, 3.8]
     env:
       SPARK_LOCAL_IP: localhost
@@ -58,10 +54,6 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y graphviz
       - name: Run tests
-        env:
-          NEO4J_AURADB_URI: ${{ secrets.NEO4J_AURADB_URI}}
-          NEO4J_AURADB_USER: ${{ secrets.NEO4J_AURADB_USER}}
-          NEO4J_AURADB_PASSWD: ${{ secrets.NEO4J_AURADB_PASSWD}}
         run: |
           ./build/mvn -q clean package -DskipTests
           ./build/mvn -q test
@@ -77,4 +69,56 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: unit-tests-log-jdk${{ matrix.java }}-python${{ matrix.python}}
+          path: "./target/unit-tests.log"
+
+  neo4j-tests:
+    runs-on: ubuntu-latest
+    env:
+      JAVA_VERSION: 1.8
+      SPARK_LOCAL_IP: localhost
+      MAVEN_OPTS: -Xmx1g
+    steps:
+      - name: Checkout spark-sql-flow-plugin repository
+        uses: actions/checkout@v2
+        # In order to fetch changed files
+        with:
+          fetch-depth: 0
+      # Cache local repositories. Note that GitHub Actions cache has a 2G limit.
+      - name: Cache Scala, Maven and Zinc
+        uses: actions/cache@v1
+        with:
+          path: build
+          key: build-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            build-
+      - name: Cache Maven local repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ env.JAVA_VERSION }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ env.JAVA_VERSION }}-maven-
+      - name: Install JDK ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+      - name: Run tests
+        env:
+          NEO4J_AURADB_URI: ${{ secrets.NEO4J_AURADB_URI}}
+          NEO4J_AURADB_USER: ${{ secrets.NEO4J_AURADB_USER}}
+          NEO4J_AURADB_PASSWD: ${{ secrets.NEO4J_AURADB_PASSWD}}
+        run: |
+          ./build/mvn -q clean package -DskipTests
+          ./build/mvn -q -Dtest=none -DwildcardSuites=org.apache.spark.sql.flow.sink.Neo4jAuraSinkSuite test
+      - name: Upload test results to report
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results-jdk${{ env.JAVA_VERSION }}-python${{ env.PYTHON_VERSION}}
+          path: "./target/surefire-reports/*.xml"
+      - name: Upload unit tests log files
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: unit-tests-log-jdk${{ env.JAVA_VERSION }}-python${{ env.PYTHON_VERSION}}
           path: "./target/unit-tests.log"
