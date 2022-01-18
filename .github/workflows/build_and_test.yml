@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false
       matrix:
@@ -55,6 +58,10 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y graphviz
       - name: Run tests
+        env:
+          NEO4J_AURADB_URI: ${{ secrets.NEO4J_AURADB_URI}}
+          NEO4J_AURADB_USER: ${{ secrets.NEO4J_AURADB_USER}}
+          NEO4J_AURADB_PASSWD: ${{ secrets.NEO4J_AURADB_PASSWD}}
         run: |
           ./build/mvn -q clean package -DskipTests
           ./build/mvn -q test

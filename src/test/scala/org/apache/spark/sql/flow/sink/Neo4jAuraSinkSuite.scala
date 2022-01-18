@@ -38,8 +38,7 @@ class Neo4jAuraSinkSuite extends QueryTest with SharedSparkSession
     uri != null && user != null && passwd != null
   }
 
-  override def beforeEach(): Unit = {
-    super.beforeEach()
+  private def resetNeo4jState(): Unit = {
     if (runTests) {
       withSession { s =>
         withTx(s) { tx =>
@@ -47,6 +46,11 @@ class Neo4jAuraSinkSuite extends QueryTest with SharedSparkSession
         }
       }
     }
+  }
+
+  override def beforeEach(): Unit = {
+    super.beforeEach()
+    resetNeo4jState()
   }
 
   protected override def test(testName: String, testTags: Tag*)
@@ -79,17 +83,21 @@ class Neo4jAuraSinkSuite extends QueryTest with SharedSparkSession
     }
   }
 
+  private def checkNodeCount(expected: Int): Unit = {
+    withSession { s =>
+      withTx(s) { tx =>
+        val r = tx.run("MATCH (n) RETURN count(*)").single()
+        assert(r.get(0).asInt === expected)
+      }
+    }
+  }
+
   test("neo4j write/read - stream") {
     withListener(SQLFlowListener(Neo4jAuraSink(uri, user, passwd))) {
       val df1 = spark.range(1).selectExpr("id as k", "id as v")
       checkAnswer(df1, Row(0, 0) :: Nil)
       spark.sparkContext.listenerBus.waitUntilEmpty()
-      withSession { s =>
-        withTx(s) { tx =>
-          val r = tx.run("MATCH (n) RETURN count(*)").single()
-          assert(r.get(0).asInt === 3)
-        }
-      }
+      checkNodeCount(3)
 
       val df2 = spark.range(1)
         .selectExpr("id as k", "id as v")
@@ -97,12 +105,7 @@ class Neo4jAuraSinkSuite extends QueryTest with SharedSparkSession
         .count()
       checkAnswer(df2, Row(0, 1) :: Nil)
       spark.sparkContext.listenerBus.waitUntilEmpty()
-      withSession { s =>
-        withTx(s) { tx =>
-          val r = tx.run("MATCH (n) RETURN count(*)").single()
-          assert(r.get(0).asInt === 6)
-        }
-      }
+      checkNodeCount(6)
 
       withSession { s =>
         withTx(s) { tx =>
@@ -124,12 +127,7 @@ class Neo4jAuraSinkSuite extends QueryTest with SharedSparkSession
         .count()
       checkAnswer(df1, Row(0, 1) :: Nil)
       spark.sparkContext.listenerBus.waitUntilEmpty()
-      withSession { s =>
-        withTx(s) { tx =>
-          val r = tx.run("MATCH (n) RETURN count(*)").single()
-          assert(r.get(0).asInt === 4)
-        }
-      }
+      checkNodeCount(4)
 
       val df2 = spark.range(1)
         .selectExpr("id as k", "id as v")
@@ -138,12 +136,7 @@ class Neo4jAuraSinkSuite extends QueryTest with SharedSparkSession
         .where("count = 1")
       checkAnswer(df2, Row(0, 1) :: Nil)
       spark.sparkContext.listenerBus.waitUntilEmpty()
-      withSession { s =>
-        withTx(s) { tx =>
-          val r = tx.run("MATCH (n) RETURN count(*)").single()
-          assert(r.get(0).asInt === 6)
-        }
-      }
+      checkNodeCount(6)
 
       withSession { s =>
         withTx(s) { tx =>
