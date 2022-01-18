@@ -18,9 +18,13 @@
 package org.apache.spark.sql.flow.sink
 
 import java.io.File
+import java.sql.Timestamp
+import java.time.format.DateTimeFormatter
+import java.util.TimeZone
 import java.util.concurrent.LinkedBlockingQueue
 
 import scala.collection.immutable.Stream
+import scala.collection.mutable
 import scala.sys.process._
 import scala.util.Try
 
@@ -29,7 +33,7 @@ import org.apache.commons.io.FileUtils
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql._
 import org.apache.spark.sql.catalyst.util._
-import org.apache.spark.sql.flow.{BaseGraphBatchSink, GraphNodeType, SQLFlowGraphEdge, SQLFlowGraphNode}
+import org.apache.spark.sql.flow.{BaseGraphBatchSink, BaseGraphStreamSink, GraphNodeType, SQLFlowGraphEdge, SQLFlowGraphNode}
 
 /**
  * Using ProcessBuilder.lineStream produces a stream, that uses
@@ -101,7 +105,7 @@ object GraphFileWriter {
       throw new AnalysisException(if (overwrite) {
         s"`overwrite` is set to true, but could not remove output dir path '$dirPath'"
       } else {
-        s"output dir path '$dirPath' already exists"
+        s"Output dir path '$dirPath' already exists"
       })
     }
     stringToFile(new File(outputDir, filename), graphString)
@@ -112,7 +116,7 @@ trait BaseGraphFormat {
   def toGraphString(nodes: Seq[SQLFlowGraphNode], edges: Seq[SQLFlowGraphEdge]): String
 }
 
-object GraphVizFormat extends Logging {
+object GraphVizSink extends Logging {
   private def isCommandAvailable(command: String): Boolean = {
     val attempt = {
       Try(Process(Seq("sh", "-c", s"command -v $command")).run(ProcessLogger(_ => ())).exitValue())
@@ -136,27 +140,41 @@ object GraphVizFormat extends Logging {
 }
 
 abstract class GraphFileBatchSink extends BaseGraphBatchSink with BaseGraphFormat {
-  def fileSuffix: String
+  def filenameSuffix: String
+
+  protected def getFilenamePrefixFrom(options: Map[String, String]): String = {
+    options.getOrElse("filenamePrefix", "sqlflow")
+  }
+
+  protected def getOutputDirPathFrom(options: Map[String, String]): String = {
+    options.getOrElse("outputDirPath", {
+      throw new AnalysisException("`outputDirPath` not specified")
+    })
+  }
+
+  protected def getOverwriteFrom(options: Map[String, String]): Boolean = {
+    options.getOrElse("overwrite", "false").toBoolean
+  }
 
   override def write(
       nodes: Seq[SQLFlowGraphNode],
       edges: Seq[SQLFlowGraphEdge],
       options: Map[String, String]): Unit = {
-    val dirPath = options.getOrElse("outputDirPath", {
-      throw new AnalysisException("`outputDirPath` not specified")
-    })
-    val filenamePrefix = options.getOrElse("filenamePrefix", "sqlflow")
-    val overwrite = options.getOrElse("overwrite", "false").toBoolean
+    val dirPath = getOutputDirPathFrom(options)
+    val filenamePrefix = getFilenamePrefixFrom(options)
+    val overwrite = getOverwriteFrom(options)
     GraphFileWriter.writeTo(
       dirPath,
-      s"$filenamePrefix.$fileSuffix",
+      s"$filenamePrefix.$filenameSuffix",
       toGraphString(nodes, edges),
       overwrite)
   }
 }
 
-case class GraphVizSink(imgFormat: String = "svg") extends GraphFileBatchSink {
-  override val fileSuffix: String = "dot"
+case class GraphVizSink(imgFormat: String = "svg")
+    extends GraphFileBatchSink with BaseGraphStreamSink {
+
+  override val filenameSuffix: String = "dot"
 
   private val cachedNodeColor = "lightblue"
 
@@ -230,18 +248,47 @@ case class GraphVizSink(imgFormat: String = "svg") extends GraphFileBatchSink {
       .replaceAll(">", "&gt;")
   }
 
+  private def tryGenerateImageFile(options: Map[String, String]): Unit = {
+    val dirPath = getOutputDirPathFrom(options)
+    val filenamePrefix = getFilenamePrefixFrom(options)
+    val dotFile = new File(dirPath, s"$filenamePrefix.$filenameSuffix")
+    val dstFile = new File(dirPath, s"$filenamePrefix.$imgFormat").getAbsolutePath
+    GraphVizSink.tryGenerateImageFile(imgFormat, dotFile.getAbsolutePath, dstFile)
+  }
+
   override def write(
       nodes: Seq[SQLFlowGraphNode],
       edges: Seq[SQLFlowGraphEdge],
       options: Map[String, String]): Unit = {
     super.write(nodes, edges, options)
+    tryGenerateImageFile(options)
+  }
 
-    // Moreover, try to generate an image data from a generated graph file
-    val dirPath = options("outputDirPath")
-    val filenamePrefix = options.getOrElse("filenamePrefix", "sqlflow")
-    val dotFile = new File(dirPath, s"$filenamePrefix.$fileSuffix")
-    val dstFile = new File(dirPath, s"$filenamePrefix.$imgFormat").getAbsolutePath
-    GraphVizFormat.tryGenerateImageFile(imgFormat, dotFile.getAbsolutePath, dstFile)
+  private def getCurrentDateTime(): String = {
+    val curTimestamp = new Timestamp(System.currentTimeMillis())
+    val zoneId = TimeZone.getTimeZone( "UTC" ).toZoneId
+    val formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")
+    curTimestamp.toLocalDateTime.atZone(zoneId).format(formatter)
+  }
+
+  override def append(
+      nodes: Seq[SQLFlowGraphNode],
+      edges: Seq[SQLFlowGraphEdge],
+      options: Map[String, String]): Unit = {
+    val rootOutputDir = new File(getOutputDirPathFrom(options))
+    if (!rootOutputDir.exists() && !rootOutputDir.mkdir()) {
+      throw new AnalysisException("Failed to make root output dir " +
+        s"'${rootOutputDir.getAbsolutePath}'")
+    }
+    val outputDir = new File(rootOutputDir, getCurrentDateTime())
+    val writeOptions = {
+      val opts = mutable.Map[String, String]()
+      opts ++= options
+      opts("outputDirPath") = outputDir.getAbsolutePath
+      opts.toMap
+    }
+    super.write(nodes, edges, writeOptions)
+    tryGenerateImageFile(writeOptions)
   }
 }
 
@@ -255,7 +302,7 @@ object AdjacencyListSink extends Logging {
 }
 
 case class AdjacencyListSink(sep: Char = ',') extends GraphFileBatchSink {
-  override val fileSuffix: String = "lst"
+  override val filenameSuffix: String = "lst"
 
   override def toGraphString(nodes: Seq[SQLFlowGraphNode], edges: Seq[SQLFlowGraphEdge]): String = {
     val edgeListSet = edges.map { e => (e.fromId, e.toId) }.toSet

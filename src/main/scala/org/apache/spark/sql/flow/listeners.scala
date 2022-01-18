@@ -31,6 +31,7 @@ import org.apache.spark.sql.util.QueryExecutionListener
 abstract class BaseSQLFlowListener extends QueryExecutionListener with Logging {
   def graphSink: BaseGraphStreamSink
   def contracted: Boolean
+  def options: Map[String, String] = Map.empty
 
   override def onFailure(funcName: String, qe: QueryExecution, exception: Exception): Unit = {}
 
@@ -58,7 +59,7 @@ abstract class BaseSQLFlowListener extends QueryExecutionListener with Logging {
           "durationMs" -> s"${durationNs / (1000 * 1000)}",
           "timestamp" -> s"${Instant.now()}"
         ))
-        graphSink.append(nodes, edges, Map.empty)
+        graphSink.append(nodes, edges, options)
     }
   } catch {
     case NonFatal(e) =>
@@ -66,7 +67,13 @@ abstract class BaseSQLFlowListener extends QueryExecutionListener with Logging {
   }
 }
 
-case class SQLFlowListener(graphSink: BaseGraphStreamSink, contracted: Boolean = false)
+case class SQLFlowListener(
+    graphSink: BaseGraphStreamSink,
+    contracted: Boolean = false,
+    override val options: Map[String, String] = Map.empty)
+  extends BaseSQLFlowListener
+
+case class GraphVizSQLFlowListener(graphSink: BaseGraphStreamSink, contracted: Boolean = false)
   extends BaseSQLFlowListener
 
 case class Neo4jAuraSQLFlowListener(conf: SparkConf) extends BaseSQLFlowListener {
