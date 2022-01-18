@@ -17,14 +17,18 @@
 
 package org.apache.spark.sql.flow.sink
 
+import scala.collection.JavaConverters._
+
 import org.scalactic.source.Position
 import org.scalatest.Tag
 
-import org.apache.spark.{SparkException, SparkFunSuite}
+import org.apache.spark.SparkException
+import org.apache.spark.sql.{QueryTest, Row}
 import org.apache.spark.sql.flow._
+import org.apache.spark.sql.test.{SharedSparkSession, SQLTestUtils}
 
-class Neo4jAuraSinkSuite extends SparkFunSuite
-  with SQLFlowTestUtils with Neo4jAura {
+class Neo4jAuraSinkSuite extends QueryTest with SharedSparkSession
+  with SQLTestUtils with SQLFlowTestUtils with Neo4jAura {
 
   val uri = System.getenv("NEO4J_AURADB_URI")
   val user = System.getenv("NEO4J_AURADB_USER")
@@ -71,6 +75,94 @@ class Neo4jAuraSinkSuite extends SparkFunSuite
              |RETURN p
            """.stripMargin)
         assert(r.keys().size === 1)
+      }
+    }
+  }
+
+  test("neo4j write/read - stream") {
+    withListener(SQLFlowListener(Neo4jAuraSink(uri, user, passwd))) {
+      val df1 = spark.range(1).selectExpr("id as k", "id as v")
+      checkAnswer(df1, Row(0, 0) :: Nil)
+      spark.sparkContext.listenerBus.waitUntilEmpty()
+      withSession { s =>
+        withTx(s) { tx =>
+          val r = tx.run("MATCH (n) RETURN count(*)").single()
+          assert(r.get(0).asInt === 3)
+        }
+      }
+
+      val df2 = spark.range(1)
+        .selectExpr("id as k", "id as v")
+        .groupBy("k")
+        .count()
+      checkAnswer(df2, Row(0, 1) :: Nil)
+      spark.sparkContext.listenerBus.waitUntilEmpty()
+      withSession { s =>
+        withTx(s) { tx =>
+          val r = tx.run("MATCH (n) RETURN count(*)").single()
+          assert(r.get(0).asInt === 6)
+        }
+      }
+
+      withSession { s =>
+        withTx(s) { tx =>
+          val r = tx.run(s"""
+             |MATCH (from:Plan { name: "Range" })-[:transformInto*2..3]->(to:Query)
+             |RETURN to
+           """.stripMargin)
+          assert(r.keys().size === 1)
+        }
+      }
+    }
+  }
+
+  test("semantically-equal plan node merging - stream") {
+    withListener(SQLFlowListener(Neo4jAuraSink(uri, user, passwd))) {
+      val df1 = spark.range(1)
+        .selectExpr("id as k", "id as v")
+        .groupBy("k")
+        .count()
+      checkAnswer(df1, Row(0, 1) :: Nil)
+      spark.sparkContext.listenerBus.waitUntilEmpty()
+      withSession { s =>
+        withTx(s) { tx =>
+          val r = tx.run("MATCH (n) RETURN count(*)").single()
+          assert(r.get(0).asInt === 4)
+        }
+      }
+
+      val df2 = spark.range(1)
+        .selectExpr("id as k", "id as v")
+        .groupBy("k")
+        .count().as("count")
+        .where("count = 1")
+      checkAnswer(df2, Row(0, 1) :: Nil)
+      spark.sparkContext.listenerBus.waitUntilEmpty()
+      withSession { s =>
+        withTx(s) { tx =>
+          val r = tx.run("MATCH (n) RETURN count(*)").single()
+          assert(r.get(0).asInt === 6)
+        }
+      }
+
+      withSession { s =>
+        withTx(s) { tx =>
+          val queryNodeNames = tx.run("MATCH(n:Query) RETURN properties(n) AS props").asScala
+            .map { r => r.get("props").asMap().get("name").toString }.toSeq
+          assert(queryNodeNames.size === 2)
+
+          val Seq(sHashValueSet1, sHashValueSet2) = queryNodeNames.map { nodeName =>
+            tx.run(s"""
+                 |MATCH (n:Plan)-[:transformInto*1..]->(to:Query {name: "$nodeName"})
+                 |RETURN properties(n) AS props
+               """.stripMargin
+            ).asScala.map { r =>
+              r.get("props").asMap().get("semanticHash").toString
+            }.toSet
+          }
+          // We assume the three nodes are overlapped in data lineage
+          assert((sHashValueSet1 & sHashValueSet2).size === 3)
+        }
       }
     }
   }
