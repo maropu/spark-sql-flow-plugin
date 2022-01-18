@@ -23,36 +23,11 @@ jobs:
         # In order to fetch changed files
         with:
           fetch-depth: 0
-      # Cache local repositories. Note that GitHub Actions cache has a 2G limit.
-      - name: Cache Scala, Maven and Zinc
-        uses: actions/cache@v1
+      - name: Init test env
+        uses: ./.github/actions/setup
         with:
-          path: build
-          key: build-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            build-
-      - name: Cache Maven local repository
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ matrix.java }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ matrix.java }}-maven-
-      - name: Install JDK ${{ matrix.java }}
-        uses: actions/setup-java@v1
-        with:
-          java-version: ${{ matrix.java }}
-      - name: Install Python ${{ matrix.python }}
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python }}
-          architecture: x64
-      - name: Install Python packages (Python ${{ matrix.python }})
-        run: python -m pip install -r ./bin/requirements.txt
-      - name: Install Graphviz
-        run: |
-          sudo apt-get update -y
-          sudo apt-get install -y graphviz
+          java: ${{ matrix.java }}
+          python: ${{ matrix.python }}
       - name: Run tests
         run: |
           ./build/mvn -q clean package -DskipTests
