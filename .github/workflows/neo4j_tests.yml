@@ -1,0 +1,68 @@
+name: Reusable workflow for Neo4j tests
+
+on:
+  workflow_call:
+    inputs:
+      java:
+        required: true
+        type: string
+    secrets:
+      uri:
+        required: true
+      user:
+        required: true
+      passwd:
+        required: true
+
+jobs:
+  neo4j-tests:
+    name: Run Neo4j tests
+    runs-on: ubuntu-latest
+    env:
+      SPARK_LOCAL_IP: localhost
+      MAVEN_OPTS: -Xmx1g
+    steps:
+      - name: Checkout spark-sql-flow-plugin repository
+        uses: actions/checkout@v2
+        # In order to fetch changed files
+        with:
+          fetch-depth: 0
+      # Cache local repositories. Note that GitHub Actions cache has a 2G limit.
+      - name: Cache Scala, Maven and Zinc
+        uses: actions/cache@v1
+        with:
+          path: build
+          key: build-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            build-
+      - name: Cache Maven local repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ inputs.java }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ inputs.java }}-maven-
+      - name: Install JDK ${{ inputs.java }}
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ inputs.java }}
+      - name: Run tests
+        env:
+          NEO4J_AURADB_URI: ${{ secrets.uri}}
+          NEO4J_AURADB_USER: ${{ secrets.user}}
+          NEO4J_AURADB_PASSWD: ${{ secrets.passwd}}
+        run: |
+          ./build/mvn -q clean package -DskipTests
+          ./build/mvn -q -Dtest=none -DwildcardSuites=org.apache.spark.sql.flow.sink.Neo4jAuraSinkSuite test
+      - name: Upload test results to report
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: neo4j-test-results-jdk${{ inputs.java }}
+          path: "./target/surefire-reports/*.xml"
+      - name: Upload unit tests log files
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: neo4j-tests-log-jdk${{ inputs.java }}
+          path: "./target/unit-tests.log"
