@@ -37,6 +37,7 @@ import org.apache.spark.sql.catalyst.plans.logical._
 import org.apache.spark.sql.execution.columnar.InMemoryRelation
 import org.apache.spark.sql.execution.datasources.LogicalRelation
 import org.apache.spark.sql.flow.sink.{BaseGraphFormat, GraphVizSink}
+import org.apache.spark.sql.internal.SQLConf
 
 abstract class BaseSQLFlow extends PredicateHelper with Logging {
 
@@ -897,10 +898,36 @@ object SQLFlow extends Logging {
     computeDigest(seed).substring(0, 7)
   }
 
+  private def withSQLConf[T](pairs: (String, String)*)(f: => T): T = {
+    val conf = SQLConf.get
+    val (keys, values) = pairs.unzip
+    val currentValues = keys.map { key =>
+      if (conf.contains(key)) {
+        Some(conf.getConfString(key))
+      } else {
+        None
+      }
+    }
+    (keys, values).zipped.foreach { (k, v) =>
+      if (SQLConf.isStaticConfigKey(k)) {
+        throw new AnalysisException(s"Cannot modify the value of a static config: $k")
+      }
+      conf.setConfString(k, v)
+    }
+    try f finally {
+      keys.zip(currentValues).foreach {
+        case (key, Some(value)) => conf.setConfString(key, value)
+        case (key, None) => conf.unsetConf(key)
+      }
+    }
+  }
+
   // TODO: Revisit this; we need to return same hash values
   // between different JVM instances.
   private [flow] def semanticHash(p: LogicalPlan): String = {
-    computeDigest(p.canonicalized.toString).substring(0, 7)
+    withSQLConf((SQLConf.MAX_TO_STRING_FIELDS.key, "1024")) {
+      computeDigest(p.canonicalized.toString).substring(0, 7)
+    }
   }
 
   def saveAsSQLFlow(
