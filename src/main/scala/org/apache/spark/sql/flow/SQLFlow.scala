@@ -898,7 +898,7 @@ object SQLFlow extends Logging {
     computeDigest(seed).substring(0, 7)
   }
 
-  private def withSQLConf[T](pairs: (String, String)*)(f: => T): T = {
+  protected def withSQLConf[T](pairs: (String, String)*)(f: => T): T = {
     val conf = SQLConf.get
     val (keys, values) = pairs.unzip
     val currentValues = keys.map { key =>
@@ -909,7 +909,7 @@ object SQLFlow extends Logging {
       }
     }
     (keys, values).zipped.foreach { (k, v) =>
-      if (SQLConf.isStaticConfigKey(k)) {
+      if (SQLConf.staticConfKeys.contains(k)) {
         throw new AnalysisException(s"Cannot modify the value of a static config: $k")
       }
       conf.setConfString(k, v)
