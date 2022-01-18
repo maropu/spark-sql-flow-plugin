@@ -23,7 +23,7 @@ import org.apache.spark.TestUtils
 import org.apache.spark.sql.{QueryTest, Row}
 import org.apache.spark.sql.catalyst.util._
 import org.apache.spark.sql.flow._
-import org.apache.spark.sql.test.{SQLTestUtils, SharedSparkSession}
+import org.apache.spark.sql.test.{SharedSparkSession, SQLTestUtils}
 
 class GraphSinkSuite extends QueryTest with SharedSparkSession
   with SQLTestUtils with SQLFlowTestUtils {
