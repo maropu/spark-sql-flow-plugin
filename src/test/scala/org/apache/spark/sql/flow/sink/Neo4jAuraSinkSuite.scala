@@ -152,16 +152,24 @@ class Neo4jAuraSinkSuite extends QueryTest with SharedSparkSession
     }
   }
 
-  test("Database should be empty") {
+  test("overwrite option") {
     val sink = Neo4jAuraSink(uri, user, passwd)
     val nodeType = GraphNodeType.TableNode
     val nodes = SQLFlowGraphNode("nodeA", "nodeA", Seq("c"), "c INT", nodeType, false) :: Nil
     sink.write(nodes, Nil, Map.empty)
 
     val errMsg = intercept[SparkException] {
-      val sink = Neo4jAuraSink(uri, user, passwd)
       sink.write(nodes, Nil, Map.empty)
     }.getMessage
     assert(errMsg === "Failed to execution tx because: Database should be empty")
+
+    sink.write(nodes, Nil, Map("overwrite" -> "true"))
+    withSession { s =>
+      withTx(s) { tx =>
+        val names = tx.run("MATCH (n) RETURN n.name AS name").asScala
+          .map { r => r.get("name").asString }.toSeq
+        assert(names === Seq("nodeA"))
+      }
+    }
   }
 }
