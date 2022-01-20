@@ -46,22 +46,46 @@ jobs:
           name: unit-tests-log-jdk${{ matrix.java }}-python${{ matrix.python}}
           path: "./target/unit-tests.log"
 
-  neo4j-integration-tests-java8:
+  neo4j-tests-java8-python37:
     uses: maropu/spark-sql-flow-plugin/.github/workflows/neo4j_tests.yml@spark-3.2
     with:
       java: 1.8
+      python: 3.7
     secrets:
       uri: ${{ secrets.NEO4J_AURADB_URI}}
       user: ${{ secrets.NEO4J_AURADB_USER}}
       passwd: ${{ secrets.NEO4J_AURADB_PASSWD}}
 
-  neo4j-integration-tests-java11:
+  neo4j-tests-java8-python38:
     # Since the neo4j integration tests will access the same Neo4j Aura instance,
     # they cannot run concurrently.
-    needs: neo4j-integration-tests-java8
+    needs: neo4j-tests-java8-python37
+    uses: maropu/spark-sql-flow-plugin/.github/workflows/neo4j_tests.yml@spark-3.2
+    with:
+      java: 1.8
+      python: 3.8
+    secrets:
+      uri: ${{ secrets.NEO4J_AURADB_URI}}
+      user: ${{ secrets.NEO4J_AURADB_USER}}
+      passwd: ${{ secrets.NEO4J_AURADB_PASSWD}}
+
+  neo4j-tests-java11-python37:
+    needs: neo4j-tests-java8-python38
     uses: maropu/spark-sql-flow-plugin/.github/workflows/neo4j_tests.yml@spark-3.2
     with:
       java: 11
+      python: 3.7
+    secrets:
+      uri: ${{ secrets.NEO4J_AURADB_URI}}
+      user: ${{ secrets.NEO4J_AURADB_USER}}
+      passwd: ${{ secrets.NEO4J_AURADB_PASSWD}}
+
+  neo4j-tests-java11-python38:
+    needs: neo4j-tests-java11-python37
+    uses: maropu/spark-sql-flow-plugin/.github/workflows/neo4j_tests.yml@spark-3.2
+    with:
+      java: 11
+      python: 3.8
     secrets:
       uri: ${{ secrets.NEO4J_AURADB_URI}}
       user: ${{ secrets.NEO4J_AURADB_USER}}
