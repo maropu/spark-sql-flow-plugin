@@ -6,6 +6,9 @@ on:
       java:
         required: true
         type: string
+      python:
+        required: true
+        type: string
     secrets:
       uri:
         required: true
@@ -31,7 +34,7 @@ jobs:
         uses: ./.github/actions/setup
         with:
           java: ${{ inputs.java }}
-          python: 3.7  # Not used in this test
+          python: ${{ inputs.python}}
       - name: Run tests
         env:
           NEO4J_AURADB_URI: ${{ secrets.uri}}
@@ -40,15 +43,16 @@ jobs:
         run: |
           ./build/mvn -q clean package -DskipTests
           ./build/mvn -q -Dtest=none -DwildcardSuites=org.apache.spark.sql.flow.sink.Neo4jAuraSinkSuite test
+          ./bin/run-tests --parallelism 1 --testnames test_neo4jaura_sink
       - name: Upload test results to report
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: neo4j-test-results-jdk${{ inputs.java }}
+          name: neo4j-test-results-jdk${{ inputs.java }}-python${{ inputs.python}}
           path: "./target/surefire-reports/*.xml"
       - name: Upload unit tests log files
         if: failure()
         uses: actions/upload-artifact@v2
         with:
-          name: neo4j-tests-log-jdk${{ inputs.java }}
+          name: neo4j-unit-tests-log-jdk${{ inputs.java }}-python${{ inputs.python}}
           path: "./target/unit-tests.log"
