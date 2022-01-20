@@ -25,7 +25,7 @@ from sqlflow import *
 from tests.testutils import ReusedSQLTestCase
 
 
-class AutoTrackingTests(ReusedSQLTestCase):
+class SQLFlowTests(ReusedSQLTestCase):
 
     @classmethod
     def conf(cls):

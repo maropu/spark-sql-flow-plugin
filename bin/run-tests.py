@@ -32,7 +32,7 @@ import queue as Queue
 from multiprocessing import Manager
 
 
-python_test_goals = ["test_sqlflow"]
+python_test_goals = ["test_sqlflow", "test_neo4jaura_sink"]
 
 
 def print_red(text):
