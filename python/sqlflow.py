@@ -126,6 +126,7 @@ def save_data_lineage(output_dir_path: str, filename_prefix: str = "sqlflow", gr
     options = f'outputDirPath={output_dir_path},filenamePrefix={filename_prefix},overwrite={overwrite}'
     jvm.SQLFlowApi.saveAsSQLFlow(graph_sink, contracted, options)
 
+
 def export_data_lineage_into(graph_sink: str, contracted: bool = False, options: Dict[str, str] = {}) -> None:
     jvm = SparkSession.builder.getOrCreate().sparkContext._active_spark_context._jvm  # type: ignore
     options_as_string = ','.join(map(lambda kv: f'{kv[0]}={kv[1]}', options.items()))
