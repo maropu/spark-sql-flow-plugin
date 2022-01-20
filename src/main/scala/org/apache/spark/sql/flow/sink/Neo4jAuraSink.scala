@@ -17,6 +17,7 @@
 
 package org.apache.spark.sql.flow.sink
 
+import scala.collection.JavaConverters._
 import scala.util.Try
 import scala.util.control.NonFatal
 
@@ -62,6 +63,21 @@ trait Neo4jAura {
     } finally {
       if (tx != null) {
         tx.close()
+      }
+    }
+  }
+
+  protected def resetNeo4jDbState(): Unit = {
+    withSession { s =>
+      withTx(s) { tx =>
+        val constraints = tx.run("SHOW ALL CONSTRAINT YIELD name").asScala
+          .map { r => r.get("name").asString }
+        constraints.foreach { c =>
+          tx.run(s"DROP CONSTRAINT $c IF EXISTS")
+        }
+      }
+      withTx(s) { tx =>
+        tx.run("MATCH (n) DETACH DELETE n")
       }
     }
   }

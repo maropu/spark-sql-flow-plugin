@@ -38,19 +38,11 @@ class Neo4jAuraSinkSuite extends QueryTest with SharedSparkSession
     uri != null && user != null && passwd != null
   }
 
-  private def resetNeo4jState(): Unit = {
-    if (runTests) {
-      withSession { s =>
-        withTx(s) { tx =>
-          tx.run("MATCH (n) DETACH DELETE n")
-        }
-      }
-    }
-  }
-
   override def beforeEach(): Unit = {
     super.beforeEach()
-    resetNeo4jState()
+    if (runTests) {
+      resetNeo4jDbState()
+    }
   }
 
   protected override def test(testName: String, testTags: Tag*)
