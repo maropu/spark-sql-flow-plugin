@@ -22,7 +22,7 @@ import inspect
 import os
 import uuid
 from pyspark.sql import DataFrame, SparkSession
-from typing import Any, List
+from typing import Any, Dict, List
 
 
 def _setup_logger() -> Any:
@@ -122,9 +122,11 @@ def auto_tracking_with(name):  # type: ignore
 
 def save_data_lineage(output_dir_path: str, filename_prefix: str = "sqlflow", graph_sink: str = "graphviz",
                       contracted: bool = False, overwrite: bool = False) -> None:
-    try:
-        jvm = SparkSession.builder.getOrCreate().sparkContext._active_spark_context._jvm  # type: ignore
-        options = f'outputDirPath={output_dir_path},filenamePrefix={filename_prefix},overwrite={overwrite}'
-        jvm.SQLFlowApi.saveAsSQLFlow(graph_sink, contracted, options)
-    except:
-        _logger.warning(f'Failed to save data lineage in {output_dir_path}')
+    jvm = SparkSession.builder.getOrCreate().sparkContext._active_spark_context._jvm  # type: ignore
+    options = f'outputDirPath={output_dir_path},filenamePrefix={filename_prefix},overwrite={overwrite}'
+    jvm.SQLFlowApi.saveAsSQLFlow(graph_sink, contracted, options)
+
+def export_data_lineage_into(graph_sink: str, contracted: bool = False, options: Dict[str, str] = {}) -> None:
+    jvm = SparkSession.builder.getOrCreate().sparkContext._active_spark_context._jvm  # type: ignore
+    options_as_string = ','.join(map(lambda kv: f'{kv[0]}={kv[1]}', options.items()))
+    jvm.SQLFlowApi.exportSQLFlowInto(graph_sink, contracted, options_as_string)

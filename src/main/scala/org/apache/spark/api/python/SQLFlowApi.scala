@@ -21,7 +21,7 @@ import java.util.Locale
 
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql.flow._
-import org.apache.spark.sql.flow.sink.{AdjacencyListSink, GraphFileBatchSink, GraphVizSink}
+import org.apache.spark.sql.flow.sink.{AdjacencyListSink, GraphFileBatchSink, GraphVizSink, Neo4jAuraSink}
 import org.apache.spark.util.{Utils => SparkUtils}
 
 object SQLFlowApi extends Logging {
@@ -48,7 +48,29 @@ object SQLFlowApi extends Logging {
         AdjacencyListSink(sepString)
 
       case _ =>
-        throw new IllegalStateException(s"Unknown graph format: $fmt")
+        throw new IllegalArgumentException(s"Unknown graph format: $fmt")
+    }
+  }
+
+  private def checkRequiredOptions(
+      options: Map[String, String],
+      sink: String,
+      expected: Seq[String]): Unit = {
+    expected.foreach { key =>
+      if (!options.contains(key)) {
+        throw new IllegalArgumentException(s"`$key` must be specified in the graph sink '$sink'")
+      }
+    }
+  }
+
+  private def toGraphSink(sink: String, options: Map[String, String]): BaseGraphBatchSink = {
+    sink.toLowerCase(Locale.ROOT) match {
+      case "neo4jaura" =>
+        checkRequiredOptions(options, sink, Seq("uri", "user", "passwd"))
+        Neo4jAuraSink(options("uri"), options("user"), options("passwd"))
+
+      case _ =>
+        throw new IllegalArgumentException(s"Unknown graph sink: $sink")
     }
   }
 
@@ -72,9 +94,15 @@ object SQLFlowApi extends Logging {
   def saveAsSQLFlow(
       graphFormat: String = "graphviz",
       contracted: Boolean,
-      options: String = ""): Unit = {
+      options: String): Unit = {
     val parsedOptions = parseOptions(options)
     val graphFmt = toGraphFormat(graphFormat, parsedOptions)
     SQLFlow.saveAsSQLFlow(parsedOptions, contracted, graphFmt)
+  }
+
+  def exportSQLFlowInto(graphSink: String, contracted: Boolean, options: String): Unit = {
+    val parsedOptions = parseOptions(options)
+    val sink = toGraphSink(graphSink, parsedOptions)
+    SQLFlow.saveAsSQLFlow(parsedOptions, contracted, sink)
   }
 }

@@ -242,7 +242,6 @@ To load the listener when launching a Spark cluster, you can use Spark configura
 
  * Implements more graph formatters, e.g., [Apache Atlas](https://atlas.apache.org/#/) and [Mermaid](https://mermaid-js.github.io/mermaid/#/) ([Issue#3](https://github.com/maropu/spark-sql-flow-plugin/issues/3))
  * Tracks data lineage between table/views via `INSERT` queries ([Issue#5](https://github.com/maropu/spark-sql-flow-plugin/issues/5))
- * Support Neo4jAuraSink in `python/sqlflow.py`
  * Supports global temp views
 
 ## Bug Reports
