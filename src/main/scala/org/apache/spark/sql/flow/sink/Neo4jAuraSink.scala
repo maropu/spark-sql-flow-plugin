@@ -188,11 +188,16 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
       nodes: Seq[SQLFlowGraphNode],
       edges: Seq[SQLFlowGraphEdge],
       options: Map[String, String]): Unit = {
+    val overwrite = options.getOrElse("overwrite", "false").toBoolean
     withSession { s =>
-      withTx(s) { tx =>
-        if (!isDatabaseEmpty(tx)) {
-          throw new AnalysisException("Database should be empty")
+      if (!overwrite) {
+        withTx(s) { tx =>
+          if (!isDatabaseEmpty(tx)) {
+            throw new AnalysisException("Database should be empty")
+          }
         }
+      } else {
+        resetNeo4jDbState()
       }
       withTx(s) { tx =>
         createNodes(tx, nodes)
