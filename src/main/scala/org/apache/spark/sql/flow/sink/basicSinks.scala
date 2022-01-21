@@ -200,7 +200,7 @@ case class GraphVizSink(imgFormat: String = "svg")
     node.tpe match {
       case GraphNodeType.TableNode | GraphNodeType.ViewNode | GraphNodeType.QueryNode =>
         generateTableNodeString(node)
-      case GraphNodeType.PlanNode =>
+      case GraphNodeType.PlanNode | GraphNodeType.LeafPlanNode =>
         generatePlanNodeString(node)
     }
   }

@@ -250,13 +250,14 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
       uniqId: String,
       nodeName: String,
       schemaDDL: String,
+      isLeaf: Boolean = false,
       isCached: Boolean = false): SQLFlowGraphNode = {
     SQLFlowGraphNode(
       uniqId,
       nodeName,
       outputAttrNames,
       schemaDDL,
-      GraphNodeType.PlanNode,
+      if (isLeaf) GraphNodeType.LeafPlanNode else GraphNodeType.PlanNode,
       isCached)
   }
 
@@ -320,7 +321,11 @@ abstract class BaseSQLFlow extends PredicateHelper with Logging {
       case _: View | _: ViewNode | _: TempViewNode =>
         generateViewNode(outputAttrNames, uniqId, nodeName, schemaDDL, isCached)
       case _ =>
-        generatePlanNode(outputAttrNames, uniqId, nodeName, schemaDDL, isCached)
+        val isLeaf = p match {
+          case _: Range => true
+          case _ => false
+        }
+        generatePlanNode(outputAttrNames, uniqId, nodeName, schemaDDL, isLeaf, isCached)
     }
     setPlanPropsIn(graphNode, p)
     graphNode

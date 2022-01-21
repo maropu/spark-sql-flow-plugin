@@ -111,7 +111,7 @@ class Neo4jAuraSinkSuite extends QueryTest with SharedSparkSession
       withSession { s =>
         withTx(s) { tx =>
           val r1 = tx.run(s"""
-             |MATCH (from:Plan { name: "Range" })-[:transformInto*1..]->(to:Query)
+             |MATCH (from:LeafPlan { name: "Range" })-[:transformInto*1..]->(to:Query)
              |RETURN count(to) AS cnt
            """.stripMargin)
           assert(r1.single().get("cnt").asInt === 3)
@@ -163,7 +163,7 @@ class Neo4jAuraSinkSuite extends QueryTest with SharedSparkSession
 
           val Seq(sHashValueSet1, sHashValueSet2) = queryNodeNames.map { nodeName =>
             tx.run(s"""
-                 |MATCH (n:Plan)-[:transformInto*1..]->(to:Query {name: "$nodeName"})
+                 |MATCH p=(n:Plan)-[:transformInto*1..]->(to:Query {name: "$nodeName"})
                  |RETURN n.semanticHash AS semanticHash
                """.stripMargin
             ).asScala.map { r =>
@@ -171,7 +171,7 @@ class Neo4jAuraSinkSuite extends QueryTest with SharedSparkSession
             }.toSet
           }
           // We assume the three nodes are overlapped in data lineage
-          assert((sHashValueSet1 & sHashValueSet2).size === 3)
+          assert((sHashValueSet1 & sHashValueSet2).size === 2)
         }
       }
     }
