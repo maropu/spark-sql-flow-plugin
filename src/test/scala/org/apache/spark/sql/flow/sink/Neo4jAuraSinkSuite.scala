@@ -67,10 +67,10 @@ class Neo4jAuraSinkSuite extends QueryTest with SharedSparkSession
     withSession { s =>
       withTx(s) { tx =>
         val r = tx.run(s"""
-             |MATCH p=(from:Table { name: "nodeA" })-[:transformInto*2]->(to:Table { name: "nodeC"})
-             |RETURN p
+             |MATCH (from:Table { name: "nodeA" })-[:transformInto*2]->(to:Table { name: "nodeC"})
+             |RETURN count(to) AS cnt
            """.stripMargin)
-        assert(r.keys().size === 1)
+        assert(r.single().get("cnt").asInt === 1)
       }
     }
   }
