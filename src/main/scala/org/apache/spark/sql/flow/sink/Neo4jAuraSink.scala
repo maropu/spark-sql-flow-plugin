@@ -174,8 +174,10 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
         s"""
            |MATCH (src:$fromLabel), (dst:$toLabel)
            |WHERE src.$fromPred AND dst.$toPred
-           |MERGE (src)-[t:transformInto]->(dst)
-           |RETURN type(t)
+           |MERGE (src)-[r:transformInto]->(dst)
+           |ON CREATE SET r.refCnt = 1
+           |ON MATCH SET r.refCnt = r.refCnt + 1
+           |RETURN r.refCnt
          """.stripMargin)
     }
   }

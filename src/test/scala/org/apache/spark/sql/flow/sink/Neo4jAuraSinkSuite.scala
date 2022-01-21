@@ -99,13 +99,38 @@ class Neo4jAuraSinkSuite extends QueryTest with SharedSparkSession
       spark.sparkContext.listenerBus.waitUntilEmpty()
       checkNodeCount(6)
 
+      val df3 = spark.range(1)
+        .selectExpr("id as k", "id as v")
+        .groupBy("k")
+        .count()
+        .where("count = 1")
+      checkAnswer(df3, Row(0, 1) :: Nil)
+      spark.sparkContext.listenerBus.waitUntilEmpty()
+      checkNodeCount(8)
+
       withSession { s =>
         withTx(s) { tx =>
-          val r = tx.run(s"""
-             |MATCH (from:Plan { name: "Range" })-[:transformInto*2..3]->(to:Query)
-             |RETURN to
+          val r1 = tx.run(s"""
+             |MATCH (from:Plan { name: "Range" })-[:transformInto*1..]->(to:Query)
+             |RETURN count(to) AS cnt
            """.stripMargin)
-          assert(r.keys().size === 1)
+          assert(r1.single().get("cnt").asInt === 3)
+
+          val r2 = tx.run(s"""
+             |MATCH (s)-[t:transformInto]->(e)
+             |RETURN s.name AS sn, t.refCnt AS cnt
+           """.stripMargin)
+          val edges = r2.asScala.map { r =>
+            (r.get("sn").asString, r.get("cnt").asInt)
+          }
+          assert(edges.toSet === Set(
+            ("Project", 2),
+            ("Range", 1),
+            ("Aggregate", 1),
+            ("Project", 1),
+            ("Range", 2),
+            ("Filter", 1),
+            ("Aggregate", 1)))
         }
       }
     }

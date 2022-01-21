@@ -171,15 +171,26 @@ is represented below on your Neo4j browser:
 
 <p align="center"><img src="resources/spark-data-repair-plugin-neo4jaura.svg" width="700px"></p>
 
-To know which views are referenced multiple times by plans, you can run a CYPHER query below for listing up the views.
+To understand which views are referenced multiple times by plans, you can run a CYPHER query below for listing up the views.
 Therefore, the result views can be candidiates to be cached.
 
 ```
-// Lists up the views that are referenced multiple times by plans
+// Lists up the `View` nodes that are referenced multiple times by `Plan` nodes
 MATCH (n:View)-[:transformInto]->(p:Plan)
 WITH n, count(p) as refs
 WHERE refs >= 2
 RETURN n.name
+```
+
+Another useful example is most-frequently query tracking; a `transformInto` relationship has the `refCnt` property
+that is the number of references by queries, so you can select frequently-referenced `transformInto` paths by a query below:
+
+```
+// Selects the sub-graphs whose the `refCnt`s of `transformInto` relationships are more than 1
+MATCH path=()-[:transformInto*1..]->(n)
+WHERE ALL(r IN relationships(path) WHERE r.refCnt >= 2)
+MATCH (n)-[:transformInto]->(q:Query)
+RETURN path, q
 ```
 
 ### Writes Your Custom Graph Formatter
