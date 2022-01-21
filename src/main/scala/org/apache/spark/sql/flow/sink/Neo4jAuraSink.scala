@@ -94,6 +94,7 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
     case GraphNodeType.TableNode => "Table"
     case GraphNodeType.ViewNode => "View"
     case GraphNodeType.PlanNode => "Plan"
+    case GraphNodeType.LeafPlanNode => "LeafPlan"
     case GraphNodeType.QueryNode => "Query"
   }
 
@@ -132,6 +133,12 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
            |FOR (n:Plan)
            |REQUIRE n.semanticHash IS UNIQUE
          """.stripMargin)
+      tx.run(
+        s"""
+           |CREATE CONSTRAINT unique_leaf_plan_node_constraint IF NOT EXISTS
+           |FOR (n:LeafPlan)
+           |REQUIRE n.semanticHash IS UNIQUE
+         """.stripMargin)
     }
   } catch {
     case NonFatal(_) =>
@@ -161,8 +168,10 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
       edges: Seq[SQLFlowGraphEdge]): Unit = {
     val nodeMap = nodes.map { n =>
       n.uniqueId -> (genLabel(n), n.tpe match {
-        case GraphNodeType.PlanNode => s"""semanticHash = "${n.props("semanticHash")}""""
-        case _ => s"""uid = "${n.uniqueId}""""
+        case GraphNodeType.PlanNode | GraphNodeType.LeafPlanNode =>
+          s"""semanticHash = "${n.props("semanticHash")}""""
+        case _ =>
+          s"""uid = "${n.uniqueId}""""
       })
     }.toMap
 

@@ -20,7 +20,7 @@ package org.apache.spark.sql.flow
 import scala.collection.mutable
 
 object GraphNodeType extends Enumeration {
-  val TableNode, ViewNode, PlanNode, QueryNode = Value
+  val TableNode, ViewNode, PlanNode, LeafPlanNode, QueryNode = Value
 }
 
 case class SQLFlowGraphNode(
@@ -36,6 +36,7 @@ case class SQLFlowGraphNode(
     case GraphNodeType.TableNode => "table"
     case GraphNodeType.ViewNode => "view"
     case GraphNodeType.PlanNode => "plan"
+    case GraphNodeType.LeafPlanNode => "leaf_plan"
     case GraphNodeType.QueryNode => "query"
   }
 

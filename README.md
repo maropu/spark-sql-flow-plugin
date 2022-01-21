@@ -186,12 +186,14 @@ Another useful example is most-frequently query tracking; a `transformInto` rela
 that is the number of references by queries, so you can select frequently-referenced `transformInto` paths by a query below:
 
 ```
-// Selects the sub-graphs whose the `refCnt`s of `transformInto` relationships are more than 1
-MATCH path=()-[:transformInto*1..]->(n)
-WHERE ALL(r IN relationships(path) WHERE r.refCnt >= 2)
-MATCH (n)-[:transformInto]->(q:Query)
-RETURN path, q
+// Selects the relationships whose `refCnt` is more than 1
+MATCH p=(s)-[:transformInto*1..]->(e)
+WHERE (s:LeafPlan OR s:Table OR s:View) AND ALL(r IN relationships(p) WHERE r.refCnt >= 2)
+MATCH (e)-[:transformInto]->(q:Query)
+RETURN p, q
 ```
+
+Other useful CYPHER queries can be found in [resources/README.md](resources/README.md).
 
 ### Writes Your Custom Graph Formatter
 
