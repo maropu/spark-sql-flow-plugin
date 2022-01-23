@@ -19,11 +19,11 @@ RETURN p
 ### Removes query nodes older than 90 days
 
 ```
-// Decrement the reference counts of relationships related to the older query nodes
-MATCH p=(n)-[*]->(q:Query)
-WHERE (n:LeafPlan OR n:Table OR n:View) AND duration.inDays(datetime(q.timestamp), datetime()).days > 90
-FOREACH (r IN relationships(p) | SET r.refCnt = r.refCnt - 1)
-RETURN p;
+// Decrements the reference counts of relationships related to the older query nodes
+MATCH (n)-[t:transformInto*]->(q:Query)
+WHERE duration.inDays(datetime(q.timestamp), datetime()).days > 90
+SET head(t).refCnt = head(t).refCnt - 1
+RETURN n;
 
 // Then, removes the older nodes
 MATCH (q:Query)
