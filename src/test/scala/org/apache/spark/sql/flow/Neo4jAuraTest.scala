@@ -17,20 +17,34 @@
 
 package org.apache.spark.sql.flow
 
-import org.apache.spark.sql.SparkSession
+import org.scalactic.source.Position
+import org.scalatest.{BeforeAndAfterEach, Tag}
+import org.scalatest.funsuite.AnyFunSuiteLike
 
-class TPCDSFlowTestSuite extends SQLFlowTestSuite with TPCDSTest {
+import org.apache.spark.sql.flow.sink.Neo4jAura
 
-  override protected def baseResourcePath = {
-    getWorkspaceFilePath(tpcdsResourceFilePath.head, tpcdsResourceFilePath.tail: _*).toFile
+trait Neo4jAuraTest extends Neo4jAura with AnyFunSuiteLike with BeforeAndAfterEach {
+
+  val uri = System.getenv("NEO4J_AURADB_URI")
+  val user = System.getenv("NEO4J_AURADB_USER")
+  val passwd = System.getenv("NEO4J_AURADB_PASSWD")
+
+  private lazy val runTests = {
+    uri != null && user != null && passwd != null
   }
 
-  override protected def ignoreList: Set[String] = Set(
-    // TODO: Cannot generate a dot file for `q28.sql`
-    "q28.sql"
-  )
+  override def beforeEach(): Unit = {
+    super.beforeEach()
+    if (runTests) {
+      resetNeo4jDbState()
+    }
+  }
 
-  override protected def runQuery(query: String, session: SparkSession): Unit = {
-    session.sql(query).createOrReplaceTempView("v")
+  protected override def test(testName: String, testTags: Tag*)
+      (testFun: => Any)(implicit pos: Position): Unit = {
+    super.test(testName) {
+      assume(runTests)
+      testFun
+    }
   }
 }

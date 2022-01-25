@@ -211,6 +211,7 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
         resetNeo4jDbState()
       }
       withTx(s) { tx =>
+        // TODO: For fast queries, creates indexes on a generated graph
         createNodes(tx, nodes)
         createEdges(tx, nodes, edges)
       }

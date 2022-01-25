@@ -19,39 +19,13 @@ package org.apache.spark.sql.flow.sink
 
 import scala.collection.JavaConverters._
 
-import org.scalactic.source.Position
-import org.scalatest.Tag
-
 import org.apache.spark.SparkException
 import org.apache.spark.sql.{QueryTest, Row}
 import org.apache.spark.sql.flow._
 import org.apache.spark.sql.test.{SharedSparkSession, SQLTestUtils}
 
 class Neo4jAuraSinkSuite extends QueryTest with SharedSparkSession
-  with SQLTestUtils with SQLFlowTestUtils with Neo4jAura {
-
-  val uri = System.getenv("NEO4J_AURADB_URI")
-  val user = System.getenv("NEO4J_AURADB_USER")
-  val passwd = System.getenv("NEO4J_AURADB_PASSWD")
-
-  private lazy val runTests = {
-    uri != null && user != null && passwd != null
-  }
-
-  override def beforeEach(): Unit = {
-    super.beforeEach()
-    if (runTests) {
-      resetNeo4jDbState()
-    }
-  }
-
-  protected override def test(testName: String, testTags: Tag*)
-      (testFun: => Any)(implicit pos: Position): Unit = {
-    super.test(testName) {
-      assume(runTests)
-      testFun
-    }
-  }
+  with SQLTestUtils with SQLFlowTestUtils with Neo4jAuraTest {
 
   test("neo4j write/read") {
     val sink = Neo4jAuraSink(uri, user, passwd)
