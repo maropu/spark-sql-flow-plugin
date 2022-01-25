@@ -43,6 +43,7 @@ jobs:
         run: |
           ./build/mvn -q clean package -DskipTests
           ./build/mvn -q -Dtest=none -DwildcardSuites=org.apache.spark.sql.flow.sink.Neo4jAuraSinkSuite test
+          ./build/mvn -q -Dtest=none -DwildcardSuites=org.apache.spark.sql.flow.TPCDSFlowWithNeo4jAuraSink test
           ./bin/run-tests --parallelism 1 --testnames test_neo4jaura_sink
       - name: Upload test results to report
         if: always()
