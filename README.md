@@ -176,8 +176,8 @@ Therefore, the result views can be candidiates to be cached.
 
 ```
 // Lists up the `View` nodes that are referenced multiple times by `Plan` nodes
-MATCH (n:View)-[:transformInto]->(p:Plan)
-WITH n, count(p) as refs
+MATCH (n:LeafPlan)-[t:transformInto]->(:Plan)
+WITH n, sum(size(t.dstNodeIds)) as refs
 WHERE refs >= 2
 RETURN n.name
 ```
@@ -186,14 +186,14 @@ Another useful example is most-frequently query tracking; a `transformInto` rela
 that is the number of references by queries, so you can select frequently-referenced `transformInto` paths by a query below:
 
 ```
-// Selects the relationships whose `refCnt` is more than 1
+// Selects the relationships whose reference count is more than 1
 MATCH p=(s)-[:transformInto*1..]->(e)
-WHERE (s:LeafPlan OR s:Table OR s:View) AND ALL(r IN relationships(p) WHERE r.refCnt >= 2)
+WHERE (s:LeafPlan OR s:Table OR s:View) AND ALL(r IN relationships(p) WHERE size(r.dstNodeIds) >= 2)
 MATCH (e)-[:transformInto]->(q:Query)
 RETURN p, q
 ```
 
-Other useful CYPHER queries can be found in [resources/README.md](resources/README.md).
+Other useful CYPHER queries can be found in [resources/README.md](resources/README.md#list-of-other-useful-cypher-queries).
 
 ### Writes Your Custom Graph Formatter
 

@@ -92,7 +92,7 @@ class Neo4jAuraSinkSuite extends QueryTest with SharedSparkSession
 
           val r2 = tx.run(s"""
              |MATCH (s)-[t:transformInto]->(e)
-             |RETURN s.name AS sn, t.refCnt AS cnt
+             |RETURN s.name AS sn, size(t.dstNodeIds) AS cnt
            """.stripMargin)
           val edges = r2.asScala.map { r =>
             (r.get("sn").asString, r.get("cnt").asInt)

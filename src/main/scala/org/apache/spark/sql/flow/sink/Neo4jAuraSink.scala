@@ -18,6 +18,7 @@
 package org.apache.spark.sql.flow.sink
 
 import scala.collection.JavaConverters._
+import scala.collection.mutable
 import scala.util.Try
 import scala.util.control.NonFatal
 
@@ -77,6 +78,13 @@ trait Neo4jAura {
         }
       }
       withTx(s) { tx =>
+        val indexes = tx.run("SHOW ALL INDEX YIELD name").asScala
+          .map { r => r.get("name").asString }
+        indexes.foreach { c =>
+          tx.run(s"DROP INDEX $c IF EXISTS")
+        }
+      }
+      withTx(s) { tx =>
         tx.run("MATCH (n) DETACH DELETE n")
       }
     }
@@ -114,34 +122,22 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
   }
 
   private def tryToCreateConstraints(s: Session): Unit = try {
+    def genCreateConstraintStmt(label: String, uniqProp: String): String = {
+      s"""
+         |CREATE CONSTRAINT unique_${label.toLowerCase}_node_constraint IF NOT EXISTS
+         |FOR (n:$label)
+         |REQUIRE n.$uniqProp IS UNIQUE
+       """.stripMargin
+    }
     withTx(s) { tx =>
-      tx.run(
-        s"""
-           |CREATE CONSTRAINT unique_table_node_constraint IF NOT EXISTS
-           |FOR (n:Table)
-           |REQUIRE n.uid IS UNIQUE
-         """.stripMargin)
-      tx.run(
-        s"""
-           |CREATE CONSTRAINT unique_view_node_constraint IF NOT EXISTS
-           |FOR (n:View)
-           |REQUIRE n.uid IS UNIQUE
-         """.stripMargin)
-      tx.run(
-        s"""
-           |CREATE CONSTRAINT unique_plan_node_constraint IF NOT EXISTS
-           |FOR (n:Plan)
-           |REQUIRE n.semanticHash IS UNIQUE
-         """.stripMargin)
-      tx.run(
-        s"""
-           |CREATE CONSTRAINT unique_leaf_plan_node_constraint IF NOT EXISTS
-           |FOR (n:LeafPlan)
-           |REQUIRE n.semanticHash IS UNIQUE
-         """.stripMargin)
+      tx.run(genCreateConstraintStmt("Table", "uid"))
+      tx.run(genCreateConstraintStmt("View", "uid"))
+      tx.run(genCreateConstraintStmt("Query", "uid"))
+      tx.run(genCreateConstraintStmt("Plan", "semanticHash"))
+      tx.run(genCreateConstraintStmt("LeafPlan", "semanticHash"))
     }
   } catch {
-    case NonFatal(_) =>
+    case NonFatal(e) =>
   }
 
   private def tryToCreateNodes(s: Session, nodes: Seq[SQLFlowGraphNode]): Unit = {
@@ -167,7 +163,7 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
       nodes: Seq[SQLFlowGraphNode],
       edges: Seq[SQLFlowGraphEdge]): Unit = {
     val nodeMap = nodes.map { n =>
-      n.uniqueId -> (genLabel(n), n.tpe match {
+      n.uniqueId -> (n, genLabel(n), n.tpe match {
         case GraphNodeType.PlanNode | GraphNodeType.LeafPlanNode =>
           s"""semanticHash = "${n.props("semanticHash")}""""
         case _ =>
@@ -176,17 +172,43 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
     }.toMap
 
     val compactEdges = edges.map { e => (e.fromId, e.toId) }.distinct
+    val edgeMap = compactEdges.groupBy(kv => kv._1).mapValues(_.map(_._2))
+    def collectDstNodeIds(s: String): Seq[String] = {
+      val buf = mutable.ArrayBuffer[String]()
+      val maxDepthToTraverse = 128
+      var nodes: Seq[String] = Seq(s)
+      (0 until maxDepthToTraverse).foreach { _ =>
+        nodes = nodes.flatMap { e =>
+          edgeMap.getOrElse(e, Nil).flatMap(nodeMap.get).flatMap { case (node, _, _) =>
+            node.tpe match {
+              case GraphNodeType.QueryNode | GraphNodeType.ViewNode =>
+                buf.append(node.uniqueId)
+                None
+              case _ =>
+                Some(node.uniqueId)
+            }
+          }
+        }
+
+        if (nodes.isEmpty) {
+          return buf.distinct.toSeq
+        }
+      }
+      buf.distinct.toSeq
+    }
+
     compactEdges.foreach { case (fromId, toId) =>
-      val (fromLabel, fromPred) = nodeMap(fromId)
-      val (toLabel, toPred) = nodeMap(toId)
+      val (_, fromLabel, fromPred) = nodeMap(fromId)
+      val (_, toLabel, toPred) = nodeMap(toId)
+      val dstUniqIds = collectDstNodeIds(fromId).map(n => s""""$n"""").mkString("[", ",", "]")
       tx.run(
         s"""
            |MATCH (src:$fromLabel), (dst:$toLabel)
            |WHERE src.$fromPred AND dst.$toPred
            |MERGE (src)-[r:transformInto]->(dst)
-           |ON CREATE SET r.refCnt = 1
-           |ON MATCH SET r.refCnt = r.refCnt + 1
-           |RETURN r.refCnt
+           |ON CREATE SET r.dstNodeIds = $dstUniqIds
+           |ON MATCH SET r.dstNodeIds = r.dstNodeIds + $dstUniqIds
+           |RETURN r.dstNodeIds
          """.stripMargin)
     }
   }
@@ -211,7 +233,6 @@ case class Neo4jAuraSink(uri: String, user: String, passwd: String)
         resetNeo4jDbState()
       }
       withTx(s) { tx =>
-        // TODO: For fast queries, creates indexes on a generated graph
         createNodes(tx, nodes)
         createEdges(tx, nodes, edges)
       }
