@@ -27,6 +27,14 @@ import org.apache.spark.sql.test.{SharedSparkSession, SQLTestUtils}
 class TPCDSFlowWithNeo4jAuraSink extends QueryTest with SharedSparkSession
   with SQLTestUtils with SQLFlowTestUtils with Neo4jAuraTest with TPCDSTest {
 
+  private def getWorkspaceFilePath(first: String, more: String*) = {
+    if (!(sys.props.contains("spark.test.home") || sys.env.contains("SPARK_HOME"))) {
+      fail("spark.test.home or SPARK_HOME is not set.")
+    }
+    val sparkHome = sys.props.getOrElse("spark.test.home", sys.env("SPARK_HOME"))
+    java.nio.file.Paths.get(sparkHome, first +: more: _*)
+  }
+
   private lazy val tpcdsQueryFiles = {
     val tpcdsResourceFile = getWorkspaceFilePath(
       tpcdsResourceFilePath.head, tpcdsResourceFilePath.tail: _*).toFile
