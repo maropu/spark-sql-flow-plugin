@@ -265,7 +265,7 @@ To load the listener when launching a Spark cluster, you can use Spark configura
 
 ## TODO
 
- * Implements more graph formatters, e.g., [Apache Atlas](https://atlas.apache.org/#/) and [Mermaid](https://mermaid-js.github.io/mermaid/#/) ([Issue#3](https://github.com/maropu/spark-sql-flow-plugin/issues/3))
+ * Implements more graph formatters, e.g., [Apache Atlas](https://atlas.apache.org/#/) ([Issue#3](https://github.com/maropu/spark-sql-flow-plugin/issues/3))
  * Tracks data lineage between table/views via `INSERT` queries ([Issue#5](https://github.com/maropu/spark-sql-flow-plugin/issues/5))
  * Updates CYPHER queries in [resources/README.md](resources/README.md)
  * Supports global temp views
