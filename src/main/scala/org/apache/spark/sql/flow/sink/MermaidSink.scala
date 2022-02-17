@@ -17,17 +17,37 @@
 
 package org.apache.spark.sql.flow.sink
 
+import java.io.File
+
 import org.apache.spark.sql.flow.{GraphNodeType, SQLFlowGraphEdge, SQLFlowGraphNode}
 
 /**
  * This class transforms an input graph into a Mermaid-formatted flowchart.
  *  - https://mermaid-js.github.io/mermaid/#/flowchart
  */
-case object MermaidSink extends GraphFileBatchSink {
+case class MermaidSink(imgFormat: String = "svg") extends GraphFileBatchSink {
+
   override def filenameSuffix: String = "mmd"
 
   private val className = {
-    this.getClass.getCanonicalName.replace("$", "")
+    getClass.getCanonicalName
+  }
+
+  private def tryGenerateImageFile(options: Map[String, String]): Unit = {
+    val dirPath = getOutputDirPathFrom(options)
+    val filenamePrefix = getFilenamePrefixFrom(options)
+    val mmdFile = new File(dirPath, s"$filenamePrefix.$filenameSuffix").getAbsolutePath
+    val dstFile = new File(dirPath, s"$filenamePrefix.$imgFormat").getAbsolutePath
+    val arguments = s"-i $mmdFile -o $dstFile"
+    SinkUtils.tryToExecuteCommand("mmdc", arguments)
+  }
+
+  override def write(
+      nodes: Seq[SQLFlowGraphNode],
+      edges: Seq[SQLFlowGraphEdge],
+      options: Map[String, String]): Unit = {
+    super.write(nodes, edges, options)
+    tryGenerateImageFile(options)
   }
 
   override def toGraphString(nodes: Seq[SQLFlowGraphNode], edges: Seq[SQLFlowGraphEdge]): String = {

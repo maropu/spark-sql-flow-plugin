@@ -41,7 +41,7 @@ class GraphSinkSuite extends QueryTest with SharedSparkSession
         val outputPath = s"${dirPath.getAbsolutePath}/$imageFormat"
         df.saveAsSQLFlow(Map("outputDirPath" -> outputPath), graphSink = GraphVizSink(imageFormat))
         val imgFile = new File(s"$outputPath/sqlflow.$imageFormat")
-        assert(imgFile.exists())
+        assert(imgFile.exists(), s"because 'sqlflow.$imageFormat' does not exists")
       }
     }
     withTempView("t") {
@@ -59,7 +59,7 @@ class GraphSinkSuite extends QueryTest with SharedSparkSession
             graphSink = GraphVizSink(imageFormat)
           )
           val imgFile = new File(s"$outputPath/sqlflow.$imageFormat")
-          assert(imgFile.exists())
+          assert(imgFile.exists(), s"because 'sqlflow.$imageFormat' does not exists")
         }
       }
     }
@@ -238,7 +238,7 @@ class GraphSinkSuite extends QueryTest with SharedSparkSession
           .createOrReplaceTempView("t3")
 
         val flowString = getOutputAsString {
-          SQLFlow.printAsSQLFlow(graphFormat = MermaidSink)
+          SQLFlow.printAsSQLFlow(graphFormat = MermaidSink())
         }
         checkMermaidFormatString(flowString,
           """
@@ -264,7 +264,7 @@ class GraphSinkSuite extends QueryTest with SharedSparkSession
 
         val contractedFlowString = getOutputAsString {
           SQLFlow.printAsSQLFlow(
-            contracted = true, graphFormat = MermaidSink)
+            contracted = true, graphFormat = MermaidSink())
         }
         checkMermaidFormatString(contractedFlowString,
           """
@@ -277,6 +277,44 @@ class GraphSinkSuite extends QueryTest with SharedSparkSession
             |    t2-->t3
             |    default.t1-->t2
           """.stripMargin)
+      }
+    }
+  }
+
+  ignore("mermaid image data generation") {
+    assume(TestUtils.testCommandAvailable("mmdc"))
+
+    // Output file must end with ".md", ".svg", ".png" or ".pdf"
+    val testImageFormats = Seq("svg", "png", "pdf")
+
+    withTempDir { dirPath =>
+      import org.apache.spark.sql.flow.SQLFlow._
+      val df = sql("SELECT k, sum(v) FROM VALUES (1, 2), (3, 4) t(k, v) GROUP BY k")
+
+      testImageFormats.foreach { imageFormat =>
+        val outputPath = s"${dirPath.getAbsolutePath}/$imageFormat"
+        df.saveAsSQLFlow(Map("outputDirPath" -> outputPath), graphSink = MermaidSink(imageFormat))
+        val imgFile = new File(s"$outputPath/sqlflow.$imageFormat")
+        assert(imgFile.exists(), s"because 'sqlflow.$imageFormat' does not exists")
+      }
+    }
+    withTempView("t") {
+      withTempDir { dirPath =>
+        sql(
+          """
+            |CREATE OR REPLACE TEMPORARY VIEW t AS
+            |  SELECT k, sum(v) FROM VALUES (1, 2), (3, 4) t(k, v) GROUP BY k
+          """.stripMargin)
+
+        testImageFormats.foreach { imageFormat =>
+          val outputPath = s"${dirPath.getAbsolutePath}/$imageFormat"
+          SQLFlow.saveAsSQLFlow(
+            Map("outputDirPath" -> outputPath),
+            graphSink = MermaidSink(imageFormat)
+          )
+          val imgFile = new File(s"$outputPath/sqlflow.$imageFormat")
+          assert(imgFile.exists(), s"because 'sqlflow.$imageFormat' does not exists")
+        }
       }
     }
   }

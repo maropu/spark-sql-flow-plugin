@@ -21,12 +21,8 @@ import java.io.File
 import java.sql.Timestamp
 import java.time.format.DateTimeFormatter
 import java.util.TimeZone
-import java.util.concurrent.LinkedBlockingQueue
 
-import scala.collection.immutable.Stream
 import scala.collection.mutable
-import scala.sys.process._
-import scala.util.Try
 
 import org.apache.commons.io.FileUtils
 
@@ -34,66 +30,6 @@ import org.apache.spark.internal.Logging
 import org.apache.spark.sql._
 import org.apache.spark.sql.catalyst.util._
 import org.apache.spark.sql.flow.{BaseGraphBatchSink, BaseGraphStreamSink, GraphNodeType, SQLFlowGraphEdge, SQLFlowGraphNode}
-
-/**
- * Using ProcessBuilder.lineStream produces a stream, that uses
- * a LinkedBlockingQueue with a default capacity of Integer.MAX_VALUE.
- *
- * This causes OOM if the consumer cannot keep up with the producer.
- *
- * See scala.sys.process.ProcessBuilderImpl.lineStream
- */
-private[sql] object BlockingLineStream {
-
-  // See scala.sys.process.Streamed
-  private final class BlockingStreamed[T](
-    val process: T => Unit,
-    val done: Int => Unit,
-    val stream: () => Stream[T])
-
-  // See scala.sys.process.Streamed
-  private object BlockingStreamed {
-    // scala.process.sys.Streamed uses default of Integer.MAX_VALUE,
-    // which causes OOMs if the consumer cannot keep up with producer.
-    val maxQueueSize = 65536
-
-    def apply[T](nonzeroException: Boolean): BlockingStreamed[T] = {
-      val q = new LinkedBlockingQueue[Either[Int, T]](maxQueueSize)
-
-      def next(): Stream[T] = q.take match {
-        case Left(0) => Stream.empty
-        case Left(code) =>
-          if (nonzeroException) scala.sys.error("Nonzero exit code: " + code) else Stream.empty
-        case Right(s) => Stream.cons(s, next())
-      }
-
-      new BlockingStreamed((s: T) => q put Right(s), code => q put Left(code), () => next())
-    }
-  }
-
-  // See scala.sys.process.ProcessImpl.Spawn
-  private object Spawn {
-    def apply(f: => Unit): Thread = apply(f, daemon = false)
-
-    def apply(f: => Unit, daemon: Boolean): Thread = {
-      val thread = new Thread() {
-        override def run() = {
-          f
-        }
-      }
-      thread.setDaemon(daemon)
-      thread.start()
-      thread
-    }
-  }
-
-  def apply(command: Seq[String]): Stream[String] = {
-    val streamed = BlockingStreamed[String](true)
-    val process = command.run(BasicIO(false, streamed.process, None))
-    Spawn(streamed.done(process.exitValue()))
-    streamed.stream()
-  }
-}
 
 object GraphFileWriter {
   def writeTo(dirPath: String, filename: String, graphString: String, overwrite: Boolean): File = {
@@ -114,29 +50,6 @@ object GraphFileWriter {
 
 trait BaseGraphFormat {
   def toGraphString(nodes: Seq[SQLFlowGraphNode], edges: Seq[SQLFlowGraphEdge]): String
-}
-
-object GraphVizSink extends Logging {
-  private def isCommandAvailable(command: String): Boolean = {
-    val attempt = {
-      Try(Process(Seq("sh", "-c", s"command -v $command")).run(ProcessLogger(_ => ())).exitValue())
-    }
-    attempt.isSuccess && attempt.get == 0
-  }
-
-  // If the Graphviz dot command installed, converts the generated dot file
-  // into a specified-formatted image.
-  def tryGenerateImageFile(format: String, src: String, dst: String): Unit = {
-    if (isCommandAvailable("dot")) {
-      try {
-        val commands = Seq("bash", "-c", s"dot -T$format $src > $dst")
-        BlockingLineStream(commands)
-      } catch {
-        case e =>
-          logWarning(s"Failed to generate a graph image (fmt=$format): ${e.getMessage}")
-      }
-    }
-  }
 }
 
 abstract class GraphFileBatchSink extends BaseGraphBatchSink with BaseGraphFormat {
@@ -256,9 +169,10 @@ case class GraphVizSink(imgFormat: String = "svg")
   private def tryGenerateImageFile(options: Map[String, String]): Unit = {
     val dirPath = getOutputDirPathFrom(options)
     val filenamePrefix = getFilenamePrefixFrom(options)
-    val dotFile = new File(dirPath, s"$filenamePrefix.$filenameSuffix")
+    val dotFile = new File(dirPath, s"$filenamePrefix.$filenameSuffix").getAbsolutePath
     val dstFile = new File(dirPath, s"$filenamePrefix.$imgFormat").getAbsolutePath
-    GraphVizSink.tryGenerateImageFile(imgFormat, dotFile.getAbsolutePath, dstFile)
+    val arguments = s"-T$imgFormat $dotFile > $dstFile"
+    SinkUtils.tryToExecuteCommand("dot", arguments)
   }
 
   override def write(
