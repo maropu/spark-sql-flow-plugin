@@ -24,7 +24,7 @@ import org.apache.spark.sql.flow.{GraphNodeType, SQLFlowGraphEdge, SQLFlowGraphN
  *  - https://mermaid-js.github.io/mermaid/#/flowchart
  */
 case object MermaidSink extends GraphFileBatchSink {
-  override def filenameSuffix: String = "mermaid"
+  override def filenameSuffix: String = "mmd"
 
   private val className = {
     this.getClass.getCanonicalName.replace("$", "")
