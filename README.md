@@ -267,9 +267,9 @@ To load the listener when launching a Spark cluster, you can use Spark configura
 
  * Implements more graph exporters, e.g., for [Apache Atlas](https://atlas.apache.org/#/) and [DataHub](https://datahubproject.io/)/[Acryl Data](https://www.acryldata.io/) ([Issue#3](https://github.com/maropu/spark-sql-flow-plugin/issues/3))
  * Tracks data lineage between table/views via `INSERT` queries ([Issue#5](https://github.com/maropu/spark-sql-flow-plugin/issues/5))
- * Updates CYPHER queries in [resources/README.md](resources/README.md)
+ * Adds more CYPHER query examples in [resources/README.md](resources/README.md), e.g.,
+   * CYPHER query to group SQL/DataFrame queries by their similarities (alternative approach to store query logs is [spark-query-log-plugin](https://github.com/maropu/spark-query-log-plugin))
  * Supports global temp views
-
 ## Bug Reports
 
 If you hit some bugs and have requests, please leave some comments on [Issues](https://github.com/maropu/spark-sql-flow-plugin/issues)
