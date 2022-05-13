@@ -255,6 +255,7 @@ To load the listener when launching a Spark cluster, you can use Spark configura
  - Prophecy, Spark: Column Level Lineage, https://medium.com/prophecy-io/spark-column-level-lineage-478c1fe4701d
  - Collibra/SQLDep, Introducing Collibra Lineage - Automated Data Lineage, https://www.collibra.com/us/en/blog/introducing-collibra-lineage
  - Tokern, Automate data engineering tasks with column-level data lineage, https://tokern.io
+ - SQLLineage, SQL Lineage Analysis Tool powered by Python, https://github.com/reata/sqllineage
 
 ## References
 
